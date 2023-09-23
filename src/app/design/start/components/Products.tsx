@@ -35,7 +35,7 @@ export default function Products() {
   const [selected, setSelected] = useState(shirts[0]);
 
   return (
-    <div className="w-full py-4">
+    <div className="w-full py-4 px-4">
       <div className="mx-auto w-full">
         <RadioGroup value={selected} onChange={setSelected}>
           <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>

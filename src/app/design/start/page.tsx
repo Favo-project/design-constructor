@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import Products from "./components/Products";
 import Text from "./components/Text";
@@ -20,7 +20,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function Start() {
-  let [categories] = useState({
+  let [categories]: any = useState({
     Products: {
       icon: <PiTShirt />,
       component: Products,
@@ -49,7 +49,7 @@ export default function Start() {
         <div>
           <canvas id="design" />
         </div>
-        <div className="p-4 shadow-xl">
+        <div className="sm:p-4 lg:p-8 shadow-xl">
           <h2 className="text-gray-700 text-2xl font-semibold mt-6">
             Create your design
           </h2>
@@ -70,14 +70,16 @@ export default function Start() {
                     }
                   >
                     <div className="flex flex-col items-center">
-                      <span>{categories[category].icon}</span>
+                      <span className="text-2xl mb-2">
+                        {categories[category].icon}
+                      </span>
                       <p>{category}</p>
                     </div>
                   </Tab>
                 ))}
               </Tab.List>
               <Tab.Panels className="mt-2">
-                {Object.values(categories).map((category, idx) => (
+                {Object.values(categories).map((category: any, idx) => (
                   <Tab.Panel
                     key={idx}
                     className={classNames(
