@@ -50,7 +50,7 @@ export default function UploadGuide() {
         onClick={openModal}
         className="text-base font-medium text-blue-700"
       >
-        Open dialog
+        Learn more
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -83,7 +83,7 @@ export default function UploadGuide() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
+                    Learn more dialog
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
@@ -107,8 +107,6 @@ export default function UploadGuide() {
           </div>
         </Dialog>
       </Transition>
-
-      
     </div>
   );
 }
