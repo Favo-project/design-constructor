@@ -5,9 +5,6 @@ import { RxCross1 } from "react-icons/rx";
 export function FileDrop({ file, setFile }: any) {
   const [isOver, setIsOver] = useState(false);
 
-  console.log(isOver);
-
-  // Define the event handlers
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsOver(true);
@@ -59,7 +56,10 @@ export function FileDrop({ file, setFile }: any) {
         <div className="text-center">
           {file ? (
             <div className="flex items-center cursor-auto rounded-md py-1 px-2 text-sm bg-slate-200">
-              <button className="text-sm p-1.5 mr-2 cursor-pointer">
+              <button
+                onClick={() => setFile("")}
+                className="text-sm p-1.5 mr-2 cursor-pointer"
+              >
                 <RxCross1 />
               </button>{" "}
               {file.name}
@@ -75,7 +75,7 @@ export function FileDrop({ file, setFile }: any) {
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none ring-2 ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                 >
-                  <span>Upload a file</span>
+                  <span>Choose a file</span>
                   <input
                     id="file-upload"
                     name="file-upload"
