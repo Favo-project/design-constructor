@@ -24,7 +24,10 @@ function classNames(...classes: string[]) {
 }
 
 export default function Start() {
-  let [categories]: any = useState({
+  const canvasRef = useRef(null);
+  const designContainer = useRef(null);
+  const containerRef = useRef(null);
+  const [categories]: any = useState({
     Products: {
       icon: <PiTShirt />,
       component: Products,
@@ -47,10 +50,13 @@ export default function Start() {
     },
   });
 
-  useLayoutEffect(() => {
-    const canvas = new fabric.Canvas("design", {
-      width: 600,
-      height: 600,
+  useEffect(() => {
+    const CANVAS_WIDTH = 700;
+    const CANVAS_HEIGHT = 700;
+
+    const canvas = new fabric.Canvas(canvasRef.current, {
+      width: CANVAS_WIDTH,
+      height: CANVAS_HEIGHT,
       selection: true,
     });
 
@@ -72,12 +78,17 @@ export default function Start() {
       }
     );
 
-    const canvasContainer = document.getElementById("canvas-container");
+    const canvasContainer: any = designContainer.current;
 
     // Initial scale and pan variables
     let scale = 1;
     let offsetX = 0;
     let offsetY = 0;
+    let lastX: any, lastY: any;
+    let MIN_OFFSET_X = 0;
+    let MAX_OFFSET_X = 0;
+    let MIN_OFFSET_Y = 0;
+    let MAX_OFFSET_Y = 0;
 
     function updateCanvasViewport() {
       canvas.setViewportTransform([scale, 0, 0, scale, offsetX, offsetY]);
@@ -85,42 +96,90 @@ export default function Start() {
     }
 
     function centerCanvasViewport() {
-      offsetX = (canvasContainer!.clientWidth - canvas.width! * scale) / 2;
-      offsetY = (canvasContainer!.clientHeight - canvas.height! * scale) / 2;
+      offsetX =
+        (canvasContainer!.clientWidth * scale - canvas.width! * scale) / 2;
+      offsetY =
+        (canvasContainer!.clientHeight * scale - canvas.height! * scale) / 2;
       updateCanvasViewport();
     }
 
     document.getElementById("zoom-in")!.addEventListener("click", function () {
-      scale *= 1.4;
-      centerCanvasViewport();
+      if (scale >= 1 && 4 > scale) {
+        // scaling factor
+        scale += 0.5;
+
+        // new scaled canvas width and height in zoom out
+        let newWidth = CANVAS_WIDTH * scale;
+        let newHeight = CANVAS_HEIGHT * scale;
+
+        // change offset limits when scaling in zoom out
+        MIN_OFFSET_X = scale === 1 ? 0 : -200 * scale;
+        MIN_OFFSET_Y = scale === 1 ? 0 : -200 * scale;
+        MAX_OFFSET_X = scale === 1 ? 0 : 200 * scale;
+        MAX_OFFSET_Y = scale === 1 ? 0 : 200 * scale;
+
+        canvas.setWidth(newWidth);
+        canvas.setHeight(newHeight);
+
+        centerCanvasViewport();
+      }
     });
 
     document.getElementById("zoom-out")!.addEventListener("click", function () {
-      scale /= 1.4;
-      centerCanvasViewport();
-      console.log("w", canvas.width);
-      console.log("h", canvas.height);
-      console.log("v", canvas.viewportTransform);
+      if (scale > 1 && 4 >= scale) {
+        // scaling factor
+        scale -= 0.5;
+
+        // new scaled canvas width and height in zoom out
+        let newWidth = CANVAS_WIDTH * scale;
+        let newHeight = CANVAS_HEIGHT * scale;
+
+        // change offset limits when scaling in zoom out
+        MIN_OFFSET_X = scale === 1 ? 0 : -200 * scale;
+        MIN_OFFSET_Y = scale === 1 ? 0 : -200 * scale;
+        MAX_OFFSET_X = scale === 1 ? 0 : 200 * scale;
+        MAX_OFFSET_Y = scale === 1 ? 0 : 200 * scale;
+
+        canvas.setWidth(newWidth);
+        canvas.setHeight(newHeight);
+
+        centerCanvasViewport();
+      }
     });
 
     // Implement panning using mouse events
     let isPanning = false;
 
-    canvas.on("mouse:move", (e) => {
+    canvas.on("mouse:move", (event) => {
       if (isPanning) {
-        const mouseEvent = e.e;
-        const delta = new fabric.Point(
-          mouseEvent.movementX,
-          mouseEvent.movementY
-        );
-        canvas.relativePan(delta);
-        canvas.setCursor("grab");
-        canvas.requestRenderAll();
+        const deltaX = event.e.clientX - lastX;
+        const deltaY = event.e.clientY - lastY;
+        lastX = event.e.clientX;
+        lastY = event.e.clientY;
+
+        // Calculate the updated offset values
+        let newOffsetX = offsetX + deltaX;
+        let newOffsetY = offsetY + deltaY;
+
+        // Ensure the new offset values stay within the defined limits
+        newOffsetX = Math.max(MIN_OFFSET_X, Math.min(MAX_OFFSET_X, newOffsetX));
+        newOffsetY = Math.max(MIN_OFFSET_Y, Math.min(MAX_OFFSET_Y, newOffsetY));
+
+        // Update the canvas viewport
+        offsetX = newOffsetX;
+        offsetY = newOffsetY;
+
+        canvas.selection = false;
+
+        // Render the canvas to apply the changes
+        updateCanvasViewport();
       }
     });
 
-    canvas.on("mouse:down", () => {
+    canvas.on("mouse:down", (event) => {
       isPanning = true;
+      lastX = event.e.clientX;
+      lastY = event.e.clientY;
       canvas.setCursor("grab");
       canvas.requestRenderAll();
     });
@@ -137,17 +196,59 @@ export default function Start() {
       canvas.requestRenderAll();
     });
 
+    const printableArea = new fabric.Rect({
+      top: canvas.height! / 2 - 50,
+      left: canvas.width! / 2,
+      originX: "center",
+      originY: "center",
+      width: 250,
+      height: 300,
+      fill: "transparent",
+      stroke: "transparent",
+      strokeWidth: 1,
+      strokeDashArray: [5, 5],
+      selectable: false,
+      evented: false,
+    });
+
+    const areaText = new fabric.Text("PRINTABLE AREA", {
+      top: canvas.height! / 2 + printableArea.height! / 2 - 35,
+      left: canvas.width! / 2,
+      fontSize: 14,
+      fontStyle: "normal",
+      fontFamily: "Arial",
+      fill: "transparent",
+      selectable: false,
+      evented: false,
+      originX: "center",
+      originY: "center",
+    });
+
+    canvas.add(printableArea, areaText);
+
+    canvas.on("mouse:over", () => {
+      printableArea.set({ stroke: "white" });
+      areaText.set({ fill: "white" });
+      canvas.requestRenderAll();
+    });
+
+    canvas.on("mouse:out", () => {
+      printableArea.set({ stroke: "transparent" });
+      areaText.set({ fill: "transparent" });
+      canvas.requestRenderAll();
+    });
+
     // Initialize the canvas viewport
     updateCanvasViewport();
-  });
+  }, []);
 
   return (
     <div id="designer" className="mt-20">
-      <div className="grid grid-cols-2">
-        <div className="relative">
-          <div className="fixed top-0 left-0 bottom-0 w-[50vw] flex items-center justify-center">
-            <div id="canvas-container">
-              <canvas id="design" width="600" height="600" />
+      <div className="grid sm:grid-cols-1 lg:grid-cols-3">
+        <div id="design-content" ref={containerRef} className="relative">
+          <div className="lg:fixed top-0 mt-20 overflow-hidden left-0 bottom-0 sm:w-[100vw] lg:w-[66.6vw] flex items-center justify-center">
+            <div id="design-container" ref={designContainer}>
+              <canvas id="design" ref={canvasRef} />
             </div>
             <div
               id="controls"
@@ -174,6 +275,7 @@ export default function Start() {
             </div>
           </div>
         </div>
+        <div></div>
         <div className="sm:p-4 lg:p-8 shadow-xl min-h-[100vh]">
           <h2 className="text-gray-700 text-2xl font-semibold mt-6">
             Create your design
