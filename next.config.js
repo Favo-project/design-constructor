@@ -7,6 +7,20 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "c.bonfireassets.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "www.bonfire.com",
+        port: "",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

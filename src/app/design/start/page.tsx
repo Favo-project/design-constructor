@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Tab } from "@headlessui/react";
 import Products from "./components/Products";
 import Text from "./components/Text";
@@ -23,7 +23,28 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+
+
 export default function Start() {
+  const [loading, setLoading] = useState(true)
+  const zoomInBtn = useRef(null)
+  const zoomOutBtn = useRef(null)
+
+  const [canvasScale, setCanvasScale] = useState(100);
+  const canvasValues = useRef({
+    scale: 1,
+    offsetX: 0,
+    offsetY: 0,
+    lastX: null,
+    lastY: null,
+    CANVAS_WIDTH: 700,
+    CANVAS_HEIGHT: 700,
+    MIN_OFFSET_X: 0,
+    MAX_OFFSET_X: 0,
+    MIN_OFFSET_Y: 0,
+    MAX_OFFSET_Y: 0,
+    isPanning: false,
+  });
   const canvasRef = useRef(null);
   const designContainer = useRef(null);
   const containerRef = useRef(null);
@@ -50,23 +71,49 @@ export default function Start() {
     },
   });
 
-  useEffect(() => {
-    const CANVAS_WIDTH = 700;
-    const CANVAS_HEIGHT = 700;
+  const [campaign, setCampaign] = useState({
+    selected: {
+      product: 0,
+      side: 'front',
+      type: 0,
+    },
+    products: [],
+    design: {
+      front: {
+        text: [],
+        graphics: [],
+        images: []
+      },
+      back: {
+        text: [],
+        graphics: [],
+        images: []
+      },
+    },
+  });
+
+  useLayoutEffect(() => {
 
     const canvas = new fabric.Canvas(canvasRef.current, {
-      width: CANVAS_WIDTH,
-      height: CANVAS_HEIGHT,
+      width: canvasValues.current.CANVAS_WIDTH,
+      height: canvasValues.current.CANVAS_HEIGHT,
       selection: true,
+      transparentCorners: false,
+      cornerColor: 'white',
+      cornerStrokeColor: 'white',
+      cornerSize: 10,
+      rotatingPointOffset: 12,
     });
+    setLoading(true)
 
     fabric.Image.fromURL(
       "https://c.bonfireassets.com/static/product-images/88fa7c5883ac4fc881269780872a6f0b/premium-unisex-tee-dark-heather-gray.jpg",
       (img) => {
         const canvasCenter = canvas.getCenter();
+        console.log((canvas.width || 1) / (img.width || 1))
         img.set({
           scaleX: (canvas.width || 1) / (img.width || 1),
-          scaleY: (canvas.width || 1) / (img.width || 1),
+          scaleY: (canvas.width || 1) / (img.height || 1),
           selectable: false,
           top: canvasCenter.top,
           left: canvasCenter.left,
@@ -74,49 +121,71 @@ export default function Start() {
           originY: "center",
         });
 
+
         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
       }
     );
 
-    const canvasContainer: any = designContainer.current;
+    canvasRef.canvas = canvas;
+    setLoading(false)
+  }, []);
 
-    // Initial scale and pan variables
-    let scale = 1;
-    let offsetX = 0;
-    let offsetY = 0;
-    let lastX: any, lastY: any;
-    let MIN_OFFSET_X = 0;
-    let MAX_OFFSET_X = 0;
-    let MIN_OFFSET_Y = 0;
-    let MAX_OFFSET_Y = 0;
+  useEffect(() => {
+    const canvas = canvasRef.canvas!
+    const canvasContainer: any = designContainer.current;
+    const zoomIn = zoomInBtn.current
+    const zoomOut = zoomOutBtn.current
 
     function updateCanvasViewport() {
-      canvas.setViewportTransform([scale, 0, 0, scale, offsetX, offsetY]);
-      canvas.requestRenderAll();
+      canvas.setViewportTransform([
+        canvasValues.current.scale,
+        0,
+        0,
+        canvasValues.current.scale,
+        canvasValues.current.offsetX,
+        canvasValues.current.offsetY,
+      ]);
+      canvas.renderAll();
     }
 
     function centerCanvasViewport() {
-      offsetX =
-        (canvasContainer!.clientWidth * scale - canvas.width! * scale) / 2;
-      offsetY =
-        (canvasContainer!.clientHeight * scale - canvas.height! * scale) / 2;
+      canvasValues.current.offsetX =
+        (canvasContainer!.clientWidth * canvasValues.current.scale -
+          canvas.width! * canvasValues.current.scale) /
+        2;
+      canvasValues.current.offsetY =
+        (canvasContainer!.clientHeight * canvasValues.current.scale -
+          canvas.height! * canvasValues.current.scale) /
+        2;
       updateCanvasViewport();
     }
 
-    document.getElementById("zoom-in")!.addEventListener("click", function () {
-      if (scale >= 1 && 4 > scale) {
+    zoomIn!.addEventListener("click", function () {
+      if (canvasValues.current.scale >= 1 && 4 > canvasValues.current.scale) {
         // scaling factor
-        scale += 0.5;
+        canvasValues.current.scale += 0.5;
 
         // new scaled canvas width and height in zoom out
-        let newWidth = CANVAS_WIDTH * scale;
-        let newHeight = CANVAS_HEIGHT * scale;
+        let newWidth = canvasValues.current.CANVAS_WIDTH * canvasValues.current.scale;
+        let newHeight = canvasValues.current.CANVAS_HEIGHT * canvasValues.current.scale;
 
         // change offset limits when scaling in zoom out
-        MIN_OFFSET_X = scale === 1 ? 0 : -200 * scale;
-        MIN_OFFSET_Y = scale === 1 ? 0 : -200 * scale;
-        MAX_OFFSET_X = scale === 1 ? 0 : 200 * scale;
-        MAX_OFFSET_Y = scale === 1 ? 0 : 200 * scale;
+        canvasValues.current.MIN_OFFSET_X =
+          canvasValues.current.scale === 1
+            ? 0
+            : -200 * canvasValues.current.scale;
+        canvasValues.current.MIN_OFFSET_Y =
+          canvasValues.current.scale === 1
+            ? 0
+            : -200 * canvasValues.current.scale;
+        canvasValues.current.MAX_OFFSET_X =
+          canvasValues.current.scale === 1
+            ? 0
+            : 200 * canvasValues.current.scale;
+        canvasValues.current.MAX_OFFSET_Y =
+          canvasValues.current.scale === 1
+            ? 0
+            : 200 * canvasValues.current.scale;
 
         canvas.setWidth(newWidth);
         canvas.setHeight(newHeight);
@@ -125,20 +194,32 @@ export default function Start() {
       }
     });
 
-    document.getElementById("zoom-out")!.addEventListener("click", function () {
-      if (scale > 1 && 4 >= scale) {
+    zoomOut!.addEventListener("click", function () {
+      if (canvasValues.current.scale > 1 && 4 >= canvasValues.current.scale) {
         // scaling factor
-        scale -= 0.5;
+        canvasValues.current.scale -= 0.5;
 
         // new scaled canvas width and height in zoom out
-        let newWidth = CANVAS_WIDTH * scale;
-        let newHeight = CANVAS_HEIGHT * scale;
+        let newWidth = canvasValues.current.CANVAS_WIDTH * canvasValues.current.scale;
+        let newHeight = canvasValues.current.CANVAS_HEIGHT * canvasValues.current.scale;
 
         // change offset limits when scaling in zoom out
-        MIN_OFFSET_X = scale === 1 ? 0 : -200 * scale;
-        MIN_OFFSET_Y = scale === 1 ? 0 : -200 * scale;
-        MAX_OFFSET_X = scale === 1 ? 0 : 200 * scale;
-        MAX_OFFSET_Y = scale === 1 ? 0 : 200 * scale;
+        canvasValues.current.MIN_OFFSET_X =
+          canvasValues.current.scale === 1
+            ? 0
+            : -200 * canvasValues.current.scale;
+        canvasValues.current.MIN_OFFSET_Y =
+          canvasValues.current.scale === 1
+            ? 0
+            : -200 * canvasValues.current.scale;
+        canvasValues.current.MAX_OFFSET_X =
+          canvasValues.current.scale === 1
+            ? 0
+            : 200 * canvasValues.current.scale;
+        canvasValues.current.MAX_OFFSET_Y =
+          canvasValues.current.scale === 1
+            ? 0
+            : 200 * canvasValues.current.scale;
 
         canvas.setWidth(newWidth);
         canvas.setHeight(newHeight);
@@ -146,30 +227,39 @@ export default function Start() {
         centerCanvasViewport();
       }
     });
-
-    // Implement panning using mouse events
-    let isPanning = false;
 
     canvas.on("mouse:move", (event) => {
-      if (isPanning) {
-        const deltaX = event.e.clientX - lastX;
-        const deltaY = event.e.clientY - lastY;
-        lastX = event.e.clientX;
-        lastY = event.e.clientY;
+      if (canvasValues.current.isPanning && !event.target) {
+        const deltaX = event.e.clientX - canvasValues.current.lastX;
+        const deltaY = event.e.clientY - canvasValues.current.lastY;
+        canvasValues.current.lastX = event.e.clientX;
+        canvasValues.current.lastY = event.e.clientY;
 
         // Calculate the updated offset values
-        let newOffsetX = offsetX + deltaX;
-        let newOffsetY = offsetY + deltaY;
+        let newOffsetX = canvasValues.current.offsetX + deltaX;
+        let newOffsetY = canvasValues.current.offsetY + deltaY;
 
         // Ensure the new offset values stay within the defined limits
-        newOffsetX = Math.max(MIN_OFFSET_X, Math.min(MAX_OFFSET_X, newOffsetX));
-        newOffsetY = Math.max(MIN_OFFSET_Y, Math.min(MAX_OFFSET_Y, newOffsetY));
+        newOffsetX = Math.max(
+          canvasValues.current.MIN_OFFSET_X,
+          Math.min(canvasValues.current.MAX_OFFSET_X, newOffsetX)
+        );
+        newOffsetY = Math.max(
+          canvasValues.current.MIN_OFFSET_Y,
+          Math.min(canvasValues.current.MAX_OFFSET_Y, newOffsetY)
+        );
 
         // Update the canvas viewport
-        offsetX = newOffsetX;
-        offsetY = newOffsetY;
+        canvasValues.current.offsetX = newOffsetX;
+        canvasValues.current.offsetY = newOffsetY;
 
-        canvas.selection = false;
+        if (canvasValues.current.scale === 1) {
+          canvas.selection = true
+        }
+        else {
+          canvas.selection = false;
+          canvas.setCursor("grab");
+        }
 
         // Render the canvas to apply the changes
         updateCanvasViewport();
@@ -177,24 +267,34 @@ export default function Start() {
     });
 
     canvas.on("mouse:down", (event) => {
-      isPanning = true;
-      lastX = event.e.clientX;
-      lastY = event.e.clientY;
-      canvas.setCursor("grab");
-      canvas.requestRenderAll();
+      if (!event.target) {
+        if (canvasValues.current.scale === 1) {
+          canvas.setCursor("default");
+        }
+        else {
+          canvas.setCursor("grab");
+        }
+
+        canvasValues.current.isPanning = true;
+        canvasValues!.current!.lastX = event.e.clientX;
+        canvasValues!.current!.lastY = event.e.clientY;
+        canvas.renderAll();
+      }
     });
 
     canvas.on("mouse:up", () => {
-      isPanning = false;
+      canvasValues.current.isPanning = false;
       canvas.setCursor("default");
-      canvas.requestRenderAll();
+      canvas.renderAll();
     });
 
     canvas.on("mouse:leave", () => {
-      isPanning = false;
+      canvasValues.current.isPanning = false;
       canvas.setCursor("default");
-      canvas.requestRenderAll();
+      canvas.renderAll();
     });
+
+
 
     const printableArea = new fabric.Rect({
       top: canvas.height! / 2 - 50,
@@ -206,7 +306,7 @@ export default function Start() {
       fill: "transparent",
       stroke: "transparent",
       strokeWidth: 1,
-      strokeDashArray: [5, 5],
+      strokeDashArray: [4, 4],
       selectable: false,
       evented: false,
     });
@@ -240,7 +340,39 @@ export default function Start() {
 
     // Initialize the canvas viewport
     updateCanvasViewport();
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    const canvas = canvasRef.canvas
+
+    if (campaign.products.length) {
+      setLoading(true)
+      fabric.Image.fromURL(
+        campaign.products[campaign.selected.product].types[campaign.selected.type].image[campaign.selected.side],
+        (img) => {
+          img.set({
+            scaleX: (canvasValues.current.CANVAS_WIDTH || 1) / (img.width || 1),
+            scaleY: (canvasValues.current.CANVAS_HEIGHT || 1) / (img.width || 1),
+            selectable: false,
+            top: canvasValues.current.CANVAS_WIDTH / 2,
+            left: canvasValues.current.CANVAS_HEIGHT / 2,
+            originX: "center",
+            originY: "center",
+          });
+
+
+          setLoading(false)
+          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+        }
+      );
+    }
+
+  }, [campaign])
+
+  const onChangeSide = () => {
+    if (campaign.selected.side === 'front') return setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'back' } })
+    setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'front' } })
+  }
 
   return (
     <div id="designer" className="mt-20">
@@ -254,19 +386,32 @@ export default function Start() {
               id="controls"
               className="flex items-center p-3 absolute bottom-16 left-[50%] translate-x-[-50%] rounded-md bg-white"
             >
-              <button className="flex items-center py-1 px-2 text-xs rounded-md border-opacity-70 border-slate-300 border-2 uppercase">
-                <VscRefresh className="mr-2 text-lg" /> Show back
+              <button
+                onClick={onChangeSide}
+                className="flex items-center py-1 px-2 text-xs rounded-md border-opacity-70 border-slate-300 border-2 uppercase"
+              >
+                <VscRefresh className="mr-2 text-lg" /> Show {campaign.selected.side === 'front' ? 'back' : 'front'}
               </button>
               <div id="zoom" className="flex items-center ml-4 gap-2">
                 <button
+                  onClick={() =>
+                    setCanvasScale((prevValue) => (prevValue += 50))
+                  }
                   id="zoom-in"
+                  ref={zoomInBtn}
                   className="flex items-center justify-center rounded-full p-1 border border-gray-300"
                 >
                   <BsPlusLg />
                 </button>
-                <span className="text-sm">100%</span>
+                <span className="text-sm">
+                  {canvasValues.current.scale * 100}%
+                </span>
                 <button
+                  onClick={() =>
+                    setCanvasScale((prevValue) => (prevValue -= 50))
+                  }
                   id="zoom-out"
+                  ref={zoomOutBtn}
                   className="flex items-center justify-center rounded-full p-1 border border-gray-300"
                 >
                   <BsDashLg />
@@ -314,7 +459,7 @@ export default function Start() {
                       "ring-white focus:outline-none"
                     )}
                   >
-                    <category.component />
+                    <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} />
                   </Tab.Panel>
                 ))}
               </Tab.Panels>

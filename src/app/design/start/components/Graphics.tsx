@@ -1,47 +1,65 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
 import { Lines, Bulb, Hand, Pen, Search, User } from "../assets/graphics";
+import { fabric } from 'fabric'
 
 interface IGraph {
-  icon: any;
+  url: any;
   width: number;
   height: number;
 }
 
-export default function Graphics() {
+export default function Graphics({ campaign, setCampaign, canvasRef }) {
+
   const [graphics] = useState([
     {
-      icon: Lines,
+      url: 'https://www.bonfire.com/images/clipart/863933/preview.png',
       width: 100,
       height: 50,
     },
     {
-      icon: Bulb,
+      url: 'https://www.bonfire.com/images/clipart/729424/preview.png',
       width: 100,
       height: 100,
     },
     {
-      icon: Hand,
+      url: 'https://www.bonfire.com/images/clipart/815466/preview.png',
       width: 100,
       height: 100,
     },
     {
-      icon: Pen,
+      url: 'https://www.bonfire.com/images/clipart/577129/preview.png',
       width: 100,
       height: 100,
     },
     {
-      icon: Search,
+      url: 'https://www.bonfire.com/images/clipart/68237/preview.png',
       width: 100,
       height: 100,
     },
     {
-      icon: User,
+      url: 'https://www.bonfire.com/images/clipart/984413/preview.png',
       width: 100,
       height: 100,
     },
   ]);
+
+  const graphicsRef = useRef<any>({
+    elements: []
+  })
+  const graphicHandler = (graph) => {
+    const canvas = canvasRef.current
+
+    fabric.Image.fromURL(graph.url, (img) => {
+      img.scale(.5)
+
+      graphicsRef.current.elements.push(img)
+
+      canvas.add(img)
+    })
+
+  }
 
   return (
     <div id="w-full py-4 px-4">
@@ -63,13 +81,14 @@ export default function Graphics() {
       <div className="grid grid-cols-3 gap-3 py-6">
         {graphics?.map((graph: IGraph, index) => (
           <button
+            onClick={() => graphicHandler(graph)}
             className={`py-2 px-4 flex items-center justify-center hover:ring-2 ring-gray-200 ring-opacity-40 rounded transition-all`}
             key={index}
           >
             <Image
-              src={graph.icon}
-              width={graph.width}
-              height={graph.height}
+              src={graph.url}
+              width={96}
+              height={96}
               className="object-contain"
               alt="graphic-icon"
             />
