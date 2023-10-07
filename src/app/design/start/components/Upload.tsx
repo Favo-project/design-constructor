@@ -1,10 +1,56 @@
 import UploadGuide from "./UploadGuid";
 import { FileDrop } from "@/components/FileDrop";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fabric } from 'fabric'
+import { v4 as uuidv4 } from 'uuid'
 
-export default function Upload() {
+
+export default function Upload({ campaign, setCampaign, canvasRef, canvasValues }) {
   const [file, setFile] = useState<File>();
   const [userRights, setUserRights] = useState(false);
+
+
+  const onUpload = () => {
+    const canvas = canvasRef.canvas
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file!);
+
+    const centerTop = canvasValues.current.CANVAS_HEIGHT / 2 - 100
+    const centerLeft = canvasValues.current.CANVAS_WIDTH / 2
+    const imageW = 200
+
+    reader.addEventListener("load", () => {
+      fabric.Image.fromURL(reader.result, (img) => {
+        img.originX = "center"
+        img.originY = "center"
+        img.top = centerTop
+        img.left = centerLeft
+        img.scale(1 / (img.width / imageW))
+
+        img.transparentCorners = false
+        img.cornerColor = 'white'
+        img.cornerStrokeColor = 'white'
+        img.cornerSize = 10
+        img.rotatingPointOffset = 12
+        img.dirty = true
+
+        img.setControlVisible('ml', false)
+        img.setControlVisible('mb', false)
+        img.setControlVisible('mr', false)
+        img.setControlVisible('mt', false)
+
+        img.side = campaign.selected.side
+        img.canvasId = uuidv4()
+        setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], img] } })
+
+        setFile(null)
+        setUserRights(false)
+        canvas.add(img);
+        canvas.requestRenderAll();
+      });
+    });
+  }
 
   return (
     <div id="w-full py-4 px-4">
@@ -13,7 +59,8 @@ export default function Upload() {
         <FileDrop setFile={setFile} file={file} />
         <div className="flex items-center py-4">
           <input
-            onChange={() => setUserRights(!userRights)}
+            checked={userRights}
+            onChange={(e) => setUserRights(!userRights)}
             type="checkbox"
             name="user-rights"
             id="user-rights"
@@ -26,6 +73,7 @@ export default function Upload() {
           </label>
         </div>
         <button
+          onClick={onUpload}
           disabled={!userRights || !file}
           className="p-4 w-full justify-center items-center text-slate-100 bg-indigo-600 bg-opacity-75 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
         >

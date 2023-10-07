@@ -19,22 +19,6 @@ export function FileDrop({ file, setFile }: any) {
     event.preventDefault();
     setIsOver(false);
     setFile(event.dataTransfer.files[0]);
-
-    // Use FileReader to read file content
-    // droppedFiles.forEach((file) => {
-    //   const reader = new FileReader();
-
-    //   reader.onloadend = () => {
-    //     console.log(reader);
-    //   };
-
-    //   reader.onerror = () => {
-    //     console.error("There was an issue reading the file.");
-    //   };
-
-    //   reader.readAsDataURL(file);
-    //   return reader;
-    // });
   };
 
   return (

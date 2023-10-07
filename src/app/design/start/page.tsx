@@ -18,6 +18,7 @@ import { BsPlusLg, BsDashLg } from "react-icons/bs";
 import { VscRefresh } from "react-icons/vsc";
 
 import { fabric } from "fabric";
+import { DeleteIcon, RotateIcon } from "./assets";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -310,7 +311,17 @@ export default function Start() {
       originY: "center",
     });
 
-    canvas.add(printableArea, areaText);
+    const centralLine = new fabric.Line(
+      [canvas.width / 2, 0, canvas.width / 2, printableArea.height],
+      {
+        top: printableArea.top - (printableArea.height / 2),
+        stroke: 'transparent',
+        strokeWidth: 1,
+        selectable: false,
+      }
+    );
+
+    canvas.add(printableArea, areaText, centralLine);
 
     canvas.on("mouse:over", () => {
       printableArea.set({ stroke: "white" });
@@ -321,8 +332,63 @@ export default function Start() {
     canvas.on("mouse:out", () => {
       printableArea.set({ stroke: "transparent" });
       areaText.set({ fill: "transparent" });
+      centralLine.set({ stroke: "transparent" });
       canvas.requestRenderAll();
     });
+
+    canvas.on('object:moving', (options) => {
+      const object = options.target;
+
+      // Define a threshold for how close an object should be to snap to the central line
+      const snapThreshold = 10; // Adjust as needed
+      const closeThreshold = 20; // Adjust as needed
+
+      // Calculate the distance from the object's center to the central line
+      const objectCenterX = object.left
+      const distanceToCentralLine = Math.abs(objectCenterX - (canvasValues.current.CANVAS_WIDTH / 2));
+
+      // Check if the object is close enough to the central line to snap
+      if (distanceToCentralLine <= closeThreshold) {
+        centralLine.set({ stroke: "#D83F31" });
+      }
+      else {
+        centralLine.set({ stroke: "transparent" });
+      }
+      if (distanceToCentralLine <= snapThreshold) {
+        // Snap the object to the central line
+        object.set({
+          left: canvasValues.current.CANVAS_WIDTH / 2
+        });
+
+        canvas.renderAll();
+      }
+    });
+
+    canvas.on('object:rotating', (options) => {
+      const object = options.target;
+      const snapThreshold = 5;
+
+      const degrees = {
+        Up: 0,
+        UpRight: 45,
+        Right: 90,
+        DownRight: 135,
+        Down: 180,
+        LeftDown: 225,
+        Left: 270,
+        UpLeft: 315,
+        Last: 360
+      }
+
+      for (const angle in degrees) {
+        if (degrees[angle] - snapThreshold <= object.angle && object.angle <= degrees[angle] + snapThreshold) {
+          object.set({
+            angle: degrees[angle]
+          })
+          canvas.renderAll();
+        }
+      }
+    })
 
     // Initialize the canvas viewport
     updateCanvasViewport();
@@ -352,41 +418,59 @@ export default function Start() {
       );
     }
 
-    var deleteIcon = "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23F44336;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E";
-
-    var img = document.createElement('img');
-    img.src = deleteIcon;
-
-
     fabric.Object.prototype.controls.deleteControl = new fabric.Control({
-      x: 0.5,
-      y: -0.5,
-      offsetY: 16,
+      x: 0,
+      y: 0.5,
+      offsetY: 15,
       cursorStyle: 'pointer',
       mouseUpHandler: deleteObject,
       render: renderIcon,
-      cornerSize: 24
+      cornerSize: 16
     });
 
+    fabric.Object.prototype.controls.mtr = new fabric.Control({
+      x: 0.5,
+      y: 0,
+      offsetX: 15,
+      actionHandler: fabric.controlsUtils.rotationWithSnapping,
+      cursorStyleHandler: fabric.controlsUtils.rotationStyleHandler,
+      withConnection: true,
+      actionName: 'rotate',
+      render: renderRotateIcon,
+    });
+
+    const deleteImg = document.createElement('img')
+    const rotateImg = document.createElement('img')
+    deleteImg.src = DeleteIcon
+    rotateImg.src = RotateIcon
+
+    function renderRotateIcon(ctx, left, top, styleOverride, fabricObject) {
+      const size = 24
+      ctx.save();
+      ctx.translate(left, top);
+      ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+      ctx.drawImage(rotateImg, -size / 2, -size / 2, size, size);
+      ctx.restore();
+    }
+
     function deleteObject(eventData, transform) {
-      // delete from the array
       const targetId = transform.target.canvasId
 
       const filteredElements = campaign.design[campaign.selected.side].filter((elem) => elem.canvasId !== targetId)
       setCampaign({ ...campaign, products: [...campaign.products], design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
 
-      var target = transform.target;
-      var canvas = target.canvas;
+      const target = transform.target;
+      const canvas = target.canvas;
       canvas.remove(target);
       canvas.requestRenderAll();
     }
 
     function renderIcon(ctx, left, top, styleOverride, fabricObject) {
-      var size = this.cornerSize;
+      const size = 24
       ctx.save();
       ctx.translate(left, top);
       ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
-      ctx.drawImage(img, -size / 2, -size / 2, size, size);
+      ctx.drawImage(deleteImg, -size / 2, -size / 2, size, size);
       ctx.restore();
     }
 
