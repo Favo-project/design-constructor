@@ -23,8 +23,6 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-
-
 export default function Start() {
   const [loading, setLoading] = useState(true)
   const zoomInBtn = useRef(null)
@@ -79,21 +77,12 @@ export default function Start() {
     },
     products: [],
     design: {
-      front: {
-        text: [],
-        graphics: [],
-        images: []
-      },
-      back: {
-        text: [],
-        graphics: [],
-        images: []
-      },
+      front: [],
+      back: []
     },
   });
 
   useLayoutEffect(() => {
-
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: canvasValues.current.CANVAS_WIDTH,
       height: canvasValues.current.CANVAS_HEIGHT,
@@ -120,7 +109,6 @@ export default function Start() {
           originX: "center",
           originY: "center",
         });
-
 
         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
       }
@@ -294,8 +282,6 @@ export default function Start() {
       canvas.renderAll();
     });
 
-
-
     const printableArea = new fabric.Rect({
       top: canvas.height! / 2 - 50,
       left: canvas.width! / 2,
@@ -360,18 +346,65 @@ export default function Start() {
             originY: "center",
           });
 
-
           setLoading(false)
           canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
         }
       );
     }
 
+    var deleteIcon = "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23F44336;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E";
+
+    var img = document.createElement('img');
+    img.src = deleteIcon;
+
+
+    fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+      x: 0.5,
+      y: -0.5,
+      offsetY: 16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: deleteObject,
+      render: renderIcon,
+      cornerSize: 24
+    });
+
+    function deleteObject(eventData, transform) {
+      // delete from the array
+      const targetId = transform.target.canvasId
+
+      const filteredElements = campaign.design[campaign.selected.side].filter((elem) => elem.canvasId !== targetId)
+      setCampaign({ ...campaign, products: [...campaign.products], design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
+
+      var target = transform.target;
+      var canvas = target.canvas;
+      canvas.remove(target);
+      canvas.requestRenderAll();
+    }
+
+    function renderIcon(ctx, left, top, styleOverride, fabricObject) {
+      var size = this.cornerSize;
+      ctx.save();
+      ctx.translate(left, top);
+      ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+      ctx.drawImage(img, -size / 2, -size / 2, size, size);
+      ctx.restore();
+    }
+
   }, [campaign])
 
   const onChangeSide = () => {
-    if (campaign.selected.side === 'front') return setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'back' } })
-    setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'front' } })
+    const canvas = canvasRef.canvas
+
+    if (campaign.selected.side === 'front') {
+      setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'back' } })
+      canvas.remove(...campaign.design.front)
+      canvas.add(...campaign.design.back)
+    }
+    else {
+      setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'front' } })
+      canvas.remove(...campaign.design.back)
+      canvas.add(...campaign.design.front)
+    }
   }
 
   return (
@@ -459,7 +492,7 @@ export default function Start() {
                       "ring-white focus:outline-none"
                     )}
                   >
-                    <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} />
+                    <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} canvasValues={canvasValues} />
                   </Tab.Panel>
                 ))}
               </Tab.Panels>

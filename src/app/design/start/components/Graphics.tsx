@@ -1,64 +1,91 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
-import { Lines, Bulb, Hand, Pen, Search, User } from "../assets/graphics";
+import { SVG1, SVG2, SVG3, SVG4, SVG5, SVG6, SVG7 } from "../assets/graphics";
 import { fabric } from 'fabric'
+import { v4 as uuidv4 } from 'uuid'
 
 interface IGraph {
-  url: any;
+  icon: any;
   width: number;
   height: number;
 }
 
-export default function Graphics({ campaign, setCampaign, canvasRef }) {
-
+export default function Graphics({ campaign, setCampaign, canvasRef, canvasValues }) {
   const [graphics] = useState([
     {
-      url: 'https://www.bonfire.com/images/clipart/863933/preview.png',
+      icon: SVG1,
       width: 100,
       height: 50,
     },
     {
-      url: 'https://www.bonfire.com/images/clipart/729424/preview.png',
+      icon: SVG2,
       width: 100,
       height: 100,
     },
     {
-      url: 'https://www.bonfire.com/images/clipart/815466/preview.png',
+      icon: SVG3,
       width: 100,
       height: 100,
     },
     {
-      url: 'https://www.bonfire.com/images/clipart/577129/preview.png',
+      icon: SVG4,
       width: 100,
       height: 100,
     },
     {
-      url: 'https://www.bonfire.com/images/clipart/68237/preview.png',
+      icon: SVG5,
       width: 100,
       height: 100,
     },
     {
-      url: 'https://www.bonfire.com/images/clipart/984413/preview.png',
+      icon: SVG6,
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: SVG7,
       width: 100,
       height: 100,
     },
   ]);
 
-  const graphicsRef = useRef<any>({
-    elements: []
-  })
   const graphicHandler = (graph) => {
-    const canvas = canvasRef.current
+    const canvas = canvasRef.canvas
 
-    fabric.Image.fromURL(graph.url, (img) => {
-      img.scale(.5)
+    const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+  <circle cx="50" cy="50" r="40" fill="blue" />
+</svg>`;
 
-      graphicsRef.current.elements.push(img)
+    fabric.loadSVGFromString(svgString, (objects, options) => {
+      const svgObject = fabric.util.groupSVGElements(objects, options);
 
-      canvas.add(img)
-    })
+      svgObject.width = 100
+      svgObject.height = 100
+      svgObject.fill = 'white'
+      svgObject.top = canvasValues.current.CANVAS_HEIGHT / 2 - 100
+      svgObject.left = canvasValues.current.CANVAS_WIDTH / 2
+      svgObject.originX = 'center'
+      svgObject.originY = 'center'
+      svgObject.transparentCorners = false
+      svgObject.cornerColor = 'white'
+      svgObject.cornerStrokeColor = 'white'
+      svgObject.cornerSize = 10
+      svgObject.rotatingPointOffset = 12
+      svgObject.dirty = true
 
+      svgObject.setControlVisible('ml', false)
+      svgObject.setControlVisible('mb', false)
+      svgObject.setControlVisible('mr', false)
+      svgObject.setControlVisible('mt', false)
+
+      svgObject.side = campaign.selected.side
+      svgObject.canvasId = uuidv4()
+      setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], svgObject] } })
+
+      canvas.add(svgObject);
+      canvas.renderAll()
+    });
   }
 
   return (
@@ -86,7 +113,7 @@ export default function Graphics({ campaign, setCampaign, canvasRef }) {
             key={index}
           >
             <Image
-              src={graph.url}
+              src={graph.icon}
               width={96}
               height={96}
               className="object-contain"

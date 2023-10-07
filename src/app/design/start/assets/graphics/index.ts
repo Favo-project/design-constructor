@@ -1,8 +1,9 @@
-import Lines from "./Lines.png";
-import Bulb from "./Bulb.png";
-import Hand from "./Hand.png";
-import Pen from "./Pen.png";
-import Search from "./Search.png";
-import User from "./User.png";
+import SVG1 from "./accelerate-svgrepo-com.svg";
+import SVG2 from "./circle-heat-svgrepo-com.svg";
+import SVG3 from "./compass-svgrepo-com.svg";
+import SVG4 from "./delete-svgrepo-com.svg";
+import SVG5 from "./hotel-svgrepo-com.svg";
+import SVG6 from "./mail-svgrepo-com.svg";
+import SVG7 from "./moon-cloud-svgrepo-com.svg";
 
-export { Lines, Bulb, Hand, Pen, Search, User };
+export { SVG1, SVG2, SVG3, SVG4, SVG5, SVG6, SVG7 };
