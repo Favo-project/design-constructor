@@ -14,37 +14,7 @@ interface IGraph {
 export default function Graphics({ campaign, setCampaign, canvasRef, canvasValues }) {
   const [graphics] = useState([
     {
-      icon: SVG1,
-      width: 100,
-      height: 50,
-    },
-    {
-      icon: SVG2,
-      width: 100,
-      height: 100,
-    },
-    {
-      icon: SVG3,
-      width: 100,
-      height: 100,
-    },
-    {
-      icon: SVG4,
-      width: 100,
-      height: 100,
-    },
-    {
-      icon: SVG5,
-      width: 100,
-      height: 100,
-    },
-    {
-      icon: SVG6,
-      width: 100,
-      height: 100,
-    },
-    {
-      icon: SVG7,
+      icon: 'https://www.bonfire.com/images/clipart/366068/icon.svg',
       width: 100,
       height: 100,
     },
@@ -53,31 +23,30 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
   const graphicHandler = (graph) => {
     const canvas = canvasRef.canvas
 
-    const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-  <circle cx="50" cy="50" r="40" fill="blue" />
-</svg>`;
 
-    fabric.loadSVGFromString(svgString, (objects, options) => {
+    fabric.loadSVGFromURL(graph.icon, (objects, options) => {
       const svgObject = fabric.util.groupSVGElements(objects, options);
-
-      svgObject.width = 100
-      svgObject.height = 100
-      svgObject.fill = 'white'
-      svgObject.top = canvasValues.current.CANVAS_HEIGHT / 2 - 100
-      svgObject.left = canvasValues.current.CANVAS_WIDTH / 2
-      svgObject.originX = 'center'
-      svgObject.originY = 'center'
-      svgObject.transparentCorners = false
-      svgObject.cornerColor = 'white'
-      svgObject.cornerStrokeColor = 'white'
-      svgObject.cornerSize = 10
-      svgObject.rotatingPointOffset = 12
-      svgObject.dirty = true
-
       svgObject.setControlVisible('ml', false)
       svgObject.setControlVisible('mb', false)
       svgObject.setControlVisible('mr', false)
       svgObject.setControlVisible('mt', false)
+
+      svgObject.set({
+        width: 100,
+        height: 100,
+        top: canvasValues.current.CANVAS_HEIGHT / 2 - 50,
+        left: canvasValues.current.CANVAS_WIDTH / 2,
+        originX: 'center',
+        originY: 'center',
+        transparentCorners: false,
+        cornerColor: 'white',
+        cornerStrokeColor: 'white',
+        cornerSize: 10,
+        rotatingPointOffset: 12,
+        dirty: true
+      })
+
+      svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'white' }) : elem)
 
       svgObject.side = campaign.selected.side
       svgObject.canvasId = uuidv4()
@@ -112,13 +81,7 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
             className={`py-2 px-4 flex items-center justify-center hover:ring-2 ring-gray-200 ring-opacity-40 rounded transition-all`}
             key={index}
           >
-            <Image
-              src={graph.icon}
-              width={96}
-              height={96}
-              className="object-contain"
-              alt="graphic-icon"
-            />
+            <Image src={graph.icon} width={100} height={100} alt="graphic-icon" />
           </button>
         ))}
       </div>

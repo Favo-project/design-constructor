@@ -19,6 +19,7 @@ import { VscRefresh } from "react-icons/vsc";
 
 import { fabric } from "fabric";
 import { DeleteIcon, RotateIcon } from "./assets";
+import Image from "next/image";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -31,6 +32,7 @@ export default function Start() {
 
   const [canvasScale, setCanvasScale] = useState(100);
   const canvasValues = useRef({
+    areaCrossed: false,
     scale: 1,
     offsetX: 0,
     offsetY: 0,
@@ -100,7 +102,6 @@ export default function Start() {
       "https://c.bonfireassets.com/static/product-images/88fa7c5883ac4fc881269780872a6f0b/premium-unisex-tee-dark-heather-gray.jpg",
       (img) => {
         const canvasCenter = canvas.getCenter();
-        console.log((canvas.width || 1) / (img.width || 1))
         img.set({
           scaleX: (canvas.width || 1) / (img.width || 1),
           scaleY: (canvas.width || 1) / (img.height || 1),
@@ -293,7 +294,7 @@ export default function Start() {
       fill: "transparent",
       stroke: "transparent",
       strokeWidth: 1,
-      strokeDashArray: [4, 4],
+      strokeDashArray: [3, 3],
       selectable: false,
       evented: false,
     });
@@ -323,25 +324,116 @@ export default function Start() {
 
     canvas.add(printableArea, areaText, centralLine);
 
-    canvas.on("mouse:over", () => {
-      printableArea.set({ stroke: "white" });
+    function onCross(options) {
+      hasCrossedOut(options.target, printableArea)
+      options.target.setCoords();
+      if (canvasValues.current.areaCrossed) {
+        printableArea.set({
+          stroke: 'red'
+        })
+        options.target.set({
+          opacity: 0.5
+        })
+      } else {
+        printableArea.set({
+          stroke: 'white'
+        })
+        options.target.set({
+          opacity: 1
+        })
+      }
+      canvas.renderAll()
+    }
+
+    function hasCrossedOut(object1, object2) {
+      // Calculate the boundaries of object1
+      const objWidth1 = object1.width * object1.scaleX
+      const objHeight1 = object1.height * object1.scaleY
+      const objWidth2 = object2.width * object2.scaleX
+      const objHeight2 = object2.height * object2.scaleY
+
+      var left1 = object1.left - objWidth1 / 2
+      var top1 = object1.top - objHeight1 / 2
+      var right1 = left1 + objWidth1
+      var bottom1 = top1 + objHeight1
+
+      // Calculate the boundaries of object2
+      var left2 = object2.left - objWidth2 / 2
+      var top2 = object2.top - objHeight2 / 2
+      var right2 = left2 + objWidth2
+      var bottom2 = top2 + objHeight2
+      // Check if object1 has crossed out of object2
+      if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
+        return canvasValues.current.areaCrossed = true
+      } else {
+        return canvasValues.current.areaCrossed = false
+      }
+    }
+
+    const onCanvasOver = () => {
+      if (canvasValues.current.areaCrossed) {
+        printableArea.set({
+          stroke: 'red'
+        })
+      } else {
+        printableArea.set({
+          stroke: 'white'
+        })
+      }
       areaText.set({ fill: "white" });
-      canvas.requestRenderAll();
+      canvas.renderAll();
+    }
+
+    canvas.on({
+      'object:moving': onCross,
+      'object:scaling': onCross,
+      'object:rotating': onCross,
+
     });
 
-    canvas.on("mouse:out", () => {
+    const onCanvasOut = () => {
       printableArea.set({ stroke: "transparent" });
       areaText.set({ fill: "transparent" });
       centralLine.set({ stroke: "transparent" });
-      canvas.requestRenderAll();
-    });
+      canvas.renderAll();
+    }
+
+    canvas.on({ "mouse:over": onCanvasOver, "mouse:move": onCanvasOver });
+    canvas.on({ "mouse:out": onCanvasOut, "mouse:leave": onCanvasOut });
+
+    function limitObjectWithinCanvas(obj, canvas) {
+      const canvasWidth = canvasValues.current.CANVAS_WIDTH
+      const canvasHeight = canvasValues.current.CANVAS_HEIGHT
+      const objWidth = (obj.width * obj.scaleX) / 2
+      const objHeight = (obj.height * obj.scaleY) / 2
+
+      const objLeft = obj.left;
+      const objTop = obj.top;
+      const objRight = obj.left + obj.width * obj.scaleX;
+      const objBottom = obj.top + obj.height * obj.scaleY;
+
+      if (objLeft < objWidth) {
+        obj.left = objWidth
+      }
+      if (objTop < objHeight) {
+        obj.top = objHeight
+      }
+      if (objRight > canvasWidth + objWidth) {
+        obj.left = canvasWidth - objWidth
+      }
+      if (objBottom > canvasHeight + objHeight) {
+        obj.top = canvasHeight - objHeight
+      }
+    }
 
     canvas.on('object:moving', (options) => {
       const object = options.target;
+      // limit object within canvas
+      limitObjectWithinCanvas(options.target, canvas)
 
       // Define a threshold for how close an object should be to snap to the central line
-      const snapThreshold = 10; // Adjust as needed
-      const closeThreshold = 20; // Adjust as needed
+      const snapThreshold = 15; // Adjust as needed
+      const closeThreshold = 25; // Color as needed
 
       // Calculate the distance from the object's center to the central line
       const objectCenterX = object.left
@@ -349,7 +441,7 @@ export default function Start() {
 
       // Check if the object is close enough to the central line to snap
       if (distanceToCentralLine <= closeThreshold) {
-        centralLine.set({ stroke: "#D83F31" });
+        centralLine.set({ stroke: "#F94C10" });
       }
       else {
         centralLine.set({ stroke: "transparent" });
@@ -365,8 +457,9 @@ export default function Start() {
     });
 
     canvas.on('object:rotating', (options) => {
-      const object = options.target;
-      const snapThreshold = 5;
+      const object = options.target
+      const objAngle = options.target.angle
+      const snapThreshold = 10;
 
       const degrees = {
         Up: 0,
@@ -381,13 +474,19 @@ export default function Start() {
       }
 
       for (const angle in degrees) {
-        if (degrees[angle] - snapThreshold <= object.angle && object.angle <= degrees[angle] + snapThreshold) {
+        if (degrees[angle] - snapThreshold <= objAngle && objAngle <= degrees[angle] + snapThreshold) {
           object.set({
-            angle: degrees[angle]
+            angle: degrees[angle],
           })
           canvas.renderAll();
         }
       }
+    })
+
+    canvas.on('object:added', (options) => {
+      const object = options.target
+
+      canvas.setActiveObject(object);
     })
 
     // Initialize the canvas viewport
@@ -425,8 +524,22 @@ export default function Start() {
       cursorStyle: 'pointer',
       mouseUpHandler: deleteObject,
       render: renderIcon,
-      cornerSize: 16
+      cornerSize: 24
     });
+
+
+    fabric.Group.prototype.setControlVisible('ml', false)
+    fabric.Group.prototype.setControlVisible('mb', false)
+    fabric.Group.prototype.setControlVisible('mr', false)
+    fabric.Group.prototype.setControlVisible('mt', false)
+    fabric.Group.prototype.setControlVisible('mtr', false)
+    fabric.Group.prototype.originX = 'center'
+    fabric.Group.prototype.originY = 'center'
+    fabric.Group.prototype.transparentCorners = false
+    fabric.Group.prototype.cornerColor = 'white'
+    fabric.Group.prototype.cornerStrokeColor = 'white'
+    fabric.Group.prototype.cornerSize = 10
+    fabric.Group.prototype.rotatingPointOffset = 12
 
     fabric.Object.prototype.controls.mtr = new fabric.Control({
       x: 0.5,
@@ -437,6 +550,7 @@ export default function Start() {
       withConnection: true,
       actionName: 'rotate',
       render: renderRotateIcon,
+      cornerSize: 24
     });
 
     const deleteImg = document.createElement('img')
@@ -454,19 +568,17 @@ export default function Start() {
     }
 
     function deleteObject(eventData, transform) {
-      const targetId = transform.target.canvasId
+      const delElements = transform.target.canvas.getActiveObjects().map(elem => elem.canvasId)
+      const filteredElements = campaign.design[campaign.selected.side].filter((elem) => !delElements.includes(elem.canvasId))
 
-      const filteredElements = campaign.design[campaign.selected.side].filter((elem) => elem.canvasId !== targetId)
-      setCampaign({ ...campaign, products: [...campaign.products], design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
-
-      const target = transform.target;
-      const canvas = target.canvas;
-      canvas.remove(target);
-      canvas.requestRenderAll();
+      setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
+      canvas.remove(...transform.target.canvas.getActiveObjects())
+      canvas.discardActiveObject()
+      canvas.renderAll()
     }
 
     function renderIcon(ctx, left, top, styleOverride, fabricObject) {
-      const size = 24
+      const size = 26
       ctx.save();
       ctx.translate(left, top);
       ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
@@ -474,6 +586,23 @@ export default function Start() {
       ctx.restore();
     }
 
+    const deleteObjHandler = (event) => {
+      if (event.keyCode === 46 && canvas.getActiveObjects().length > 0) {
+        const delElements = canvas.getActiveObjects().map(elem => elem.canvasId)
+        const filteredElements = campaign.design[campaign.selected.side].filter((elem) => !delElements.includes(elem.canvasId))
+
+        setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
+        canvas.remove(...canvas.getActiveObjects())
+        canvas.discardActiveObject()
+        canvas.renderAll()
+      }
+    }
+
+    document.addEventListener('keydown', deleteObjHandler)
+
+    return () => {
+      document.removeEventListener('keydown', deleteObjHandler)
+    }
   }, [campaign])
 
   const onChangeSide = () => {
@@ -489,6 +618,8 @@ export default function Start() {
       canvas.remove(...campaign.design.back)
       canvas.add(...campaign.design.front)
     }
+
+    canvas.discardActiveObject()
   }
 
   return (
@@ -514,9 +645,10 @@ export default function Start() {
                   onClick={() =>
                     setCanvasScale((prevValue) => (prevValue += 50))
                   }
+                  disabled={canvasScale >= 400}
                   id="zoom-in"
                   ref={zoomInBtn}
-                  className="flex items-center justify-center rounded-full p-1 border border-gray-300"
+                  className="flex items-center justify-center rounded-full p-1 border border-gray-300 disabled:opacity-30"
                 >
                   <BsPlusLg />
                 </button>
@@ -527,9 +659,10 @@ export default function Start() {
                   onClick={() =>
                     setCanvasScale((prevValue) => (prevValue -= 50))
                   }
+                  disabled={canvasScale <= 100}
                   id="zoom-out"
                   ref={zoomOutBtn}
-                  className="flex items-center justify-center rounded-full p-1 border border-gray-300"
+                  className="flex items-center justify-center rounded-full p-1 border border-gray-300 disabled:opacity-30"
                 >
                   <BsDashLg />
                 </button>
