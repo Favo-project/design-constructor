@@ -6,18 +6,18 @@ import { PreTee, ClassTee, ComfSleeve, Hoodie, Sweatshirt } from "../assets";
 const shirts = [
   {
     name: "Premium Unisex Tee",
-    printArea: {
+    printableArea: {
       front: {
-        top: 0,
-        left: 0,
-        width: 0,
-        height: 0,
+        top: 290,
+        left: 350,
+        width: 250,
+        height: 310,
       },
       back: {
-        top: 0,
-        left: 0,
-        width: 0,
-        height: 0,
+        top: 250,
+        left: 350,
+        width: 250,
+        height: 300,
       }
     },
     types: [
@@ -41,11 +41,19 @@ const shirts = [
   },
   {
     name: "Classic Unisex Tee",
-    printCoords: {
-      top: 0,
-      left: 0,
-      width: 0,
-      height: 0,
+    printableArea: {
+      front: {
+        top: 270,
+        left: 350,
+        width: 250,
+        height: 300,
+      },
+      back: {
+        top: 260,
+        left: 350,
+        width: 260,
+        height: 320,
+      }
     },
     types: [
       {

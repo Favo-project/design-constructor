@@ -43,7 +43,6 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
         cornerStrokeColor: 'white',
         cornerSize: 10,
         rotatingPointOffset: 12,
-        dirty: true
       })
 
       svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'white' }) : elem)

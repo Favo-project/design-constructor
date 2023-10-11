@@ -33,7 +33,6 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
         img.cornerStrokeColor = 'white'
         img.cornerSize = 10
         img.rotatingPointOffset = 12
-        img.dirty = true
 
         img.setControlVisible('ml', false)
         img.setControlVisible('mb', false)

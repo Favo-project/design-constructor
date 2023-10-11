@@ -22,7 +22,6 @@ export default function Text({ campaign, setCampaign, canvasRef, canvasValues })
       cornerStrokeColor: 'white',
       cornerSize: 10,
       rotatingPointOffset: 12,
-      dirty: true
     })
 
     canvasText.setControlVisible('ml', false)

@@ -19,7 +19,6 @@ import { VscRefresh } from "react-icons/vsc";
 
 import { fabric } from "fabric";
 import { DeleteIcon, RotateIcon } from "./assets";
-import Image from "next/image";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -32,7 +31,11 @@ export default function Start() {
 
   const [canvasScale, setCanvasScale] = useState(100);
   const canvasValues = useRef({
-    areaCrossed: false,
+    areaCrossed: {
+      front: {},
+      back: {},
+    },
+    side: 'front',
     scale: 1,
     offsetX: 0,
     offsetY: 0,
@@ -96,28 +99,63 @@ export default function Start() {
       cornerSize: 10,
       rotatingPointOffset: 12,
     });
-    setLoading(true)
 
-    fabric.Image.fromURL(
-      "https://c.bonfireassets.com/static/product-images/88fa7c5883ac4fc881269780872a6f0b/premium-unisex-tee-dark-heather-gray.jpg",
-      (img) => {
-        const canvasCenter = canvas.getCenter();
-        img.set({
-          scaleX: (canvas.width || 1) / (img.width || 1),
-          scaleY: (canvas.width || 1) / (img.height || 1),
-          selectable: false,
-          top: canvasCenter.top,
-          left: canvasCenter.left,
-          originX: "center",
-          originY: "center",
-        });
+    const printableArea = new fabric.Rect({
+      top: canvasValues.current.CANVAS_HEIGHT / 2 - 50,
+      left: canvasValues.current.CANVAS_WIDTH / 2,
+      originX: "center",
+      originY: "center",
+      width: 250,
+      height: 300,
+      fill: "transparent",
+      stroke: "transparent",
+      strokeWidth: 1,
+      strokeDashArray: [3, 3],
+      selectable: false,
+      evented: false,
+    });
 
-        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+    const areaText = new fabric.Text("PRINTABLE AREA", {
+      top: printableArea.top + printableArea.height! / 2 + 15,
+      left: canvas.width! / 2,
+      fontSize: 14,
+      fontStyle: "normal",
+      fontFamily: "Arial",
+      fill: "transparent",
+      selectable: false,
+      evented: false,
+      originX: "center",
+      originY: "center",
+    });
+
+    const centralLine = new fabric.Line(
+      [canvas.width / 2, 0, canvas.width / 2, printableArea.height],
+      {
+        top: printableArea.top - (printableArea.height / 2),
+        stroke: 'transparent',
+        strokeWidth: 1,
+        selectable: false,
       }
     );
 
+    canvas.add(printableArea, areaText, centralLine);
+
     canvasRef.canvas = canvas;
-    setLoading(false)
+    canvasRef.printableArea = printableArea;
+    canvasRef.areaText = areaText;
+    canvasRef.centralLine = centralLine;
+
+    fabric.Group.prototype.setControlVisible('ml', false)
+    fabric.Group.prototype.setControlVisible('mb', false)
+    fabric.Group.prototype.setControlVisible('mr', false)
+    fabric.Group.prototype.setControlVisible('mt', false)
+    fabric.Group.prototype.originX = 'center'
+    fabric.Group.prototype.originY = 'center'
+    fabric.Group.prototype.transparentCorners = false
+    fabric.Group.prototype.cornerColor = 'white'
+    fabric.Group.prototype.cornerStrokeColor = 'white'
+    fabric.Group.prototype.cornerSize = 10
+    fabric.Group.prototype.rotatingPointOffset = 12
   }, []);
 
   useEffect(() => {
@@ -284,178 +322,6 @@ export default function Start() {
       canvas.renderAll();
     });
 
-    const printableArea = new fabric.Rect({
-      top: canvas.height! / 2 - 50,
-      left: canvas.width! / 2,
-      originX: "center",
-      originY: "center",
-      width: 250,
-      height: 300,
-      fill: "transparent",
-      stroke: "transparent",
-      strokeWidth: 1,
-      strokeDashArray: [3, 3],
-      selectable: false,
-      evented: false,
-    });
-
-    const areaText = new fabric.Text("PRINTABLE AREA", {
-      top: canvas.height! / 2 + printableArea.height! / 2 - 35,
-      left: canvas.width! / 2,
-      fontSize: 14,
-      fontStyle: "normal",
-      fontFamily: "Arial",
-      fill: "transparent",
-      selectable: false,
-      evented: false,
-      originX: "center",
-      originY: "center",
-    });
-
-    const centralLine = new fabric.Line(
-      [canvas.width / 2, 0, canvas.width / 2, printableArea.height],
-      {
-        top: printableArea.top - (printableArea.height / 2),
-        stroke: 'transparent',
-        strokeWidth: 1,
-        selectable: false,
-      }
-    );
-
-    canvas.add(printableArea, areaText, centralLine);
-
-    function onCross(options) {
-      hasCrossedOut(options.target, printableArea)
-      options.target.setCoords();
-      if (canvasValues.current.areaCrossed) {
-        printableArea.set({
-          stroke: 'red'
-        })
-        options.target.set({
-          opacity: 0.5
-        })
-      } else {
-        printableArea.set({
-          stroke: 'white'
-        })
-        options.target.set({
-          opacity: 1
-        })
-      }
-      canvas.renderAll()
-    }
-
-    function hasCrossedOut(object1, object2) {
-      // Calculate the boundaries of object1
-      const objWidth1 = object1.width * object1.scaleX
-      const objHeight1 = object1.height * object1.scaleY
-      const objWidth2 = object2.width * object2.scaleX
-      const objHeight2 = object2.height * object2.scaleY
-
-      var left1 = object1.left - objWidth1 / 2
-      var top1 = object1.top - objHeight1 / 2
-      var right1 = left1 + objWidth1
-      var bottom1 = top1 + objHeight1
-
-      // Calculate the boundaries of object2
-      var left2 = object2.left - objWidth2 / 2
-      var top2 = object2.top - objHeight2 / 2
-      var right2 = left2 + objWidth2
-      var bottom2 = top2 + objHeight2
-      // Check if object1 has crossed out of object2
-      if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
-        return canvasValues.current.areaCrossed = true
-      } else {
-        return canvasValues.current.areaCrossed = false
-      }
-    }
-
-    const onCanvasOver = () => {
-      if (canvasValues.current.areaCrossed) {
-        printableArea.set({
-          stroke: 'red'
-        })
-      } else {
-        printableArea.set({
-          stroke: 'white'
-        })
-      }
-      areaText.set({ fill: "white" });
-      canvas.renderAll();
-    }
-
-    canvas.on({
-      'object:moving': onCross,
-      'object:scaling': onCross,
-      'object:rotating': onCross,
-
-    });
-
-    const onCanvasOut = () => {
-      printableArea.set({ stroke: "transparent" });
-      areaText.set({ fill: "transparent" });
-      centralLine.set({ stroke: "transparent" });
-      canvas.renderAll();
-    }
-
-    canvas.on({ "mouse:over": onCanvasOver, "mouse:move": onCanvasOver });
-    canvas.on({ "mouse:out": onCanvasOut, "mouse:leave": onCanvasOut });
-
-    function limitObjectWithinCanvas(obj, canvas) {
-      const canvasWidth = canvasValues.current.CANVAS_WIDTH
-      const canvasHeight = canvasValues.current.CANVAS_HEIGHT
-      const objWidth = (obj.width * obj.scaleX) / 2
-      const objHeight = (obj.height * obj.scaleY) / 2
-
-      const objLeft = obj.left;
-      const objTop = obj.top;
-      const objRight = obj.left + obj.width * obj.scaleX;
-      const objBottom = obj.top + obj.height * obj.scaleY;
-
-      if (objLeft < objWidth) {
-        obj.left = objWidth
-      }
-      if (objTop < objHeight) {
-        obj.top = objHeight
-      }
-      if (objRight > canvasWidth + objWidth) {
-        obj.left = canvasWidth - objWidth
-      }
-      if (objBottom > canvasHeight + objHeight) {
-        obj.top = canvasHeight - objHeight
-      }
-    }
-
-    canvas.on('object:moving', (options) => {
-      const object = options.target;
-      // limit object within canvas
-      limitObjectWithinCanvas(options.target, canvas)
-
-      // Define a threshold for how close an object should be to snap to the central line
-      const snapThreshold = 15; // Adjust as needed
-      const closeThreshold = 25; // Color as needed
-
-      // Calculate the distance from the object's center to the central line
-      const objectCenterX = object.left
-      const distanceToCentralLine = Math.abs(objectCenterX - (canvasValues.current.CANVAS_WIDTH / 2));
-
-      // Check if the object is close enough to the central line to snap
-      if (distanceToCentralLine <= closeThreshold) {
-        centralLine.set({ stroke: "#F94C10" });
-      }
-      else {
-        centralLine.set({ stroke: "transparent" });
-      }
-      if (distanceToCentralLine <= snapThreshold) {
-        // Snap the object to the central line
-        object.set({
-          left: canvasValues.current.CANVAS_WIDTH / 2
-        });
-
-        canvas.renderAll();
-      }
-    });
-
     canvas.on('object:rotating', (options) => {
       const object = options.target
       const objAngle = options.target.angle
@@ -485,9 +351,145 @@ export default function Start() {
 
     canvas.on('object:added', (options) => {
       const object = options.target
-
-      canvas.setActiveObject(object);
+      if (object.ignore) return
+      else canvas.setActiveObject(object);
     })
+
+    function onCross(options) {
+      hasCrossedOut(options.target, canvasRef.printableArea)
+      options.target.setCoords();
+      if (canvasValues.current.areaCrossed[canvasValues.current.side][options.target.canvasId] === true) {
+        canvasRef.printableArea.set({
+          stroke: 'red'
+        })
+        options.target.set({
+          opacity: 0.5
+        })
+      } else {
+        canvasRef.printableArea.set({
+          stroke: 'white'
+        })
+        options.target.set({
+          opacity: 1
+        })
+      }
+
+      if (Object.hasOwn(canvasValues.current.areaCrossed[canvasValues.current.side], 'undefined') && !!options.target.canvasId) {
+        delete canvasValues.current.areaCrossed[canvasValues.current.side][undefined]
+      }
+
+      canvas.renderAll()
+    }
+
+    function hasCrossedOut(object1, object2) {
+      // Calculate the boundaries of object1
+      const objWidth1 = object1.width * object1.scaleX
+      const objHeight1 = object1.height * object1.scaleY
+      const objWidth2 = object2.width * object2.scaleX
+      const objHeight2 = object2.height * object2.scaleY
+
+      var left1 = object1.left - objWidth1 / 2
+      var top1 = object1.top - objHeight1 / 2
+      var right1 = left1 + objWidth1
+      var bottom1 = top1 + objHeight1
+
+      // Calculate the boundaries of object2
+      var left2 = object2.left - objWidth2 / 2
+      var top2 = object2.top - objHeight2 / 2
+      var right2 = left2 + objWidth2
+      var bottom2 = top2 + objHeight2
+      // Check if object1 has crossed out of object2
+      if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
+        return canvasValues.current.areaCrossed[canvasValues.current.side][object1.canvasId] = true
+      } else {
+        return canvasValues.current.areaCrossed[canvasValues.current.side][object1.canvasId] = false
+      }
+    }
+
+    canvas.on({
+      'object:moving': onCross,
+      'object:scaling': onCross,
+      'object:rotating': onCross,
+    });
+
+    const onCanvasOver = () => {
+      if (Object.values(canvasValues.current.areaCrossed[canvasValues.current.side]).includes(true)) {
+        canvasRef.printableArea.set({
+          stroke: 'red'
+        })
+      } else {
+        canvasRef.printableArea.set({
+          stroke: 'white'
+        })
+      }
+      canvasRef.areaText.set({ fill: "white" });
+      canvas.renderAll();
+    }
+
+    const onCanvasOut = () => {
+      canvasRef.printableArea.set({ stroke: "transparent" });
+      canvasRef.areaText.set({ fill: "transparent" });
+      canvasRef.centralLine.set({ stroke: "transparent" });
+      canvas.renderAll();
+    }
+
+    canvas.on({ "mouse:over": onCanvasOver, "mouse:move": onCanvasOver });
+    canvas.on({ "mouse:out": onCanvasOut, "mouse:leave": onCanvasOut });
+
+    canvas.on('object:moving', (options) => {
+      const object = options.target;
+      // limit object within canvas
+      limitObjectWithinCanvas(options.target, canvas)
+
+      // Define a threshold for how close an object should be to snap to the central line
+      const snapThreshold = 10; // Adjust as needed
+      const closeThreshold = 20; // Color as needed
+
+      // Calculate the distance from the object's center to the central line
+      const objectCenterX = object.left
+      const distanceToCentralLine = Math.abs(objectCenterX - (canvasValues.current.CANVAS_WIDTH / 2));
+
+      // Check if the object is close enough to the central line to snap
+      if (distanceToCentralLine <= closeThreshold) {
+        canvasRef.centralLine.set({ stroke: "#F94C10" });
+      }
+      else {
+        canvasRef.centralLine.set({ stroke: "transparent" });
+      }
+      if (distanceToCentralLine <= snapThreshold) {
+        // Snap the object to the central line
+        object.set({
+          left: canvasValues.current.CANVAS_WIDTH / 2
+        });
+
+        canvas.renderAll();
+      }
+    });
+
+    function limitObjectWithinCanvas(obj, canvas) {
+      const canvasWidth = canvasValues.current.CANVAS_WIDTH
+      const canvasHeight = canvasValues.current.CANVAS_HEIGHT
+      const objWidth = (obj.width * obj.scaleX) / 2
+      const objHeight = (obj.height * obj.scaleY) / 2
+
+      const objLeft = obj.left;
+      const objTop = obj.top;
+      const objRight = obj.left + obj.width * obj.scaleX;
+      const objBottom = obj.top + obj.height * obj.scaleY;
+
+      if (objLeft < objWidth) {
+        obj.left = objWidth
+      }
+      if (objTop < objHeight) {
+        obj.top = objHeight
+      }
+      if (objRight > canvasWidth + objWidth) {
+        obj.left = canvasWidth - objWidth
+      }
+      if (objBottom > canvasHeight + objHeight) {
+        obj.top = canvasHeight - objHeight
+      }
+    }
 
     // Initialize the canvas viewport
     updateCanvasViewport();
@@ -515,6 +517,24 @@ export default function Start() {
           canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
         }
       );
+
+      const printableArea = campaign.products[campaign.selected.product].printableArea[campaign.selected.side]
+      canvasRef.printableArea.set({
+        top: printableArea.top,
+        left: printableArea.left,
+        width: printableArea.width,
+        height: printableArea.height,
+      })
+      canvasRef.areaText.set({
+        top: printableArea.top + printableArea.height / 2 + 15,
+        left: canvasValues.current.CANVAS_WIDTH / 2,
+      })
+      canvasRef.centralLine.set({
+        top: printableArea.top - (printableArea.height / 2),
+        left: canvasValues.current.CANVAS_WIDTH / 2,
+        height: printableArea.height,
+      })
+      canvas.requestRenderAll()
     }
 
     fabric.Object.prototype.controls.deleteControl = new fabric.Control({
@@ -526,20 +546,6 @@ export default function Start() {
       render: renderIcon,
       cornerSize: 24
     });
-
-
-    fabric.Group.prototype.setControlVisible('ml', false)
-    fabric.Group.prototype.setControlVisible('mb', false)
-    fabric.Group.prototype.setControlVisible('mr', false)
-    fabric.Group.prototype.setControlVisible('mt', false)
-    fabric.Group.prototype.setControlVisible('mtr', false)
-    fabric.Group.prototype.originX = 'center'
-    fabric.Group.prototype.originY = 'center'
-    fabric.Group.prototype.transparentCorners = false
-    fabric.Group.prototype.cornerColor = 'white'
-    fabric.Group.prototype.cornerStrokeColor = 'white'
-    fabric.Group.prototype.cornerSize = 10
-    fabric.Group.prototype.rotatingPointOffset = 12
 
     fabric.Object.prototype.controls.mtr = new fabric.Control({
       x: 0.5,
@@ -572,6 +578,9 @@ export default function Start() {
       const filteredElements = campaign.design[campaign.selected.side].filter((elem) => !delElements.includes(elem.canvasId))
 
       setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
+      delElements.forEach(obj => {
+        delete canvasValues.current.areaCrossed[campaign.selected.side][obj]
+      });
       canvas.remove(...transform.target.canvas.getActiveObjects())
       canvas.discardActiveObject()
       canvas.renderAll()
@@ -592,6 +601,9 @@ export default function Start() {
         const filteredElements = campaign.design[campaign.selected.side].filter((elem) => !delElements.includes(elem.canvasId))
 
         setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
+        delElements.forEach(obj => {
+          delete canvasValues.current.areaCrossed[campaign.selected.side][obj]
+        });
         canvas.remove(...canvas.getActiveObjects())
         canvas.discardActiveObject()
         canvas.renderAll()
@@ -610,11 +622,13 @@ export default function Start() {
 
     if (campaign.selected.side === 'front') {
       setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'back' } })
+      canvasValues.current.side = 'back'
       canvas.remove(...campaign.design.front)
       canvas.add(...campaign.design.back)
     }
     else {
       setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'front' } })
+      canvasValues.current.side = 'front'
       canvas.remove(...campaign.design.back)
       canvas.add(...campaign.design.front)
     }
