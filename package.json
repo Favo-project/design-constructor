@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm install --build-from-source canvas",
     "start": "next start",
     "lint": "next lint"
   },
@@ -17,6 +17,7 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "canvas": "^2.11.2",
+    "concurrently": "^8.2.1",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "fabric": "^5.3.0",
