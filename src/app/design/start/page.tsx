@@ -31,7 +31,7 @@ export default function Start() {
   const zoomOutBtn = useRef(null)
 
   const [canvasScale, setCanvasScale] = useState(100);
-  const canvasValues = useRef({
+  const canvasValues: any = useRef({
     areaCrossed: {
       front: {},
       back: {},
@@ -50,7 +50,7 @@ export default function Start() {
     MAX_OFFSET_Y: 0,
     isPanning: false,
   });
-  const canvasRef = useRef(null);
+  const canvasRef: any = useRef(null);
   const designContainer = useRef(null);
   const containerRef = useRef(null);
   const [categories]: any = useState({
@@ -94,11 +94,6 @@ export default function Start() {
       width: canvasValues.current.CANVAS_WIDTH,
       height: canvasValues.current.CANVAS_HEIGHT,
       selection: true,
-      transparentCorners: false,
-      cornerColor: 'white',
-      cornerStrokeColor: 'white',
-      cornerSize: 10,
-      rotatingPointOffset: 12,
     });
 
     const printableArea = new fabric.Rect({
@@ -589,8 +584,8 @@ export default function Start() {
       x: 0.5,
       y: 0,
       offsetX: 15,
-      actionHandler: fabric.controlsUtils.rotationWithSnapping,
-      cursorStyleHandler: fabric.controlsUtils.rotationStyleHandler,
+      actionHandler: fabric.controlsUtils!.rotationWithSnapping,
+      cursorStyleHandler: fabric.controlsUtils!.rotationStyleHandler,
       withConnection: true,
       actionName: 'rotate',
       render: renderRotateIcon,

@@ -65,7 +65,7 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
 
 
     fabric.loadSVGFromURL(graph.icon, (objects, options) => {
-      const svgObject = fabric.util.groupSVGElements(objects, options);
+      const svgObject: any = fabric.util.groupSVGElements(objects, options);
       svgObject.setControlVisible('ml', false)
       svgObject.setControlVisible('mb', false)
       svgObject.setControlVisible('mr', false)
