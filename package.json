@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm install --build-from-source canvas",
+    "build": "concurrently \"npm install --build-from-source canvas\" \"next build\"",
     "start": "next start",
     "lint": "next lint"
   },
