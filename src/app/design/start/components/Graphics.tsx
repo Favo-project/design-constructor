@@ -18,6 +18,46 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
       width: 100,
       height: 100,
     },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/366074/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/98049/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/267107/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/1087893/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/95097/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/173033/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/102768/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/1236006/icon.svg',
+      width: 100,
+      height: 100,
+    },
   ]);
 
   const graphicHandler = (graph) => {
@@ -38,6 +78,7 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
         left: canvasValues.current.CANVAS_WIDTH / 2,
         originX: 'center',
         originY: 'center',
+        fill: 'white',
         transparentCorners: false,
         cornerColor: 'white',
         cornerStrokeColor: 'white',

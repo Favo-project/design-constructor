@@ -19,9 +19,9 @@ export default function Text({ campaign, setCampaign, canvasRef, canvasValues })
       lineHeight: 0.9,
       transparentCorners: false,
       cornerColor: 'white',
-      cornerStrokeColor: 'white',
+      cornerStrokeColor: '#ADC4CE',
       cornerSize: 10,
-      rotatingPointOffset: 12,
+      rotatingPointOffset: 0,
     })
 
     canvasText.setControlVisible('ml', false)

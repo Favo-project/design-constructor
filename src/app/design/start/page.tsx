@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Tab } from "@headlessui/react";
 import Products from "./components/Products";
 import Text from "./components/Text";
@@ -19,6 +19,7 @@ import { VscRefresh } from "react-icons/vsc";
 
 import { fabric } from "fabric";
 import { DeleteIcon, RotateIcon } from "./assets";
+import Loader from "@/components/Loader";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -137,6 +138,10 @@ export default function Start() {
         selectable: false,
       }
     );
+
+    printableArea.ignore = true
+    areaText.ignore = true
+    centralLine.ignore = true
 
     canvas.add(printableArea, areaText, centralLine);
 
@@ -356,53 +361,85 @@ export default function Start() {
     })
 
     function onCross(options) {
-      hasCrossedOut(options.target, canvasRef.printableArea)
-      options.target.setCoords();
-      if (canvasValues.current.areaCrossed[canvasValues.current.side][options.target.canvasId] === true) {
-        canvasRef.printableArea.set({
-          stroke: 'red'
-        })
-        options.target.set({
-          opacity: 0.5
-        })
-      } else {
-        canvasRef.printableArea.set({
-          stroke: 'white'
-        })
-        options.target.set({
-          opacity: 1
+      options.target.setCoords()
+      if (options.target.canvasId) {
+        canvas.forEachObject((obj) => {
+          if (obj.ignore) return;
+          delete canvasValues.current.areaCrossed[canvasValues.current.side]['group']
+
+          const objWidth1 = obj.width
+          const objHeight1 = obj.height
+          const objWidth2 = canvasRef.printableArea.width
+          const objHeight2 = canvasRef.printableArea.height
+
+          const left1 = obj.left - objWidth1 / 2
+          const top1 = obj.top - objHeight1 / 2
+          const right1 = left1 + objWidth1
+          const bottom1 = top1 + objHeight1
+
+          // Calculate the boundaries of object2
+          const left2 = canvasRef.printableArea.left - objWidth2 / 2
+          const top2 = canvasRef.printableArea.top - objHeight2 / 2
+          const right2 = left2 + objWidth2
+          const bottom2 = top2 + objHeight2
+          // Check if object1 has crossed out of object2
+          if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
+            canvasValues.current.areaCrossed[canvasValues.current.side][obj.canvasId] = true
+            obj.set({ opacity: 0.5 })
+            canvasRef.printableArea.set({
+              stroke: 'red'
+            })
+            return canvas.renderAll()
+          } else {
+            canvasValues.current.areaCrossed[canvasValues.current.side][obj.canvasId] = false
+            obj.set({ opacity: 1 })
+            canvasRef.printableArea.set({
+              stroke: 'white'
+            })
+            return canvas.renderAll()
+          }
         })
       }
+      else {
+        const obj = options.target
+        const childrenObjects = obj._objects
 
-      if (Object.hasOwn(canvasValues.current.areaCrossed[canvasValues.current.side], 'undefined') && !!options.target.canvasId) {
-        delete canvasValues.current.areaCrossed[canvasValues.current.side][undefined]
-      }
+        childrenObjects.forEach((item) => {
+          item.set({ opacity: 1 })
+          delete canvasValues.current.areaCrossed[canvasValues.current.side][item.canvasId]
+        })
 
-      canvas.renderAll()
-    }
+        const objWidth1 = obj.width
+        const objHeight1 = obj.height
+        const objWidth2 = canvasRef.printableArea.width
+        const objHeight2 = canvasRef.printableArea.height
 
-    function hasCrossedOut(object1, object2) {
-      // Calculate the boundaries of object1
-      const objWidth1 = object1.width * object1.scaleX
-      const objHeight1 = object1.height * object1.scaleY
-      const objWidth2 = object2.width * object2.scaleX
-      const objHeight2 = object2.height * object2.scaleY
+        const left1 = obj.left - objWidth1 / 2
+        const top1 = obj.top - objHeight1 / 2
+        const right1 = left1 + objWidth1
+        const bottom1 = top1 + objHeight1
 
-      var left1 = object1.left - objWidth1 / 2
-      var top1 = object1.top - objHeight1 / 2
-      var right1 = left1 + objWidth1
-      var bottom1 = top1 + objHeight1
-
-      // Calculate the boundaries of object2
-      var left2 = object2.left - objWidth2 / 2
-      var top2 = object2.top - objHeight2 / 2
-      var right2 = left2 + objWidth2
-      var bottom2 = top2 + objHeight2
-      // Check if object1 has crossed out of object2
-      if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
-        return canvasValues.current.areaCrossed[canvasValues.current.side][object1.canvasId] = true
-      } else {
-        return canvasValues.current.areaCrossed[canvasValues.current.side][object1.canvasId] = false
+        // Calculate the boundaries of object2
+        const left2 = canvasRef.printableArea.left - objWidth2 / 2
+        const top2 = canvasRef.printableArea.top - objHeight2 / 2
+        const right2 = left2 + objWidth2
+        const bottom2 = top2 + objHeight2
+        // Check if object1 has crossed out of object2
+        if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
+          canvasValues.current.areaCrossed[canvasValues.current.side]['group'] = true
+          obj.set({ opacity: 0.5 })
+          canvasRef.printableArea.set({
+            stroke: 'red'
+          })
+          return canvas.renderAll()
+        } else {
+          canvasValues.current.areaCrossed[canvasValues.current.side]['group'] = false
+          obj.set({ opacity: 1 })
+          canvasRef.printableArea.set({
+            stroke: 'white'
+          })
+          return canvas.renderAll()
+        }
       }
     }
 
@@ -496,6 +533,7 @@ export default function Start() {
   }, [])
 
   useEffect(() => {
+    setLoading(true)
     const canvas = canvasRef.canvas
 
     if (campaign.products.length) {
@@ -580,6 +618,7 @@ export default function Start() {
       setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
       delElements.forEach(obj => {
         delete canvasValues.current.areaCrossed[campaign.selected.side][obj]
+        delete canvasValues.current.areaCrossed[campaign.selected.side]['group']
       });
       canvas.remove(...transform.target.canvas.getActiveObjects())
       canvas.discardActiveObject()
@@ -603,6 +642,7 @@ export default function Start() {
         setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
         delElements.forEach(obj => {
           delete canvasValues.current.areaCrossed[campaign.selected.side][obj]
+          delete canvasValues.current.areaCrossed[campaign.selected.side]['group']
         });
         canvas.remove(...canvas.getActiveObjects())
         canvas.discardActiveObject()
@@ -611,6 +651,7 @@ export default function Start() {
     }
 
     document.addEventListener('keydown', deleteObjHandler)
+    setLoading(false)
 
     return () => {
       document.removeEventListener('keydown', deleteObjHandler)
@@ -634,6 +675,7 @@ export default function Start() {
     }
 
     canvas.discardActiveObject()
+    canvas.renderAll()
   }
 
   return (
@@ -641,6 +683,13 @@ export default function Start() {
       <div className="grid sm:grid-cols-1 lg:grid-cols-3">
         <div id="design-content" ref={containerRef} className="relative">
           <div className="lg:fixed top-0 mt-20 overflow-hidden left-0 bottom-0 sm:w-[100vw] lg:w-[66.6vw] flex items-center justify-center">
+            {
+              loading ? (
+                <div className="absolute bg-white bg-opacity-20 z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center text-4xl">
+                  <Loader />
+                </div>
+              ) : null
+            }
             <div id="design-container" ref={designContainer}>
               <canvas id="design" ref={canvasRef} />
             </div>

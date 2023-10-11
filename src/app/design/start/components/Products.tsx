@@ -74,6 +74,41 @@ const shirts = [
       },
     ],
   },
+  {
+    name: "Pullover Hoodie",
+    printableArea: {
+      front: {
+        top: 290,
+        left: 350,
+        width: 270,
+        height: 300,
+      },
+      back: {
+        top: 275,
+        left: 350,
+        width: 270,
+        height: 320,
+      }
+    },
+    types: [
+      {
+        color: "grey",
+        image: {
+          front:
+            "https://c.bonfireassets.com/static/product-images/f9e0/pullover-hoodie-sport-grey.jpg",
+          back: "https://c.bonfireassets.com/static/product-images/266c/pullover-hoodie-sport-grey-back.jpg",
+        },
+      },
+      {
+        color: "#3f70a2",
+        image: {
+          front:
+            "https://c.bonfireassets.com/static/product-images/4cc0/pullover-hoodie-indigo.jpg",
+          back: "https://c.bonfireassets.com/static/product-images/a253/pullover-hoodie-indigo-back.jpg",
+        },
+      },
+    ],
+  },
 ];
 
 export default function Products({ campaign, setCampaign }) {
