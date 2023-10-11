@@ -17,9 +17,10 @@ import { HiOutlineTemplate } from "react-icons/hi";
 import { BsPlusLg, BsDashLg } from "react-icons/bs";
 import { VscRefresh } from "react-icons/vsc";
 
-import { fabric } from "fabric";
+import { fabric } from "fabric"
 import { DeleteIcon, RotateIcon } from "./assets";
 import Loader from "@/components/Loader";
+import { Transform } from "fabric/fabric-impl";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -96,7 +97,7 @@ export default function Start() {
       selection: true,
     });
 
-    const printableArea = new fabric.Rect({
+    const printableArea: any = new fabric.Rect({
       top: canvasValues.current.CANVAS_HEIGHT / 2 - 50,
       left: canvasValues.current.CANVAS_WIDTH / 2,
       originX: "center",
@@ -111,7 +112,7 @@ export default function Start() {
       evented: false,
     });
 
-    const areaText = new fabric.Text("PRINTABLE AREA", {
+    const areaText: any = new fabric.Text("PRINTABLE AREA", {
       top: printableArea.top + printableArea.height! / 2 + 15,
       left: canvas.width! / 2,
       fontSize: 14,
@@ -124,7 +125,7 @@ export default function Start() {
       originY: "center",
     });
 
-    const centralLine = new fabric.Line(
+    const centralLine: any = new fabric.Line(
       [canvas.width / 2, 0, canvas.width / 2, printableArea.height],
       {
         top: printableArea.top - (printableArea.height / 2),
@@ -577,19 +578,19 @@ export default function Start() {
       cursorStyle: 'pointer',
       mouseUpHandler: deleteObject,
       render: renderIcon,
-      cornerSize: 24
     });
+
+    const fabricWithControlsUtils = fabric as typeof fabric & { controlsUtils: any };
 
     fabric.Object.prototype.controls.mtr = new fabric.Control({
       x: 0.5,
       y: 0,
       offsetX: 15,
-      actionHandler: fabric.controlsUtils!.rotationWithSnapping,
-      cursorStyleHandler: fabric.controlsUtils!.rotationStyleHandler,
+      actionHandler: fabricWithControlsUtils.controlsUtils.rotationWithSnapping,
+      cursorStyleHandler: fabricWithControlsUtils.controlsUtils.rotationStyleHandler,
       withConnection: true,
       actionName: 'rotate',
       render: renderRotateIcon,
-      cornerSize: 24
     });
 
     const deleteImg = document.createElement('img')
@@ -606,8 +607,8 @@ export default function Start() {
       ctx.restore();
     }
 
-    function deleteObject(eventData, transform) {
-      const delElements = transform.target.canvas.getActiveObjects().map(elem => elem.canvasId)
+    function deleteObject(eventData: MouseEvent, transform: Transform): boolean {
+      const delElements = transform.target.canvas.getActiveObjects().map((elem: any) => elem.canvasId)
       const filteredElements = campaign.design[campaign.selected.side].filter((elem) => !delElements.includes(elem.canvasId))
 
       setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...filteredElements] } })
@@ -618,6 +619,7 @@ export default function Start() {
       canvas.remove(...transform.target.canvas.getActiveObjects())
       canvas.discardActiveObject()
       canvas.renderAll()
+      return true
     }
 
     function renderIcon(ctx, left, top, styleOverride, fabricObject) {

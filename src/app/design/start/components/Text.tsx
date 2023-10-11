@@ -8,7 +8,7 @@ export default function Text({ campaign, setCampaign, canvasRef, canvasValues })
   const addText = () => {
     const canvas = canvasRef.canvas
 
-    const canvasText = new fabric.Text(text, {
+    const canvasText: any = new fabric.Text(text, {
       top: canvasValues.current.CANVAS_HEIGHT / 2 - 100,
       left: canvasValues.current.CANVAS_WIDTH / 2,
       fontSize: 62,

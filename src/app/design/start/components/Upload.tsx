@@ -12,7 +12,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
 
   const onUpload = () => {
     const canvas = canvasRef.canvas
-    const reader = new FileReader();
+    const reader: any = new FileReader();
 
     reader.readAsDataURL(file!);
 
@@ -21,7 +21,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
     const imageW = 200
 
     reader.addEventListener("load", () => {
-      fabric.Image.fromURL(reader.result, (img) => {
+      fabric.Image.fromURL(reader.result, (img: any) => {
         img.originX = "center"
         img.originY = "center"
         img.top = centerTop
