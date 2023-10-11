@@ -18,7 +18,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
 
     const centerTop = canvasValues.current.CANVAS_HEIGHT / 2 - 100
     const centerLeft = canvasValues.current.CANVAS_WIDTH / 2
-    const imageW = 200
+    const imageW = 150
 
     reader.addEventListener("load", () => {
       fabric.Image.fromURL(reader.result, (img: any) => {

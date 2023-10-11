@@ -363,8 +363,8 @@ export default function Start() {
           if (obj.ignore) return;
           delete canvasValues.current.areaCrossed[canvasValues.current.side]['group']
 
-          const objWidth1 = obj.width
-          const objHeight1 = obj.height
+          const objWidth1 = obj.width * obj.scaleX
+          const objHeight1 = obj.height * obj.scaleY
           const objWidth2 = canvasRef.printableArea.width
           const objHeight2 = canvasRef.printableArea.height
 
@@ -405,8 +405,8 @@ export default function Start() {
           delete canvasValues.current.areaCrossed[canvasValues.current.side][item.canvasId]
         })
 
-        const objWidth1 = obj.width
-        const objHeight1 = obj.height
+        const objWidth1 = obj.width * obj.scaleX
+        const objHeight1 = obj.height * obj.scaleY
         const objWidth2 = canvasRef.printableArea.width
         const objHeight2 = canvasRef.printableArea.height
 
