@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "noImplicitAny": false,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,6 +23,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/design/start/components/index.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/design/start/components/index.ts"
+  ],
   "exclude": ["node_modules"]
 }

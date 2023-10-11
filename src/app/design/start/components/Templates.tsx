@@ -1,7 +1,3 @@
-export default function Templates () {
-    return (
-        <div id="design-templates">
-            Templates
-        </div>
-    )
+export default function Templates() {
+  return <div id="design-templates">Templates</div>;
 }

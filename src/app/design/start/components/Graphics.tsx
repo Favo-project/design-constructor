@@ -1,7 +1,130 @@
-export default function Graphics () {
-    return (
-        <div id="design-graphics">
-            Graphics
+import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+import { BiSearch } from "react-icons/bi";
+import { SVG1, SVG2, SVG3, SVG4, SVG5, SVG6, SVG7 } from "../assets/graphics";
+import { fabric } from 'fabric'
+import { v4 as uuidv4 } from 'uuid'
+
+interface IGraph {
+  icon: any;
+  width: number;
+  height: number;
+}
+
+export default function Graphics({ campaign, setCampaign, canvasRef, canvasValues }) {
+  const [graphics] = useState([
+    {
+      icon: 'https://www.bonfire.com/images/clipart/366068/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/366074/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/98049/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/267107/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/1087893/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/95097/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/173033/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/102768/icon.svg',
+      width: 100,
+      height: 100,
+    },
+    {
+      icon: 'https://www.bonfire.com/images/clipart/1236006/icon.svg',
+      width: 100,
+      height: 100,
+    },
+  ]);
+
+  const graphicHandler = (graph) => {
+    const canvas = canvasRef.canvas
+
+
+    fabric.loadSVGFromURL(graph.icon, (objects, options) => {
+      const svgObject = fabric.util.groupSVGElements(objects, options);
+      svgObject.setControlVisible('ml', false)
+      svgObject.setControlVisible('mb', false)
+      svgObject.setControlVisible('mr', false)
+      svgObject.setControlVisible('mt', false)
+
+      svgObject.set({
+        width: 100,
+        height: 100,
+        top: canvasValues.current.CANVAS_HEIGHT / 2 - 50,
+        left: canvasValues.current.CANVAS_WIDTH / 2,
+        originX: 'center',
+        originY: 'center',
+        fill: 'white',
+        transparentCorners: false,
+        cornerColor: 'white',
+        cornerStrokeColor: 'white',
+        cornerSize: 10,
+        rotatingPointOffset: 12,
+      })
+
+      svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'white' }) : elem)
+
+      svgObject.side = campaign.selected.side
+      svgObject.canvasId = uuidv4()
+      setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], svgObject] } })
+
+      canvas.add(svgObject);
+      canvas.renderAll()
+    });
+  }
+
+  return (
+    <div id="w-full py-4 px-4">
+      <div>
+        <div className="relative mt-2 rounded-md shadow-sm">
+          <input
+            type="text"
+            name="search"
+            className="block w-full outline-none rounded-md border-0 py-3 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            placeholder="Search for something"
+          />
+          <div className="absolute inset-y-0 right-0 flex items-center">
+            <button className="h-full rounded-md border-0 bg-transparent py-0 px-3 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+              <BiSearch className="text-xl" />
+            </button>
+          </div>
         </div>
-    )
+      </div>
+      <div className="grid grid-cols-3 gap-3 py-6">
+        {graphics?.map((graph: IGraph, index) => (
+          <button
+            onClick={() => graphicHandler(graph)}
+            className={`py-2 px-4 flex items-center justify-center hover:ring-2 ring-gray-200 ring-opacity-40 rounded transition-all`}
+            key={index}
+          >
+            <Image src={graph.icon} width={100} height={100} alt="graphic-icon" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }

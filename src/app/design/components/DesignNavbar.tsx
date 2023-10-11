@@ -17,7 +17,7 @@ export default function DesignNavbar() {
   return (
     <>
       <nav
-        className="flex items-center justify-between p-6 lg:px-8 shadow-sm"
+        className="flex fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 shadow-sm"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
