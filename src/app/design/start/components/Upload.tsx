@@ -1,4 +1,4 @@
-import UploadGuide from "./UploadGuid";
+import UploadGuide from "./UploadGuide";
 import { FileDrop } from "@/components/FileDrop";
 import { useEffect, useState } from "react";
 import { fabric } from 'fabric'
