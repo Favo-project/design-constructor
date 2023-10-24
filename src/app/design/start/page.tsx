@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Tab } from "@headlessui/react";
 import Products from "./components/Products";
-import Text from "./components/Text";
-import Graphics from "./components/Graphics";
+import Text from "./components/Text/Text";
+import Graphics from "./components/Graphics/Graphics";
 import Templates from "./components/Templates";
-import Upload from "./components/Upload";
+import Upload from "./components/Ulpoad/Upload";
 import {
   PiShapes,
   PiTShirt,
@@ -21,6 +21,10 @@ import { fabric } from "fabric"
 import { DeleteIcon, RotateIcon } from "./assets";
 import Loader from "@/components/Loader";
 import { Transform } from "fabric/fabric-impl";
+import TextEditor from "./components/Text/Editor";
+import GraphicsEditor from "./components/Graphics/Editor";
+import ImageEditor from "./components/Ulpoad/Editor";
+import MultipleEditor from "./components/MultipleEditor";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -28,6 +32,9 @@ function classNames(...classes: string[]) {
 
 export default function Start() {
   const [loading, setLoading] = useState(true)
+  const [tabIndex, setTabIndex] = useState(0)
+  const [selectedObj, setSelectedObj] = useState<{ type: any, object: fabric.Object }>(null)
+  const [multipleObj, setMultipleObj] = useState([])
   const zoomInBtn = useRef(null)
   const zoomOutBtn = useRef(null)
 
@@ -58,14 +65,17 @@ export default function Start() {
     Products: {
       icon: <PiTShirt />,
       component: Products,
+      editor: MultipleEditor
     },
     Text: {
       icon: <PiTextTBold />,
       component: Text,
+      editor: TextEditor
     },
     Graphics: {
       icon: <PiShapes />,
       component: Graphics,
+      editor: GraphicsEditor
     },
     Templates: {
       icon: <HiOutlineTemplate />,
@@ -74,6 +84,7 @@ export default function Start() {
     Upload: {
       icon: <PiUploadSimple />,
       component: Upload,
+      editor: ImageEditor
     },
   });
 
@@ -96,6 +107,70 @@ export default function Start() {
       height: canvasValues.current.CANVAS_HEIGHT,
       selection: true,
     });
+
+    const onSelect = (options) => {
+      if (options.selected.length > 1) {
+        setMultipleObj(options.selected)
+        setSelectedObj(null)
+        setTabIndex(0)
+      }
+      else {
+        setSelectedObj({ type: options.selected[0].type, object: options.selected[0] })
+        setMultipleObj([])
+
+        switch (options.selected[0].type) {
+          case 'text':
+            setTabIndex(1)
+            break
+          case 'icon':
+            setTabIndex(2)
+            break
+          case 'image':
+            setTabIndex(4)
+            break
+          default:
+            setTabIndex(0)
+        }
+      }
+    }
+
+    const onMouseDown = (options) => {
+      if (options.target) {
+        if (options.target.type === 'activeSelection') {
+          setMultipleObj(options.selected)
+          setSelectedObj(null)
+          setTabIndex(0)
+        }
+        else {
+          setSelectedObj({ type: options.target.type, object: options.target })
+          setMultipleObj([])
+
+          switch (options.target.type) {
+            case 'text':
+              setTabIndex(1)
+              break
+            case 'icon':
+              setTabIndex(2)
+              break
+            case 'image':
+              setTabIndex(4)
+              break
+            default:
+              setTabIndex(0)
+          }
+        }
+      }
+    }
+
+    canvas.on('selection:created', onSelect)
+    canvas.on('object:selected', onSelect)
+    canvas.on('selection:updated', onSelect)
+    canvas.on('mouse:down', onMouseDown)
+
+    canvas.on('before:selection:cleared', (options) => {
+      setMultipleObj([])
+      setSelectedObj(null)
+    })
 
     const printableArea: any = new fabric.Rect({
       top: canvasValues.current.CANVAS_HEIGHT / 2 - 50,
@@ -675,6 +750,13 @@ export default function Start() {
     canvas.renderAll()
   }
 
+  const onChangeTab = (index) => {
+    setTabIndex(index)
+
+    setSelectedObj(null)
+    setMultipleObj([])
+  }
+
   return (
     <div id="designer" className="mt-20">
       <div className="grid sm:grid-cols-1 lg:grid-cols-3">
@@ -736,10 +818,11 @@ export default function Start() {
             Create your design
           </h2>
           <div className="w-full px-2 py-6 sm:px-0">
-            <Tab.Group>
+            <Tab.Group onChange={onChangeTab} selectedIndex={tabIndex}>
               <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
                 {Object.keys(categories).map((category) => (
                   <Tab
+                    onClick={() => onChangeTab(tabIndex)}
                     key={category}
                     className={({ selected }) =>
                       classNames(
@@ -769,7 +852,13 @@ export default function Start() {
                       "ring-white focus:outline-none"
                     )}
                   >
-                    <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} canvasValues={canvasValues} />
+                    {
+                      (selectedObj || multipleObj?.length) && category.editor ? (
+                        <category.editor selectedObj={selectedObj} multipleObj={multipleObj} campaign={campaign} setCampaign={setCampaign} canvasRef={canvasRef} canvasValues={canvasValues} />
+                      ) : (
+                        <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} canvasValues={canvasValues} />
+                      )
+                    }
                   </Tab.Panel>
                 ))}
               </Tab.Panels>

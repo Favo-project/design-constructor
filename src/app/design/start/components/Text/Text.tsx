@@ -24,6 +24,7 @@ export default function Text({ campaign, setCampaign, canvasRef, canvasValues })
       rotatingPointOffset: 0,
     })
 
+
     canvasText.setControlVisible('ml', false)
     canvasText.setControlVisible('mb', false)
     canvasText.setControlVisible('mr', false)
@@ -31,6 +32,7 @@ export default function Text({ campaign, setCampaign, canvasRef, canvasValues })
 
     canvasText.side = campaign.selected.side
     canvasText.canvasId = uuidv4()
+    canvasText.type = 'text'
 
     setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], canvasText] } })
 

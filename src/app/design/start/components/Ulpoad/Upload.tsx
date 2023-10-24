@@ -41,6 +41,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
 
         img.side = campaign.selected.side
         img.canvasId = uuidv4()
+        img.type = 'image'
         setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], img] } })
 
         setFile(null)

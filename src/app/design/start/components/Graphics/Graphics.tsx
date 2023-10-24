@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
-import { SVG1, SVG2, SVG3, SVG4, SVG5, SVG6, SVG7 } from "../assets/graphics";
+import { SVG1, SVG2, SVG3, SVG4, SVG5, SVG6, SVG7 } from "../../assets/graphics";
 import { fabric } from 'fabric'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -81,15 +81,16 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
         fill: 'white',
         transparentCorners: false,
         cornerColor: 'white',
-        cornerStrokeColor: 'white',
+        cornerStrokeColor: '#ADC4CE',
         cornerSize: 10,
         rotatingPointOffset: 12,
       })
 
-      svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'white' }) : elem)
+      svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'red' }) : elem)
 
       svgObject.side = campaign.selected.side
       svgObject.canvasId = uuidv4()
+      svgObject.type = 'icon'
       setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], svgObject] } })
 
       canvas.add(svgObject);
