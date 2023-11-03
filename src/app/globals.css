@@ -3,3 +3,31 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Pacifico&family=Quicksand:wght@300;400;500;600;700&family=VT323&display=swap");
+
+@font-face {
+  font-family: "RobotoMono";
+  src: url("../../public/fonts/RobotoMono-VariableFont_wght.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Inconsolata";
+  src: url("../../public/fonts/Inconsolata-VariableFont_wdth,wght.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "VT323";
+  src: url("../../public/fonts/VT323-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Pacifico";
+  src: url("../../public/fonts/Pacifico-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("../../public/fonts/Quicksand-VariableFont_wght.ttf")
+    format("truetype");
+}

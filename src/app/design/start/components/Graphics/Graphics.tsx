@@ -72,8 +72,6 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
       svgObject.setControlVisible('mt', false)
 
       svgObject.set({
-        width: 100,
-        height: 100,
         top: canvasValues.current.CANVAS_HEIGHT / 2 - 50,
         left: canvasValues.current.CANVAS_WIDTH / 2,
         originX: 'center',

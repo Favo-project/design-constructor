@@ -65,7 +65,8 @@ export default function Start() {
     Products: {
       icon: <PiTShirt />,
       component: Products,
-      editor: MultipleEditor
+      editor: MultipleEditor,
+      multiple: true
     },
     Text: {
       icon: <PiTextTBold />,
@@ -110,9 +111,9 @@ export default function Start() {
 
     const onSelect = (options) => {
       if (options.selected.length > 1) {
+        setTabIndex(0)
         setMultipleObj(options.selected)
         setSelectedObj(null)
-        setTabIndex(0)
       }
       else {
         setSelectedObj({ type: options.selected[0].type, object: options.selected[0] })
@@ -136,10 +137,10 @@ export default function Start() {
 
     const onMouseDown = (options) => {
       if (options.target) {
-        if (options.target.type === 'activeSelection') {
-          setMultipleObj(options.selected)
-          setSelectedObj(null)
+        if (options.target.type === 'activeSelection' && !options.target.canvasId) {
           setTabIndex(0)
+          setMultipleObj(options.target._objects)
+          setSelectedObj(null)
         }
         else {
           setSelectedObj({ type: options.target.type, object: options.target })
@@ -207,6 +208,7 @@ export default function Start() {
         stroke: 'transparent',
         strokeWidth: 1,
         selectable: false,
+        evented: false
       }
     );
 
@@ -698,7 +700,7 @@ export default function Start() {
     }
 
     function renderIcon(ctx, left, top, styleOverride, fabricObject) {
-      const size = 26
+      const size = 24
       ctx.save();
       ctx.translate(left, top);
       ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
@@ -853,10 +855,14 @@ export default function Start() {
                     )}
                   >
                     {
-                      (selectedObj || multipleObj?.length) && category.editor ? (
+                      multipleObj?.length && category.multiple ? (
                         <category.editor selectedObj={selectedObj} multipleObj={multipleObj} campaign={campaign} setCampaign={setCampaign} canvasRef={canvasRef} canvasValues={canvasValues} />
                       ) : (
-                        <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} canvasValues={canvasValues} />
+                        selectedObj && category.editor ? (
+                          <category.editor selectedObj={selectedObj} multipleObj={multipleObj} campaign={campaign} setCampaign={setCampaign} canvasRef={canvasRef} canvasValues={canvasValues} />
+                        ) : (
+                          <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} canvasValues={canvasValues} />
+                        )
                       )
                     }
                   </Tab.Panel>
