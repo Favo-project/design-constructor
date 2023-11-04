@@ -5,7 +5,7 @@ import { Tab } from "@headlessui/react";
 import Products from "./components/Products";
 import Text from "./components/Text/Text";
 import Graphics from "./components/Graphics/Graphics";
-import Templates from "./components/Templates";
+// import Templates from "./components/Templates";
 import Upload from "./components/Ulpoad/Upload";
 import {
   PiShapes,
@@ -13,7 +13,7 @@ import {
   PiTextTBold,
   PiUploadSimple,
 } from "react-icons/pi";
-import { HiOutlineTemplate } from "react-icons/hi";
+// import { HiOutlineTemplate } from "react-icons/hi";
 import { BsPlusLg, BsDashLg } from "react-icons/bs";
 import { VscRefresh } from "react-icons/vsc";
 
@@ -78,10 +78,10 @@ export default function Start() {
       component: Graphics,
       editor: GraphicsEditor
     },
-    Templates: {
-      icon: <HiOutlineTemplate />,
-      component: Templates,
-    },
+    // Templates: {
+    //   icon: <HiOutlineTemplate />,
+    //   component: Templates,
+    // },
     Upload: {
       icon: <PiUploadSimple />,
       component: Upload,
@@ -136,7 +136,6 @@ export default function Start() {
     }
 
     const onMouseDown = (options) => {
-      console.log(options);
       if (options.target) {
         if (options.target.type === 'activeSelection' && !options.target.canvasId) {
           setTabIndex(0)
