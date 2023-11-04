@@ -84,11 +84,12 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
         rotatingPointOffset: 12,
       })
 
-      svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'red' }) : elem)
+      svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'white' }) : elem)
 
       svgObject.side = campaign.selected.side
       svgObject.canvasId = uuidv4()
       svgObject.type = 'icon'
+      svgObject.url = graph.icon
       setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], svgObject] } })
 
       canvas.add(svgObject);

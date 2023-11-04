@@ -123,7 +123,7 @@ export default function Products({ campaign, setCampaign }) {
   }
 
   return (
-    <div className="w-full py-4 px-4">
+    <div className="w-full py-4">
       <div className="mx-auto w-full">
         <RadioGroup value={campaign.selected.product} onChange={onChangeHandler}>
           <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>

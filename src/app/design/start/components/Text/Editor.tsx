@@ -159,7 +159,6 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
 
         let scale = size / oldSize
 
-
         if (e.target.value === '') {
             setSize(null)
         }
@@ -257,8 +256,6 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
             canvas.add(duplicatedObject);
             canvas.requestRenderAll()
         })
-
-        // const duplicatedObject = fabric.util.object.clone(selectedObj.object)
     }
 
     const selectAll = () => {
@@ -346,7 +343,7 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
                 <div id="color">
                     <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Color</h3>
 
-                    <div className="top-16 w-full max-w-sm px-2">
+                    <div className="w-full max-w-sm px-2">
                         <Popover className="relative">
                             {({ open }) => (
                                 <>

@@ -136,6 +136,7 @@ export default function Start() {
     }
 
     const onMouseDown = (options) => {
+      console.log(options);
       if (options.target) {
         if (options.target.type === 'activeSelection' && !options.target.canvasId) {
           setTabIndex(0)
@@ -202,7 +203,7 @@ export default function Start() {
     });
 
     const centralLine: any = new fabric.Line(
-      [canvas.width / 2, 0, canvas.width / 2, printableArea.height],
+      [(canvas.width / 2), 0, (canvas.width / 2), printableArea.height],
       {
         top: printableArea.top - (printableArea.height / 2),
         stroke: 'transparent',
