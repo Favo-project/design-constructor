@@ -193,4 +193,13 @@ const colors = [
   },
 ];
 
-export { colors };
+const fonts = [
+  'Arial',
+  "Pacifico",
+  "VT323",
+  "Quicksand",
+  "Inconsolata",
+  "RobotoMono",
+]
+
+export { colors, fonts };

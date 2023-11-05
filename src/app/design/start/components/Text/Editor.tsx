@@ -7,16 +7,7 @@ import { fabric } from 'fabric'
 import { HiOutlineDuplicate } from "react-icons/hi"
 import { BiSolidSelectMultiple } from "react-icons/bi"
 import { v4 as uuidv4 } from 'uuid'
-import { colors } from "@/constants"
-
-const fonts = [
-    'Arial',
-    "Pacifico",
-    "VT323",
-    "Quicksand",
-    "Inconsolata",
-    "RobotoMono",
-]
+import { colors, fonts } from "@/constants"
 
 export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
     const [text, setText] = useState(selectedObj.object.text)
@@ -27,14 +18,6 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
     const [size, setSize] = useState(1)
     const [spacing, setSpacing] = useState(0)
     const [rotate, setRotate] = useState(0)
-
-    useLayoutEffect(() => {
-        fonts.forEach((font) => {
-            if (font === 'Arial') return
-            const myfont = new FontFaceObserver(font);
-            myfont.load()
-        })
-    }, [])
 
     useEffect(() => {
         setText(selectedObj.object.text)

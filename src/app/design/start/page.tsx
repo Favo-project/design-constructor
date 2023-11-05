@@ -25,6 +25,8 @@ import TextEditor from "./components/Text/Editor";
 import GraphicsEditor from "./components/Graphics/Editor";
 import ImageEditor from "./components/Ulpoad/Editor";
 import MultipleEditor from "./components/MultipleEditor";
+import FontFaceObserver from 'fontfaceobserver'
+import { fonts } from "@/constants";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -103,6 +105,12 @@ export default function Start() {
   });
 
   useLayoutEffect(() => {
+    fonts.forEach((font) => {
+      if (font === 'Arial') return
+      const myfont = new FontFaceObserver(font);
+      myfont.load()
+    })
+
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: canvasValues.current.CANVAS_WIDTH,
       height: canvasValues.current.CANVAS_HEIGHT,
@@ -127,7 +135,7 @@ export default function Start() {
             setTabIndex(2)
             break
           case 'image':
-            setTabIndex(4)
+            setTabIndex(3)
             break
           default:
             setTabIndex(0)
@@ -154,7 +162,7 @@ export default function Start() {
               setTabIndex(2)
               break
             case 'image':
-              setTabIndex(4)
+              setTabIndex(3)
               break
             default:
               setTabIndex(0)
@@ -725,7 +733,6 @@ export default function Start() {
     }
 
     document.addEventListener('keydown', deleteObjHandler)
-    setLoading(false)
 
     return () => {
       document.removeEventListener('keydown', deleteObjHandler)
