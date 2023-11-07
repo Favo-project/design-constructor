@@ -19,6 +19,16 @@ const nextConfig = {
         hostname: "www.bonfire.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "tailwindui.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "dynamic.bonfireassets.com",
+        port: "",
+      },
     ],
   },
 };

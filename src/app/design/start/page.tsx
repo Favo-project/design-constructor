@@ -794,20 +794,6 @@ export default function Start() {
               <div id="zoom" className="flex items-center ml-4 gap-2">
                 <button
                   onClick={() =>
-                    setCanvasScale((prevValue) => (prevValue += 50))
-                  }
-                  disabled={canvasScale >= 400}
-                  id="zoom-in"
-                  ref={zoomInBtn}
-                  className="flex items-center justify-center rounded-full p-1 border border-gray-300 disabled:opacity-30"
-                >
-                  <BsPlusLg />
-                </button>
-                <span className="text-sm">
-                  {canvasValues.current.scale * 100}%
-                </span>
-                <button
-                  onClick={() =>
                     setCanvasScale((prevValue) => (prevValue -= 50))
                   }
                   disabled={canvasScale <= 100}
@@ -816,6 +802,20 @@ export default function Start() {
                   className="flex items-center justify-center rounded-full p-1 border border-gray-300 disabled:opacity-30"
                 >
                   <BsDashLg />
+                </button>
+                <span className="text-sm">
+                  {canvasValues.current.scale * 100}%
+                </span>
+                <button
+                  onClick={() =>
+                    setCanvasScale((prevValue) => (prevValue += 50))
+                  }
+                  disabled={canvasScale >= 400}
+                  id="zoom-in"
+                  ref={zoomInBtn}
+                  className="flex items-center justify-center rounded-full p-1 border border-gray-300 disabled:opacity-30"
+                >
+                  <BsPlusLg />
                 </button>
               </div>
             </div>

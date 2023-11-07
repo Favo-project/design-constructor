@@ -3,12 +3,13 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
+import { PiCaretRightThin } from "react-icons/pi";
 
 const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
+  { name: "Design", href: "#" },
+  { name: "Profits", href: "#" },
+  { name: "Settings", href: "#" },
+  { name: "Edit & Preview", href: "#" },
 ];
 
 export default function DesignNavbar() {
@@ -17,7 +18,7 @@ export default function DesignNavbar() {
   return (
     <>
       <nav
-        className="flex fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 shadow-sm"
+        className="flex fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 lg:py-0 shadow-sm"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -40,20 +41,26 @@ export default function DesignNavbar() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              {item.name}
-            </a>
+        <div className="hidden lg:flex items-center">
+          {navigation.map((item, index) => (
+            <div key={index} className="flex items-center">
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-sm py-6 font-semibold leading-6 text-gray-900"
+              >
+                {item.name}
+              </a>
+              <PiCaretRightThin className="text-6xl text-slate-300" />
+            </div>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
+          <button className="bg-indigo-500 text-white rounded-md shadow-md px-3 p-1">
+            Next
+          </button>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
+            Log in
           </a>
         </div>
       </nav>

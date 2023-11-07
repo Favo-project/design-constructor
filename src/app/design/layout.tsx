@@ -6,9 +6,9 @@ export default function DesignLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="lg:pt-[72px] pt-[80px]">
       <DesignNavbar />
       {children}
-    </>
+    </div>
   );
 }
