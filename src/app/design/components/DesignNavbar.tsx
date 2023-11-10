@@ -4,12 +4,13 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { PiCaretRightThin } from "react-icons/pi";
+import Link from "next/link";
 
 const navigation = [
-  { name: "Design", href: "#" },
-  { name: "Profits", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Edit & Preview", href: "#" },
+  { name: "Design", href: "/design/start" },
+  { name: "Profits", href: "/design/profits" },
+  { name: "Details", href: "/design/details" },
+  { name: "Edit & Preview", href: "/design/preview" },
 ];
 
 export default function DesignNavbar() {
@@ -18,18 +19,18 @@ export default function DesignNavbar() {
   return (
     <>
       <nav
-        className="flex fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 lg:py-0 shadow-sm"
+        className="flex z-50 fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 lg:py-0 shadow-sm"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt="logo"
             />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -44,14 +45,14 @@ export default function DesignNavbar() {
         <div className="hidden lg:flex items-center">
           {navigation.map((item, index) => (
             <div key={index} className="flex items-center">
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="text-sm py-6 font-semibold leading-6 text-gray-900"
               >
                 {item.name}
-              </a>
-              <PiCaretRightThin className="text-6xl text-slate-300" />
+              </Link>
+              <PiCaretRightThin className="text-7xl text-slate-300" />
             </div>
           ))}
         </div>
@@ -94,13 +95,13 @@ export default function DesignNavbar() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
                     href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
               <div className="py-6">

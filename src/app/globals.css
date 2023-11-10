@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Pacifico&family=Quicksand:wght@300;400;500;600;700&family=VT323&display=swap");
 
 @font-face {

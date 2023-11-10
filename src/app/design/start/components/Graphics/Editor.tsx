@@ -168,7 +168,7 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
                                                     <div className="grid lg:grid-cols-6">
                                                         {colors.map((item, index) => (
                                                             <div key={index}>
-                                                                <button className="p-2 rounded-full" onClick={() => onChangeColor(item.color)} >
+                                                                <button className="border border-gray-300 rounded-full shadow-md" onClick={() => onChangeColor(item.color)} >
                                                                     <span className="block w-8 h-8 rounded-full" style={{ backgroundColor: item.color }} />
                                                                 </button>
                                                             </div>
