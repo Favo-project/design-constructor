@@ -8,13 +8,20 @@ import {
 export default function Dashboard() {
   return (
     <div id="overview">
-      <div className="p-4 sm:ml-56">
-        <h1 className="text-3xl font-semibold text-slate-700 my-6">Overview</h1>
-        <div className="grid grid-cols-2 gap-8">
-          <div className="max-w-sm p-10 bg-white border border-gray-200 rounded-lg shadow">
-            <h5 className="mb-8 text-2xl font-medium tracking-tight text-gray-600 font-sans">
-              Campaign
-            </h5>
+      <header>
+        <h1 className="text-3xl font-bold text-slate-600 my-8">Overview</h1>
+      </header>
+      <div className="grid grid-cols-2 gap-8">
+        <div className="flex flex-col gap-8">
+          <div className="py-8 px-6 bg-white border border-gray-200 rounded-2xl shadow-lg">
+            <header className="flex items-center mb-8 justify-between">
+              <h3 className="text-2xl font-semibold tracking-tight text-gray-600">
+                Campaigns
+              </h3>
+              <button className="p-1 text-indigo-600 hover:text-indigo-400 transition text-sm">
+                Start new
+              </button>
+            </header>
             <div className="campaign-list">
               <ul className="mb-8">
                 <li className="flex items-center mb-4">
@@ -39,7 +46,9 @@ export default function Dashboard() {
             </div>
             <SolidButton>Make your own campaign</SolidButton>
           </div>
-          <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow h-min">
+        </div>
+        <div>
+          <div className="py-8 px-6 bg-white border border-gray-200 rounded-2xl shadow-lg h-min">
             <h5 className="mb-8 text-2xl font-medium tracking-tight text-gray-600 font-sans">
               Recent sales
             </h5>

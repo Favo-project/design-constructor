@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar";
+import DashboardSidebar from "@/components/DashboardSidebar";
 
 export default function DashboardLayout({
   children,
@@ -7,8 +7,10 @@ export default function DashboardLayout({
 }) {
   return (
     <div id="dashboard">
-      <Sidebar />
-      {children}
+      <DashboardSidebar />
+      <div className="p-4 lg:ml-56 bg-[#f5f8fc] h-[100vh]">
+        {children}
+      </div>
     </div>
   );
 }
