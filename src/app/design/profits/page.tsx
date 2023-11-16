@@ -75,7 +75,6 @@ export default function Profits() {
                                             </ul>
                                         </div>
                                     </div>
-
                                 </td>
                                 <td className="text-base py-5 text-slate-700 font-medium">{product.baseCost}$</td>
                                 <td className="py-5">

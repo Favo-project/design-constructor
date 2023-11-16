@@ -88,7 +88,7 @@ export default function Sidebar() {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
-          <Link href={'/dashboard/overview'} className="flex flex-col items-center mb-6">
+          <Link href={'/dashboard/overview'} className="flex flex-col items-center my-6">
             <img
               width={32}
               height={32}
