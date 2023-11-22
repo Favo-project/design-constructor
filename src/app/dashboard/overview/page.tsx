@@ -1,5 +1,4 @@
 'use client'
-import SolidButton from "@/components/form-elements/SolidButton";
 import {
   CurrencyDollarIcon,
   UserIcon,
@@ -10,6 +9,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { MdDelete, MdDeleteOutline, MdModeEdit, MdOutlineEdit } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
+import HelpCard from "@/components/HelpCard";
 
 export default function Dashboard() {
   return (
@@ -255,13 +255,7 @@ export default function Dashboard() {
               </p>
             </div>
             <div className="py-8 px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
-              <h5 className="mb-8 text-2xl font-medium tracking-tight text-gray-600 font-sans">
-                Need help?
-              </h5>
-              <p className="mb-3 font-normal text-gray-700 text-center">
-                Have your questions answered without having to wait.
-              </p>
-              <button className="px-4 py-2 rounded-lg border border-indigo-500 text-indigo-600 font-semibold shadow-lg transition-all">Get help now</button>
+              <HelpCard />
             </div>
           </div>
         </div>
