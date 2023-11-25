@@ -83,7 +83,7 @@ export default function Stores() {
                                         <div className="mt-6 flex justify-end">
 
                                             <button
-                                                disabled={!name}
+                                                disabled={name === ''}
                                                 type="button"
                                                 className="inline-flex justify-center rounded-lg border border-transparent bg-indigo-500 px-4 py-3 text-sm font-medium text-white hover:bg-indigo-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 disabled:bg-indigo-400 disabled:cursor-auto"
                                                 onClick={closeModal}
