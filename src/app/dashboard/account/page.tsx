@@ -15,13 +15,13 @@ export default function Account() {
                             <Image className="rounded-full" src={avatar} alt="account-avatar" width={160} height={160} />
                         </div>
                         <div>
-                            <h3 className="font-medium text-3xl font-sans text-slate-700 mb-3">Dilrozbek Raximov</h3>
+                            <h3 className="font-medium text-2xl font-sans text-slate-700 mb-3">Dilrozbek Raximov</h3>
                             <p className="text-slate-700 font-sans">Member since September 2023</p>
                         </div>
                     </div>
 
                     <div>
-                        
+
                     </div>
                 </div>
             </div>
