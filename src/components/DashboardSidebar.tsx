@@ -58,9 +58,9 @@ export default function Sidebar() {
         <button
           data-drawer-target="default-sidebar"
           data-drawer-toggle="default-sidebar"
-          aria-controls="default-sidebar"
+          aria-controls="default-sidebar" 
           type="button"
-          className="inline-flex items-center transition p-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 dark:text-gray-400 dark:hover:bg-slate-300"
+          className="inline-flex items-center transition p-3 text-sm rounded-lg focus:outline-none focus:ring-2 text-gray-400 hover:bg-slate-300"
           onClick={toggleSidebar}
         >
           <span className="sr-only">Open sidebar</span>
@@ -87,7 +87,7 @@ export default function Sidebar() {
         className={`fixed top-0 left-0 z-40 w-56 h-screen transition-all lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-700">
           <Link href={'/dashboard/overview'} className="flex flex-col items-center my-6">
             <img
               width={32}
@@ -107,9 +107,9 @@ export default function Sidebar() {
                   <Link
                     onClick={() => setIsOpen(false)}
                     href={link.href}
-                    className="flex transition-all items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 group"
+                    className="flex transition-all items-center p-2 rounded-lg text-white hover:bg-gray-500 group"
                   >
-                    <span className="text-2xl text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                    <span className="text- transition duration-75 text-gray-400 group-hover:text-white">
                       {link.icon}
                     </span>
                     <span className="ml-3">{link.name}</span>
