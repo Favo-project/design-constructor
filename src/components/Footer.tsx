@@ -1,55 +1,82 @@
 import Link from "next/link";
+import { FaInstagram, FaTiktok } from "react-icons/fa6";
+import { FaTelegramPlane, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="container mx-auto flex flex-col">
-      <ul className="flex items-center justify-between mx-2 my-5">
-        <ul>
-          <li>
-            <h4 className="font-bold">Sell online</h4>
-          </li>
-          <li>
-            <Link href={".."}>Limited edition campaign</Link>
-          </li>
-          <li>
-            <Link href={".."}>On demand merch store</Link>
-          </li>
-          <li>
-            <Link href={".."}>On demand merch store</Link>
-          </li>
+    <div className="py-12 bg-slate-600">
+      <footer className="container mx-auto max-w-7xl">
+        <ul className="grid grid-cols-4 mx-2 my-6">
+          <div>
+            <Link href={'/'} className="logo p-2 mb-6 rounded-full bg-white bg-opacity-90 inline-block w-12 h-12 shadow-lg hover:shadow-indigo-600">
+              <img
+                width={32}
+                height={32}
+                className="h-8 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                alt="logo"
+              />
+            </Link>
+            <p className="text-sm max-w-[190px] text-slate-300 mb-10 font-sans">Where the world goes for premium custom shirts.</p>
+            <Link href={'/dashboard/overview'} className="rounded-md bg-indigo-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all">
+              My dashboard
+            </Link>
+          </div>
+          <ul className="flex flex-col gap-2">
+            <li>
+              <h4 className="font-bold text-slate-300 tracking-wide font-sans">Company</h4>
+            </li>
+            <li>
+              <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"/about"}>About us</Link>
+            </li>
+            <li>
+              <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"/help"}>Get help</Link>
+            </li>
+          </ul>
+          <ul className="flex flex-col gap-2">
+            <li>
+              <h4 className="font-bold text-slate-300 tracking-wide font-sans">For creators</h4>
+            </li>
+            <li>
+              <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"/online-stores"}>Create store</Link>
+            </li>
+            <li>
+              <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"/sell-online"}>Sell on ArtVibe</Link>
+            </li>
+          </ul>
+          <ul className="flex flex-col gap-2">
+            <li>
+              <h4 className="font-bold text-slate-300 tracking-wide font-sans">Contacts</h4>
+            </li>
+            <li>
+              <h5 className="text-sm font-sans text-slate-300 mt-2">Call us:</h5>
+              <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"tel:+998949434672"}>+998 94 943 46 72</Link>
+            </li>
+            <li>
+              <h5 className="text-sm font-sans text-slate-300 mt-2">Telegram:</h5>
+              <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"https://t.me/artvibeuz"}>@artvibeuz</Link>
+            </li>
+          </ul>
         </ul>
-        <ul>
-          <li>
-            <h4 className="font-bold">Sell online</h4>
-          </li>
-          <li>
-            <Link href={".."}>Limited edition campaign</Link>
-          </li>
-          <li>
-            <Link href={".."}>On demand merch store</Link>
-          </li>
-          <li>
-            <Link href={".."}>On demand merch store</Link>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <h4 className="font-bold">Sell online</h4>
-          </li>
-          <li>
-            <Link href={".."}>Limited edition campaign</Link>
-          </li>
-          <li>
-            <Link href={".."}>On demand merch store</Link>
-          </li>
-          <li>
-            <Link href={".."}>On demand merch store</Link>
-          </li>
-        </ul>
-      </ul>
-      <p className="text-center p-4">
-        © 2023 Bonfire.com DMCA Trademark Takedown
-      </p>
-    </footer>
+        <div className="w-full px-12 py-8 mt-16 flex justify-between items-center rounded-2xl bg-gray-700">
+          <p className="text-slate-300 font-sans tracking-tight">© 2023 ArtVibe.uz</p>
+
+          <div className="flex items-center gap-3">
+            <a className="p-2.5 rounded-full flex items-center justify-center text-2xl text-slate-100 hover:bg-slate-600 transition-all hover:shadow-md" target="_blank" href="https://instagram.com/artvibe">
+              <FaInstagram />
+            </a>
+            <a className="p-2.5 rounded-full flex items-center justify-center text-2xl text-slate-100 hover:bg-slate-600 transition-all hover:shadow-md" target="_blank" href="https://t.me/artvibeuz">
+              <FaTelegramPlane />
+            </a>
+            <a className="p-2.5 rounded-full flex items-center justify-center text-2xl text-slate-100 hover:bg-slate-600 transition-all hover:shadow-md" target="_blank" href="#">
+              <FaFacebook />
+            </a>
+            <a className="p-2.5 rounded-full flex items-center justify-center text-2xl text-slate-100 hover:bg-slate-600 transition-all hover:shadow-md" target="_blank" href="#">
+              <FaTiktok />
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }

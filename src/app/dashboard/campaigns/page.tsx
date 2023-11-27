@@ -167,7 +167,7 @@ export default function Campaigns() {
                 </div>
             </div>
 
-            <div className="py-8 px-7 mt-20 bg-white border border-gray-200 rounded-2xl shadow-lg">
+            <div className="py-8 px-7 max-w-xl mt-20 bg-white border border-gray-200 rounded-2xl shadow-lg">
               <HelpCard />
             </div>
         </div>

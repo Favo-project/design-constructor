@@ -73,33 +73,24 @@ export default function Account() {
                             <Image className="rounded-full" src={avatar} alt="account-avatar" width={160} height={160} />
                         </div>
                         <div>
-<<<<<<< HEAD
-                            <h3 className="font-medium text-2xl font-sans text-slate-700 mb-3">Dilrozbek Raximov</h3>
-                            <p className="text-slate-700 font-sans">Member since September 2023</p>
-                        </div>
-                    </div>
-
-                    <div>
-
-=======
                             <h3 className="font-medium text-3xl font-sans text-slate-700 mb-3">Dilrozbek Raximov</h3>
                             <p className="text-slate-700 font-medium font-sans">Member since September 2023</p>
                         </div>
                     </div>
 
-                    <div className="w-full max-w-md px-2 py-16 sm:px-0">
+                    <div className="w-full max-w-lg px-2 py-8 sm:px-0">
                         <Tab.Group>
-                            <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+                            <Tab.List className="flex space-x-1 rounded-xl p-1 gap-3">
                                 {Object.keys(categories).map((category) => (
                                     <Tab
                                         key={category}
                                         className={({ selected }) =>
                                             classNames(
-                                                'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
-                                                'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                                                'w-full py-2.5 font-medium leading-5',
+                                                ' outline-none',
                                                 selected
-                                                    ? 'bg-white text-blue-700 shadow'
-                                                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                                                    ? 'text-gray-800 border-b-[1.5px] font-semibold border-b-gray-800'
+                                                    : 'text-gray-400 hover:text-indigo-500'
                                             )
                                         }
                                     >
@@ -108,47 +99,46 @@ export default function Account() {
                                 ))}
                             </Tab.List>
                             <Tab.Panels className="mt-2">
-                                {Object.values(categories).map((posts, idx) => (
-                                    <Tab.Panel
-                                        key={idx}
-                                        className={classNames(
-                                            'rounded-xl bg-white p-3',
-                                            'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
-                                        )}
-                                    >
-                                        <ul>
-                                            {posts.map((post) => (
-                                                <li
-                                                    key={post.id}
-                                                    className="relative rounded-md p-3 hover:bg-gray-100"
-                                                >
-                                                    <h3 className="text-sm font-medium leading-5">
-                                                        {post.title}
-                                                    </h3>
-
-                                                    <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                                                        <li>{post.date}</li>
-                                                        <li>&middot;</li>
-                                                        <li>{post.commentCount} comments</li>
-                                                        <li>&middot;</li>
-                                                        <li>{post.shareCount} shares</li>
-                                                    </ul>
-
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(
-                                                            'absolute inset-0 rounded-md',
-                                                            'ring-blue-400 focus:z-10 focus:outline-none focus:ring-2'
-                                                        )}
-                                                    />
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </Tab.Panel>
-                                ))}
+                                <Tab.Panel className={"py-6 px-2"}>
+                                    <div className="flex flex-col mb-12">
+                                        <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="name">NAME*</label>
+                                        <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="text" id="name" />
+                                    </div>
+                                    <div className="flex flex-col mb-12">
+                                        <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="email">EMAIL ADDRESS*</label>
+                                        <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="email" />
+                                    </div>
+                                    <div className="flex flex-col mb-12">
+                                        <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="email">PHOTO</label>
+                                        <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="file" id="email" />
+                                        <p className="text-slate-600 text-sm mt-2">JPG or PNG. Maximum size of 5MB.</p>
+                                    </div>
+                                    <div>
+                                        <button className="px-4 py-3 bg-green-600 text-white font-sans tracking-widest uppercase text-sm font-semibold rounded-lg shadow-md">
+                                            SAVE CHANGES
+                                        </button>
+                                    </div>
+                                </Tab.Panel>
+                                <Tab.Panel className={"py-6 px-2"}>
+                                    <div className="flex flex-col mb-12">
+                                        <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="new-password">NEW PASSWORD*</label>
+                                        <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="new-password" />
+                                    </div>
+                                    <div className="flex flex-col mb-12">
+                                        <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="confirm-password">CONFIRM NEW PASSOWRD*</label>
+                                        <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="confirm-password" />
+                                    </div>
+                                    <div>
+                                        <button className="px-4 py-3 bg-green-600 text-white font-sans tracking-widest uppercase text-sm font-semibold rounded-lg shadow-md">
+                                            CHANGE PASSWORD
+                                        </button>
+                                    </div>
+                                </Tab.Panel>
+                                <Tab.Panel className={"py-6 px-2"}>
+                                    Email
+                                </Tab.Panel>
                             </Tab.Panels>
                         </Tab.Group>
->>>>>>> 0e213a24bbc76df7ef3d5813b7aa02eaeb4a275d
                     </div>
                 </div>
             </div>
