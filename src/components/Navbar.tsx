@@ -3,12 +3,13 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
+import Link from "next/link";
 
 const navigation = [
-  { name: "Sell online", href: "#" },
-  { name: "Create store", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Templates", href: "#" },
+  { name: "Sell online", href: "/sell-online" },
+  { name: "Create store", href: "/online-stores" },
+  { name: "Marketplace", href: "/marketplace" },
+  { name: "Templates", href: "/templates" },
 ];
 
 export default function Navbar() {
@@ -16,10 +17,11 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="bg-white sticky top-0 z-50 shadow-sm bg-opacity-90">
+      <div className="py-3 bg-white z-50 relative"></div>
+      <div className="bg-white sticky shadow-sm top-0 z-50">
         <div className="container m-auto max-w-7xl">
           <nav
-            className="flex items-center justify-between p-6 lg:px-8"
+            className="flex items-center justify-between p-4 lg:px-8"
             aria-label="Global"
           >
             <div className="flex lg:flex-1">
@@ -46,13 +48,13 @@ export default function Navbar() {
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">

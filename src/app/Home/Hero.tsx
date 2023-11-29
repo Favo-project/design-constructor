@@ -1,11 +1,12 @@
-import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
+import { heroImg1, heroImg2, heroImg3, heroImg4, heroImg5 } from "./assets";
+import { GoSearch } from "react-icons/go";
 
-export default function Example() {
+export default function Hero() {
+
   return (
     <div className="bg-white">
-      <Navbar />
-
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -20,13 +21,12 @@ export default function Example() {
           />
         </div>
 
-
-        <div className="container m-auto max-w-7xl">
+        <div className="container m-auto max-w-7xl flex gap-10">
           <div className="py-10 sm:py-14 lg:py-20">
-            <h1 className="text-4xl max-w-lg font-bold tracking-normal text-gray-700 sm:text-5xl">
+            <h1 className="text-4xl max-w-lg font-semibold font-sans tracking-wide text-gray-700 sm:text-5xl">
               Design your next favorite custom shirt
             </h1>
-            <div className="mt-10 flex items-center gap-x-4">
+            <div className="mt-10 flex items-center gap-x-4 mb-12">
               <Link
                 href="/design/start"
                 className="rounded-md bg-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
@@ -39,6 +39,33 @@ export default function Example() {
               >
                 Dashboard
               </Link>
+            </div>
+            <div className="relative shadow-[2px_2px_14px_0px_#bdc8d9] border-slate-200 focus-within:hover:shadow-none hover:shadow-none focus-within:shadow-none rounded-xl max-w-md transition-all">
+              <input className="px-4 py-3.5 rounded-xl w-full hover:shadow-[inset_0_0_0_2px_#bdc8d9] outline-none hover:focus-within:shadow-[inset_0_0_0_2px_#474E68] focus-within:shadow-[inset_0_0_0_2px_#474E68] transition-all duration-300 font-semibold text-slate-600" type="text" placeholder="Search" />
+              <button className="absolute top-[50%] translate-y-[-50%] right-0 text-2xl py-3.5 px-4">
+                <GoSearch />
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center gap-8">
+            <div className="flex flex-col gap-6">
+              <div className="h-[200px] w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+                <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg5} alt="hero-image" />
+              </div>
+              <div className="h-max w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+                <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg1} alt="hero-image" width={180} height={100} />
+              </div>
+            </div>
+            <div className="flex flex-col gap-6">
+              <div className="h-max w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+                <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg2} alt="hero-image" width={180} height={100} />
+              </div>
+              <div className="h-[200px] w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+                <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg4} alt="hero-image" width={180} height={100} />
+              </div>
+            </div>
+            <div className="h-max w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+              <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg3} alt="hero-image" width={180} height={100} />
             </div>
           </div>
         </div>
