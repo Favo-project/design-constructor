@@ -10,6 +10,7 @@ import { Fragment } from 'react'
 import { MdDelete, MdDeleteOutline, MdModeEdit, MdOutlineEdit } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import HelpCard from "@/components/HelpCard";
+import Link from "next/link";
 
 export default function Dashboard() {
   return (
@@ -24,9 +25,9 @@ export default function Dashboard() {
               <h3 className="text-2xl font-semibold tracking-tight text-gray-600">
                 Campaigns
               </h3>
-              <button className="p-1 text-indigo-600 hover:text-indigo-400 transition text-sm">
+              <Link href={'/design/start'} className="p-1 text-indigo-600 hover:text-indigo-400 transition text-sm">
                 Start new
-              </button>
+              </Link>
             </header>
             <div className="campaign-list">
               <ul className="mb-8">
@@ -220,9 +221,9 @@ export default function Dashboard() {
               </tbody>
             </table>
             <div className="flex justify-end mt-4">
-              <button className="px-4 py-2 rounded-lg border border-indigo-500 text-indigo-600 font-semibold shadow-lg transition-all">
+              <Link href={'/dashboard/campaigns'} className="px-4 py-2 rounded-lg border border-indigo-500 text-indigo-600 font-semibold shadow-lg transition-all">
                 See all
-              </button>
+              </Link>
             </div>
           </div>
           <div className="py-8 px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
@@ -236,9 +237,9 @@ export default function Dashboard() {
                   NO PAYOUTS YET
                 </h4>
                 <p className="text-sm text-slate-600 text-center tracking-wide mb-3">No payouts available yet. Don’t worry, we will email you when the first one is ready.</p>
-                <button className="px-3 py-2 border-2 border-slate-400 rounded-md text-slate-600 text-sm uppercase font-sans tracking-widest">
+                <Link href={'/dashboard/payouts'} className="px-3 py-2 border-2 border-slate-400 rounded-md text-slate-600 text-sm uppercase font-sans tracking-widest">
                   LEARN MORE
-                </button>
+                </Link>
               </div>
             </div>
           </div>
