@@ -25,7 +25,7 @@ export default function Navbar() {
             aria-label="Global"
           >
             <div className="flex lg:flex-1">
-              <a href="#" className="-m-1.5 p-1.5">
+              <Link href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
                 <img
                   width={32}
@@ -34,7 +34,7 @@ export default function Navbar() {
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt="logo"
                 />
-              </a>
+              </Link>
             </div>
             <div className="flex lg:hidden">
               <button
@@ -51,7 +51,7 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-semibold leading-6 text-gray-900"
+                  className="text font-sans font-medium leading-6 text-gray-900"
                 >
                   {item.name}
                 </Link>

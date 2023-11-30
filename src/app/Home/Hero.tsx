@@ -29,7 +29,7 @@ export default function Hero() {
             <div className="mt-10 flex items-center gap-x-4 mb-12">
               <Link
                 href="/design/start"
-                className="rounded-md bg-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
+                className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
               >
                 Start designing
               </Link>
@@ -40,12 +40,12 @@ export default function Hero() {
                 Dashboard
               </Link>
             </div>
-            <div className="relative shadow-[2px_2px_14px_0px_#bdc8d9] border-slate-200 focus-within:hover:shadow-none hover:shadow-none focus-within:shadow-none rounded-xl max-w-md transition-all">
+            <form className="relative shadow-[2px_2px_14px_0px_#bdc8d9] border-slate-200 focus-within:hover:shadow-none hover:shadow-none focus-within:shadow-none rounded-xl max-w-md transition-all">
               <input className="px-4 py-3.5 rounded-xl w-full hover:shadow-[inset_0_0_0_2px_#bdc8d9] outline-none hover:focus-within:shadow-[inset_0_0_0_2px_#474E68] focus-within:shadow-[inset_0_0_0_2px_#474E68] transition-all duration-300 font-semibold text-slate-600" type="text" placeholder="Search" />
-              <button className="absolute top-[50%] translate-y-[-50%] right-0 text-2xl py-3.5 px-4">
+              <button type="submit" className="absolute top-[50%] translate-y-[-50%] right-0 text-2xl py-3.5 px-4">
                 <GoSearch />
               </button>
-            </div>
+            </form>
           </div>
           <div className="flex items-center gap-8">
             <div className="flex flex-col gap-6">
@@ -65,7 +65,7 @@ export default function Hero() {
               </div>
             </div>
             <div className="h-max w-[200px] rounded-[40px] overflow-hidden shadow-xl">
-              <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg3} alt="hero-image" width={180} height={100} />
+              <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg3} alt="hero-image" width={180} height={400} />
             </div>
           </div>
         </div>
