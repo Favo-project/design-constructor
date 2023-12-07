@@ -32,6 +32,9 @@ export default function Footer() {
             <li>
               <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"/help"}>Get help</Link>
             </li>
+            <li>
+              <Link className="text-slate-100 font-sans hover:text-slate-400 transition" href={"/contact"}>Contact</Link>
+            </li>
           </ul>
           <ul className="flex flex-col gap-2">
             <li>
