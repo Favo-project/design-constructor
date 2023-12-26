@@ -3,6 +3,7 @@ import Image from "next/image";
 import { store1, store2 } from "../assets";
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import UserMenu from "../components/UserMenu";
 
 export default function Stores() {
     const [isOpen, setIsOpen] = useState(false)
@@ -18,8 +19,9 @@ export default function Stores() {
 
     return (
         <div id="stores">
-            <header>
+            <header className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-slate-600 my-8">Store</h1>
+                <UserMenu />
             </header>
 
             <div className="flex justify-center gap-6">

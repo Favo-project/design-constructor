@@ -3,6 +3,7 @@ import Image from "next/image";
 import { avatar } from "../assets";
 import { useState } from 'react'
 import { Tab } from '@headlessui/react'
+import UserMenu from "../components/UserMenu";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -62,8 +63,9 @@ export default function Account() {
 
     return (
         <div id="account">
-            <header>
-                <h1 className="text-3xl font-bold text-slate-600 my-8">Campaigns</h1>
+            <header className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold text-slate-600 my-8">Account</h1>
+                <UserMenu />
             </header>
 
             <div>

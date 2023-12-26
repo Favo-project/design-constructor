@@ -1,10 +1,19 @@
 "use client";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Dialog } from "@headlessui/react";
+import { Dialog, Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { AiOutlineHome } from "react-icons/ai";
+import { IoSettingsOutline } from "react-icons/io5";
+import { MdLogout } from "react-icons/md";
 import { useState } from "react";
 import { PiCaretRightThin } from "react-icons/pi";
 import Link from "next/link";
+import AuthModal from "@/components/AuthModal";
+import { useAtom } from "jotai";
+import { authAtom, userAtom } from "@/constants";
+import { useRouter } from "next/navigation";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const navigation = [
   { name: "Design", href: "/design/start" },
@@ -14,7 +23,30 @@ const navigation = [
 ];
 
 export default function DesignNavbar() {
+  const router = useRouter()
+  const [user, setUser] = useAtom(userAtom)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [auth, setAuth] = useAtom(authAtom)
+  const [currentHref, setCurrentHref] = useState(window.location.pathname)
+
+  const onNext = () => {
+    navigation.forEach((path, index) => {
+      if (path.href === currentHref) {
+        router.push(navigation[index + 1].href)
+      }
+    })
+  }
+
+  const onLogout = () => {
+    setAuth('')
+    setUser({
+      name: null,
+      phone: null,
+      loaded: false
+    })
+    localStorage.removeItem('user_at')
+    router.push('/')
+  }
 
   return (
     <>
@@ -57,14 +89,71 @@ export default function DesignNavbar() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
-          <button className="bg-indigo-500 text-white rounded-md shadow-md px-3 p-1">
+          <button onClick={onNext} disabled={!user.loaded} className="bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
             Next
           </button>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in
-          </a>
-        </div>
-      </nav>
+          {
+            user.loaded ? (
+              <div>
+                <Menu as="div" className="relative inline-block text-left">
+                  <div>
+                    <Menu.Button className="inline-flex w-full justify-center rounded-md px-3 py-3 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                      <span className="text-xl">
+                        <FaRegUserCircle />
+                      </span>
+                      <ChevronDownIcon
+                        className="-mr-1 ml-1 h-5 w-5 text-lg text-slate-600"
+                        aria-hidden="true"
+                      />
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as="div"
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute overflow-hidden right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                      <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">Welcome, {user.name}!</h3>
+                      <Menu.Item as="div">
+                        <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
+                          <span className="text-2xl mr-2 text-slate-500">
+                            <AiOutlineHome />
+                          </span> Dashboard
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item as="div">
+                        <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
+                          <span className="text-2xl mr-2 text-slate-500">
+                            <IoSettingsOutline />
+                          </span> Account Settings
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item as="div">
+                        <button onClick={onLogout} className="w-full flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100">
+                          <span className="text-2xl mr-2 text-slate-500">
+                            <MdLogout />
+                          </span> Logout
+                        </button>
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              </div>
+            ) : (
+              <AuthModal>
+                <div className="text-slate-700 font-sans font-semibold px-3 p-1">
+                  Log in <span aria-hidden="true">&rarr;</span>
+                </div>
+              </AuthModal>
+            )
+          }
+
+        </div >
+      </nav >
       <Dialog
         as="div"
         className="lg:hidden"

@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { payout } from "../assets";
+import UserMenu from "../components/UserMenu";
 
 export default function Payouts() {
     return (
         <div id="payouts">
-            <header>
-                <h1 className="text-3xl font-bold text-slate-600 my-8">Store</h1>
+            <header className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold text-slate-600 my-8">Payouts</h1>
+                <UserMenu />
             </header>
             <div className="flex flex-col items-center pt-8">
                 <div>

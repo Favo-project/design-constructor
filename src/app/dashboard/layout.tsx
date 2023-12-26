@@ -3,8 +3,8 @@ import DashboardSidebar from "@/components/DashboardSidebar";
 import { authAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import Loading from "./loading";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
 
 export default function DashboardLayout({
   children,
@@ -51,7 +51,9 @@ export default function DashboardLayout({
     <div id="dashboard">
       {
         loading ? (
-          <Loading />
+          <div className="absolute bg-white bg-opacity-20 z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center text-4xl">
+            <Loader />
+          </div>
         ) : (
           user.loaded ? (
             <>

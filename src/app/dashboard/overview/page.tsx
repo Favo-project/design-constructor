@@ -11,12 +11,14 @@ import { MdDelete, MdDeleteOutline, MdModeEdit, MdOutlineEdit } from "react-icon
 import { IoSettingsOutline } from "react-icons/io5";
 import HelpCard from "@/components/HelpCard";
 import Link from "next/link";
+import UserMenu from "../components/UserMenu";
 
 export default function Dashboard() {
   return (
     <div id="overview">
-      <header>
+      <header className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-slate-600 my-8">Overview</h1>
+        <UserMenu />
       </header>
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col gap-8">

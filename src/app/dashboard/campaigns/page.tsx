@@ -10,6 +10,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from 'next/navigation'
 import HelpCard from "@/components/HelpCard";
 import Link from "next/link";
+import UserMenu from "../components/UserMenu";
 
 
 export default function Campaigns() {
@@ -17,8 +18,9 @@ export default function Campaigns() {
 
     return (
         <div id="overview">
-            <header>
+            <header className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-slate-600 my-8">Campaigns</h1>
+                <UserMenu />
             </header>
 
             <div>
