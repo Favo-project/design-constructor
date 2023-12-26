@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NextTopLoader from 'nextjs-toploader';
 const inter = Inter({ subsets: ["latin"] });
+import { Provider } from 'jotai'
 
 export const metadata: Metadata = {
   title: "Favo design",
@@ -19,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextTopLoader showSpinner={false} color="#7752FE" />
-        {children}</body>
+        <Provider>
+          {children}
+        </Provider>
+      </body>
     </html>
   );
 }

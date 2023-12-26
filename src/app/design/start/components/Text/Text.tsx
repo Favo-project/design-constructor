@@ -32,6 +32,12 @@ export default function Text({ campaign, setCampaign, canvasRef, canvasValues })
     canvasText.canvasId = uuidv4()
     canvasText.type = 'text'
 
+    canvasText.set({
+      top: (canvasRef.printableArea.top - canvasRef.printableArea.height / 2) + canvasText.height / 2 + 15
+    })
+
+    canvasText.relativeTop = (canvasText.top - canvasText.height / 2) - (canvasRef.printableArea.top - canvasRef.printableArea.height / 2)
+
     setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], canvasText] } })
 
     setText('')

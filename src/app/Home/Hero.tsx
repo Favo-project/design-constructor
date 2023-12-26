@@ -1,9 +1,14 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
 import { heroImg1, heroImg2, heroImg3, heroImg4, heroImg5 } from "./assets";
 import { GoSearch } from "react-icons/go";
+import { userAtom } from "@/constants";
+import { useAtom } from "jotai";
+import AuthModal from "@/components/AuthModal";
 
 export default function Hero() {
+  const [user] = useAtom(userAtom)
 
   return (
     <div className="bg-white">
@@ -23,22 +28,36 @@ export default function Hero() {
 
         <div className="container m-auto max-w-7xl flex gap-10">
           <div className="py-10 sm:py-14 lg:py-20">
-            <h1 className="text-4xl max-w-lg font-semibold font-sans tracking-wide text-gray-700 sm:text-5xl">
+            <h1 className="text-[36px] max-w-lg font-semibold leading-tight font-sans tracking-wide text-gray-700 sm:text-[48px]">
               Design your next favorite custom shirt
             </h1>
             <div className="mt-10 flex items-center gap-x-4 mb-12">
-              <Link
-                href="/design/start"
-                className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
-              >
-                Start designing
-              </Link>
-              <Link
-                href="/dashboard/overview"
-                className="rounded-md bg-transparent px-4 py-[12.5px] text-sm font-semibold text-slate-600 shadow-sm border-2 border-slate-500 hover:bg-slate-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600 transition-all"
-              >
-                Dashboard
-              </Link>
+              {
+                user.loaded ? (
+                  <>
+                    <Link
+                      href="/design/start"
+                      className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
+                    >
+                      Start designing
+                    </Link>
+                    <Link
+                      href="/dashboard/overview"
+                      className="rounded-md bg-transparent px-4 py-[12.5px] text-sm font-semibold text-slate-600 shadow-sm border-2 border-slate-500 hover:bg-slate-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600 transition-all"
+                    >
+                      Dashboard
+                    </Link>
+                  </>
+                ) : (
+                  <Link
+                    href="/design/start"
+                    className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
+                  >
+                    Start designing
+                  </Link>
+                )
+              }
+
             </div>
             <form className="relative shadow-[2px_2px_14px_0px_#bdc8d9] border-slate-200 focus-within:hover:shadow-none hover:shadow-none focus-within:shadow-none rounded-xl max-w-md transition-all">
               <input className="px-4 py-3.5 rounded-xl w-full hover:shadow-[inset_0_0_0_2px_#bdc8d9] outline-none hover:focus-within:shadow-[inset_0_0_0_2px_#474E68] focus-within:shadow-[inset_0_0_0_2px_#474E68] transition-all duration-300 font-semibold text-slate-600" type="text" placeholder="Search" />

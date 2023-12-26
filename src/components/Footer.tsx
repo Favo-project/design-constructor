@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaInstagram, FaTiktok } from "react-icons/fa6";
 import { FaTelegramPlane, FaFacebook } from "react-icons/fa";
+import StartBtn from "./StartBtn";
 
 export default function Footer() {
   return (
@@ -18,9 +19,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm max-w-[190px] text-slate-300 mb-10 font-sans">Where the world goes for premium custom shirts.</p>
-            <Link href={'/dashboard/overview'} className="rounded-md bg-indigo-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all">
-              My dashboard
-            </Link>
+            <StartBtn href="/dashboard/overview" context="My dashboard" contextOut="Get started" />
           </div>
           <ul className="flex flex-col gap-2">
             <li>

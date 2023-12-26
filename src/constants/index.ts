@@ -1,4 +1,6 @@
-const colors = [
+import { atom } from 'jotai'
+
+export const colors = [
   {
     name: "Black",
     color: "rgb(0, 0, 0)",
@@ -193,7 +195,7 @@ const colors = [
   },
 ];
 
-const fonts = [
+export const fonts = [
   'Arial',
   "Pacifico",
   "VT323",
@@ -202,4 +204,9 @@ const fonts = [
   "RobotoMono",
 ]
 
-export { colors, fonts };
+export const authAtom = atom(localStorage.getItem('user_at') || '')
+export const userAtom = atom({
+  name: null,
+  phone: null,
+  loaded: false
+})

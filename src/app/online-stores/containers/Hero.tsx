@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { storeHero } from "../assets";
+import StartBtn from "@/components/StartBtn";
 
 export default function Hero() {
     return (
@@ -11,9 +12,7 @@ export default function Hero() {
                 <div className="relative z-10 flex flex-col items-center m-auto px-4 mb-12">
                     <h1 className="max-w-sm mt-6 mb-8 text-center text-5xl font-bold leading-snug font-sans text-slate-700 tracking-wide">OPEN YOUR ONLINE STORE</h1>
                     <p className="text-slate-600 mb-6 font-medium text-2xl font-sans">Your custom designed shirts all in one place</p>
-                    <Link className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all" href={'/dashboard/stores'}>
-                        Create your store
-                    </Link>
+                    <StartBtn href="/dashboard/stores" context={'Create your store'} />
                 </div>
                 <div className="relative z-10 max-w-4xl rounded-lg overflow-hidden shadow-lg m-auto w-full">
                     <Image className="w-full" src={storeHero} alt="store-hero-image" width={700} height={500} />

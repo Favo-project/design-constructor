@@ -9,6 +9,7 @@ import { FaMinus } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from 'next/navigation'
 import HelpCard from "@/components/HelpCard";
+import Link from "next/link";
 
 
 export default function Campaigns() {
@@ -57,9 +58,9 @@ export default function Campaigns() {
                             <button className="flex items-center text-indigo-700 font-semibold py-2.5 px-4 border border-indigo-300 shadow-lg rounded-lg">Filter campaigns <LuSettings2 className="ml-2 text-xl" /></button>
                         </div> */}
 
-                        <button onClick={() => router.push('/design/start')} className="font-bold text-white bg-indigo-600 py-2.5 font-sans px-4 rounded-lg shadow-md">
+                        <Link href={'/design/start'} className="font-bold text-white bg-indigo-600 py-2.5 font-sans px-4 rounded-lg shadow-md">
                             Start new
-                        </button>
+                        </Link>
                     </header>
 
                     <table className="text-left w-full">
@@ -168,7 +169,7 @@ export default function Campaigns() {
             </div>
 
             <div className="py-8 px-7 max-w-xl mt-20 bg-white border border-gray-200 rounded-2xl shadow-lg">
-              <HelpCard />
+                <HelpCard />
             </div>
         </div>
     )

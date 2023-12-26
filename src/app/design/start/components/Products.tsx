@@ -111,7 +111,7 @@ const shirts = [
   },
 ];
 
-export default function Products({ campaign, setCampaign }) {
+export default function Products({ campaign, setCampaign, canvasRef, canvasValues }) {
 
   useEffect(() => {
     setCampaign({ ...campaign, products: [...shirts] })
@@ -120,6 +120,22 @@ export default function Products({ campaign, setCampaign }) {
 
   const onChangeHandler = (value) => {
     setCampaign({ ...campaign, selected: { ...campaign.selected, product: value, type: 0 } })
+
+    const printableArea = campaign.products[value].printableArea[canvasValues.current.side]
+
+    console.log(printableArea);
+
+    for (const side in campaign.design) {
+
+      if (campaign.design[side].length) {
+        campaign.design[side].forEach((elem) => {
+          elem.set({
+            top: (printableArea.top - printableArea.height / 2) + elem.height / 2 + elem.relativeTop
+          })
+          canvasRef.canvas.renderAll()
+        })
+      }
+    }
   }
 
   return (

@@ -1,3 +1,4 @@
+import StartBtn from "@/components/StartBtn";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -53,7 +54,7 @@ export default function Guide() {
                     </div>
                 </div>
                 <div className="flex items-center justify-center mt-14">
-                    <Link href={'/dashboard/overview'} className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold font-sans tracking-wider text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all">Get started</Link>
+                    <StartBtn />
                 </div>
             </div>
         </main>

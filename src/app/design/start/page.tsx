@@ -437,12 +437,52 @@ export default function Start() {
 
     canvas.on('object:added', (options) => {
       const object = options.target
+
+      // object.set({
+      //   top: (canvasRef.printableArea.top - canvasRef.printableArea.height / 2) + object.height / 2 + object.relativeTop
+      // })
+
       if (object.ignore) return
       else canvas.setActiveObject(object);
     })
 
+    const moveLimit = (options) => {
+      const object = options.target;
+      // limit object within canvas
+      limitObjectWithinCanvas(options.target, canvas)
+
+      // Define a threshold for how close an object should be to snap to the central line
+      const snapThreshold = 10; // Adjust as needed
+      const closeThreshold = 20; // Color as needed
+
+      // Calculate the distance from the object's center to the central line
+      const objectCenterX = object.left
+      const distanceToCentralLine = Math.abs(objectCenterX - (canvasValues.current.CANVAS_WIDTH / 2));
+
+      // Check if the object is close enough to the central line to snap
+      if (distanceToCentralLine <= closeThreshold) {
+        canvasRef.centralLine.set({ stroke: "#F94C10" });
+      }
+      else {
+        canvasRef.centralLine.set({ stroke: "transparent" });
+      }
+      if (distanceToCentralLine <= snapThreshold) {
+        // Snap the object to the central line
+        object.set({
+          left: canvasValues.current.CANVAS_WIDTH / 2
+        });
+
+        canvas.renderAll();
+      }
+    }
+
     function onCross(options) {
-      options.target.setCoords()
+      moveLimit(options)
+
+      console.log(options.target.relativeTop);
+
+      options.target.relativeTop = (options.target.top - options.target.height / 2) - (canvasRef.printableArea.top - canvasRef.printableArea.height / 2)
+
       if (options.target.canvasId) {
         canvas.forEachObject((obj) => {
           if (obj.ignore) return;
@@ -553,36 +593,6 @@ export default function Start() {
 
     canvas.on({ "mouse:over": onCanvasOver, "mouse:move": onCanvasOver });
     canvas.on({ "mouse:out": onCanvasOut, "mouse:leave": onCanvasOut });
-
-    canvas.on('object:moving', (options) => {
-      const object = options.target;
-      // limit object within canvas
-      limitObjectWithinCanvas(options.target, canvas)
-
-      // Define a threshold for how close an object should be to snap to the central line
-      const snapThreshold = 10; // Adjust as needed
-      const closeThreshold = 20; // Color as needed
-
-      // Calculate the distance from the object's center to the central line
-      const objectCenterX = object.left
-      const distanceToCentralLine = Math.abs(objectCenterX - (canvasValues.current.CANVAS_WIDTH / 2));
-
-      // Check if the object is close enough to the central line to snap
-      if (distanceToCentralLine <= closeThreshold) {
-        canvasRef.centralLine.set({ stroke: "#F94C10" });
-      }
-      else {
-        canvasRef.centralLine.set({ stroke: "transparent" });
-      }
-      if (distanceToCentralLine <= snapThreshold) {
-        // Snap the object to the central line
-        object.set({
-          left: canvasValues.current.CANVAS_WIDTH / 2
-        });
-
-        canvas.renderAll();
-      }
-    });
 
     function limitObjectWithinCanvas(obj, canvas) {
       const canvasWidth = canvasValues.current.CANVAS_WIDTH
