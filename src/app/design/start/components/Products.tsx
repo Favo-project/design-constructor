@@ -25,16 +25,16 @@ const shirts = [
         color: "gray",
         image: {
           front:
-            "http://localhost:3333/images/premium-unisex-tee-dark-heather-gray.jpg",
-          back: "http://localhost:3333/images/premium-unisex-tee-dark-heather-gray-back.jpg",
+            `${process.env.NEXT_PUBLIC_BASE_URL}/images/premium-unisex-tee-dark-heather-gray.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/images/premium-unisex-tee-dark-heather-gray-back.jpg`,
         },
       },
       {
         color: "red",
         image: {
           front:
-            "http://localhost:3333/images/premium-unisex-tee-red.jpg",
-          back: "http://localhost:3333/images/premium-unisex-tee-red-back.jpg",
+            `${process.env.NEXT_PUBLIC_BASE_URL}/images/premium-unisex-tee-red.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/images/premium-unisex-tee-red-back.jpg`,
         },
       },
     ],
@@ -60,16 +60,16 @@ const shirts = [
         color: "black",
         image: {
           front:
-            "http://localhost:3333/images/classic-tee-black.jpg",
-          back: "http://localhost:3333/images/classic-tee-black-back.jpg",
+            `${process.env.NEXT_PUBLIC_BASE_URL}/images/classic-tee-black.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/images/classic-tee-black-back.jpg`,
         },
       },
       {
         color: "blue",
         image: {
           front:
-            "http://localhost:3333/images/classic-tee-royal.jpg",
-          back: "http://localhost:3333/images/classic-tee-royal-back.jpg",
+            `${process.env.NEXT_PUBLIC_BASE_URL}/images/classic-tee-royal.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/images/classic-tee-royal-back.jpg`,
         },
       },
     ],
@@ -95,16 +95,16 @@ const shirts = [
         color: "grey",
         image: {
           front:
-            "http://localhost:3333/images/pullover-hoodie-sport-grey.jpg",
-          back: "http://localhost:3333/images/pullover-hoodie-sport-grey-back.jpg",
+            `${process.env.NEXT_PUBLIC_BASE_URL}/images/pullover-hoodie-sport-grey.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/images/pullover-hoodie-sport-grey-back.jpg`,
         },
       },
       {
         color: "#3f70a2",
         image: {
           front:
-            "http://localhost:3333/images/pullover-hoodie-indigo.jpg",
-          back: "http://localhost:3333/images/pullover-hoodie-indigo-back.jpg",
+            `${process.env.NEXT_PUBLIC_BASE_URL}/images/pullover-hoodie-indigo.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/images/pullover-hoodie-indigo-back.jpg`,
         },
       },
     ],

@@ -205,7 +205,7 @@ export const fonts = [
   "RobotoMono",
 ]
 
-export const authAtom = atom(localStorage.getItem('user_at') || '')
+export const authAtom = atom('')
 export const userAtom = atom({
   name: null,
   phone: null,

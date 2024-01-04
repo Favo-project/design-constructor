@@ -43,14 +43,19 @@ export default function DesignNavbar() {
   }
 
   const onLogout = () => {
-    setAuth('')
-    setUser({
-      name: null,
-      phone: null,
-      loaded: false
-    })
-    localStorage.removeItem('user_at')
-    router.push('/')
+    try {
+      setAuth('')
+      setUser({
+        name: null,
+        phone: null,
+        loaded: false
+      })
+      localStorage.removeItem('user_at')
+      router.push('/')
+    }
+    catch (e) {
+
+    }
   }
 
   const onSave = async () => {
@@ -231,7 +236,7 @@ export default function DesignNavbar() {
 
 
     try {
-      const { data: response } = await axios.post('http://localhost:3333/campaigns', campaign, {
+      const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns`, campaign, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`

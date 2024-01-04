@@ -56,14 +56,19 @@ export default function Navbar() {
   }, [auth])
 
   const onLogout = () => {
-    setAuth('')
-    setUser({
-      name: null,
-      phone: null,
-      loaded: false
-    })
-    localStorage.removeItem('user_at')
-    router.push('/')
+    try {
+      setAuth('')
+      setUser({
+        name: null,
+        phone: null,
+        loaded: false
+      })
+      localStorage.removeItem('user_at')
+      router.push('/')
+    }
+    catch (e) {
+
+    }
   }
 
   return (

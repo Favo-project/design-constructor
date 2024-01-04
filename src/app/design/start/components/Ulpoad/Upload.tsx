@@ -24,7 +24,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
     formData.append('image', file);
 
     try {
-      const { data: response } = await axios.post('http://localhost:3333/upload', formData, {
+      const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -36,7 +36,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
 
       let imgElement = new Image();
       imgElement.crossOrigin = "anonymous";
-      imgElement.src = 'http://localhost:3333/' + response.data.image
+      imgElement.src = `${process.env.NEXT_PUBLIC_BASE_URL}/` + response.data.image
 
       imgElement.onload = function () {
         const fabricImage: CanvasObj = new fabric.Image(imgElement);
