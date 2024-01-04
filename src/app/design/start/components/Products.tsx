@@ -25,16 +25,16 @@ const shirts = [
         color: "gray",
         image: {
           front:
-            "https://c.bonfireassets.com/static/product-images/88fa7c5883ac4fc881269780872a6f0b/premium-unisex-tee-dark-heather-gray.jpg",
-          back: "https://c.bonfireassets.com/static/product-images/4c8e02ec536641a698cd00186eb08381/premium-unisex-tee-dark-heather-gray-back.jpg",
+            "http://localhost:3333/images/premium-unisex-tee-dark-heather-gray.jpg",
+          back: "http://localhost:3333/images/premium-unisex-tee-dark-heather-gray-back.jpg",
         },
       },
       {
         color: "red",
         image: {
           front:
-            "https://c.bonfireassets.com/static/product-images/408b/premium-unisex-tee-red.jpg",
-          back: "https://c.bonfireassets.com/static/product-images/840d/premium-unisex-tee-red-back.jpg",
+            "http://localhost:3333/images/premium-unisex-tee-red.jpg",
+          back: "http://localhost:3333/images/premium-unisex-tee-red-back.jpg",
         },
       },
     ],
@@ -60,16 +60,16 @@ const shirts = [
         color: "black",
         image: {
           front:
-            "https://c.bonfireassets.com/static/product-images/023ab4071df64bb4bbd65233d75907fe/classic-tee-black.jpg",
-          back: "https://c.bonfireassets.com/static/product-images/f069582b4d5d421b83200fa0136f0cf2/classic-tee-black-back.jpg",
+            "http://localhost:3333/images/classic-tee-black.jpg",
+          back: "http://localhost:3333/images/classic-tee-black-back.jpg",
         },
       },
       {
         color: "blue",
         image: {
           front:
-            "https://c.bonfireassets.com/static/product-images/6e66bdcda7ac415fbde3531019173387/classic-tee-royal.jpg",
-          back: "https://c.bonfireassets.com/static/product-images/ae0b6e5b01ed4aec810ebd7e62f94498/classic-tee-royal-back.jpg",
+            "http://localhost:3333/images/classic-tee-royal.jpg",
+          back: "http://localhost:3333/images/classic-tee-royal-back.jpg",
         },
       },
     ],
@@ -95,16 +95,16 @@ const shirts = [
         color: "grey",
         image: {
           front:
-            "https://c.bonfireassets.com/static/product-images/f9e0/pullover-hoodie-sport-grey.jpg",
-          back: "https://c.bonfireassets.com/static/product-images/266c/pullover-hoodie-sport-grey-back.jpg",
+            "http://localhost:3333/images/pullover-hoodie-sport-grey.jpg",
+          back: "http://localhost:3333/images/pullover-hoodie-sport-grey-back.jpg",
         },
       },
       {
         color: "#3f70a2",
         image: {
           front:
-            "https://c.bonfireassets.com/static/product-images/4cc0/pullover-hoodie-indigo.jpg",
-          back: "https://c.bonfireassets.com/static/product-images/a253/pullover-hoodie-indigo-back.jpg",
+            "http://localhost:3333/images/pullover-hoodie-indigo.jpg",
+          back: "http://localhost:3333/images/pullover-hoodie-indigo-back.jpg",
         },
       },
     ],
@@ -123,16 +123,12 @@ export default function Products({ campaign, setCampaign, canvasRef, canvasValue
 
     const printableArea = campaign.products[value].printableArea[canvasValues.current.side]
 
-    console.log(printableArea);
-
     for (const side in campaign.design) {
 
       if (campaign.design[side].length) {
         campaign.design[side].forEach((elem) => {
-          elem.set({
-            top: (printableArea.top - printableArea.height / 2) + elem.height / 2 + elem.relativeTop
-          })
-          canvasRef.canvas.renderAll()
+          elem.top = (printableArea.top - printableArea.height / 2) + elem.height / 2 + elem.relativeTop
+          canvasRef.canvas.requestRenderAll()
         })
       }
     }

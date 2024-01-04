@@ -11,9 +11,11 @@ import { PiCaretRightThin } from "react-icons/pi";
 import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
-import { authAtom, userAtom } from "@/constants";
+import { authAtom, campaignAtom, canvas, userAtom } from "@/constants";
 import { useRouter } from "next/navigation";
 import { FaRegUserCircle } from "react-icons/fa";
+import { fabric } from "fabric"
+import axios from "axios";
 
 const navigation = [
   { name: "Design", href: "/design/start" },
@@ -23,11 +25,14 @@ const navigation = [
 ];
 
 export default function DesignNavbar() {
+  const [canvasExp] = useAtom<any>(canvas)
+
   const router = useRouter()
   const [user, setUser] = useAtom(userAtom)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [auth, setAuth] = useAtom(authAtom)
   const [currentHref, setCurrentHref] = useState(window.location.pathname)
+  const [campaign] = useAtom(campaignAtom)
 
   const onNext = () => {
     navigation.forEach((path, index) => {
@@ -46,6 +51,198 @@ export default function DesignNavbar() {
     })
     localStorage.removeItem('user_at')
     router.push('/')
+  }
+
+  const onSave = async () => {
+
+    const filteredFront = campaign.design.front.map((elem) => {
+      if (elem.type === 'text') {
+        return {
+          originX: elem.originX,
+          originY: elem.originX,
+          top: elem.top,
+          left: elem.left,
+          scaleX: elem.scaleX,
+          scaleY: elem.scaleY,
+          type: elem.type,
+          side: elem.side,
+          canvasId: elem.canvasId,
+          relativeTop: elem.relativeTop,
+          text: elem.text,
+          fontFamily: elem.fontFamily,
+          fontSize: elem.fontSize,
+          fontWeight: elem.fontWeight,
+          fontStyle: elem.fontStyle,
+          textAlign: elem.textAlign,
+          textBaseline: elem.textBaseline,
+          fill: elem.fill,
+          opacity: elem.opacity,
+          shadow: elem.shadow,
+          underline: elem.underline,
+          overline: elem.overline,
+          linethrough: elem.linethrough,
+          angle: elem.angle,
+          flipX: elem.flipX,
+          flipY: elem.flipY,
+          charSpacing: elem.charSpacing,
+          lineHeight: elem.lineHeight,
+        }
+      }
+      else if (elem.type === 'icon') {
+        console.log(elem);
+        return {
+          originX: elem.originX,
+          originY: elem.originX,
+          top: elem.top,
+          left: elem.left,
+          scaleX: elem.scaleX,
+          scaleY: elem.scaleY,
+          type: elem.type,
+          side: elem.side,
+          canvasId: elem.canvasId,
+          relativeTop: elem.relativeTop,
+          url: elem.url,
+          fill: elem.fill,
+          opacity: elem.opacity,
+          shadow: elem.shadow,
+          angle: elem.angle,
+          flipX: elem.flipX,
+          flipY: elem.flipY,
+        }
+      }
+      else if (elem.type === 'image') {
+        return {
+          originX: elem.originX,
+          originY: elem.originX,
+          top: elem.top,
+          left: elem.left,
+          scaleX: elem.scaleX,
+          scaleY: elem.scaleY,
+          type: elem.type,
+          side: elem.side,
+          canvasId: elem.canvasId,
+          relativeTop: elem.relativeTop,
+          fill: elem.fill,
+          opacity: elem.opacity,
+          shadow: elem.shadow,
+          angle: elem.angle,
+          flipX: elem.flipX,
+          flipY: elem.flipY,
+          src: elem?._element?.src
+        }
+      }
+    })
+
+    const filteredBack = campaign.design.back.map((elem) => {
+      if (elem.type === 'text') {
+        return {
+          originX: elem.originX,
+          originY: elem.originX,
+          top: elem.top,
+          left: elem.left,
+          scaleX: elem.scaleX,
+          scaleY: elem.scaleY,
+          type: elem.type,
+          side: elem.side,
+          canvasId: elem.canvasId,
+          relativeTop: elem.relativeTop,
+          text: elem.text,
+          fontFamily: elem.fontFamily,
+          fontSize: elem.fontSize,
+          fontWeight: elem.fontWeight,
+          fontStyle: elem.fontStyle,
+          textAlign: elem.textAlign,
+          textBaseline: elem.textBaseline,
+          fill: elem.fill,
+          opacity: elem.opacity,
+          shadow: elem.shadow,
+          underline: elem.underline,
+          overline: elem.overline,
+          linethrough: elem.linethrough,
+          angle: elem.angle,
+          flipX: elem.flipX,
+          flipY: elem.flipY,
+          charSpacing: elem.charSpacing,
+          lineHeight: elem.lineHeight,
+        }
+      }
+      else if (elem.type === 'icon') {
+        console.log(elem);
+        return {
+          originX: elem.originX,
+          originY: elem.originX,
+          top: elem.top,
+          left: elem.left,
+          scaleX: elem.scaleX,
+          scaleY: elem.scaleY,
+          type: elem.type,
+          side: elem.side,
+          canvasId: elem.canvasId,
+          relativeTop: elem.relativeTop,
+          url: elem.url,
+          fill: elem.fill,
+          opacity: elem.opacity,
+          shadow: elem.shadow,
+          angle: elem.angle,
+          flipX: elem.flipX,
+          flipY: elem.flipY,
+        }
+      }
+      else if (elem.type === 'image') {
+        return {
+          originX: elem.originX,
+          originY: elem.originX,
+          top: elem.top,
+          left: elem.left,
+          scaleX: elem.scaleX,
+          scaleY: elem.scaleY,
+          type: elem.type,
+          side: elem.side,
+          canvasId: elem.canvasId,
+          relativeTop: elem.relativeTop,
+          fill: elem.fill,
+          opacity: elem.opacity,
+          shadow: elem.shadow,
+          angle: elem.angle,
+          flipX: elem.flipX,
+          flipY: elem.flipY,
+          src: elem?._element?.src
+        }
+      }
+    })
+
+    campaign.design.front = filteredFront
+    campaign.design.back = filteredBack
+
+    console.log(campaign);
+
+    canvasExp.setZoom(3)
+    canvasExp.width = canvasExp.width * 3
+    canvasExp.height = canvasExp.height * 3
+
+    canvasExp.renderAll();
+
+    // const dataUrl = canvasExp.toDataURL()
+
+    // const img = document.createElement('img')
+    // img.src = dataUrl
+
+    // document.body.appendChild(img)
+
+
+    try {
+      const { data: response } = await axios.post('http://localhost:3333/campaigns', campaign, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+        }
+      });
+
+      console.log(response);
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
   return (
@@ -89,6 +286,13 @@ export default function DesignNavbar() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
+          {
+            user.loaded ? (
+              <button onClick={onSave} className="text-indigo-500 font-sans font-semibold mr-1">
+                Save
+              </button>
+            ) : null
+          }
           <button onClick={onNext} disabled={!user.loaded} className="bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
             Next
           </button>
@@ -145,7 +349,7 @@ export default function DesignNavbar() {
               </div>
             ) : (
               <AuthModal>
-                <div className="text-slate-700 font-sans font-semibold px-3 p-1">
+                <div className="text-slate-700 font-sans font-semibold px-1 p-1">
                   Log in <span aria-hidden="true">&rarr;</span>
                 </div>
               </AuthModal>

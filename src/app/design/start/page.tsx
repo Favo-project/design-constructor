@@ -4,8 +4,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Tab } from "@headlessui/react";
 import Products from "./components/Products";
 import Text from "./components/Text/Text";
-import Graphics from "./components/Graphics/Graphics";
-// import Templates from "./components/Templates";
+import Clipart from "./components/Clipart/Clipart";
 import Upload from "./components/Ulpoad/Upload";
 import {
   PiShapes,
@@ -13,7 +12,6 @@ import {
   PiTextTBold,
   PiUploadSimple,
 } from "react-icons/pi";
-// import { HiOutlineTemplate } from "react-icons/hi";
 import { BsPlusLg, BsDashLg } from "react-icons/bs";
 import { VscRefresh } from "react-icons/vsc";
 
@@ -22,17 +20,21 @@ import { DeleteIcon, RotateIcon } from "./assets";
 import Loader from "@/components/Loader";
 import { Transform } from "fabric/fabric-impl";
 import TextEditor from "./components/Text/Editor";
-import GraphicsEditor from "./components/Graphics/Editor";
+import ClipartEditor from "./components/Clipart/Editor";
 import ImageEditor from "./components/Ulpoad/Editor";
 import MultipleEditor from "./components/MultipleEditor";
 import FontFaceObserver from 'fontfaceobserver'
-import { fonts } from "@/constants";
+import { campaignAtom, fonts, canvas } from "@/constants";
+import { useAtom } from "jotai";
+
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Start() {
+  const [canvasExp, setCanvas] = useAtom(canvas)
+
   const [loading, setLoading] = useState(true)
   const [tabIndex, setTabIndex] = useState(0)
   const [selectedObj, setSelectedObj] = useState<{ type: any, object: fabric.Object }>(null)
@@ -75,10 +77,10 @@ export default function Start() {
       component: Text,
       editor: TextEditor
     },
-    Graphics: {
+    Clipart: {
       icon: <PiShapes />,
-      component: Graphics,
-      editor: GraphicsEditor
+      component: Clipart,
+      editor: ClipartEditor
     },
     // Templates: {
     //   icon: <HiOutlineTemplate />,
@@ -91,18 +93,8 @@ export default function Start() {
     },
   });
 
-  const [campaign, setCampaign] = useState({
-    selected: {
-      product: 0,
-      side: 'front',
-      type: 0,
-    },
-    products: [],
-    design: {
-      front: [],
-      back: []
-    },
-  });
+  // campaign state
+  const [campaign, setCampaign] = useAtom(campaignAtom);
 
   useLayoutEffect(() => {
     fonts.forEach((font) => {
@@ -115,7 +107,10 @@ export default function Start() {
       width: canvasValues.current.CANVAS_WIDTH,
       height: canvasValues.current.CANVAS_HEIGHT,
       selection: true,
+      imageSmoothingEnabled: true
     });
+
+    setCanvas(canvas)
 
     const onSelect = (options) => {
       if (options.selected.length > 1) {
@@ -438,10 +433,6 @@ export default function Start() {
     canvas.on('object:added', (options) => {
       const object = options.target
 
-      // object.set({
-      //   top: (canvasRef.printableArea.top - canvasRef.printableArea.height / 2) + object.height / 2 + object.relativeTop
-      // })
-
       if (object.ignore) return
       else canvas.setActiveObject(object);
     })
@@ -478,8 +469,6 @@ export default function Start() {
 
     function onCross(options) {
       moveLimit(options)
-
-      console.log(options.target.relativeTop);
 
       options.target.relativeTop = (options.target.top - options.target.height / 2) - (canvasRef.printableArea.top - canvasRef.printableArea.height / 2)
 
@@ -629,23 +618,25 @@ export default function Start() {
 
     if (campaign.products.length) {
       setLoading(true)
-      fabric.Image.fromURL(
-        campaign.products[campaign.selected.product].types[campaign.selected.type].image[campaign.selected.side],
-        (img) => {
-          img.set({
-            scaleX: (canvasValues.current.CANVAS_WIDTH || 1) / (img.width || 1),
-            scaleY: (canvasValues.current.CANVAS_HEIGHT || 1) / (img.width || 1),
-            selectable: false,
-            top: canvasValues.current.CANVAS_WIDTH / 2,
-            left: canvasValues.current.CANVAS_HEIGHT / 2,
-            originX: "center",
-            originY: "center",
-          });
 
-          setLoading(false)
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        }
-      );
+      let imgElement = new Image();
+      imgElement.crossOrigin = "anonymous";
+      imgElement.src = campaign.products[campaign.selected.product].types[campaign.selected.type].image[campaign.selected.side]
+
+      imgElement.onload = function () {
+        const fabricImage = new fabric.Image(imgElement);
+        fabricImage.set({
+          scaleX: (canvasValues.current.CANVAS_WIDTH || 1) / (fabricImage.width || 1),
+          scaleY: (canvasValues.current.CANVAS_HEIGHT || 1) / (fabricImage.width || 1),
+          selectable: false,
+          top: canvasValues.current.CANVAS_WIDTH / 2,
+          left: canvasValues.current.CANVAS_HEIGHT / 2,
+          originX: "center",
+          originY: "center",
+        });
+        setLoading(false)
+        canvas.setBackgroundImage(fabricImage, canvas.renderAll.bind(canvas));
+      };
 
       const printableArea = campaign.products[campaign.selected.product].printableArea[campaign.selected.side]
       canvasRef.printableArea.set({
@@ -777,7 +768,7 @@ export default function Start() {
   }
 
   return (
-    <div id="designer" className="mt-20">
+    <div id="designer">
       <div className="grid sm:grid-cols-1 lg:grid-cols-3">
         <div id="design-content" ref={containerRef} className="relative">
           <div className="lg:fixed top-0 mt-20 overflow-hidden left-0 bottom-0 sm:w-[100vw] lg:w-[66.6vw] flex items-center justify-center">

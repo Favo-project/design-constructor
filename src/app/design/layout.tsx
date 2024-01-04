@@ -11,7 +11,6 @@ export default function DesignLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter()
   const [loading, setLoading] = useState(true)
 
   const [user, setUser] = useAtom(userAtom)

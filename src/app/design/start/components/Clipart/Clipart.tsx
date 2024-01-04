@@ -11,7 +11,7 @@ interface IGraph {
   height: number;
 }
 
-export default function Graphics({ campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Clipart({ campaign, setCampaign, canvasRef, canvasValues }) {
   const [graphics] = useState([
     {
       icon: 'https://www.bonfire.com/images/clipart/366068/icon.svg',
@@ -86,6 +86,7 @@ export default function Graphics({ campaign, setCampaign, canvasRef, canvasValue
 
       svgObject._objects.map((elem) => elem.fill ? elem.set({ fill: 'white' }) : elem)
 
+      svgObject.relativeTop = (svgObject.top - svgObject.height / 2) - (canvasRef.printableArea.top - canvasRef.printableArea.height / 2)
       svgObject.side = campaign.selected.side
       svgObject.canvasId = uuidv4()
       svgObject.type = 'icon'

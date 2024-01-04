@@ -29,6 +29,11 @@ const nextConfig = {
         hostname: "dynamic.bonfireassets.com",
         port: "",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3333",
+      },
     ],
   },
 };

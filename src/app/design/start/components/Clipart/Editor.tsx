@@ -9,7 +9,7 @@ import { LuFlipHorizontal2, LuFlipVertical2 } from "react-icons/lu"
 import Image from "next/image";
 import { colors } from "@/constants"
 
-export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
+export default function ClipartEditor({ selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
     const [selectedColor, setSelectedColor] = useState(null)
     const [rotate, setRotate] = useState(0)
 
@@ -20,7 +20,6 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
             setRotate(Math.floor(options.transform.target.angle))
         })
     }, [selectedObj.object.canvasId])
-
 
     const onChangeColor = (color) => {
         const canvas = canvasRef.canvas

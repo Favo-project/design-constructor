@@ -1,3 +1,4 @@
+'use client'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { AiOutlineHome } from "react-icons/ai";

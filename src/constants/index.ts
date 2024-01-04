@@ -1,4 +1,5 @@
-import { atom } from 'jotai'
+import { atom } from 'jotai';
+import { fabric } from "fabric"
 
 export const colors = [
   {
@@ -210,3 +211,18 @@ export const userAtom = atom({
   phone: null,
   loaded: false
 })
+
+export const campaignAtom = atom({
+  selected: {
+    product: 0,
+    side: 'front',
+    type: 0,
+  },
+  products: [],
+  design: {
+    front: [],
+    back: []
+  },
+})
+
+export const canvas = atom({})
