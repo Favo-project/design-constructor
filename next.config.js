@@ -34,6 +34,11 @@ const nextConfig = {
         hostname: "localhost",
         port: "3333",
       },
+      {
+        protocol: "https",
+        hostname: "ill-pink-loincloth.cyclic.app",
+        port: "",
+      },
     ],
   },
 };
