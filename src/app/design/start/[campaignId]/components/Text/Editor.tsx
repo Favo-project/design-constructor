@@ -1,8 +1,7 @@
-import { useEffect, useState, Fragment, useLayoutEffect } from "react"
+import { useEffect, useState, Fragment } from "react"
 import { Listbox, Transition, Popover } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { BsCheckLg } from "react-icons/bs"
-import FontFaceObserver from 'fontfaceobserver'
 import { fabric } from 'fabric'
 import { HiOutlineDuplicate } from "react-icons/hi"
 import { BiSolidSelectMultiple } from "react-icons/bi"

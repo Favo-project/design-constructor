@@ -12,9 +12,8 @@ import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
 import { authAtom, campaignAtom, canvas, userAtom } from "@/constants";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { FaRegUserCircle } from "react-icons/fa";
-import { fabric } from "fabric"
 import axios from "axios";
 
 const navigation = [
@@ -25,6 +24,7 @@ const navigation = [
 ];
 
 export default function DesignNavbar() {
+  const { campaignId } = useParams()
   const [canvasExp] = useAtom<any>(canvas)
 
   const router = useRouter()
@@ -33,14 +33,6 @@ export default function DesignNavbar() {
   const [auth, setAuth] = useAtom(authAtom)
   const [currentHref, setCurrentHref] = useState(window.location.pathname)
   const [campaign] = useAtom(campaignAtom)
-
-  const onNext = () => {
-    navigation.forEach((path, index) => {
-      if (path.href === currentHref) {
-        router.push(navigation[index + 1].href)
-      }
-    })
-  }
 
   const onLogout = () => {
     try {
@@ -51,25 +43,28 @@ export default function DesignNavbar() {
         loaded: false
       })
       localStorage.removeItem('user_at')
-      router.push('/')
     }
     catch (e) {
-
+      router.push('/')
     }
   }
 
   const onSave = async () => {
+    let camp = JSON.parse(JSON.stringify(campaign))
 
     const filteredFront = campaign.design.front.map((elem) => {
-      if (elem.type === 'text') {
+      if (elem.objType === 'text') {
         return {
           originX: elem.originX,
           originY: elem.originX,
+          width: elem.width,
+          height: elem.height,
           top: elem.top,
           left: elem.left,
           scaleX: elem.scaleX,
           scaleY: elem.scaleY,
           type: elem.type,
+          objType: elem.objType,
           side: elem.side,
           canvasId: elem.canvasId,
           relativeTop: elem.relativeTop,
@@ -93,16 +88,18 @@ export default function DesignNavbar() {
           lineHeight: elem.lineHeight,
         }
       }
-      else if (elem.type === 'icon') {
-        console.log(elem);
+      else if (elem.objType === 'icon') {
         return {
           originX: elem.originX,
           originY: elem.originX,
+          width: elem.width,
+          height: elem.height,
           top: elem.top,
           left: elem.left,
           scaleX: elem.scaleX,
           scaleY: elem.scaleY,
           type: elem.type,
+          objType: elem.objType,
           side: elem.side,
           canvasId: elem.canvasId,
           relativeTop: elem.relativeTop,
@@ -115,15 +112,19 @@ export default function DesignNavbar() {
           flipY: elem.flipY,
         }
       }
-      else if (elem.type === 'image') {
+      else if (elem.objType === 'image') {
+        console.log(elem?._element?.src, elem);
         return {
           originX: elem.originX,
           originY: elem.originX,
+          width: elem.width,
+          height: elem.height,
           top: elem.top,
           left: elem.left,
           scaleX: elem.scaleX,
           scaleY: elem.scaleY,
           type: elem.type,
+          objType: elem.objType,
           side: elem.side,
           canvasId: elem.canvasId,
           relativeTop: elem.relativeTop,
@@ -139,15 +140,18 @@ export default function DesignNavbar() {
     })
 
     const filteredBack = campaign.design.back.map((elem) => {
-      if (elem.type === 'text') {
+      if (elem.objType === 'text') {
         return {
           originX: elem.originX,
           originY: elem.originX,
+          width: elem.width,
+          height: elem.height,
           top: elem.top,
           left: elem.left,
           scaleX: elem.scaleX,
           scaleY: elem.scaleY,
           type: elem.type,
+          objType: elem.objType,
           side: elem.side,
           canvasId: elem.canvasId,
           relativeTop: elem.relativeTop,
@@ -171,16 +175,18 @@ export default function DesignNavbar() {
           lineHeight: elem.lineHeight,
         }
       }
-      else if (elem.type === 'icon') {
-        console.log(elem);
+      else if (elem.objType === 'icon') {
         return {
           originX: elem.originX,
           originY: elem.originX,
+          width: elem.width,
+          height: elem.height,
           top: elem.top,
           left: elem.left,
           scaleX: elem.scaleX,
           scaleY: elem.scaleY,
           type: elem.type,
+          objType: elem.objType,
           side: elem.side,
           canvasId: elem.canvasId,
           relativeTop: elem.relativeTop,
@@ -193,15 +199,18 @@ export default function DesignNavbar() {
           flipY: elem.flipY,
         }
       }
-      else if (elem.type === 'image') {
+      else if (elem.objType === 'image') {
         return {
           originX: elem.originX,
           originY: elem.originX,
+          width: elem.width,
+          height: elem.height,
           top: elem.top,
           left: elem.left,
           scaleX: elem.scaleX,
           scaleY: elem.scaleY,
           type: elem.type,
+          objType: elem.objType,
           side: elem.side,
           canvasId: elem.canvasId,
           relativeTop: elem.relativeTop,
@@ -216,38 +225,51 @@ export default function DesignNavbar() {
       }
     })
 
-    campaign.design.front = filteredFront
-    campaign.design.back = filteredBack
+    camp.design.front = filteredFront
+    camp.design.back = filteredBack
 
-    console.log(campaign);
+    if (camp.design.front.length || camp.design.back.length) {
+      try {
 
-    canvasExp.setZoom(3)
-    canvasExp.width = canvasExp.width * 3
-    canvasExp.height = canvasExp.height * 3
+        if (campaignId) {
+          console.log(camp);
 
-    canvasExp.renderAll();
+          const { data: response } = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/${campaignId}`, camp, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+            }
+          });
 
-    // const dataUrl = canvasExp.toDataURL()
+          console.log(response);
+        } else {
+          const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns`, camp, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+            }
+          });
 
-    // const img = document.createElement('img')
-    // img.src = dataUrl
+          console.log(response);
 
-    // document.body.appendChild(img)
-
-
-    try {
-      const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns`, campaign, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+          if (response.success) {
+            router.push(`/design/start/${response.data._id}`)
+          }
         }
-      });
 
-      console.log(response);
+      }
+      catch (e) {
+        console.log(e);
+      }
     }
-    catch (e) {
-      console.log(e);
-    }
+  }
+
+  const onNext = () => {
+    navigation.forEach((path, index) => {
+      if (path.href === currentHref) {
+        router.push(navigation[index + 1].href)
+      }
+    })
   }
 
   return (

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
-import { SVG1, SVG2, SVG3, SVG4, SVG5, SVG6, SVG7 } from "../../assets/graphics";
+import { SVG1, SVG2, SVG3, SVG4, SVG5, SVG6, SVG7 } from "../../../assets/graphics";
 import { fabric } from 'fabric'
 import { v4 as uuidv4 } from 'uuid'
 
