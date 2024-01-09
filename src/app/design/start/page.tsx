@@ -96,21 +96,6 @@ export default function Start() {
   // campaign state
   const [campaign, setCampaign] = useAtom(campaignAtom);
 
-  useEffect(() => {
-    setCampaign({
-      selected: {
-        product: 0,
-        side: 'front',
-        type: 0,
-      },
-      products: [],
-      design: {
-        front: [],
-        back: []
-      },
-    })
-  }, [])
-
   useLayoutEffect(() => {
     fonts.forEach((font) => {
       if (font === 'Arial') return
