@@ -36,7 +36,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "ill-pink-loincloth.cyclic.app",
+        hostname: process.env.NEXT_PUBLIC_SERVER_HOSTNAME,
         port: "",
       },
     ],
