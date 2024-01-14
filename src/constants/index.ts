@@ -1,6 +1,25 @@
 import { atom } from 'jotai';
 import { fabric } from "fabric"
 
+const initCampaign = {
+  selected: {
+    product: 0,
+    side: 'front',
+    type: 0,
+  },
+  title: '',
+  description: '',
+  products: [],
+  images: [],
+  tags: [],
+  sizes: [],
+  design: {
+    front: [],
+    back: []
+  },
+  campaignLevel: 0
+}
+
 export const colors = [
   {
     name: "Black",
@@ -212,17 +231,8 @@ export const userAtom = atom({
   loaded: false
 })
 
-export const campaignAtom = atom({
-  selected: {
-    product: 0,
-    side: 'front',
-    type: 0,
-  },
-  products: [],
-  design: {
-    front: [],
-    back: []
-  },
-})
+export const campaignAtom = atom({ ...initCampaign })
+
+export const campaignStart = atom({ ...initCampaign })
 
 export const canvas = atom({})

@@ -115,17 +115,16 @@ export default function Start({ params }: { params: { campaignId: string } }) {
         console.log(response);
 
         const design = await campaignUtils.addObjects(canvasRef.canvas, response.data.design, response.data.products[0].printableArea, campaign.selected.side)
+        canvasRef.canvas.discardActiveObject()
+        setTabIndex(0)
 
         setCampaign({
-          selected: {
-            product: 0,
-            side: 'front',
-            type: 0,
-          },
+          ...campaignAtom.init,
           design: {
             ...design
           },
           products: response.data.products,
+          campaignLevel: response.data.campaignLevel
         })
       }
       catch (e) {
@@ -275,6 +274,17 @@ export default function Start({ params }: { params: { campaignId: string } }) {
     fabric.Object.prototype.cornerStrokeColor = 'white'
     fabric.Object.prototype.cornerSize = 10
     fabric.Object.prototype.rotatingPointOffset = 12
+    fabric.Group.prototype.setControlVisible('ml', false)
+    fabric.Group.prototype.setControlVisible('mb', false)
+    fabric.Group.prototype.setControlVisible('mr', false)
+    fabric.Group.prototype.setControlVisible('mt', false)
+    fabric.Group.prototype.originX = 'center'
+    fabric.Group.prototype.originY = 'center'
+    fabric.Group.prototype.transparentCorners = false
+    fabric.Group.prototype.cornerColor = 'white'
+    fabric.Group.prototype.cornerStrokeColor = 'white'
+    fabric.Group.prototype.cornerSize = 10
+    fabric.Group.prototype.rotatingPointOffset = 12
   }, []);
 
   useEffect(() => {

@@ -2,7 +2,7 @@
 import DashboardSidebar from "@/components/DashboardSidebar";
 import { authAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 
@@ -17,7 +17,7 @@ export default function DashboardLayout({
   const [auth, setAuth] = useAtom(authAtom)
   const [user, setUser] = useAtom(userAtom)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     try {
       fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
         headers: {
@@ -28,6 +28,14 @@ export default function DashboardLayout({
           setUser({ ...data.user, loaded: true })
         }
         else {
+          setAuth('')
+          setUser({
+            name: null,
+            phone: null,
+            loaded: false
+          })
+          localStorage.removeItem('user_at')
+          setLoading(false)
           router.push('/')
         }
         setLoading(false)

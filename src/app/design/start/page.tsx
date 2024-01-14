@@ -24,7 +24,7 @@ import ClipartEditor from "./components/Clipart/Editor";
 import ImageEditor from "./components/Ulpoad/Editor";
 import MultipleEditor from "./components/MultipleEditor";
 import FontFaceObserver from 'fontfaceobserver'
-import { campaignAtom, fonts, canvas } from "@/constants";
+import { campaignAtom, fonts, canvas, campaignStart } from "@/constants";
 import { useAtom } from "jotai";
 
 
@@ -94,7 +94,7 @@ export default function Start() {
   });
 
   // campaign state
-  const [campaign, setCampaign] = useAtom(campaignAtom);
+  const [campaign, setCampaign] = useAtom(campaignStart);
 
   useLayoutEffect(() => {
     fonts.forEach((font) => {
@@ -226,6 +226,15 @@ export default function Start() {
     canvasRef.areaText = areaText;
     canvasRef.centralLine = centralLine;
 
+    fabric.Object.prototype.setControlVisible('ml', false)
+    fabric.Object.prototype.setControlVisible('mb', false)
+    fabric.Object.prototype.setControlVisible('mr', false)
+    fabric.Object.prototype.setControlVisible('mt', false)
+    fabric.Object.prototype.transparentCorners = false
+    fabric.Object.prototype.cornerColor = 'white'
+    fabric.Object.prototype.cornerStrokeColor = 'white'
+    fabric.Object.prototype.cornerSize = 10
+    fabric.Object.prototype.rotatingPointOffset = 12
     fabric.Group.prototype.setControlVisible('ml', false)
     fabric.Group.prototype.setControlVisible('mb', false)
     fabric.Group.prototype.setControlVisible('mr', false)
@@ -237,15 +246,7 @@ export default function Start() {
     fabric.Group.prototype.cornerStrokeColor = 'white'
     fabric.Group.prototype.cornerSize = 10
     fabric.Group.prototype.rotatingPointOffset = 12
-    fabric.Object.prototype.setControlVisible('ml', false)
-    fabric.Object.prototype.setControlVisible('mb', false)
-    fabric.Object.prototype.setControlVisible('mr', false)
-    fabric.Object.prototype.setControlVisible('mt', false)
-    fabric.Object.prototype.transparentCorners = false
-    fabric.Object.prototype.cornerColor = 'white'
-    fabric.Object.prototype.cornerStrokeColor = 'white'
-    fabric.Object.prototype.cornerSize = 10
-    fabric.Object.prototype.rotatingPointOffset = 12
+
   }, []);
 
   useEffect(() => {

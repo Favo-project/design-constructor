@@ -11,10 +11,13 @@ import { PiCaretRightThin } from "react-icons/pi";
 import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
-import { authAtom, campaignAtom, canvas, userAtom } from "@/constants";
-import { useRouter, useParams } from "next/navigation";
+import { authAtom, campaignAtom, campaignStart, canvas, userAtom } from "@/constants";
+import { useRouter, useParams, usePathname } from "next/navigation";
 import { FaRegUserCircle } from "react-icons/fa";
 import axios from "axios";
+import { campaignTools } from "../actions/campaignTools";
+import SaveButton from "./SaveButton";
+import NextButton from "./NextButton";
 
 const navigation = [
   { name: "Design", href: "/design/start" },
@@ -24,15 +27,21 @@ const navigation = [
 ];
 
 export default function DesignNavbar() {
+  const router = useRouter()
+  const pathname = usePathname()
   const { campaignId } = useParams()
+
+  const [loading, setLoading] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
   const [canvasExp] = useAtom<any>(canvas)
 
-  const router = useRouter()
   const [user, setUser] = useAtom(userAtom)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [auth, setAuth] = useAtom(authAtom)
   const [currentHref, setCurrentHref] = useState(window.location.pathname)
+
   const [campaign] = useAtom(campaignAtom)
+  const [campaignBlank, setCampaignBlank] = useAtom(campaignStart)
 
   const onLogout = () => {
     try {
@@ -50,226 +59,50 @@ export default function DesignNavbar() {
   }
 
   const onSave = async () => {
-    let camp = JSON.parse(JSON.stringify(campaign))
+    if (campaignId) {
+      setLoading(true)
+      const response = await campaignTools.saveCampaign(pathname, auth, campaignId, campaign)
 
-    const filteredFront = campaign.design.front.map((elem) => {
-      if (elem.objType === 'text') {
-        return {
-          originX: elem.originX,
-          originY: elem.originX,
-          width: elem.width,
-          height: elem.height,
-          top: elem.top,
-          left: elem.left,
-          scaleX: elem.scaleX,
-          scaleY: elem.scaleY,
-          type: elem.type,
-          objType: elem.objType,
-          side: elem.side,
-          canvasId: elem.canvasId,
-          relativeTop: elem.relativeTop,
-          text: elem.text,
-          fontFamily: elem.fontFamily,
-          fontSize: elem.fontSize,
-          fontWeight: elem.fontWeight,
-          fontStyle: elem.fontStyle,
-          textAlign: elem.textAlign,
-          textBaseline: elem.textBaseline,
-          fill: elem.fill,
-          opacity: elem.opacity,
-          shadow: elem.shadow,
-          underline: elem.underline,
-          overline: elem.overline,
-          linethrough: elem.linethrough,
-          angle: elem.angle,
-          flipX: elem.flipX,
-          flipY: elem.flipY,
-          charSpacing: elem.charSpacing,
-          lineHeight: elem.lineHeight,
-        }
+      if (response.success) {
+        setIsSaved(true)
+
+        setTimeout(() => {
+          setIsSaved(false)
+        }, 5000)
       }
-      else if (elem.objType === 'icon') {
-        return {
-          originX: elem.originX,
-          originY: elem.originX,
-          width: elem.width,
-          height: elem.height,
-          top: elem.top,
-          left: elem.left,
-          scaleX: elem.scaleX,
-          scaleY: elem.scaleY,
-          type: elem.type,
-          objType: elem.objType,
-          side: elem.side,
-          canvasId: elem.canvasId,
-          relativeTop: elem.relativeTop,
-          url: elem.url,
-          fill: elem.fill,
-          opacity: elem.opacity,
-          shadow: elem.shadow,
-          angle: elem.angle,
-          flipX: elem.flipX,
-          flipY: elem.flipY,
-        }
+      else {
+        // error || warn the user that they should make change
       }
-      else if (elem.objType === 'image') {
-        console.log(elem?._element?.src, elem);
-        return {
-          originX: elem.originX,
-          originY: elem.originX,
-          width: elem.width,
-          height: elem.height,
-          top: elem.top,
-          left: elem.left,
-          scaleX: elem.scaleX,
-          scaleY: elem.scaleY,
-          type: elem.type,
-          objType: elem.objType,
-          side: elem.side,
-          canvasId: elem.canvasId,
-          relativeTop: elem.relativeTop,
-          fill: elem.fill,
-          opacity: elem.opacity,
-          shadow: elem.shadow,
-          angle: elem.angle,
-          flipX: elem.flipX,
-          flipY: elem.flipY,
-          src: elem?._element?.src
-        }
+
+      setLoading(false)
+    }
+    else {
+      const response = await campaignTools.initCampaign(auth, campaignBlank)
+      if (response.success) {
+        setCampaignBlank({
+          ...campaignStart.init,
+          products: [...campaignBlank.products]
+        })
+        router.push(`/design/start/${response.data._id}`)
+        return response.data
       }
-    })
-
-    const filteredBack = campaign.design.back.map((elem) => {
-      if (elem.objType === 'text') {
-        return {
-          originX: elem.originX,
-          originY: elem.originX,
-          width: elem.width,
-          height: elem.height,
-          top: elem.top,
-          left: elem.left,
-          scaleX: elem.scaleX,
-          scaleY: elem.scaleY,
-          type: elem.type,
-          objType: elem.objType,
-          side: elem.side,
-          canvasId: elem.canvasId,
-          relativeTop: elem.relativeTop,
-          text: elem.text,
-          fontFamily: elem.fontFamily,
-          fontSize: elem.fontSize,
-          fontWeight: elem.fontWeight,
-          fontStyle: elem.fontStyle,
-          textAlign: elem.textAlign,
-          textBaseline: elem.textBaseline,
-          fill: elem.fill,
-          opacity: elem.opacity,
-          shadow: elem.shadow,
-          underline: elem.underline,
-          overline: elem.overline,
-          linethrough: elem.linethrough,
-          angle: elem.angle,
-          flipX: elem.flipX,
-          flipY: elem.flipY,
-          charSpacing: elem.charSpacing,
-          lineHeight: elem.lineHeight,
-        }
-      }
-      else if (elem.objType === 'icon') {
-        return {
-          originX: elem.originX,
-          originY: elem.originX,
-          width: elem.width,
-          height: elem.height,
-          top: elem.top,
-          left: elem.left,
-          scaleX: elem.scaleX,
-          scaleY: elem.scaleY,
-          type: elem.type,
-          objType: elem.objType,
-          side: elem.side,
-          canvasId: elem.canvasId,
-          relativeTop: elem.relativeTop,
-          url: elem.url,
-          fill: elem.fill,
-          opacity: elem.opacity,
-          shadow: elem.shadow,
-          angle: elem.angle,
-          flipX: elem.flipX,
-          flipY: elem.flipY,
-        }
-      }
-      else if (elem.objType === 'image') {
-        return {
-          originX: elem.originX,
-          originY: elem.originX,
-          width: elem.width,
-          height: elem.height,
-          top: elem.top,
-          left: elem.left,
-          scaleX: elem.scaleX,
-          scaleY: elem.scaleY,
-          type: elem.type,
-          objType: elem.objType,
-          side: elem.side,
-          canvasId: elem.canvasId,
-          relativeTop: elem.relativeTop,
-          fill: elem.fill,
-          opacity: elem.opacity,
-          shadow: elem.shadow,
-          angle: elem.angle,
-          flipX: elem.flipX,
-          flipY: elem.flipY,
-          src: elem?._element?.src
-        }
-      }
-    })
-
-    camp.design.front = filteredFront
-    camp.design.back = filteredBack
-
-    if (camp.design.front.length || camp.design.back.length) {
-      try {
-
-        if (campaignId) {
-          console.log(camp);
-
-          const { data: response } = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/${campaignId}`, camp, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
-            }
-          });
-
-          console.log(response);
-        } else {
-          const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns`, camp, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
-            }
-          });
-
-          console.log(response);
-
-          if (response.success) {
-            router.push(`/design/start/${response.data._id}`)
-          }
-        }
-
-      }
-      catch (e) {
-        console.log(e);
+      else {
+        // error || warn the user that they should make change
       }
     }
   }
 
-  const onNext = () => {
-    navigation.forEach((path, index) => {
-      if (path.href === currentHref) {
-        router.push(navigation[index + 1].href)
-      }
-    })
+  const onNext = async () => {
+    const data = await onSave()
+    if (campaignId) {
+      await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
+    }
+    else {
+      await campaignTools.changeLevel(auth, pathname, data._id, data)
+    }
+  }
+  const onLaunch = () => {
+
   }
 
   return (
@@ -313,16 +146,8 @@ export default function DesignNavbar() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
-          {
-            user.loaded ? (
-              <button onClick={onSave} className="text-indigo-500 font-sans font-semibold mr-1">
-                Save
-              </button>
-            ) : null
-          }
-          <button onClick={onNext} disabled={!user.loaded} className="bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
-            Next
-          </button>
+          <SaveButton loaded={user.loaded} onSave={onSave} loading={loading} isSaved={isSaved} />
+          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} />
           {
             user.loaded ? (
               <div>

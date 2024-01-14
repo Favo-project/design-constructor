@@ -44,6 +44,10 @@ const shirts = [
         },
       },
     ],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'],
+    baseCost: 120000,
+    maxCost: 170000,
+    sellingPrice: 0
   },
   {
     name: "Classic Unisex Tee",
@@ -85,6 +89,10 @@ const shirts = [
         },
       },
     ],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
+    baseCost: 100000,
+    maxCost: 150000,
+    sellingPrice: 0
   },
   {
     name: "Pullover Hoodie",
@@ -126,6 +134,10 @@ const shirts = [
         },
       },
     ],
+    sizes: ['S', 'M', 'L', '2XL', '3XL'],
+    baseCost: 180000,
+    maxCost: 250000,
+    sellingPrice: 0
   },
 ];
 
