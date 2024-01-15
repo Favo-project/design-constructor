@@ -48,6 +48,7 @@ export default function Start({ params }: { params: { campaignId: string } }) {
   const zoomInBtn = useRef(null)
   const zoomOutBtn = useRef(null)
 
+
   const [canvasScale, setCanvasScale] = useState(100);
   const canvasValues: any = useRef({
     areaCrossed: {
@@ -839,7 +840,7 @@ export default function Start({ params }: { params: { campaignId: string } }) {
                 onClick={onChangeSide}
                 className="flex items-center py-1 px-2 text-xs rounded-md border-opacity-70 border-slate-300 border-2 uppercase"
               >
-                <VscRefresh className="mr-2 text-lg" /> Show {campaign.selected.side === 'front' ? 'back' : 'front'}
+                <VscRefresh className="mr-2 text-lg" /> Show {campaign?.selected?.side === 'front' ? 'back' : 'front'}
               </button>
               <div id="zoom" className="flex items-center ml-4 gap-2">
                 <button

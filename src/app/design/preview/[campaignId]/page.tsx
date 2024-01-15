@@ -1,10 +1,7 @@
 'use client'
 import Image from "next/image";
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useLayoutEffect, useState } from 'react'
-import { BiSolidUserCircle } from "react-icons/bi";
-import { AiOutlinePlus } from "react-icons/ai";
-import { BsCheckLg, BsQuestionCircle } from "react-icons/bs";
+import { useLayoutEffect, useState } from 'react'
+import { BsCheckLg } from "react-icons/bs";
 import { FaHeading } from 'react-icons/fa6'
 import { GrEdit } from 'react-icons/gr'
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -16,6 +13,8 @@ import { useParams } from "next/navigation";
 import Loader from "@/components/Loader";
 import { formatCurrency } from "../../actions/campaignTools";
 import { PiWarningDiamond } from "react-icons/pi";
+import AccountSettings from "../../components/AccountSettings";
+import SizeInfo from "../../components/SizeInfo";
 
 export default function Preview() {
     const { campaignId } = useParams()
@@ -28,10 +27,6 @@ export default function Preview() {
 
     const [auth, setAuth] = useAtom(authAtom)
     const [campaign, setCampaign] = useAtom(campaignAtom)
-
-    const [sizes] = useState([
-        'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'
-    ])
 
     useLayoutEffect(() => {
         const fetch = async () => {
@@ -58,16 +53,6 @@ export default function Preview() {
 
         fetch()
     }, [campaignId])
-
-    const [isLogoDialog, setIsLogoDialog] = useState(false)
-
-    function closeModal() {
-        setIsLogoDialog(false)
-    }
-
-    function openModal() {
-        setIsLogoDialog(true)
-    }
 
     const flipSide = (side) => {
         setImgLoading(true)
@@ -112,6 +97,12 @@ export default function Preview() {
         return formatCurrency(product.sellingPrice)
     }
 
+    const getCurrentSizes = () => {
+        const product = campaign.products.find((p) => p.name === currentProduct.name)
+
+        return product.sizes
+    }
+
     return <div className="container relative m-auto">
         {loading ? (
             <Loader />
@@ -120,7 +111,7 @@ export default function Preview() {
                 <div className="sticky flex justify-end top-28 h-min">
                     <div className="relative">
                         <div>
-                            <Image className="object-contain w-full h-full" src={loadImage(currentProduct.colors[currentColor].image[side])} alt="product-img" width={600} height={600} />
+                            <Image className="object-contain w-full h-full" src={loadImage(currentProduct?.colors[currentColor].image[side])} alt="product-img" width={600} height={600} />
                         </div>
 
                         {
@@ -134,10 +125,10 @@ export default function Preview() {
                         <div>
                             <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1">
                                 <button onClick={() => flipSide('front')} className="p-2 bg-white rounded-lg border-2 border-slate-100 hover:border-slate-300 transition-all">
-                                    <Image src={loadImage(currentProduct.colors[currentColor].image['front'])} alt="product-img" width={38} height={38} />
+                                    <Image src={loadImage(currentProduct?.colors[currentColor].image['front'])} alt="product-img" width={38} height={38} />
                                 </button>
-                                <button onClick={() => flipSide('back')} className="p-2 rounded-lg border-2 border-slate-100 hover:border-slate-300 transition-all">
-                                    <Image src={loadImage(currentProduct.colors[currentColor].image['back'])} alt="product-img" width={38} height={38} />
+                                <button onClick={() => flipSide('back')} className="p-2 bg-white rounded-lg border-2 border-slate-100 hover:border-slate-300 transition-all">
+                                    <Image src={loadImage(currentProduct?.colors[currentColor].image['back'])} alt="product-img" width={38} height={38} />
                                 </button>
                             </div>
                             <button className="absolute bottom-5 left-[35%] px-3 py-2 text-sm font-semibold rounded-lg border-2 shadow-lg bg-white border-slate-100 text-indigo-500 hover:border-slate-300 transition-all">
@@ -154,26 +145,13 @@ export default function Preview() {
                         <input onChange={(e) => setCampaign({ ...campaign, description: e.target.value })} placeholder="Describe your campaign in one sentence" className="text-lg w-full xl:w-[70%] p-3 outline-none text-slate-600 border border-dashed border-slate-300 hover:border-slate-500 transition mb-3" type="text" value={campaign.description || ''} required />
                     </div>
 
-                    <div className="flex items-center mt-4">
-                        <button className="relative mr-2 p-0.5 flex items-center justify-center rounded-full border border-dashed border-gray-400" onClick={openModal}>
-                            <span className="text-4xl text-gray-300">
-                                <BiSolidUserCircle />
-                            </span>
-                            <span className="flex items-center justify-center absolute bottom-0 right-0 rounded-full p-[1.5px] text-xs bg-green-700 text-white">
-                                <AiOutlinePlus />
-                            </span>
-                        </button>
-                        <p className="text-gray-600 font-medium">
-                            by <span>Dilrozbek Raximov</span>
-                        </p>
-                        <button className="p-1 ml-2 text-gray-400 hover:text-gray-700"><BsQuestionCircle /></button>
-                    </div>
+                    <AccountSettings />
 
-                    <div className="my-6">
+                    <div className="my-10">
                         <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">COLOR</h3>
                         <ul className="flex items-center gap-2">
                             {
-                                currentProduct.colors.map(({ color }, index) => (
+                                currentProduct?.colors.map(({ color }, index) => (
                                     <li onClick={() => setColor(index)} key={index} className="relative border cursor-pointer border-gray-400 p-1 rounded-full">
                                         <span style={{ background: color.content }} className="flex rounded-full w-6 h-6" />
                                         {
@@ -189,11 +167,11 @@ export default function Preview() {
                         </ul>
                     </div>
 
-                    <div className="my-6">
+                    <div className="my-10">
                         <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Design<span className="text-lg ml-2">{getCurrentPrice()}</span></h3>
                         <div className="flex flex-wrap gap-3">
                             {
-                                campaign.images.map((product, index) => (
+                                campaign?.images.map((product, index) => (
                                     <button onClick={() => setProduct(product)} key={index} className={`${product.name === currentProduct.name ? (
                                         'bg-slate-100 border-slate-200'
                                     ) : 'hover:shadow-lg border-gray-100'
@@ -208,20 +186,23 @@ export default function Preview() {
                         </div>
                     </div>
 
-                    <div className="my-8">
+                    <div className="my-10">
                         <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">SIZE</h3>
                         <div className="flex flex-wrap mb-3 gap-2">
                             {
-                                currentProduct.sizes?.length ? (
-                                    <>
-                                        {
-                                            currentProduct.sizes.map((size, index) => (
-                                                <button key={index} className="px-3 py-1 rounded-lg border border-slate-200 text-sm text-slate-500 font-semibold font-mono hover:border-slate-400 hover:shadow-md transition-all">
-                                                    {size}
-                                                </button>
-                                            ))}
-                                        <button className="text-indigo-500 font-sans hover:opacity-75 transition">Size & fabric info</button>
-                                    </>
+                                getCurrentSizes()?.length ? (
+                                    <div className="flex flex-col items-start">
+                                        <div className="flex gap-2 mb-5">
+                                            {
+                                                getCurrentSizes()?.map((size, index) => (
+                                                    <button key={index} className="px-3 py-1 rounded-lg border border-slate-300 text-sm text-slate-500 font-semibold font-mono hover:border-slate-500 hover:shadow-md transition-all">
+                                                        {size}
+                                                    </button>
+                                                ))
+                                            }
+                                        </div>
+                                        <SizeInfo />
+                                    </div>
 
                                 ) : (
                                     <h4 className="text-slate-600 font-sans flex items-center font-semibold">Currently there is no size for this product <span className="text-2xl text-orange-600 ml-2"><PiWarningDiamond /></span></h4>
@@ -248,60 +229,5 @@ export default function Preview() {
                 </div>
             </div>
         </div>
-
-        <Transition appear show={isLogoDialog} as={Fragment}>
-            <Dialog as="div" className="relative z-50" onClose={closeModal}>
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-black/25" />
-                </Transition.Child>
-
-                <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900"
-                                >
-                                    Payment successful
-                                </Dialog.Title>
-                                <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
-                                        Your payment has been successfully submitted. We’ve sent
-                                        you an email with all of the details of your order.
-                                    </p>
-                                </div>
-
-                                <div className="mt-4">
-                                    <button
-                                        type="button"
-                                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        onClick={closeModal}
-                                    >
-                                        Got it, thanks!
-                                    </button>
-                                </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
-                    </div>
-                </div>
-            </Dialog>
-        </Transition>
     </div>
 }

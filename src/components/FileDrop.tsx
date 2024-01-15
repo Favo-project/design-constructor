@@ -23,19 +23,12 @@ export function FileDrop({ file, setFile }: any) {
 
   return (
     <div className="col-span-full">
-      <label
-        htmlFor="cover-photo"
-        className="block text-sm font-medium leading-6 text-gray-900"
-      >
-        Cover photo
-      </label>
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer ${
-          isOver ? " bg-gray-100 border-gray-900 border-5 " : ""
-        }`}
+        className={`mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer ${isOver ? " bg-gray-100 border-gray-900 border-5 " : ""
+          }`}
       >
         <div className="text-center">
           {file ? (
