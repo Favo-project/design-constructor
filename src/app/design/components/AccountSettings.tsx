@@ -10,14 +10,17 @@ import Image from "next/image";
 export default function AccountSettings() {
     const [isLogoDialog, setIsLogoDialog] = useState(false)
     const [file, setFile] = useState<File>()
-    const [base64Img, setBase64Img] = useState<string | ArrayBuffer>('')
+    const [base64Img, setBase64Img] = useState<string>('')
 
     useEffect(() => {
         if (file?.name && file?.size) {
             console.log(file);
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => setBase64Img(reader.result);
+            reader.onload = () => {
+                const result: any = reader.result
+                setBase64Img(result);
+            }
         }
     }, [file])
 
