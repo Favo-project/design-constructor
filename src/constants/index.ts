@@ -1,5 +1,4 @@
 import { atom } from 'jotai';
-import { fabric } from "fabric"
 
 const initCampaign = {
   selected: {
@@ -10,14 +9,14 @@ const initCampaign = {
   title: '',
   description: '',
   products: [],
-  images: [],
   tags: [],
-  sizes: [],
   design: {
     front: [],
     back: []
   },
-  campaignLevel: 0
+  campaignLevel: 0,
+  soldHidden: false,
+  soldAmount: 0
 }
 
 export const colors = [

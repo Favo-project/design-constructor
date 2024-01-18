@@ -105,6 +105,7 @@ export default function Start({ params }: { params: { campaignId: string } }) {
 
   useLayoutEffect(() => {
     const fetchData = async () => {
+      setLoading(true)
       try {
         const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/${params.campaignId}`, {
           headers: {
@@ -113,23 +114,30 @@ export default function Start({ params }: { params: { campaignId: string } }) {
           }
         })
 
-        console.log(response);
-
         const design = await campaignUtils.addObjects(canvasRef.canvas, response.data.design, response.data.products[0].printableArea, campaign.selected.side)
         canvasRef.canvas.discardActiveObject()
         setTabIndex(0)
 
         setCampaign({
           ...campaignAtom.init,
+          ...response.data,
           design: {
             ...design
-          },
-          products: response.data.products,
-          campaignLevel: response.data.campaignLevel
+          }
         })
+        setLoading(false)
       }
       catch (e) {
-        console.log(e);
+        if (e?.response?.status === 403) {
+          router.push('/')
+          setAuth('')
+          setUser({
+            name: null,
+            phone: null,
+            loaded: false
+          })
+          localStorage.removeItem('user_at')
+        }
       }
     }
 

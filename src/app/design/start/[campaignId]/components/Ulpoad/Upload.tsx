@@ -4,6 +4,9 @@ import { useState } from "react";
 import { fabric } from 'fabric'
 import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
+import { authAtom, userAtom } from "@/constants";
+import { useAtom } from "jotai";
+import { useRouter } from "next/navigation";
 
 interface CanvasObj extends fabric.Image {
   relativeTop?: number, side?: string, canvasId?: string, objType?: string
@@ -11,6 +14,9 @@ interface CanvasObj extends fabric.Image {
 
 export default function Upload({ campaign, setCampaign, canvasRef, canvasValues }) {
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const [auth, setAuth] = useAtom(authAtom)
+  const [user, setUser] = useAtom(userAtom)
 
   const [file, setFile] = useState<File>();
   const [userRights, setUserRights] = useState(false);
@@ -71,8 +77,17 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
       }
 
       setLoading(false)
-    } catch (error) {
-      console.error('Error uploading file:', error);
+    } catch (e) {
+      if (e?.response?.status === 403) {
+        router.push('/')
+        setAuth('')
+        setUser({
+          name: null,
+          phone: null,
+          loaded: false
+        })
+        localStorage.removeItem('user_at')
+      }
       setLoading(false)
     }
 

@@ -15,7 +15,6 @@ import { BiCopy, BiSolidCopy } from "react-icons/bi";
 import axios from "axios";
 import { useAtom } from "jotai";
 import { authAtom, campaignAtom, userAtom } from "@/constants";
-import Loading from "../components/loading";
 import Loader from "@/components/Loader";
 import CampaignDelete from "../components/CampaignDelete";
 
@@ -188,7 +187,7 @@ export default function Campaigns() {
                                             <td>
                                                 <div className="flex items-center gap-3 p-3">
                                                     <div>
-                                                        <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.images[0].colors[0].image.front}`} alt="product-img" width={48} height={48} />
+                                                        <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} alt="product-img" width={48} height={48} />
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-medium">{campaign.title}</p>
@@ -310,8 +309,6 @@ export default function Campaigns() {
                                         </tr>
                                     ))
                                 )
-
-
                             )}
                         </tbody>
                     </table>

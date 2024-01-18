@@ -1,5 +1,6 @@
 'use client'
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineDollar, AiOutlineHome } from "react-icons/ai";
 import { BiStore } from "react-icons/bi";
@@ -40,6 +41,7 @@ const navigation = [
 ]
 
 export default function Sidebar() {
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleSidebar = () => {
@@ -52,13 +54,17 @@ export default function Sidebar() {
     }
   }
 
+  const isActive = (link) => {
+    return pathname === link
+  }
+
   return (
     <div className="sidebar">
       <div className="lg:hidden p-2 bg-gray-700">
         <button
           data-drawer-target="default-sidebar"
           data-drawer-toggle="default-sidebar"
-          aria-controls="default-sidebar" 
+          aria-controls="default-sidebar"
           type="button"
           className="inline-flex items-center transition p-3 text-sm rounded-lg focus:outline-none focus:ring-2 text-gray-400 hover:bg-slate-300"
           onClick={toggleSidebar}
@@ -107,9 +113,9 @@ export default function Sidebar() {
                   <Link
                     onClick={() => setIsOpen(false)}
                     href={link.href}
-                    className="flex transition-all items-center p-2 rounded-lg text-white hover:bg-gray-500 group"
+                    className={`${isActive(link.href) ? 'text-slate-600 bg-white bg-opacity-75' : 'text-white hover:bg-gray-500'} flex transition-all items-center p-2 rounded-lg group`}
                   >
-                    <span className="text- transition duration-75 text-gray-400 group-hover:text-white">
+                    <span className={`${isActive(link.href) ? 'text-slate-600' : 'text-gray-400 group-hover:text-white'} transition duration-75`}>
                       {link.icon}
                     </span>
                     <span className="ml-3">{link.name}</span>

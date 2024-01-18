@@ -1,11 +1,18 @@
 import axios from "axios";
 
-const navigation = {
+export const navigation = {
     start: '/design/start',
     profits: '/design/profits',
     details: '/design/details',
     preview: '/design/preview',
 }
+
+export const designNavigation = [
+    { name: "Design", href: "/design/start", level: 1, passed: false },
+    { name: "Profits", href: "/design/profits", level: 2, passed: false },
+    { name: "Details", href: "/design/details", level: 3, passed: false },
+    { name: "Edit & Preview", href: "/design/preview", level: 4, passed: false },
+];
 
 class CampaignTools {
     async saveCampaign(pathname: string, authToken: string, campaignId: string | string[], campaign) {
@@ -34,7 +41,7 @@ class CampaignTools {
             return await this.modify(authToken, campaignId, filteredCampaign)
         }
         else {
-            return new Error('Could not find the page pathname!')
+            throw new Error('Could not find the page pathname!')
         }
     }
 
@@ -58,15 +65,12 @@ class CampaignTools {
 
                 return response
             }
-            catch (e) {
-                return e?.message
+            catch (err) {
+                throw err
             }
         }
         else {
-            return {
-                success: false,
-                message: 'You need to make at least one change!'
-            }
+            throw new Error('You need to make at least one change!')
         }
     }
 
@@ -90,8 +94,8 @@ class CampaignTools {
 
                 return response
             }
-            catch (e) {
-                return e?.message
+            catch (err) {
+                throw err
             }
         }
         else {
@@ -113,8 +117,8 @@ class CampaignTools {
 
             return response
         }
-        catch (e) {
-            return e?.message
+        catch (err) {
+            throw err
         }
     }
 
@@ -230,6 +234,25 @@ class CampaignTools {
         }
     }
 
+    launchCheck(campaign) {
+        if (!campaign || !campaign.design || !campaign.products.length) {
+            return false
+        }
+        else if (!campaign.title) {
+            return false
+        }
+        else if (!campaign.description) {
+            return false
+        }
+        else if (campaign.campaignLevel < 3) {
+            return false
+        }
+        else if (!campaign.tags.length) {
+            return false
+        }
+        return true
+    }
+
     async changeLevel(authToken: string, pathname: string, campaignId: string | string[], campaign) {
         let campaignLevel = 0
         if (pathname.indexOf(navigation.start) !== -1 && campaign.campaignLevel < 1) {
@@ -251,6 +274,40 @@ class CampaignTools {
             campaignLevel = 4
 
             await this.modify(authToken, campaignId, { campaignLevel })
+        }
+    }
+
+    navigation(campaign, campaignId) {
+        return designNavigation.map((link) => {
+            if (campaign.campaignLevel >= link.level) {
+                return {
+                    ...link,
+                    passed: true,
+                    href: `${link.href}/${campaignId}`
+                }
+            }
+            else {
+                return {
+                    ...link,
+                    href: `${link.href}/${campaignId}`
+                }
+            }
+        })
+    }
+
+    async launchCampaign(campaign, authToken, campaignId) {
+        try {
+            const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/launch/${campaignId}`, campaign, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken || localStorage.getItem('user_at')}`
+                }
+            });
+
+            return response
+        }
+        catch (err) {
+            throw err
         }
     }
 }

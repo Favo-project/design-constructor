@@ -1,20 +1,13 @@
 import { useParams, usePathname } from "next/navigation"
-import SaveLoader from "./SaveLoader"
 import { useLayoutEffect, useState } from "react"
 import Link from "next/link"
-import { campaignTools } from "../actions/campaignTools"
+import { campaignTools, navigation } from "../actions/campaignTools"
 
-const navigation = {
-    start: '/design/start',
-    profits: '/design/profits',
-    details: '/design/details',
-    preview: '/design/preview',
-}
-
-export default function NextButton({ loaded, onNext, onLaunch, loading, campaign }) {
+export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, isSaved }) {
     const pathname = usePathname()
     const { campaignId } = useParams()
     const [isNext, setIsNext] = useState(false)
+    const [isLaunch, setIsLaunch] = useState(false)
 
     const [nextUrl, setNextUrl] = useState('')
 
@@ -33,14 +26,26 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         }
 
         setIsNext(campaignTools.nextCheck(pathname, campaign))
+        setIsLaunch(campaignTools.launchCheck(campaign))
     }, [pathname, campaignId, campaign])
 
 
-    if (pathname.indexOf(navigation.preview) !== -1 && campaignId) return (
-        <button onClick={onLaunch} disabled={!loaded || loading} className="block bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
-            Launch
-        </button>
-    )
+    if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
+
+        if (!isLaunch) {
+            return (
+                <button disabled className="block bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
+                    Launch
+                </button>
+            )
+        }
+
+        return (
+            <button onClick={onLaunch} disabled={!loaded || loading} className="block bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
+                Launch
+            </button>
+        )
+    }
 
     if (!isNext) {
         return (

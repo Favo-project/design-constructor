@@ -14,7 +14,7 @@ export default function SaveButton({ loaded, onSave, loading, isSaved }) {
 
     if (isSaved) {
         return (
-            <button onClick={onSave} disabled className="text-sm text-slate-700 font-sans font-semibold mr-1 flex items-center disabled:cursor-not-allowed">
+            <button disabled className="text-sm text-slate-700 font-sans font-semibold mr-1 flex items-center disabled:cursor-not-allowed">
                 <span className="text text-green-600 mr-1 text-lg"><MdCheck /></span> Saved
             </button>
         )

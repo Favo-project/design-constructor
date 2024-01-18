@@ -5,40 +5,32 @@ import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { AiOutlineHome } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdLogout } from "react-icons/md";
-import { useState } from "react";
+import { MdLogout, MdCheck } from "react-icons/md";
+import { useEffect, useState } from "react";
 import { PiCaretRightThin } from "react-icons/pi";
 import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
-import { authAtom, campaignAtom, campaignStart, canvas, userAtom } from "@/constants";
+import { authAtom, campaignAtom, campaignStart, userAtom } from "@/constants";
 import { useRouter, useParams, usePathname } from "next/navigation";
 import { FaRegUserCircle } from "react-icons/fa";
-import axios from "axios";
 import { campaignTools } from "../actions/campaignTools";
 import SaveButton from "./SaveButton";
 import NextButton from "./NextButton";
-
-const navigation = [
-  { name: "Design", href: "/design/start" },
-  { name: "Profits", href: "/design/profits" },
-  { name: "Details", href: "/design/details" },
-  { name: "Edit & Preview", href: "/design/preview" },
-];
+import SaveDialog from "./SaveDialog";
 
 export default function DesignNavbar() {
   const router = useRouter()
   const pathname = usePathname()
   const { campaignId } = useParams()
+  const [saveDialog, setSaveDialog] = useState(false)
 
   const [loading, setLoading] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
-  const [canvasExp] = useAtom<any>(canvas)
 
   const [user, setUser] = useAtom(userAtom)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [auth, setAuth] = useAtom(authAtom)
-  const [currentHref, setCurrentHref] = useState(window.location.pathname)
 
   const [campaign] = useAtom(campaignAtom)
   const [campaignBlank, setCampaignBlank] = useAtom(campaignStart)
@@ -52,61 +44,117 @@ export default function DesignNavbar() {
         loaded: false
       })
       localStorage.removeItem('user_at')
+      router.push('/')
     }
     catch (e) {
       router.push('/')
     }
   }
 
+  // window.onbeforeunload = (e) => {
+  //   e.preventDefault()
+  // }
+
   const onSave = async () => {
-    if (campaignId) {
-      setLoading(true)
-      const response = await campaignTools.saveCampaign(pathname, auth, campaignId, campaign)
+    try {
+      if (campaignId) {
+        setLoading(true)
+        const response = await campaignTools.saveCampaign(pathname, auth, campaignId, campaign)
 
-      if (response.success) {
-        setIsSaved(true)
+        if (response.success) {
+          setIsSaved(true)
 
-        setTimeout(() => {
-          setIsSaved(false)
-        }, 5000)
+          setTimeout(() => {
+            setIsSaved(false)
+          }, 3000)
+        }
+        else {
+          // error || warn the user that they should make change
+        }
+
+        setLoading(false)
       }
       else {
-        // error || warn the user that they should make change
+        setSaveDialog(true)
+        const response = await campaignTools.initCampaign(auth, campaignBlank)
+        if (response.success) {
+          setCampaignBlank({
+            ...campaignStart.init,
+            products: [...campaignBlank.products]
+          })
+          router.push(`/design/start/${response.data._id}`)
+          return response.data
+        }
+        else {
+          // error || warn the user that they should make change
+        }
       }
-
-      setLoading(false)
     }
-    else {
-      const response = await campaignTools.initCampaign(auth, campaignBlank)
-      if (response.success) {
-        setCampaignBlank({
-          ...campaignStart.init,
-          products: [...campaignBlank.products]
+    catch (err) {
+      if (err?.response?.status === 403) {
+        router.push('/')
+        setAuth('')
+        setUser({
+          name: null,
+          phone: null,
+          loaded: false
         })
-        router.push(`/design/start/${response.data._id}`)
-        return response.data
+        localStorage.removeItem('user_at')
+        setSaveDialog(false)
       }
       else {
-        // error || warn the user that they should make change
+        console.log(err);
       }
     }
   }
 
   const onNext = async () => {
-    const data = await onSave()
-    if (campaignId) {
-      await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
+    try {
+      const data = await onSave()
+      if (campaignId) {
+        await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
+      }
+      else {
+        await campaignTools.changeLevel(auth, pathname, data._id, data)
+      }
     }
-    else {
-      await campaignTools.changeLevel(auth, pathname, data._id, data)
+    catch (err) {
+      if (err?.response?.status === 403) {
+        router.push('/')
+        setAuth('')
+        setUser({
+          name: null,
+          phone: null,
+          loaded: false
+        })
+        localStorage.removeItem('user_at')
+        setSaveDialog(false)
+      }
+      else {
+        console.log(err);
+      }
     }
   }
-  const onLaunch = () => {
 
+  const onLaunch = () => {
+    try {
+      const response = campaignTools.launchCampaign(campaign, auth, campaignId)
+    }
+    catch (e) {
+
+    }
   }
+
+  useEffect(() => {
+    if (saveDialog && campaignId) {
+      setSaveDialog(false)
+    }
+  }, [saveDialog, campaignId])
 
   return (
     <>
+      <SaveDialog isOpen={saveDialog} closeModal={() => { }} />
+
       <nav
         className="flex z-50 fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 lg:py-0 shadow-sm"
         aria-label="Global"
@@ -132,22 +180,32 @@ export default function DesignNavbar() {
           </button>
         </div>
         <div className="hidden lg:flex items-center">
-          {navigation.map((item, index) => (
+          {campaignTools.navigation(campaign, campaignId).map((link, index) => (
             <div key={index} className="flex items-center">
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm py-6 font-semibold leading-6 text-gray-900"
-              >
-                {item.name}
-              </Link>
+              {
+                link.passed ? (
+                  <div className="flex items-center">
+                    <Link
+                      href={link.href}
+                      className="text-sm py-6 font-semibold leading-6 text-slate-700 hover:text-indigo-500 transition-all"
+                    >
+                      {link.name}
+                    </Link>
+                    <span className="ml-1 text-green-600 text-lg">
+                      <MdCheck />
+                    </span>
+                  </div>
+                ) : (
+                  <button className="text-sm py-6 font-semibold leading-6 text-slate-700 cursor-default">{link.name}</button>
+                )
+              }
               <PiCaretRightThin className="text-7xl text-slate-300" />
             </div>
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
           <SaveButton loaded={user.loaded} onSave={onSave} loading={loading} isSaved={isSaved} />
-          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} />
+          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} isSaved={isSaved} />
           {
             user.loaded ? (
               <div>
@@ -239,7 +297,7 @@ export default function DesignNavbar() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {navigation.map((item) => (
+                {campaignTools.navigation(campaign, campaignId).map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}

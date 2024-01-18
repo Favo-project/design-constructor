@@ -1,20 +1,22 @@
 'use client'
 import Loader from "@/components/Loader";
-import { authAtom, campaignAtom } from "@/constants";
+import { authAtom, campaignAtom, userAtom } from "@/constants";
 import axios from "axios";
 import { useAtom } from "jotai";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from 'react'
 import { BsQuestionCircle } from "react-icons/bs";
 import { formatCurrency } from "../../actions/campaignTools";
 import ProfitInput from "./ProfitInput";
 
 export default function Profits() {
+    const router = useRouter()
     const { campaignId } = useParams()
     const [loading, setLoading] = useState(true)
-
     const [auth, setAuth] = useAtom(authAtom)
+    const [user, setUser] = useAtom(userAtom)
+
     const [campaign, setCampaign] = useAtom(campaignAtom)
 
     useLayoutEffect(() => {
@@ -28,13 +30,20 @@ export default function Profits() {
                     }
                 })
 
-                console.log(response.data);
-
-                setCampaign({ ...response.data })
+                setCampaign({ ...campaignAtom.init, ...response.data })
                 setLoading(false)
             }
             catch (e) {
-                console.log(e);
+                if (e?.response?.status === 403) {
+                    router.push('/')
+                    setAuth('')
+                    setUser({
+                        name: null,
+                        phone: null,
+                        loaded: false
+                    })
+                    localStorage.removeItem('user_at')
+                }
                 setLoading(false)
             }
         }
@@ -43,7 +52,7 @@ export default function Profits() {
     }, [campaignId])
 
     return <div>
-        <div className="container m-auto">
+        <div className="container m-auto w-full max-w-7xl pt-12 px-6">
 
             <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
                 Set your selling prices
@@ -69,7 +78,7 @@ export default function Profits() {
                                         <td className="py-5">
                                             <div className="flex items-center gap-4">
                                                 <div>
-                                                    <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.images[index].colors[0].image!.front}`} alt="product-img" width={64} height={64} />
+                                                    <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${product.colors[0].designImg.front}`} alt="product-img" width={64} height={64} />
                                                 </div>
                                                 <div>
                                                     <h4 className="font-bold text-gray-600">{product.title}</h4>

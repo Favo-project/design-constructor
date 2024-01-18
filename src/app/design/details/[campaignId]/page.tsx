@@ -1,16 +1,18 @@
 'use client'
-import { authAtom, campaignAtom } from '@/constants'
+import { authAtom, campaignAtom, userAtom } from '@/constants'
 import axios from 'axios'
 import { useAtom } from 'jotai'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useLayoutEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 
 export default function Details() {
+    const router = useRouter()
     const { campaignId } = useParams()
     const [loading, setLoading] = useState(true)
 
     const [auth, setAuth] = useAtom(authAtom)
+    const [user, setUser] = useAtom(userAtom)
     const [campaign, setCampaign] = useAtom(campaignAtom)
 
     const [addButton, setAddButton] = useState(false)
@@ -121,11 +123,20 @@ export default function Details() {
                 })
 
                 setAdditionalTags([...copyAdditionalTags])
-                setCampaign({ ...response.data })
+                setCampaign({ ...campaignAtom.init, ...response.data })
                 setLoading(false)
             }
             catch (e) {
-                console.log(e);
+                if (e?.response?.status === 403) {
+                    router.push('/')
+                    setAuth('')
+                    setUser({
+                        name: null,
+                        phone: null,
+                        loaded: false
+                    })
+                    localStorage.removeItem('user_at')
+                }
                 setLoading(false)
             }
         }
@@ -169,6 +180,7 @@ export default function Details() {
         setTimeout(() => {
             setCampaign({ ...campaign, tags: [...campaign.tags, tag] })
         }, 500)
+        setNewTag('')
         setAddButton(false)
     }
 
@@ -179,7 +191,7 @@ export default function Details() {
     }
 
     return (
-        <div className="container m-auto">
+        <div className="container m-auto w-full max-w-7xl pt-12 px-6">
             <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
                 What’s the best way to describe your campaign?
             </h2>

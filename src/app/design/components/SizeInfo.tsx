@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
 export default function SizeInfo() {
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
         setIsOpen(false)
