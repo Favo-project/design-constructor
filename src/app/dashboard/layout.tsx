@@ -1,6 +1,6 @@
 'use client'
 import DashboardSidebar from "@/components/DashboardSidebar";
-import { authAtom, userAtom } from "@/constants";
+import { authAtom, campaignAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ export default function DashboardLayout({
 
   const [auth, setAuth] = useAtom(authAtom)
   const [user, setUser] = useAtom(userAtom)
+  const [campaign, setCampaign] = useAtom(campaignAtom)
 
   useLayoutEffect(() => {
     try {
@@ -66,7 +67,7 @@ export default function DashboardLayout({
           user.loaded ? (
             <>
               <DashboardSidebar />
-              <div className="p-8 lg:ml-56 bg-[#f5f8fc] h-[100vh] overflow-y-auto">
+              <div className="p-8 lg:ml-56 bg-[#fff] h-[100vh] overflow-y-auto">
                 {children}
               </div>
             </>

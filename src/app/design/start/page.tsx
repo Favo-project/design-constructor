@@ -95,6 +95,11 @@ export default function Start() {
 
   // campaign state
   const [campaign, setCampaign] = useAtom(campaignStart);
+  const [campaignOld, setCampaignOld] = useAtom(campaignAtom);
+
+  useEffect(() => {
+    setCampaignOld({ ...campaignAtom.init })
+  }, [campaignOld])
 
   useLayoutEffect(() => {
     fonts.forEach((font) => {

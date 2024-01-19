@@ -16,7 +16,8 @@ const navigation = [
   {
     name: 'Campaigns',
     icon: <BsBarChart />,
-    href: '/dashboard/campaigns'
+    href: '/dashboard/campaigns',
+    subLinks: ['/dashboard/details']
   },
   {
     name: 'My Store',
@@ -55,7 +56,14 @@ export default function Sidebar() {
   }
 
   const isActive = (link) => {
-    return pathname === link
+    if (link.href === '/') return false
+    let value = pathname.indexOf(link.href) !== -1
+    if (link.subLinks?.length) {
+      link.subLinks.forEach(link => {
+        if (pathname.indexOf(link) !== -1) value = true
+      })
+    }
+    return value
   }
 
   return (
@@ -113,9 +121,9 @@ export default function Sidebar() {
                   <Link
                     onClick={() => setIsOpen(false)}
                     href={link.href}
-                    className={`${isActive(link.href) ? 'text-slate-600 bg-white bg-opacity-75' : 'text-white hover:bg-gray-500'} flex transition-all items-center p-2 rounded-lg group`}
+                    className={`${isActive(link) ? 'text-slate-600 bg-white bg-opacity-75' : 'text-white hover:bg-gray-500'} flex transition-all items-center p-2 rounded-lg group`}
                   >
-                    <span className={`${isActive(link.href) ? 'text-slate-600' : 'text-gray-400 group-hover:text-white'} transition duration-75`}>
+                    <span className={`${isActive(link) ? 'text-slate-600' : 'text-gray-400 group-hover:text-white'} transition duration-75`}>
                       {link.icon}
                     </span>
                     <span className="ml-3">{link.name}</span>

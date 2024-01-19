@@ -15,8 +15,8 @@ const initCampaign = {
     back: []
   },
   campaignLevel: 0,
-  soldHidden: false,
-  soldAmount: 0
+  soldAmount: 0,
+  _id: ''
 }
 
 export const colors = [

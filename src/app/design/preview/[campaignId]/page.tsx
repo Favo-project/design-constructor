@@ -123,21 +123,13 @@ export default function Preview() {
         return product?.sizes
     }
 
-    const onToggleVisibility = () => {
-        if (campaign.soldHidden) {
-            setCampaign({ ...campaign, soldHidden: false })
-        } else {
-            setCampaign({ ...campaign, soldHidden: true })
-        }
-    }
-
     return <div className="container relative m-auto">
         {loading ? (
             <Loader />
         ) : (
             <div className="grid grid-cols-2 gap-10 py-10 mt-6">
-                <div className="sticky flex justify-end top-28 h-min">
-                    <div className="relative">
+                <div className="sticky flex justify-end top-28 h-min bg-transparent">
+                    <div className="relative w-[600px] h-[600px]m max-h-[600px] bg-transparent">
                         <div className="border-0">
                             <Image priority style={{ objectFit: 'cover', border: 0 }} className="block w-full h-full border-0 no-underline" src={loadImage(currentProduct?.colors[currentColor].designImg[side])} alt="product-img" width={600} height={600} />
                         </div>
@@ -240,7 +232,7 @@ export default function Preview() {
                     <div className="mt-10">
                         <div className="border border-slate-200 px-8 py-6 rounded-xl max-w-md">
                             <div className="flex items-center justify-between">
-                                <div className={`${campaign.soldHidden ? 'opacity-25' : 'opacity-100'} flex items-center gap-3`}>
+                                <div className={`flex items-center gap-3`}>
                                     <span className="block text-xl p-2.5     rounded-full bg-slate-100 text-slate-400">
                                         <GrTag className="text-slate-400" />
                                     </span>
@@ -250,18 +242,10 @@ export default function Preview() {
                                     </div>
                                 </div>
                                 <div>
-                                    <button className="rounded-md p-2 shadow-xl text-slate-400 bg-gray-100" onClick={onToggleVisibility}>
-                                        {
-                                            campaign.soldHidden ? (
-                                                <span className="text-2xl">
-                                                    <IoEyeOutline />
-                                                </span>
-                                            ) : (
-                                                <span className="text-2xl">
-                                                    <IoEyeOffOutline />
-                                                </span>
-                                            )
-                                        }
+                                    <button className="rounded-md p-2 shadow-xl text-slate-400 bg-gray-100" >
+                                        <span className="text-2xl">
+                                            <IoEyeOutline />
+                                        </span>
 
                                     </button>
                                 </div>

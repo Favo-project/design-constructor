@@ -1,4 +1,5 @@
 'use client'
+import Loader from '@/components/Loader'
 import { authAtom, campaignAtom, userAtom } from '@/constants'
 import axios from 'axios'
 import { useAtom } from 'jotai'
@@ -191,45 +192,49 @@ export default function Details() {
     }
 
     return (
-        <div className="container m-auto w-full max-w-7xl pt-12 px-6">
-            <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
-                What’s the best way to describe your campaign?
-            </h2>
+        loading ? (
+            <Loader />
+        ) : (
+            <div className="container m-auto w-full max-w-7xl pt-12 px-6" >
+                <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
+                    What’s the best way to describe your campaign?
+                </h2>
 
-            <div>
-                <div className='flex flex-wrap gap-3'>
-                    {
-                        tags.map((tag, index) => (
-                            <button onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition`} key={index}>{tag.name}</button>
-                        ))
-                    }
-                </div>
-            </div>
-
-            <div className='mt-10'>
-                <h3 className='font-medium text-base text-gray-600 mb-6'>SELECT ADDITIONAL TAGS (OPTIONAL)</h3>
-                <div className='flex flex-wrap gap-3'>
-                    {
-                        additionalTags.map((tag, index) => (
-                            <button onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition`} key={index}>{tag.name}</button>
-                        ))
-                    }
-                </div>
-                <div className='mt-6'>
-                    <button type='button' onClick={() => setAddButton(true)}>
+                <div>
+                    <div className='flex flex-wrap gap-3'>
                         {
-                            addButton ? (
-                                <form autoFocus onSubmit={onAddTag} className='flex'>
-                                    <input onChange={(e) => setNewTag(e.target.value)} value={newTag} className='border-2 rounded-md text-gray-600 font-medium outline-none px-4 py-2 border-slate-300 bg-white' autoFocus type="text" />
-                                    <button type='submit' className='text-lg rounded-md text-white h-full px-4 py-3 flex justify-center items-center bg-indigo-600'>
-                                        <AiOutlinePlus />
-                                    </button>
-                                </form>
-                            ) : <span className='flex border-2 rounded-full px-4 py-2 text-gray-600 border-slate-200 bg-slate-200 hover:bg-slate-100 hover:border-slate-400'>Add your own</span>
+                            tags.map((tag, index) => (
+                                <button onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition`} key={index}>{tag.name}</button>
+                            ))
                         }
-                    </button>
+                    </div>
                 </div>
-            </div>
-        </div>
+
+                <div className='mt-10'>
+                    <h3 className='font-medium text-base text-gray-600 mb-6'>SELECT ADDITIONAL TAGS (OPTIONAL)</h3>
+                    <div className='flex flex-wrap gap-3'>
+                        {
+                            additionalTags.map((tag, index) => (
+                                <button onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition`} key={index}>{tag.name}</button>
+                            ))
+                        }
+                    </div>
+                    <div className='mt-6'>
+                        <button type='button' onClick={() => setAddButton(true)}>
+                            {
+                                addButton ? (
+                                    <form autoFocus onSubmit={onAddTag} className='flex'>
+                                        <input onChange={(e) => setNewTag(e.target.value)} value={newTag} className='border-2 rounded-md text-gray-600 font-medium outline-none px-4 py-2 border-slate-300 bg-white' autoFocus type="text" />
+                                        <button type='submit' className='text-lg rounded-md text-white h-full px-4 py-3 flex justify-center items-center bg-indigo-600'>
+                                            <AiOutlinePlus />
+                                        </button>
+                                    </form>
+                                ) : <span className='flex border-2 rounded-full px-4 py-2 text-gray-600 border-slate-200 bg-slate-200 hover:bg-slate-100 hover:border-slate-400'>Add your own</span>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </div >
+        )
     )
 }

@@ -5,7 +5,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useLayoutEffect, useState } from 'react'
 import { MdCheck, MdDelete, MdDeleteOutline, MdModeEdit, MdOutlineEdit } from "react-icons/md";
 import { GoChevronRight } from "react-icons/go";
-import { FaLess, FaMinus, FaRegCircle } from "react-icons/fa6";
+import { FaCircle, FaMinus, FaRegCircle } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from 'next/navigation'
 import HelpCard from "@/components/HelpCard";
@@ -37,15 +37,10 @@ export default function Campaigns() {
             setLoading(true)
 
             try {
-                const randomValue = Math.random().toString(36).substring(7);
-
-                const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns?_=${randomValue}`, {
+                const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns`, {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`,
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
                     },
                 })
 
@@ -109,7 +104,7 @@ export default function Campaigns() {
     }
 
     return (
-        <div id="overview">
+        <div id="campaigns">
             <header className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-slate-600 my-8">Campaigns</h1>
                 <UserMenu />
@@ -183,9 +178,9 @@ export default function Campaigns() {
                                     </tr>
                                 ) : (
                                     campaigns.map((campaign, index) => (
-                                        <tr key={index} className="hover:shadow-xl transition-all rounded-md cursor-pointer">
+                                        <tr key={index} className="hover:shadow-lg transition-all mb-2 rounded-lg overflow-hidden cursor-pointer relative">
                                             <td>
-                                                <div className="flex items-center gap-3 p-3">
+                                                <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                                                     <div>
                                                         <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} alt="product-img" width={48} height={48} />
                                                     </div>
@@ -193,7 +188,7 @@ export default function Campaigns() {
                                                         <p className="text-sm font-medium">{campaign.title}</p>
                                                         <span className="text-xs text-slate-500">0 sold</span>
                                                     </div>
-                                                </div>
+                                                </Link>
                                             </td>
                                             <td>
                                                 <div className="text-sm text-slate-600">
@@ -210,19 +205,28 @@ export default function Campaigns() {
                                             <td>
                                                 {
                                                     campaign.status === 'Draft' ? (
-
-                                                        <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
-                                                            <span className="text-slate-400 mr-1"><FaRegCircle /></span>
-                                                            Draft
-                                                        </h4>
+                                                        <>
+                                                            <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
+                                                                <span className="text-slate-400 mr-1"><FaRegCircle /></span>
+                                                                Draft
+                                                            </h4>
+                                                            <p className="text-sm text-slate-500">Not launched</p>
+                                                        </>
+                                                    ) : campaign.status === 'Launched' ? (
+                                                        <>
+                                                            <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
+                                                                <span className="text-green-600 mr-1"><FaCircle /></span>
+                                                                On
+                                                            </h4>
+                                                            <p className="text-sm text-slate-500">Launched</p>
+                                                        </>
                                                     ) : ''
                                                 }
-                                                <p className="text-sm text-slate-500">Not launched</p>
                                             </td>
                                             <td>
                                                 <Menu as="div" className="relative inline-block text-left p-3">
                                                     <div>
-                                                        <Menu.Button className="p-2 relative text-2xl outline-none text-slate-700 hover:text-slate-400 transition-all">
+                                                        <Menu.Button className="p-3 relative text-2xl outline-none text-slate-700 hover:text-slate-400 transition-all">
                                                             <IoSettingsOutline />
                                                         </Menu.Button>
                                                     </div>

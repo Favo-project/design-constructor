@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from "react"
 import Link from "next/link"
 import { campaignTools, navigation } from "../actions/campaignTools"
 
-export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, isSaved }) {
+export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, onSave }) {
     const pathname = usePathname()
     const { campaignId } = useParams()
     const [isNext, setIsNext] = useState(false)
@@ -22,7 +22,7 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
             setNextUrl(`${navigation.preview}/${campaignId}`)
         }
         else if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
-            setNextUrl('')
+            setNextUrl('/dashboard/campaigns')
         }
 
         setIsNext(campaignTools.nextCheck(pathname, campaign))
@@ -30,7 +30,17 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
     }, [pathname, campaignId, campaign])
 
 
+
     if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
+        if (campaign.status === 'Launched') {
+            return (
+                <button onClick={onSave} disabled={!loaded || loading} className="text-sm flex uppercase tracking-tight bg-indigo-500 text-white rounded-md">
+                    <Link href={nextUrl} className="block text-white rounded-md shadow-md px-2 p-2">
+                        Save & Close
+                    </Link>
+                </button>
+            )
+        }
 
         if (!isLaunch) {
             return (

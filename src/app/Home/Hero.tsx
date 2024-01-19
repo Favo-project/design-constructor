@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { heroImg1, heroImg2, heroImg3, heroImg4, heroImg5 } from "./assets";
 import { GoSearch } from "react-icons/go";
-import { userAtom } from "@/constants";
+import { campaignAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
-import AuthModal from "@/components/AuthModal";
+import { useEffect } from "react";
 
 export default function Hero() {
   const [user] = useAtom(userAtom)
+  const [campaign, setCampaign] = useAtom(campaignAtom)
 
   return (
     <div className="bg-white">

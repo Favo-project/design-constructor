@@ -32,7 +32,7 @@ export default function DesignNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [auth, setAuth] = useAtom(authAtom)
 
-  const [campaign] = useAtom(campaignAtom)
+  const [campaign, setCampaign] = useAtom(campaignAtom)
   const [campaignBlank, setCampaignBlank] = useAtom(campaignStart)
 
   const onLogout = () => {
@@ -77,6 +77,7 @@ export default function DesignNavbar() {
       else {
         setSaveDialog(true)
         const response = await campaignTools.initCampaign(auth, campaignBlank)
+        console.log(response);
         if (response.success) {
           setCampaignBlank({
             ...campaignStart.init,
@@ -86,11 +87,13 @@ export default function DesignNavbar() {
           return response.data
         }
         else {
+
           // error || warn the user that they should make change
         }
       }
     }
     catch (err) {
+      setSaveDialog(false)
       if (err?.response?.status === 403) {
         router.push('/')
         setAuth('')
@@ -100,7 +103,6 @@ export default function DesignNavbar() {
           loaded: false
         })
         localStorage.removeItem('user_at')
-        setSaveDialog(false)
       }
       else {
         console.log(err);
@@ -112,10 +114,12 @@ export default function DesignNavbar() {
     try {
       const data = await onSave()
       if (campaignId) {
-        await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
+        const response = await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
+        setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel })
       }
       else {
-        await campaignTools.changeLevel(auth, pathname, data._id, data)
+        const response = await campaignTools.changeLevel(auth, pathname, data._id, data)
+        setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel })
       }
     }
     catch (err) {
@@ -205,7 +209,7 @@ export default function DesignNavbar() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
           <SaveButton loaded={user.loaded} onSave={onSave} loading={loading} isSaved={isSaved} />
-          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} isSaved={isSaved} />
+          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} onSave={onSave} />
           {
             user.loaded ? (
               <div>

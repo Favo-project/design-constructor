@@ -19,7 +19,7 @@ import axios from "axios";
 import CampaignDelete from "../components/CampaignDelete";
 import Loader from "@/components/Loader";
 import { BiCopy, BiSolidCopy } from "react-icons/bi";
-import { FaMinus, FaRegCircle } from "react-icons/fa6";
+import { FaCircle, FaMinus, FaRegCircle } from "react-icons/fa6";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false)
@@ -51,7 +51,7 @@ export default function Dashboard() {
           },
         })
 
-        const campaignData = response.data.splice(0, 4)
+        const campaignData = response.data.splice(0, 3)
         setCampaigns(campaignData)
         setLoading(false)
       }
@@ -181,9 +181,9 @@ export default function Dashboard() {
                       </tr>
                     ) : (
                       campaigns.map((campaign, index) => (
-                        <tr key={index} className="hover:shadow-xl transition-all rounded-md cursor-pointer">
+                        <tr key={index} className="relative hover:shadow-xl transition-all rounded-md cursor-pointer">
                           <td>
-                            <div className="flex items-center gap-3 p-3">
+                            <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                               <div>
                                 <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} alt="product-img" width={48} height={48} />
                               </div>
@@ -191,19 +191,28 @@ export default function Dashboard() {
                                 <p className="text-sm font-medium">{campaign.title}</p>
                                 <span className="text-xs text-slate-500">0 sold</span>
                               </div>
-                            </div>
+                            </Link>
                           </td>
                           <td>
                             {
                               campaign.status === 'Draft' ? (
-
-                                <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
-                                  <span className="text-slate-400 mr-1"><FaRegCircle /></span>
-                                  Draft
-                                </h4>
+                                <>
+                                  <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
+                                    <span className="text-slate-400 mr-1"><FaRegCircle /></span>
+                                    Draft
+                                  </h4>
+                                  <p className="text-sm text-slate-500">Not launched</p>
+                                </>
+                              ) : campaign.status === 'Launched' ? (
+                                <>
+                                  <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
+                                    <span className="text-green-600 mr-1"><FaCircle /></span>
+                                    On
+                                  </h4>
+                                  <p className="text-sm text-slate-500">Launched</p>
+                                </>
                               ) : ''
                             }
-                            <p className="text-sm text-slate-500">Not launched</p>
                           </td>
                           <td>
                             <Menu as="div" className="relative inline-block text-left p-3">
