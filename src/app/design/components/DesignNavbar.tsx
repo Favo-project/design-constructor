@@ -19,13 +19,14 @@ import SaveButton from "./SaveButton";
 import NextButton from "./NextButton";
 import SaveDialog from "./SaveDialog";
 import LaunchDialog from "./LaunchDialog";
+import Image from "next/image";
 
 export default function DesignNavbar() {
   const router = useRouter()
   const pathname = usePathname()
   const { campaignId } = useParams()
   const [saveDialog, setSaveDialog] = useState(false)
-  const [launchDialog, setLaunchDialog] = useState(true)
+  const [launchDialog, setLaunchDialog] = useState(false)
 
   const [loading, setLoading] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
@@ -41,9 +42,7 @@ export default function DesignNavbar() {
     try {
       setAuth('')
       setUser({
-        name: null,
-        phone: null,
-        loaded: false
+        ...userAtom.init
       })
       localStorage.removeItem('user_at')
       router.push('/')
@@ -101,9 +100,7 @@ export default function DesignNavbar() {
         router.push('/')
         setAuth('')
         setUser({
-          name: null,
-          phone: null,
-          loaded: false
+          ...userAtom.init
         })
         localStorage.removeItem('user_at')
       }
@@ -130,9 +127,7 @@ export default function DesignNavbar() {
         router.push('/')
         setAuth('')
         setUser({
-          name: null,
-          phone: null,
-          loaded: false
+          ...userAtom.init
         })
         localStorage.removeItem('user_at')
         setSaveDialog(false)
@@ -156,9 +151,7 @@ export default function DesignNavbar() {
         router.push('/')
         setAuth('')
         setUser({
-          name: null,
-          phone: null,
-          loaded: false
+          ...userAtom.init
         })
         localStorage.removeItem('user_at')
       }
@@ -238,9 +231,15 @@ export default function DesignNavbar() {
               <div>
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
-                    <Menu.Button className="inline-flex w-full justify-center rounded-md px-3 py-3 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                      <span className="text-xl">
-                        <FaRegUserCircle />
+                    <Menu.Button className="inline-flex w-full items-center justify-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                      <span className="text-xl w-6 h-6 mr-1">
+                        {
+                          user.photo ? (
+                            <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
+                          ) : (
+                            <FaRegUserCircle className="w-full h-full" />
+                          )
+                        }
                       </span>
                       <ChevronDownIcon
                         className="-mr-1 ml-1 h-5 w-5 text-lg text-slate-600"

@@ -230,6 +230,10 @@ export const authAtom = atom('')
 export const userAtom = atom({
   name: null,
   phone: null,
+  email: null,
+  photo: null,
+  createdAt: null,
+  updatedAt: null,
   loaded: false
 })
 

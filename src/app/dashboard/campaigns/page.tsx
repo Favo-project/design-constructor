@@ -52,9 +52,7 @@ export default function Campaigns() {
                 if (e?.response?.status === 403) {
                     setAuth('')
                     setUser({
-                        name: null,
-                        phone: null,
-                        loaded: false
+                        ...userAtom.init
                     })
                     localStorage.removeItem('user_at')
                     setLoading(false)
@@ -93,9 +91,7 @@ export default function Campaigns() {
             if (e?.response?.status === 403) {
                 setAuth('')
                 setUser({
-                    name: null,
-                    phone: null,
-                    loaded: false
+                    ...userAtom.init
                 })
                 localStorage.removeItem('user_at')
                 router.push('/')

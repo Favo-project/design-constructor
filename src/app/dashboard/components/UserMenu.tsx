@@ -9,6 +9,7 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { authAtom, userAtom } from '@/constants';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function UserMenu() {
     const router = useRouter()
@@ -18,11 +19,7 @@ export default function UserMenu() {
     const onLogout = () => {
         try {
             setAuth('')
-            setUser({
-                name: null,
-                phone: null,
-                loaded: false
-            })
+            setUser({ ...userAtom.init })
             localStorage.removeItem('user_at')
             router.push('/')
         }
@@ -35,9 +32,15 @@ export default function UserMenu() {
         <div>
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                    <Menu.Button className="inline-flex w-full justify-center rounded-md px-3 py-3 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                        <span className="text-xl mr-1">
-                            <FaRegUserCircle />
+                    <Menu.Button className="inline-flex w-full justify-center items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                        <span className="text-xl w-6 h-6 mr-1">
+                            {
+                                user.photo ? (
+                                    <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
+                                ) : (
+                                    <FaRegUserCircle className="w-full h-full" />
+                                )
+                            }
                         </span>
                         {user.name}
                         <ChevronDownIcon

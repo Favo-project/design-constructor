@@ -15,7 +15,7 @@ export default function DesignLayout({
   const router = useRouter()
   const { campaignId } = useParams()
   const [loadingUser, setLoadingUser] = useState(true)
-  const [loadingCampaign, setLoadingCampaign] = useState(true)
+  const [loadingCampaign, setLoadingCampaign] = useState(false)
 
   const [user, setUser] = useAtom(userAtom)
   const [auth, setAuth] = useAtom(authAtom)
@@ -41,48 +41,45 @@ export default function DesignLayout({
           router.push('/')
           setAuth('')
           setUser({
-            name: null,
-            phone: null,
-            loaded: false
+            ...userAtom.init
           })
           localStorage.removeItem('user_at')
         }
         setLoadingUser(false)
       }
     }
-
-
-    const fetchCampaign = async () => {
-      try {
-        const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/${campaignId}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
-          }
-        })
-
-        setCampaign({ ...campaignAtom.init, ...response.data })
-        setLoadingCampaign(false)
-      }
-      catch (err) {
-        if (err?.response?.status === 403) {
-          router.push('/')
-          setAuth('')
-          setUser({
-            name: null,
-            phone: null,
-            loaded: false
-          })
-          localStorage.removeItem('user_at')
-        }
-        if (err?.response?.status === 404) {
-          router.push('/design/start')
-        }
-        setLoadingCampaign(false)
-      }
-    }
     fetchUser()
-    fetchCampaign()
+
+    if (campaignId) {
+      const fetchCampaign = async () => {
+        try {
+          const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/${campaignId}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+            }
+          })
+
+          setCampaign({ ...campaignAtom.init, ...response.data })
+          setLoadingCampaign(false)
+        }
+        catch (err) {
+          if (err?.response?.status === 403) {
+            router.push('/')
+            setAuth('')
+            setUser({
+              ...userAtom.init
+            })
+            localStorage.removeItem('user_at')
+          }
+          if (err?.response?.status === 404) {
+            router.push('/design/start')
+          }
+          setLoadingCampaign(false)
+        }
+      }
+      fetchCampaign()
+    }
   }, [auth])
 
   return (

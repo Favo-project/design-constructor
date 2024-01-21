@@ -3,15 +3,11 @@ import { Tab } from '@headlessui/react'
 import { useState } from 'react'
 import { useAtom } from 'jotai'
 import { authAtom } from '@/constants'
+import { PatternFormat } from 'react-number-format';
+import axios from 'axios'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
-}
-
-interface IReponse {
-    accessToken: string
-    message: string
-    success: boolean
 }
 
 export default function Auth({ closeModal }) {
@@ -26,58 +22,70 @@ export default function Auth({ closeModal }) {
     const onLoginSubmit = (e) => {
         e.preventDefault()
 
-        const body = {
-            phone: loginPhone,
-            password: loginPassword
-        }
+        const fetch = async () => {
+            const loginData = {
+                phone: loginPhone,
+                password: loginPassword
+            }
 
-        try {
-            fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
-                method: 'POST', headers: {
-                    'Content-Type': 'application/json'
-                }, body: JSON.stringify(body)
-            }).then(res => res.json()).then((data: IReponse) => {
-                if (data.success && data.accessToken) {
-                    localStorage.setItem('user_at', data.accessToken)
-                    setAuth(data.accessToken)
+            try {
+                const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, loginData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+                    }
+                })
+
+                if (response.success && response.accessToken) {
+                    localStorage.setItem('user_at', response.accessToken)
+                    setAuth(response.accessToken)
                     clear()
                     closeModal()
                 }
-            })
+            }
+            catch (e) {
+                console.log(e.message);
+                localStorage.removeItem('user_at')
+                setAuth('')
+            }
         }
-        catch (e) {
-            console.log(e.message);
-            localStorage.removeItem('user_at')
-        }
+
+        fetch()
     }
 
     const onRegisterSubmit = (e) => {
         e.preventDefault()
 
-        const body = {
-            name: registerName,
-            phone: registerPhone,
-            password: registerPassword
-        }
+        const fetch = async () => {
+            const registerData = {
+                name: registerName,
+                phone: registerPhone,
+                password: registerPassword
+            }
 
-        try {
-            fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`, {
-                method: 'POST', headers: {
-                    'Content-Type': 'application/json'
-                }, body: JSON.stringify(body)
-            }).then(res => res.json()).then((data: IReponse) => {
-                if (data.success && data.accessToken) {
-                    localStorage.setItem('user_at', data.accessToken)
-                    setAuth(data.accessToken)
+            try {
+                const { data: response } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`, registerData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+                    }
+                })
+
+                if (response.success && response.accessToken) {
+                    localStorage.setItem('user_at', response.accessToken)
+                    setAuth(response.accessToken)
                     clear()
                     closeModal()
                 }
-            })
+            }
+            catch (e) {
+                console.log(e.message);
+                localStorage.removeItem('user_at')
+                setAuth('')
+            }
         }
-        catch (e) {
-            console.log(e.message);
-            localStorage.removeItem('user_at')
-        }
+
+        fetch()
     }
 
 
@@ -125,7 +133,18 @@ export default function Auth({ closeModal }) {
                             <form onSubmit={onLoginSubmit}>
                                 <div className='flex flex-col w-full mb-4'>
                                     <label className='text-sm text-slate-500 mb-2' htmlFor="phone">Phone<span className='text-red-500'>*</span></label>
-                                    <input value={loginPhone} onChange={e => setLoginPhone(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition' type="text" name='phone' id='phone' placeholder='Phone' required />
+                                    <PatternFormat
+                                        value={loginPhone}
+                                        type="tel"
+                                        format="+998(##)###-##-##"
+                                        mask="_"
+                                        onValueChange={value => setLoginPhone(value.value)}
+                                        required
+                                        className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition'
+                                        name='phone'
+                                        id='phone'
+                                        placeholder='Phone'
+                                    />
                                 </div>
                                 <div className='flex flex-col w-full mb-4'>
                                     <label className='text-sm text-slate-500 mb-2' htmlFor="password">Password<span className='text-red-500'>*</span></label>
@@ -144,7 +163,18 @@ export default function Auth({ closeModal }) {
                                 </div>
                                 <div className='flex flex-col w-full mb-4'>
                                     <label className='text-sm text-slate-500 mb-2' htmlFor="phone">Phone<span className='text-red-500'>*</span></label>
-                                    <input value={registerPhone} onChange={e => setRegisterPhone(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition' type="text" name='phone' id='phone' placeholder='Phone' required />
+                                    <PatternFormat
+                                        value={registerPhone}
+                                        type="tel"
+                                        format="+998(##)###-##-##"
+                                        mask="_"
+                                        onValueChange={value => setRegisterPhone(value.value)}
+                                        required
+                                        className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition'
+                                        name='phone'
+                                        id='phone'
+                                        placeholder='Phone'
+                                    />
                                 </div>
                                 <div className='flex flex-col w-full mb-4'>
                                     <label className='text-sm text-slate-500 mb-2' htmlFor="password">Password<span className='text-red-500'>*</span></label>

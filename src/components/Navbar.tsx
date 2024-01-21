@@ -13,6 +13,9 @@ import { AiOutlineHome } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { FaRegUserCircle } from "react-icons/fa";
+import Image from "next/image";
+import axios from "axios";
 
 const navigation = [
   { name: "Sell online", href: "/sell-online" },
@@ -30,38 +33,39 @@ export default function Navbar() {
   const [user, setUser] = useAtom(userAtom)
 
   useEffect(() => {
-    try {
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('user_at') || auth}`
-        }
-      }).then(res => res.json()).then(data => {
-        if (data.success) {
-          setUser({ ...data.user, loaded: true })
+    const fetch = async () => {
+      try {
+        const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+          }
+        })
+
+        if (response.success) {
+          setUser({ ...response.user, loaded: true })
         }
         setLoading(false)
-      })
+      }
+      catch (e) {
+        console.log(e.message);
+        setAuth('')
+        setUser({
+          ...userAtom.init
+        })
+        localStorage.removeItem('user_at')
+        setLoading(false)
+      }
     }
-    catch (e) {
-      console.log(e.message);
-      setAuth('')
-      setUser({
-        name: null,
-        phone: null,
-        loaded: false
-      })
-      localStorage.removeItem('user_at')
-      setLoading(false)
-    }
+
+    fetch()
   }, [auth])
 
   const onLogout = () => {
     try {
       setAuth('')
       setUser({
-        name: null,
-        phone: null,
-        loaded: false
+        ...userAtom.init
       })
       localStorage.removeItem('user_at')
       router.push('/')
@@ -120,7 +124,16 @@ export default function Navbar() {
                     <div>
                       <Menu as="div" className="relative inline-block text-left">
                         <div>
-                          <Menu.Button className="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                          <Menu.Button className="inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                            <span className="text-xl w-6 h-6 mr-1">
+                              {
+                                user.photo ? (
+                                  <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
+                                ) : (
+                                  <FaRegUserCircle className="w-full h-full" />
+                                )
+                              }
+                            </span>
                             {user.name}
                             <ChevronDownIcon
                               className="-mr-1 ml-2 h-5 w-5 text-slate-600"

@@ -5,6 +5,7 @@ import { useAtom } from "jotai";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
+import axios from "axios";
 
 export default function DashboardLayout({
   children,
@@ -19,41 +20,42 @@ export default function DashboardLayout({
   const [campaign, setCampaign] = useAtom(campaignAtom)
 
   useLayoutEffect(() => {
-    try {
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('user_at') || auth}`
-        }
-      }).then(res => res.json()).then(data => {
-        if (data.success) {
-          setUser({ ...data.user, loaded: true })
+    const fetch = async () => {
+      try {
+        const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+          }
+        })
+
+        if (response.success) {
+          setUser({ ...response.user, loaded: true })
         }
         else {
           setAuth('')
           setUser({
-            name: null,
-            phone: null,
-            loaded: false
+            ...userAtom.init
           })
           localStorage.removeItem('user_at')
           setLoading(false)
           router.push('/')
         }
         setLoading(false)
-      })
+      }
+      catch (e) {
+        console.log(e.message);
+        setAuth('')
+        setUser({
+          ...userAtom.init
+        })
+        localStorage.removeItem('user_at')
+        setLoading(false)
+        router.push('/')
+      }
     }
-    catch (e) {
-      console.log(e.message);
-      setAuth('')
-      setUser({
-        name: null,
-        phone: null,
-        loaded: false
-      })
-      localStorage.removeItem('user_at')
-      setLoading(false)
-      router.push('/')
-    }
+
+    fetch()
   }, [auth])
 
   return (

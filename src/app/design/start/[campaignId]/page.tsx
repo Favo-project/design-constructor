@@ -284,9 +284,7 @@ export default function Start({ params }: { params: { campaignId: string } }) {
           router.push('/')
           setAuth('')
           setUser({
-            name: null,
-            phone: null,
-            loaded: false
+            ...userAtom.init
           })
           localStorage.removeItem('user_at')
         }
