@@ -99,7 +99,7 @@ export default function Start() {
 
   useEffect(() => {
     setCampaignOld({ ...campaignAtom.init })
-  }, [campaignOld])
+  }, [])
 
   useLayoutEffect(() => {
     fonts.forEach((font) => {
@@ -874,7 +874,7 @@ export default function Start() {
                   <Tab.Panel
                     key={idx}
                     className={classNames(
-                      "rounded-xl bg-white p-3",
+                      "rounded-xl bg-white py-3",
                       "ring-white focus:outline-none"
                     )}
                   >

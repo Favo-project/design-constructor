@@ -18,12 +18,14 @@ import { campaignTools } from "../actions/campaignTools";
 import SaveButton from "./SaveButton";
 import NextButton from "./NextButton";
 import SaveDialog from "./SaveDialog";
+import LaunchDialog from "./LaunchDialog";
 
 export default function DesignNavbar() {
   const router = useRouter()
   const pathname = usePathname()
   const { campaignId } = useParams()
   const [saveDialog, setSaveDialog] = useState(false)
+  const [launchDialog, setLaunchDialog] = useState(true)
 
   const [loading, setLoading] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
@@ -63,6 +65,7 @@ export default function DesignNavbar() {
 
         if (response.success) {
           setIsSaved(true)
+          setCampaign({ ...campaign, ...response.data })
 
           setTimeout(() => {
             setIsSaved(false)
@@ -77,13 +80,13 @@ export default function DesignNavbar() {
       else {
         setSaveDialog(true)
         const response = await campaignTools.initCampaign(auth, campaignBlank)
-        console.log(response);
         if (response.success) {
           setCampaignBlank({
             ...campaignStart.init,
             products: [...campaignBlank.products]
           })
           router.push(`/design/start/${response.data._id}`)
+          setCampaign({ ...campaign, ...response.data })
           return response.data
         }
         else {
@@ -119,7 +122,7 @@ export default function DesignNavbar() {
       }
       else {
         const response = await campaignTools.changeLevel(auth, pathname, data._id, data)
-        setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel })
+        setCampaign({ ...campaign, ...data, campaignLevel: response?.data?.campaignLevel })
       }
     }
     catch (err) {
@@ -140,12 +143,27 @@ export default function DesignNavbar() {
     }
   }
 
-  const onLaunch = () => {
+  const onLaunch = async () => {
     try {
-      const response = campaignTools.launchCampaign(campaign, auth, campaignId)
+      await onSave()
+      const response = await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
+      const data = await campaignTools.launchCampaign(auth, campaignId)
+      setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel })
+      setLaunchDialog(true)
     }
-    catch (e) {
-
+    catch (err) {
+      if (err?.response?.status === 403) {
+        router.push('/')
+        setAuth('')
+        setUser({
+          name: null,
+          phone: null,
+          loaded: false
+        })
+        localStorage.removeItem('user_at')
+      }
+      setSaveDialog(false)
+      setLaunchDialog(false)
     }
   }
 
@@ -155,9 +173,14 @@ export default function DesignNavbar() {
     }
   }, [saveDialog, campaignId])
 
+  function closeLaunchModal() {
+    setLaunchDialog(false)
+  }
+
   return (
     <>
       <SaveDialog isOpen={saveDialog} closeModal={() => { }} />
+      <LaunchDialog isOpen={launchDialog} closeModal={closeLaunchModal} />
 
       <nav
         className="flex z-50 fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 lg:py-0 shadow-sm"

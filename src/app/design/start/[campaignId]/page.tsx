@@ -2,10 +2,10 @@
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Tab } from "@headlessui/react";
-import Products from "./components/Products";
-import Text from "./components/Text/Text";
-import Clipart from "./components/Clipart/Clipart";
-import Upload from "./components/Ulpoad/Upload";
+import Products from "../components/Products";
+import Text from "../components/Text/Text";
+import Clipart from "../components/Clipart/Clipart";
+import Upload from "../components/Ulpoad/Upload";
 import {
   PiShapes,
   PiTShirt,
@@ -19,15 +19,15 @@ import { fabric } from "fabric"
 import { DeleteIcon, RotateIcon } from "../assets";
 import Loader from "@/components/Loader";
 import { Transform } from "fabric/fabric-impl";
-import TextEditor from "./components/Text/Editor";
-import ClipartEditor from "./components/Clipart/Editor";
-import ImageEditor from "./components/Ulpoad/Editor";
-import MultipleEditor from "./components/MultipleEditor";
+import TextEditor from "../components/Text/Editor";
+import ClipartEditor from "../components/Clipart/Editor";
+import ImageEditor from "../components/Ulpoad/Editor";
+import MultipleEditor from "../components/MultipleEditor";
 import FontFaceObserver from 'fontfaceobserver'
 import { campaignAtom, fonts, canvas, authAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { campaignUtils } from "../../actions/campaign";
 
 
@@ -37,6 +37,7 @@ function classNames(...classes: string[]) {
 
 export default function Start({ params }: { params: { campaignId: string } }) {
   const [canvasExp, setCanvas] = useAtom(canvas)
+  const { campaignId } = useParams()
 
   const router = useRouter()
   const [auth, setAuth] = useAtom(authAtom)
@@ -47,7 +48,6 @@ export default function Start({ params }: { params: { campaignId: string } }) {
   const [multipleObj, setMultipleObj] = useState([])
   const zoomInBtn = useRef(null)
   const zoomOutBtn = useRef(null)
-
 
   const [canvasScale, setCanvasScale] = useState(100);
   const canvasValues: any = useRef({
@@ -102,47 +102,6 @@ export default function Start({ params }: { params: { campaignId: string } }) {
 
   // campaign state
   const [campaign, setCampaign] = useAtom(campaignAtom);
-
-  useLayoutEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/${params.campaignId}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
-          }
-        })
-
-        const design = await campaignUtils.addObjects(canvasRef.canvas, response.data.design, response.data.products[0].printableArea, campaign.selected.side)
-        canvasRef.canvas.discardActiveObject()
-        setTabIndex(0)
-
-        setCampaign({
-          ...campaignAtom.init,
-          ...response.data,
-          design: {
-            ...design
-          }
-        })
-        setLoading(false)
-      }
-      catch (e) {
-        if (e?.response?.status === 403) {
-          router.push('/')
-          setAuth('')
-          setUser({
-            name: null,
-            phone: null,
-            loaded: false
-          })
-          localStorage.removeItem('user_at')
-        }
-      }
-    }
-
-    fetchData()
-  }, [])
 
   useLayoutEffect(() => {
     fonts.forEach((font) => {
@@ -295,6 +254,48 @@ export default function Start({ params }: { params: { campaignId: string } }) {
     fabric.Group.prototype.cornerSize = 10
     fabric.Group.prototype.rotatingPointOffset = 12
   }, []);
+
+  console.log(campaign);
+
+  useEffect(() => {
+    if (campaign.status === 'Launched') {
+      router.push('/design/products/' + campaignId)
+    }
+
+    const fetchData = async () => {
+      try {
+        const canvas = canvasRef.canvas
+        setLoading(true)
+        const design = await campaignUtils.addObjects(canvas, campaign.design, campaign.products[0].printableArea, campaign.selected.side)
+        canvas.discardActiveObject()
+
+        setTabIndex(0)
+
+        setCampaign({
+          ...campaign,
+          design: {
+            ...design
+          }
+        })
+        setLoading(false)
+      }
+      catch (e) {
+        if (e?.response?.status === 403) {
+          router.push('/')
+          setAuth('')
+          setUser({
+            name: null,
+            phone: null,
+            loaded: false
+          })
+          localStorage.removeItem('user_at')
+        }
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [campaignId])
 
   useEffect(() => {
     const canvas = canvasRef.canvas!
@@ -916,7 +917,7 @@ export default function Start({ params }: { params: { campaignId: string } }) {
                   <Tab.Panel
                     key={idx}
                     className={classNames(
-                      "rounded-xl bg-white p-3",
+                      "rounded-xl bg-white py-3",
                       "ring-white focus:outline-none"
                     )}
                   >

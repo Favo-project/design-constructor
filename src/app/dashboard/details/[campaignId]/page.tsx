@@ -14,14 +14,16 @@ import { FiLink } from "react-icons/fi";
 import { MdDelete, MdDeleteOutline, MdModeEdit, MdOpenInNew, MdOutlineEdit } from "react-icons/md";
 import { CiShoppingCart } from "react-icons/ci";
 import Image from "next/image";
-import { FaCircle } from "react-icons/fa6";
+import { FaCircle, FaRegCircle } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
 import { BiCopy, BiSolidCopy } from 'react-icons/bi';
 import CampaignDelete from '../../components/CampaignDelete';
 import { VscDebugRestart } from 'react-icons/vsc';
+import DraftDialog from '@/app/design/components/DraftDialog';
 
 export default function Details() {
     const router = useRouter()
+    const [isOpenDraft, setIsOpenDraft] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const { campaignId } = useParams()
     const [loading, setLoading] = useState(true)
@@ -69,6 +71,14 @@ export default function Details() {
 
     function openModal() {
         setIsOpen(true)
+    }
+
+    function closeModalDraft() {
+        setIsOpenDraft(false)
+    }
+
+    function openModalDraft() {
+        setIsOpenDraft(true)
     }
 
     async function onDelete(campaignId) {
@@ -129,8 +139,19 @@ export default function Details() {
                             </div>
                             <div>
                                 <h4 className='flex items-center gap-2 font-bold text-slate-600 mb-1'>
-                                    <span className='text-green-600'><FaCircle /></span>
-                                    Launched
+                                    {
+                                        campaign.status === 'Launched' ? (
+                                            <>
+                                                <span className='text-green-600'><FaCircle /></span>
+                                                Launched
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className='text-slate-400'><FaRegCircle /></span>
+                                                Draft
+                                            </>
+                                        )
+                                    }
                                 </h4>
                                 <p className='text-sm text-slate-400 font-medium'>
                                     Sep 18 - Jan 15, 2024
@@ -157,7 +178,7 @@ export default function Details() {
                                         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-xl ring-1 ring-black/5 outline-none">
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <Link href={`/design/start/${campaign._id}`}>
+                                                    <Link href={`/design/products/${campaign._id}`}>
                                                         <button
                                                             className={`${active ? 'bg-gray-100 text-slate-600' : 'text-gray-700'
                                                                 } group flex w-full items-center rounded-md px-2 py-3 text-sm transition-all`}
@@ -202,7 +223,7 @@ export default function Details() {
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <button
-                                                        onClick={openModal}
+                                                        onClick={openModalDraft}
                                                         className={`${active ? 'bg-gray-100 text-slate-600' : 'text-gray-700'
                                                             } group flex w-full items-center rounded-md px-2 py-3 text-sm transition-all`}
                                                     >
@@ -375,7 +396,7 @@ export default function Details() {
                 </>
             )}
 
-
+            <DraftDialog closeModal={closeModalDraft} isOpen={isOpenDraft} />
         </div>
     )
 }

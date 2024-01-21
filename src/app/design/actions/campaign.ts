@@ -60,7 +60,6 @@ class Campaign {
         });
 
         canvas.add(text);
-        canvas.discardActiveObject()
 
         return text
     }
@@ -81,7 +80,6 @@ class Campaign {
                 });
 
                 canvas.add(svgObject);
-                canvas.discardActiveObject()
                 cb(null, svgObject);
             })
         })
@@ -97,7 +95,6 @@ class Campaign {
                 });
 
                 canvas.add(image);
-                canvas.discardActiveObject()
                 cb(null, image);
             })
         })

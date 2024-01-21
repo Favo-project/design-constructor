@@ -15,7 +15,10 @@ const initCampaign = {
     back: []
   },
   campaignLevel: 0,
+  status: '',
   soldAmount: 0,
+  createdAt: '',
+  updatedAt: '',
   _id: ''
 }
 

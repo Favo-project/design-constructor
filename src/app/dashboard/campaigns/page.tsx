@@ -242,7 +242,7 @@ export default function Campaigns() {
                                                         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-xl ring-1 ring-black/5 outline-none">
                                                             <Menu.Item>
                                                                 {({ active }) => (
-                                                                    <Link href={`/design/start/${campaign._id}`}>
+                                                                    <Link href={campaign.status === 'Launched' ? `/design/products/${campaign._id}` : `/design/start/${campaign._id}`}>
                                                                         <button
                                                                             className={`${active ? 'bg-gray-100 text-slate-600' : 'text-gray-700'
                                                                                 } group flex w-full items-center rounded-md px-2 py-3 text-sm transition-all`}

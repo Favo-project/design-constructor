@@ -2,6 +2,7 @@ import { SVGAttributes, useState, useEffect } from "react";
 import { RadioGroup } from "@headlessui/react";
 import Image from "next/image";
 import { PreTee, ClassTee, ComfSleeve, Hoodie, Sweatshirt } from "../assets";
+import { useParams } from "next/navigation";
 
 const shirts = [
   {
@@ -142,20 +143,24 @@ const shirts = [
 ];
 
 export default function Products({ campaign, setCampaign, canvasRef, canvasValues }) {
+  const { campaignId } = useParams()
 
   useEffect(() => {
-    setCampaign({ ...campaign, products: [...shirts] })
-  }, [])
+    if (!campaignId) {
+      setCampaign({ ...campaign, products: [...shirts] })
+    }
+  }, [campaignId])
 
 
   const onChangeHandler = (value) => {
     setCampaign({ ...campaign, selected: { ...campaign.selected, product: value, type: 0 } })
 
     const printableArea = campaign.products[value].printableArea[canvasValues.current.side]
-
+    
     for (const side in campaign.design) {
       if (campaign.design[side].length) {
         campaign.design[side].forEach((elem) => {
+          console.log(printableArea, campaign.design[side]);
           elem.top = (printableArea.top - printableArea.height / 2) + elem.height / 2 + elem.relativeTop
           canvasRef.canvas.requestRenderAll()
         })
@@ -174,19 +179,15 @@ export default function Products({ campaign, setCampaign, canvasRef, canvasValue
                 key={product.name}
                 value={index}
                 className={({ active, checked }) =>
-                  `${active
-                    ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-sky-300"
-                    : ""
-                  }
-                    ${checked ? "text-white shadow-xl" : "bg-white"}
-                      relative flex cursor-pointer border-sky-100 border-[1px] rounded-lg px-5 py-4 shadow-sm focus:outline-none`
+                  `${checked ? "text-white shadow-xl" : "bg-white hover:border-slate-300"}
+                    relative flex cursor-pointer border-slate-100 border-2 rounded-lg p-3 shadow-sm focus:outline-none transition-all`
                 }
               >
                 {({ active, checked }) => (
                   <>
                     <div className="flex w-full items-center justify-between">
                       <div className="flex items-center">
-                        <div className="flex items-center justify-center py-4 px-6">
+                        <div className="flex items-center justify-center p-3 mr-2">
                           <Image
                             src={product.colors[0].image.front}
                             width={50}
@@ -197,7 +198,7 @@ export default function Products({ campaign, setCampaign, canvasRef, canvasValue
                         <div className="text-sm">
                           <RadioGroup.Label
                             as="p"
-                            className={`text-gray-900 ${checked ? "font-bold" : "font-medium"
+                            className={`mb-2 text-base ${checked ? "font-bold text-slate-700" : "font-medium text-slate-600"
                               }`}
                           >
                             {product.name}
