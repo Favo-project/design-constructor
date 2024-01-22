@@ -255,8 +255,6 @@ export default function Start({ params }: { params: { campaignId: string } }) {
     fabric.Group.prototype.rotatingPointOffset = 12
   }, []);
 
-  console.log(campaign);
-
   useEffect(() => {
     if (campaign.status === 'Launched') {
       router.push('/design/products/' + campaignId)
@@ -266,6 +264,7 @@ export default function Start({ params }: { params: { campaignId: string } }) {
       try {
         const canvas = canvasRef.canvas
         setLoading(true)
+
         const design = await campaignUtils.addObjects(canvas, campaign.design, campaign.products[0].printableArea, campaign.selected.side)
         canvas.discardActiveObject()
 
@@ -289,6 +288,7 @@ export default function Start({ params }: { params: { campaignId: string } }) {
           localStorage.removeItem('user_at')
         }
         setLoading(false)
+        console.log(e);
       }
     }
 

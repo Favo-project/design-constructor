@@ -1,48 +1,74 @@
 'use client'
+import CampaignCard from "@/components/CampaignCard"
+import Loader from "@/components/Loader"
+import { authAtom, userAtom } from "@/constants"
+import axios from "axios"
+import { useAtom } from "jotai"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useLayoutEffect, useState } from "react"
 
 export default function Products() {
-    const [products] = useState([
-        {
-            name: 'Harm Reduction Means Life',
-            image: 'https://dynamic.bonfireassets.com/thumb/design-image/6c1e5ac8-3c21-4e91-aa35-abec577a5703/e69c1d92-4334-4a92-a3c4-b0c1863b886c/900/'
-        },
-        {
-            name: 'Harm Reduction Means Life',
-            image: 'https://dynamic.bonfireassets.com/thumb/design-image/6c1e5ac8-3c21-4e91-aa35-abec577a5703/e69c1d92-4334-4a92-a3c4-b0c1863b886c/900/'
-        },
-        {
-            name: 'Harm Reduction Means Life',
-            image: 'https://dynamic.bonfireassets.com/thumb/design-image/6c1e5ac8-3c21-4e91-aa35-abec577a5703/e69c1d92-4334-4a92-a3c4-b0c1863b886c/900/'
-        },
-    ])
+    const [auth, setAuth] = useAtom(authAtom)
+    const [user, setUser] = useAtom(userAtom)
+    const [loading, setLoading] = useState(true)
+    const [campaigns, setCampaigns] = useState([])
+
+    useLayoutEffect(() => {
+        const fetch = async () => {
+            try {
+                setLoading(true)
+                const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/public`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+                    }
+                })
+
+                if (response.success) {
+                    setCampaigns([...response.data])
+                }
+                setLoading(false)
+            }
+            catch (err) {
+                if (err?.response?.status === 403) {
+                    setAuth('')
+                    setUser({
+                        ...userAtom.init
+                    })
+                    localStorage.removeItem('user_at')
+                }
+                setLoading(false)
+            }
+        }
+        fetch()
+    }, [auth])
 
     return (
         <main className="py-16">
-            <div className="container m-auto max-w-7xl">
-                <h2 className="text-center text-slate-700 font-semibold tracking-widest font-sans text-xl mb-10">OUR BEST PRODUCTS</h2>
-
-                <div className="grid grid-cols-3">
-                    {
-                        products.map((product, index) => (
-                            <div key={index} className="flex flex-col items-center">
-                                <div className="">
-                                    <Image src={product.image} width={300} height={300} alt="product-image" />
-                                </div>
-                                <Link className="text-slate-700 font-medium font-sans hover:text-indigo-600 transition" href="/">{product.name}</Link>
-                            </div>
-                        ))
-                    }
+            {loading ? (
+                <div className="bg-white bg-opacity-20 z-50 flex items-center justify-center text-4xl w-full min-h-[450px]">
+                    <Loader />
                 </div>
+            ) : (
+                <div className="container m-auto max-w-7xl">
+                    <h2 className="text-center text-slate-700 font-semibold tracking-widest font-sans text-xl mb-10">OUR BEST PRODUCTS</h2>
 
-                <div className="flex justify-center my-14">
-                    <Link href={'/'} className="px-3 py-2.5 rounded-lg bg-white text-slate-600 border-2 border-slate-600 font-semibold hover:bg-slate-600 hover:text-white transition">
-                        Visit the marketplace
-                    </Link>
+                    <div className="grid grid-cols-3 mb-6">
+                        {
+                            campaigns.map((campaign, index) => (
+                                <CampaignCard key={index} campaign={campaign} />
+                            ))
+                        }
+                    </div>
+
+                    <div className="flex justify-center">
+                        <Link href={'/shop'} className="px-3 py-2.5 rounded-lg bg-white text-slate-600 border-2 border-slate-600 font-semibold hover:bg-slate-600 hover:text-white transition">
+                            See all
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            )}
         </main>
     )
 }

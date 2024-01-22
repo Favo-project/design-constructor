@@ -6,7 +6,7 @@ import StartBtn from "./StartBtn";
 export default function Footer() {
   return (
     <div className="py-12 bg-slate-600">
-      <footer className="container mx-auto max-w-7xl">
+      <footer className="container mx-auto max-w-7xl px-4">
         <ul className="grid grid-cols-4 mx-2 my-6">
           <div>
             <Link href={'/'} className="logo p-2 mb-6 rounded-full bg-white bg-opacity-90 inline-block w-12 h-12 shadow-lg hover:shadow-indigo-600">

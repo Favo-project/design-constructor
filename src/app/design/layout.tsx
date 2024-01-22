@@ -15,7 +15,7 @@ export default function DesignLayout({
   const router = useRouter()
   const { campaignId } = useParams()
   const [loadingUser, setLoadingUser] = useState(true)
-  const [loadingCampaign, setLoadingCampaign] = useState(false)
+  const [loadingCampaign, setLoadingCampaign] = useState(true)
 
   const [user, setUser] = useAtom(userAtom)
   const [auth, setAuth] = useAtom(authAtom)
@@ -79,6 +79,9 @@ export default function DesignLayout({
         }
       }
       fetchCampaign()
+    }
+    else {
+      setLoadingCampaign(false)
     }
   }, [auth])
 

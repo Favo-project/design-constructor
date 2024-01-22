@@ -1,9 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { Fragment, useState } from 'react'
 import { GoChevronLeft } from 'react-icons/go'
 
 export default function LaunchDialog({ isOpen, closeModal }) {
+    const { campaignId } = useParams()
+
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={closeModal}>
@@ -95,7 +98,7 @@ export default function LaunchDialog({ isOpen, closeModal }) {
                                     </div>
                                     <div className='flex items-center justify-between mt-6'>
                                         <Link href="/dashboard/overview" className='font-medium text-indigo-500 font-sans flex items-center'><span className='text-lg mr-1 flex items-center justify-center'><GoChevronLeft /></span> Dashboard</Link>
-                                        <Link href="/" className='px-3 py-2 text-white bg-indigo-600 rounded-md shadow-md font-semibold'>See campaign</Link>
+                                        <Link href={`/${campaignId}`} className='px-3 py-2 text-white bg-indigo-600 rounded-md shadow-md font-semibold'>See campaign</Link>
                                     </div>
                                 </div>
                             </Dialog.Panel>

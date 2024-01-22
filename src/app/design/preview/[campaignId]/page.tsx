@@ -92,6 +92,12 @@ export default function Preview() {
                 <div className="relative w-[600px] h-[600px]m max-h-[600px] bg-transparent">
                     <div className="border-0">
                         <Image priority style={{ objectFit: 'cover', border: 0 }} className="block w-full h-full border-0 no-underline" src={loadImage(currentProduct?.colors[currentColor].designImg[side])} alt="product-img" width={600} height={600} />
+                        <div>
+                            <div className="w-full h-[1px] absolute top-0 block z-10 bg-white" />
+                            <div className="w-[1px] h-full absolute left-0 top-0 block z-10 bg-white" />
+                            <div className="w-full h-[1px] absolute bottom-0 block z-10 bg-white" />
+                            <div className="w-[1px] h-full absolute right-0 top-0 block z-10 bg-white" />
+                        </div>
                     </div>
 
                     {
