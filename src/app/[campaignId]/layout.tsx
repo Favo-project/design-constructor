@@ -74,7 +74,6 @@ export default function Layout({
                     })
                     localStorage.removeItem('user_at')
                     setLoading(false)
-                    router.push('/')
                 }
             }
         }

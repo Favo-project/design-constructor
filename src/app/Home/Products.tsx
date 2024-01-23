@@ -26,7 +26,8 @@ export default function Products() {
                 })
 
                 if (response.success) {
-                    setCampaigns([...response.data])
+                    const campaignData = response.data.splice(0, 6)
+                    setCampaigns([...campaignData])
                 }
                 setLoading(false)
             }
