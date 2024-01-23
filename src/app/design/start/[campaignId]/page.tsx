@@ -26,16 +26,14 @@ import MultipleEditor from "../components/MultipleEditor";
 import FontFaceObserver from 'fontfaceobserver'
 import { campaignAtom, fonts, canvas, authAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
-import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { campaignUtils } from "../../actions/campaign";
-
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Start({ params }: { params: { campaignId: string } }) {
+export default function Start() {
   const [canvasExp, setCanvas] = useAtom(canvas)
   const { campaignId } = useParams()
 

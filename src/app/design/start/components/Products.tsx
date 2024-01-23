@@ -156,7 +156,7 @@ export default function Products({ campaign, setCampaign, canvasRef, canvasValue
     setCampaign({ ...campaign, selected: { ...campaign.selected, product: value, type: 0 } })
 
     const printableArea = campaign.products[value].printableArea[canvasValues.current.side]
-    
+
     for (const side in campaign.design) {
       if (campaign.design[side].length) {
         campaign.design[side].forEach((elem) => {
