@@ -32,7 +32,7 @@ export default function UserMenu() {
         <div>
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                    <Menu.Button className="inline-flex w-full justify-center items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                    <Menu.Button className="inline-flex w-full border border-l-slate-300 justify-center items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                         <span className="text-xl w-6 h-6 mr-1">
                             {
                                 user.photo ? (
@@ -42,7 +42,9 @@ export default function UserMenu() {
                                 )
                             }
                         </span>
-                        {user.name}
+                        <div className='hidden md:table-cell'>
+                            {user.name}
+                        </div>
                         <ChevronDownIcon
                             className="-mr-1 ml-1 h-5 w-5 text-lg text-slate-600"
                             aria-hidden="true"

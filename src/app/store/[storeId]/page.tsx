@@ -28,16 +28,16 @@ export default function Store() {
         <div id="store">
             <Header />
 
-            <div className="container m-auto max-w-7xl px-4">
-                <div className="grid grid-cols-[1fr_3fr]">
+            <div className="container m-auto max-w-7xl p-4 py-12">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr]">
                     <div>
                         1
                     </div>
                     <div>
-                        <div className="grid grid-cols-3">
+                        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
                             {
                                 products.map((product, index) => (
-                                    <div key={index} className="flex flex-col items-center">
+                                    <div key={index} className="flex flex-col items-center p-4">
                                         <div className="">
                                             <Image src={product.image} width={300} height={300} alt="product-image" />
                                         </div>

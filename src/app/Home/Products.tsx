@@ -26,7 +26,7 @@ export default function Products() {
                 })
 
                 if (response.success) {
-                    const campaignData = response.data.splice(0, 6)
+                    const campaignData = response.data.splice(0, 3)
                     setCampaigns([...campaignData])
                 }
                 setLoading(false)
@@ -55,7 +55,7 @@ export default function Products() {
                 <div className="container m-auto max-w-7xl">
                     <h2 className="text-center text-slate-700 font-semibold tracking-widest font-sans text-xl mb-10">OUR BEST PRODUCTS</h2>
 
-                    <div className="grid grid-cols-3 mb-6">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mb-6 justify-center">
                         {
                             campaigns.map((campaign, index) => (
                                 <CampaignCard key={index} campaign={campaign} />

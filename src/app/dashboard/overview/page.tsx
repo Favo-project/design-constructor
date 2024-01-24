@@ -19,7 +19,7 @@ import axios from "axios";
 import CampaignDelete from "../components/CampaignDelete";
 import Loader from "@/components/Loader";
 import { BiCopy, BiSolidCopy } from "react-icons/bi";
-import { FaCircle, FaMinus, FaRegCircle } from "react-icons/fa6";
+import { FaCircle, FaRegCircle } from "react-icons/fa6";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false)
@@ -39,15 +39,10 @@ export default function Dashboard() {
       setLoading(true)
 
       try {
-        const randomValue = Math.random().toString(36).substring(7);
-
-        const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns?_=${randomValue}`, {
+        const { data: response } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`,
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
-            'Expires': '0'
           },
         })
 
@@ -112,12 +107,12 @@ export default function Dashboard() {
       <CampaignDelete closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={title} campaignId={campaignId} />
 
       <header className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-slate-600 my-8">Overview</h1>
+        <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-8">Overview</h1>
         <UserMenu />
       </header>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
         <div className="flex flex-col gap-8">
-          <div className="py-8 px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
+          <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
             <header className="flex items-center mb-8 justify-between">
               <h3 className="text-2xl font-semibold tracking-tight text-gray-600">
                 Campaigns
@@ -310,7 +305,7 @@ export default function Dashboard() {
               </Link>
             </div>
           </div>
-          <div className="py-8 px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
+          <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-semibold tracking-tight text-gray-600">
               Campaigns
             </h3>
@@ -330,7 +325,7 @@ export default function Dashboard() {
         </div>
         <div>
           <div className="flex flex-col gap-8">
-            <div className="py-8 px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
+            <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
               <h5 className="mb-8 text-2xl font-medium tracking-tight text-gray-600 font-sans">
                 Recent sales
               </h5>
@@ -339,7 +334,7 @@ export default function Dashboard() {
                 will appear here.
               </p>
             </div>
-            <div className="py-8 px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
+            <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
               <HelpCard />
             </div>
           </div>

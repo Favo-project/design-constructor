@@ -15,6 +15,9 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         if (pathname.indexOf(navigation.start) !== -1 && campaignId) {
             setNextUrl(`${navigation.profits}/${campaignId}`)
         }
+        if (pathname.indexOf(navigation.products) !== -1 && campaignId) {
+            setNextUrl(`${navigation.profits}/${campaignId}`)
+        }
         else if (pathname.indexOf(navigation.profits) !== -1 && campaignId) {
             setNextUrl(`${navigation.details}/${campaignId}`)
         }

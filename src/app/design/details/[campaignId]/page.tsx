@@ -128,7 +128,13 @@ export default function Details() {
             if (tag.relatedTags?.length) {
                 newTag.relatedTags = true
 
-                const newAdditionalTags = tag.relatedTags.map(t => {
+                const filterAdditionals = tag.relatedTags.filter(t => {
+                    const addTag = additionalTags.find(tag => tag.name === t.name)
+                    if (addTag) return false
+                    return true
+                })
+
+                const newAdditionalTags = filterAdditionals.map(t => {
                     return { ...t, relatedTo: tag.name }
                 })
                 setAdditionalTags([...additionalTags, ...newAdditionalTags])
@@ -156,7 +162,7 @@ export default function Details() {
     }
 
     return (
-        <div className="container m-auto w-full max-w-7xl pt-12 px-6" >
+        <div className="container m-auto w-full max-w-7xl py-12 lg:px-6 px-4" >
             <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
                 What’s the best way to describe your campaign?
             </h2>

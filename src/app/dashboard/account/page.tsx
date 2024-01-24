@@ -41,7 +41,6 @@ export default function Account() {
                 }
             })
 
-            console.log(response);
             setUser({ ...response.data })
             setAuth(response.newToken)
             localStorage.setItem('user_at', response.newToken)
@@ -71,15 +70,15 @@ export default function Account() {
     return (
         <div id="account">
             <header className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-slate-600 my-8">Account</h1>
+                <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-8">Account</h1>
                 <UserMenu />
             </header>
 
             <div>
                 <div>
-                    <div className="flex items-center gap-12 p-8">
+                    <div className="flex items-center justify-center sm:justify-start sm:flex-nowrap flex-wrap gap-12 p-8">
                         <div>
-                            <Image className="rounded-full w-[160px] h-[160px] object-cover object-center" src={user.photo ? (`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`) : avatar} alt="account-avatar" width={160} height={160} />
+                            <Image className="rounded-full w-[160px] h-[160px] object-cover border-2 border-slate-200 object-center" src={user.photo ? (`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`) : avatar} alt="account-avatar" width={160} height={160} />
                         </div>
                         <div>
                             <h3 className="font-medium text-3xl font-sans text-slate-700 mb-3">Dilrozbek Raximov</h3>
@@ -142,7 +141,7 @@ export default function Account() {
                                             <PatternFormat
                                                 value={user.phone}
                                                 type="tel"
-                                                format="+998(##)###-##-##"
+                                                format="+998(##)### ## ##"
                                                 mask="_"
                                                 onValueChange={value => onChange('phone', value.value)}
                                                 required

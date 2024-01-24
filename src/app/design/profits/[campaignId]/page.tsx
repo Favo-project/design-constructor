@@ -15,7 +15,8 @@ export default function Profits() {
             <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
                 Set your selling prices
             </h2>
-            <table className="text-left w-[100%]">
+            <div className="w-full overflow-x-auto">
+            <table className="text-left w-[100%] min-w-[820px]">
                 <thead>
                     <tr className="font-thin font-mono text-base uppercase text-slate-600">
                         <th>PRODUCT</th>
@@ -34,12 +35,12 @@ export default function Profits() {
                                             <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${product.colors[0].designImg.front}`} alt="product-img" width={64} height={64} />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-gray-600">{product.title}</h4>
+                                            <h4 className="font-bold text-gray-600">{product.name}</h4>
                                             <ul className="flex items-center gap-2 mt-4">
                                                 {
                                                     product.colors.map((color, idx) => (
                                                         <li key={idx}>
-                                                            <span className="block w-6 h-6 shadow-sm rounded-full" style={{ background: color.content }} />
+                                                            <span className="block w-6 h-6 shadow-sm rounded-full" style={{ background: color?.color?.content }} />
                                                         </li>
                                                     ))
                                                 }
@@ -65,6 +66,8 @@ export default function Profits() {
                     }
                 </tbody>
             </table>
+
+            </div>
 
         </div>
     </div>

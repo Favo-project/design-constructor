@@ -153,7 +153,7 @@ export default function ClipartEditor({ selectedObj, campaign, setCampaign, canv
                                         leaveFrom="opacity-100 translate-y-0"
                                         leaveTo="opacity-0 translate-y-1"
                                     >
-                                        <Popover.Panel className="absolute bg-white -bottom-52 -right-20 z-10 mt-3 w-screen max-w-sm transform px-4 sm:px-0 lg:max-w-sm">
+                                        <Popover.Panel className="lg:absolute fixed top-20 right-12 left-0 bg-white lg:-bottom-10 lg:-right-20 lg:-translate-x-[100%] z-20 mt-3 w-screen max-w-sm transform lg:max-w-sm">
                                             <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                                 <div className="p-7">
                                                     <h3 className="text-2xl text-slate-800 font-mono mb-4">Choose color</h3>
@@ -164,7 +164,7 @@ export default function ClipartEditor({ selectedObj, campaign, setCampaign, canv
                                                 </div>
                                                 <div className="relative bg-white px-7 pt-2 pb-7">
                                                     <p className="text-slate-700 text-sm font-mono mb-4">ALL COLORS</p>
-                                                    <div className="grid lg:grid-cols-6">
+                                                    <div className="grid grid-cols-6">
                                                         {colors.map((item, index) => (
                                                             <div key={index}>
                                                                 <button className="border border-gray-300 rounded-full shadow-md" onClick={() => onChangeColor(item.color)} >

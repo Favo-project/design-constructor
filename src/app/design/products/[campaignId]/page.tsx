@@ -129,8 +129,8 @@ export default function Products() {
     return (
         <div id="products">
             <div className="grid sm:grid-cols-1 lg:grid-cols-3">
-                <div id="design-content" className="relative">
-                    <div className="lg:fixed top-0 mt-20 overflow-hidden left-0 bottom-0 sm:w-[100vw] lg:w-[66.6vw] flex items-center justify-center">
+                <div id="design-content" className="relative overflow-hidden">
+                    <div className="lg:fixed top-0 bottom-0 lg:mt-20 overflow-hidden sm:w-[100vw] lg:w-[65.7vw] flex items-center justify-center">
                         {
                             loading ? (
                                 <div className="absolute bg-white bg-opacity-20 z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center text-4xl">
@@ -138,7 +138,7 @@ export default function Products() {
                                 </div>
                             ) : null
                         }
-                        <div id="design-container" onClick={() => setToEdit((prev) => !prev)}>
+                        <div id="design-container" className="scale-[.8] lg:scale-100" onClick={() => setToEdit((prev) => !prev)}>
                             <canvas id="design" ref={canvasRef} />
                         </div>
                         <div
@@ -154,7 +154,7 @@ export default function Products() {
                         </div>
                         {
                             toEdit ? (
-                                <div className="flex flex-col p-4 bg-white rounded-lg shadow-2xl shadow-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                <div className="flex flex-col p-4 w-[80%] sm:w-auto bg-white rounded-lg shadow-2xl shadow-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                                     <h2 className="text-xl font-semibold font-sans text-slate-700 mb-2">
                                         Want to edit your design?
                                     </h2>
@@ -167,7 +167,7 @@ export default function Products() {
                     </div>
                 </div>
                 <div></div>
-                <div className="sm:p-4 lg:p-8 shadow-xl min-h-[100vh]">
+                <div className="px-4 lg:p-8 shadow-xl min-h-[100vh]">
                     <h2 className="text-gray-700 text-2xl font-semibold mt-6">
                         Edit your products
                     </h2>

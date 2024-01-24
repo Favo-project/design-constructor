@@ -13,7 +13,7 @@ export default function Hero() {
 
   return (
     <div className="bg-white">
-      <div className="relative isolate px-6 pt-14 lg:px-8">
+      <div className="relative isolate px-6 lg:pt-14 pt-8 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -27,7 +27,7 @@ export default function Hero() {
           />
         </div>
 
-        <div className="container m-auto max-w-7xl flex gap-10">
+        <div className="container m-auto max-w-7xl flex lg:flex-nowrap flex-wrap gap-10">
           <div className="py-10 sm:py-14 lg:py-20">
             <h1 className="text-[36px] max-w-lg font-semibold leading-tight font-sans tracking-wide text-gray-700 sm:text-[48px]">
               Design your next favorite custom shirt
@@ -67,24 +67,24 @@ export default function Hero() {
               </button>
             </form>
           </div>
-          <div className="flex items-center gap-8">
-            <div className="flex flex-col gap-6">
-              <div className="h-[200px] w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+          <div className="flex items-center flex-wrap justify-center gap-4 lg:gap-8">
+            <div className="flex flex-col lg:gap-6 gap-3">
+              <div className="h-[150px] w-[150px] lg:h-[200px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl">
                 <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg5} alt="hero-image" />
               </div>
-              <div className="h-max w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+              <div className="h-max w-[150px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl">
                 <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg1} alt="hero-image" width={180} height={100} />
               </div>
             </div>
-            <div className="flex flex-col gap-6">
-              <div className="h-max w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+            <div className="flex flex-col gap-3 lg:gap-6">
+              <div className="h-max w-[150px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl">
                 <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg2} alt="hero-image" width={180} height={100} />
               </div>
-              <div className="h-[200px] w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+              <div className="h-[150px] w-[150px] lg:h-[200px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl">
                 <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg4} alt="hero-image" width={180} height={100} />
               </div>
             </div>
-            <div className="h-max w-[200px] rounded-[40px] overflow-hidden shadow-xl">
+            <div className="h-max w-[150px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl hidden md:block">
               <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg3} alt="hero-image" width={180} height={400} />
             </div>
           </div>

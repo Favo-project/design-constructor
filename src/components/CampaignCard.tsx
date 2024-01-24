@@ -25,7 +25,7 @@ export default function CampaignCard({ campaign }) {
     }
 
     return (
-        <Link className="block max-w-md p-2 pb-3 transition-all" href={`/${campaign._id}`}>
+        <Link className="block max-w-md m-auto p-2 pb-3 transition-all" href={`/${campaign._id}`}>
             <div className="flex flex-col">
                 <header className="relative">
                     <Image className="w-full h-full opacity-0 absolute hover:opacity-100 transition-all duration-300" src={loadImage(product.colors[0].designImg.back)} alt="campaign-img" width={324} height={324} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, ChevronUpIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { AiOutlineHome } from "react-icons/ai";
@@ -11,17 +11,20 @@ import { PiCaretRightThin } from "react-icons/pi";
 import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
-import { authAtom, campaignAtom, campaignStart, userAtom } from "@/constants";
+import { authAtom, campaignAtom, campaignStart, toastAtom, userAtom } from "@/constants";
 import { useRouter, useParams, usePathname } from "next/navigation";
 import { FaRegUserCircle } from "react-icons/fa";
-import { campaignTools } from "../actions/campaignTools";
+import { campaignTools, designNavigation, launchedNavigation } from "../actions/campaignTools";
 import SaveButton from "./SaveButton";
 import NextButton from "./NextButton";
 import SaveDialog from "./SaveDialog";
 import LaunchDialog from "./LaunchDialog";
 import Image from "next/image";
+import NavbarArrow from "./NavbarArrow";
+import Toasts from "@/components/Toasts";
 
 export default function DesignNavbar() {
+  const [toast, setToast] = useAtom(toastAtom)
   const router = useRouter()
   const pathname = usePathname()
   const { campaignId } = useParams()
@@ -62,36 +65,25 @@ export default function DesignNavbar() {
         setLoading(true)
         const response = await campaignTools.saveCampaign(pathname, auth, campaignId, campaign)
 
-        if (response.success) {
-          setIsSaved(true)
-          setCampaign({ ...campaign, ...response.data })
+        setIsSaved(true)
+        setCampaign({ ...campaign, ...response.data })
 
-          setTimeout(() => {
-            setIsSaved(false)
-          }, 3000)
-        }
-        else {
-          // error || warn the user that they should make change
-        }
+        setTimeout(() => {
+          setIsSaved(false)
+        }, 3000)
 
         setLoading(false)
       }
       else {
         setSaveDialog(true)
         const response = await campaignTools.initCampaign(auth, campaignBlank)
-        if (response.success) {
-          setCampaignBlank({
-            ...campaignStart.init,
-            products: [...campaignBlank.products]
-          })
-          router.push(`/design/start/${response.data._id}`)
-          setCampaign({ ...campaign, ...response.data })
-          return response.data
-        }
-        else {
-
-          // error || warn the user that they should make change
-        }
+        setCampaignBlank({
+          ...campaignStart.init,
+          products: [...campaignBlank.products]
+        })
+        router.push(`/design/start/${response.data._id}`)
+        setCampaign({ ...campaign, ...response.data })
+        return response.data
       }
     }
     catch (err) {
@@ -105,7 +97,7 @@ export default function DesignNavbar() {
         localStorage.removeItem('user_at')
       }
       else {
-        console.log(err);
+        setToast({ type: "warning", message: err?.message || 'Xatolik yuz berdi, qayta uruning' })
       }
     }
   }
@@ -133,7 +125,7 @@ export default function DesignNavbar() {
         setSaveDialog(false)
       }
       else {
-        console.log(err);
+        setToast({ type: "warning", message: err?.message || 'Xatolik yuz berdi, qayta uruning' })
       }
     }
   }
@@ -142,9 +134,10 @@ export default function DesignNavbar() {
     try {
       await onSave()
       const response = await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
-      const data = await campaignTools.launchCampaign(auth, campaignId)
+      await campaignTools.launchCampaign(auth, campaignId)
       setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel })
       setLaunchDialog(true)
+      setToast({ type: "success", message: 'Dizayn yakullandi' })
     }
     catch (err) {
       if (err?.response?.status === 403) {
@@ -154,6 +147,9 @@ export default function DesignNavbar() {
           ...userAtom.init
         })
         localStorage.removeItem('user_at')
+      }
+      else {
+        setToast({ type: "warning", message: err?.message || 'Xatolik yuz berdi, qayta uruning' })
       }
       setSaveDialog(false)
       setLaunchDialog(false)
@@ -170,8 +166,14 @@ export default function DesignNavbar() {
     setLaunchDialog(false)
   }
 
+  const isActive = (index) => {
+    const href = campaign.status === 'Launched' ? launchedNavigation[index].href : designNavigation[index].href
+    return pathname.indexOf(href) !== -1
+  }
+
   return (
     <>
+      <Toasts />
       <SaveDialog isOpen={saveDialog} closeModal={() => { }} />
       <LaunchDialog isOpen={launchDialog} closeModal={closeLaunchModal} />
 
@@ -189,7 +191,7 @@ export default function DesignNavbar() {
             />
           </Link>
         </div>
-        <div className="flex lg:hidden">
+        <div className="order-3 flex lg:hidden">
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -202,6 +204,15 @@ export default function DesignNavbar() {
         <div className="hidden lg:flex items-center">
           {campaignTools.navigation(campaign, campaignId).map((link, index) => (
             <div key={index} className="flex items-center">
+              {isActive(index) ? (
+                <span className="text-white bg-indigo-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold mr-1">
+                  {index + 1}
+                </span>
+              ) : (
+                <span className="text-slate-400 bg-white rounded-full w-6 h-6 border-2 border-slate-400 text-sm flex items-center justify-center font-semibold mr-1">
+                  {index + 1}
+                </span>
+              )}
               {
                 link.passed ? (
                   <div className="flex items-center">
@@ -219,78 +230,81 @@ export default function DesignNavbar() {
                   <button className="text-sm py-6 font-semibold leading-6 text-slate-700 cursor-default">{link.name}</button>
                 )
               }
-              <PiCaretRightThin className="text-7xl text-slate-300" />
+              {campaignTools.navigation(campaign, campaignId).length !== index + 1 && <NavbarArrow />}
             </div>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
+        <div className="flex lg:flex-1 lg:justify-end gap-3 items-center">
           <SaveButton loaded={user.loaded} onSave={onSave} loading={loading} isSaved={isSaved} />
           <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} onSave={onSave} />
-          {
-            user.loaded ? (
-              <div>
-                <Menu as="div" className="relative inline-block text-left">
-                  <div>
-                    <Menu.Button className="inline-flex w-full items-center justify-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                      <span className="text-xl w-6 h-6 mr-1">
-                        {
-                          user.photo ? (
-                            <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
-                          ) : (
-                            <FaRegUserCircle className="w-full h-full" />
-                          )
-                        }
-                      </span>
-                      <ChevronDownIcon
-                        className="-mr-1 ml-1 h-5 w-5 text-lg text-slate-600"
-                        aria-hidden="true"
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as="div"
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute overflow-hidden right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-                      <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">Welcome, {user.name}!</h3>
-                      <Menu.Item as="div">
-                        <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
-                          <span className="text-2xl mr-2 text-slate-500">
-                            <AiOutlineHome />
-                          </span> Dashboard
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item as="div">
-                        <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
-                          <span className="text-2xl mr-2 text-slate-500">
-                            <IoSettingsOutline />
-                          </span> Account Settings
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item as="div">
-                        <button onClick={onLogout} className="w-full flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100">
-                          <span className="text-2xl mr-2 text-slate-500">
-                            <MdLogout />
-                          </span> Logout
-                        </button>
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-            ) : (
-              <AuthModal>
-                <div className="text-slate-700 font-sans font-semibold px-1 p-1">
-                  Log in <span aria-hidden="true">&rarr;</span>
+
+          <div className="hidden lg:block">
+            {
+              user.loaded ? (
+                <div>
+                  <Menu as="div" className="relative inline-block text-left">
+                    <div>
+                      <Menu.Button className="inline-flex w-full items-center border-slate-200 border justify-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                        <span className="text-xl w-6 h-6 mr-1">
+                          {
+                            user.photo ? (
+                              <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
+                            ) : (
+                              <FaRegUserCircle className="w-full h-full" />
+                            )
+                          }
+                        </span>
+                        <ChevronDownIcon
+                          className="-mr-1 ml-1 h-5 w-5 text-lg text-slate-600"
+                          aria-hidden="true"
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as="div"
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute overflow-hidden right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                        <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">Welcome, {user.name}!</h3>
+                        <Menu.Item as="div">
+                          <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
+                            <span className="text-2xl mr-2 text-slate-500">
+                              <AiOutlineHome />
+                            </span> Dashboard
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item as="div">
+                          <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
+                            <span className="text-2xl mr-2 text-slate-500">
+                              <IoSettingsOutline />
+                            </span> Account Settings
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item as="div">
+                          <button onClick={onLogout} className="w-full flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100">
+                            <span className="text-2xl mr-2 text-slate-500">
+                              <MdLogout />
+                            </span> Logout
+                          </button>
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
                 </div>
-              </AuthModal>
-            )
-          }
+              ) : (
+                <AuthModal>
+                  <div className="text-slate-700 font-sans font-semibold px-1 p-1">
+                    Log in <span aria-hidden="true">&rarr;</span>
+                  </div>
+                </AuthModal>
+              )
+            }
+          </div>
 
         </div >
       </nav >
@@ -300,7 +314,7 @@ export default function DesignNavbar() {
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
       >
-        <div className="fixed inset-0 z-50" />
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-25" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
@@ -323,23 +337,105 @@ export default function DesignNavbar() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {campaignTools.navigation(campaign, campaignId).map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    {item.name}
-                  </Link>
+                {campaignTools.navigation(campaign, campaignId).map((link, index) => (
+                  <div key={index} className="flex items-center">
+                    {isActive(index) ? (
+                      <span className="text-white bg-indigo-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold mr-1">
+                        {index + 1}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 bg-white rounded-full w-6 h-6 border-2 border-slate-400 text-sm flex items-center justify-center font-semibold mr-1">
+                        {index + 1}
+                      </span>
+                    )}
+                    {
+                      link.passed ? (
+                        <div className="flex items-center">
+                          <Link
+                            href={link.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="text-sm py-6 font-semibold leading-6 text-slate-700 hover:text-indigo-500 transition-all"
+                          >
+                            {link.name}
+                          </Link>
+                          <span className="ml-1 text-green-600 text-lg">
+                            <MdCheck />
+                          </span>
+                        </div>
+                      ) : (
+                        <button className="text-sm py-6 font-semibold leading-6 text-slate-700 cursor-default">{link.name}</button>
+                      )
+                    }
+                  </div>
                 ))}
               </div>
               <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
+                {
+                  user.loaded ? (
+                    <div>
+                      <Menu as="div" className="relative inline-block text-left">
+                        <div>
+                          <Menu.Button className="inline-flex w-full border border-slate-200 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                            <span className="text-xl w-6 h-6 mr-1">
+                              {
+                                user.photo ? (
+                                  <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
+                                ) : (
+                                  <FaRegUserCircle className="w-full h-full" />
+                                )
+                              }
+                            </span>
+                            {user.name}
+                            <ChevronUpIcon
+                              className="-mr-1 ml-2 h-5 w-5 text-slate-600"
+                              aria-hidden="true"
+                            />
+                          </Menu.Button>
+                        </div>
+                        <Transition
+                          as="div"
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="absolute -translate-y-[calc(100%+50px)] overflow-hidden left-0 mt-2 w-56 origin-bottom-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                            <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">Welcome, {user.name}!</h3>
+                            <Menu.Item as="div">
+                              <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
+                                <span className="text-2xl mr-2 text-slate-500">
+                                  <AiOutlineHome />
+                                </span> Dashboard
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item as="div">
+                              <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
+                                <span className="text-2xl mr-2 text-slate-500">
+                                  <IoSettingsOutline />
+                                </span> Account Settings
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item as="div">
+                              <button onClick={onLogout} className="w-full flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100">
+                                <span className="text-2xl mr-2 text-slate-500">
+                                  <MdLogout />
+                                </span> Logout
+                              </button>
+                            </Menu.Item>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </div>
+                  ) : (
+                    <AuthModal>
+                      <div className="text-sm font-semibold leading-6 text-gray-900">
+                        Log in <span aria-hidden="true">&rarr;</span>
+                      </div>
+                    </AuthModal>
+                  )
+                }
               </div>
             </div>
           </div>

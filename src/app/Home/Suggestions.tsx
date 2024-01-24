@@ -8,7 +8,7 @@ export default function Suggestions() {
         <div className="py-20">
             <div className="container m-auto max-w-7xl">
                 <h2 className="text-center text-slate-700 font-semibold tracking-widest font-sans text-xl mb-16">MORE FROM ARTVIBE</h2>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                     <div className="px-3">
                         <Link href={'/catalog'} className="relative flex items-center px-6 py-12 h-[250px] duration-200 hover:shadow-[inset_0_0_0_2px_#dfc7b2] transition-all rounded-xl bg-[#efe7e3]">
                             <div className="relative z-20">

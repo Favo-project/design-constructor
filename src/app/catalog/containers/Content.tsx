@@ -35,10 +35,10 @@ export default function Content() {
     return (
         <main className="pb-16">
             <div className="container m-auto max-w-7xl">
-                <div className="grid grid-cols-[1fr_3.5fr] gap-14 px-6">
+                <div className="grid md:grid-cols-[1fr_3.5fr] gap-14 px-6">
                     <div>
                         <h3 className="text-lg font-bold font-sans text-slate-600 mb-3">Filter by tag</h3>
-                        <ul className="flex flex-col gap-2 items-start">
+                        <ul className="flex md:flex-col flex-wrap md:flex-nowrap gap-2 items-start">
                             <li>
                                 <button className="font-sans font-medium text-slate-600 px-3 py-1.5 rounded-full border-2 border-slate-200 hover:border-slate-600 focus:bg-slate-600 focus:text-white focus:border-slate-600 transition-all">News</button>
                             </li>
@@ -56,7 +56,7 @@ export default function Content() {
                             </li>
                         </ul>
                     </div>
-                    <div className="grid grid-cols-3 gap-5 [&_a:first]:flex">
+                    <div className="grid md:grid-cols-3 gap-5 [&_a:first]:flex">
                         {
                             products.map((product, index) => (
                                 <Link href={product.href} key={index} className="flex gap-4 flex-col items-center just first-of-type:flex-row first-of-type:col-span-2 first-of-type:text-2xl font-sans font-medium text-slate-600 bg-[#f0f5f9] p-6 rounded-xl border-2 border-slate-100 hover:border-slate-400 hover:shadow-xl transition-all">

@@ -7,7 +7,7 @@ export default function Hero() {
     return (
         <header className="bg-[#f5f8fc] py-12">
             <div className="container m-auto max-w-7xl">
-                <div className="flex items-center px-4">
+                <div className="flex lg:flex-nowrap flex-wrap items-center px-4">
                     <div>
                         <h1 className="text-4xl mb-12 font-bold font-sans text-slate-700 tracking-wide max-w-[525px]">The easy way to design and sell t-shirts online</h1>
 

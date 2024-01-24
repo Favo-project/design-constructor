@@ -242,3 +242,10 @@ export const campaignAtom = atom({ ...initCampaign })
 export const campaignStart = atom({ ...initCampaign })
 
 export const canvas = atom({})
+
+interface IToast {
+  type: 'warning' | 'info' | 'success' | 'error' | '',
+  message: string
+}
+
+export const toastAtom = atom<IToast>({ type: '', message: '' }) // type = warning | info | success | error

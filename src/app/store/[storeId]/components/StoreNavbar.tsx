@@ -84,13 +84,13 @@ export default function StoreNavbar() {
                         </Transition>
                     </Menu>
                 </div>
-                <div className=''>
+                <div className='hidden lg:block'>
                     <Link className='text-white text-xl uppercase font-normal tracking-widest flex items-center' href={'/'}>
                         <span className='text-white text-2xl mr-2'><FaArtstation /></span> ArtVibe
                     </Link>
                 </div>
                 <div className='flex-[2] flex items-center justify-end'>
-                    <div>
+                    <div className='hidden md:block'>
                         {
                             user.loaded ? (
                                 <div>

@@ -136,7 +136,7 @@ export default function Auth({ closeModal }) {
                                     <PatternFormat
                                         value={loginPhone}
                                         type="tel"
-                                        format="+998(##)###-##-##"
+                                        format="+998(##)### ## ##"
                                         mask="_"
                                         onValueChange={value => setLoginPhone(value.value)}
                                         required
@@ -166,7 +166,7 @@ export default function Auth({ closeModal }) {
                                     <PatternFormat
                                         value={registerPhone}
                                         type="tel"
-                                        format="+998(##)###-##-##"
+                                        format="+998(##)### ## ##"
                                         mask="_"
                                         onValueChange={value => setRegisterPhone(value.value)}
                                         required

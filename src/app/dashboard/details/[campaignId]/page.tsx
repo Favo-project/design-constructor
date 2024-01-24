@@ -108,27 +108,27 @@ export default function Details() {
             {loading ? <Loading /> : (
                 <>
                     <header className="flex items-center justify-between relative">
-                        <Link href="/dashboard/campaigns" className="p-2 absolute text-3xl text-slate-400 -left-9">
+                        <Link href="/dashboard/campaigns" className="p-2 absolute text-3xl text-slate-400 -left-9 hidden lg:block">
                             <GoChevronLeft />
                         </Link>
-                        <h1 className="text-3xl font-bold text-slate-600 my-5 ml-3">{campaign?.title}</h1>
+                        <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-5 lg:ml-3">{campaign?.title}</h1>
                         <UserMenu />
                     </header>
-                    <div className="flex items-center mb-14 gap-4 ml-3">
+                    <div className="flex items-center mb-14 gap-4 lg:ml-3">
                         <Link href={`/${campaignId}`} className="font-sans hover:text-indigo-500 text-slate-400 flex items-center transition-all">
-                            <span className="text-2xl mr-2">
+                            <span className="md:text-2xl text-xl mr-2">
                                 <MdOpenInNew />
                             </span>
                             See campaign
                         </Link>
                         <button className="font-sans hover:text-indigo-500 text-slate-400 flex items-center transition-all">
-                            <span className="text-2xl mr-2">
+                            <span className="md:text-2xl text-xl mr-2">
                                 <FiLink />
                             </span>
                             Copy link
                         </button>
                     </div>
-                    <div className='flex items-center mb-10 justify-between'>
+                    <div className='flex items-center md:flex-nowrap flex-wrap gap-5 mb-10 justify-between'>
                         <div className='flex items-center gap-3'>
                             <div>
                                 <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} width={44} height={44} alt="campaign-img" />
@@ -154,7 +154,7 @@ export default function Details() {
                                 </p>
                             </div>
                         </div>
-                        <div className='flex items-center gap-2'>
+                        <div className='flex ml-auto items-center gap-2'>
                             <div>
                                 <Menu as="div" className="relative inline-block text-left p-3">
                                     <div>
@@ -171,7 +171,7 @@ export default function Details() {
                                         leaveFrom="transform opacity-100 scale-100"
                                         leaveTo="transform opacity-0 scale-95"
                                     >
-                                        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-xl ring-1 ring-black/5 outline-none">
+                                        <Menu.Items className="absolute -right-10 md:right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-xl ring-1 ring-black/5 outline-none">
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <Link href={`/design/products/${campaign._id}`}>
@@ -326,10 +326,10 @@ export default function Details() {
                     </div>
                     <div>
                         <h2 className='text-2xl font-semibold text-slate-700 font-sans mb-6'>Share</h2>
-                        <div className='border-2 border-slate-200 rounded-lg p-10 w-min'>
+                        <div className='border-2 border-slate-200 rounded-lg lgp-10 p-4 lg:w-min'>
                             <div className='flex flex-col mb-8'>
                                 <h3 className='text-xl font-semibold text-slate-600 mb-2'>Share on social</h3>
-                                <div className='flex items-center gap-6'>
+                                <div className='flex items-center flex-wrap gap-6'>
                                     <div className='flex flex-col items-center'>
                                         <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>F</button>
                                         <span className='text-slate-500 font-sans font-medium'>
@@ -358,7 +358,7 @@ export default function Details() {
                             </div>
                             <div className='flex flex-col'>
                                 <h3 className='text-xl font-semibold text-slate-600 mb-2'>Send a link</h3>
-                                <div className='flex items-center gap-6'>
+                                <div className='flex items-center flex-wrap gap-6'>
                                     <div className='flex flex-col items-center'>
                                         <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>C</button>
                                         <span className='text-slate-500 font-sans font-medium'>

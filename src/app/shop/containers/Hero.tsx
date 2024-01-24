@@ -24,7 +24,7 @@ export default function Hero() {
                         </li>
                     </ul>
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center gap-8 justify-between">
                     <h1 className="text-3xl font-sans font-bold tracking-wide text-slate-700">T-shirt design templates</h1>
                     <div className='relative flex items-center'>
                         <span className='absolute text-lg text-slate-600 left-2'><GoSearch /></span>

@@ -38,12 +38,12 @@ export default function Slider() {
                 <h2 className='text-center text-slate-100 text-2xl font-sans font-semibold leading-normal tracking-wide max-w-[530px] mb-8'>We make it easy to create a professional looking store — no matter what your story is.</h2>
                 <p className='text-center text-slate-300 font-sans tracking-wide max-w-[530px] mb-14'>Draw inspiration for your online store from the thousands of sellers who are already using stores on Bonfire to sell their custom apparel.</p>
             </div>
-            <div className='px-32'>
+            <div className='lg:px-32 px-6'>
                 <Swiper navigation={true} modules={[Navigation]} style={{ overflow: 'unset' }} className="mySwiper">
                     {
                         slides.map((slide, index) => (
                             <SwiperSlide className='flex items-center justify-center' key={index}>
-                                <Link href={slide.href} className='relative block max-w-[730px] m-auto w-full'>
+                                <Link href={slide.href} className='relative block w-full max-w-[730px] m-auto'>
                                     <div className='w-full rounded-lg overflow-hidden shadow-xl'>
                                         <span className='flex top-0 right-0 left-0 w-full h-[30px] bg-[#8693a6] items-center justify-center after:block after:w-[40%] after:h-[8px] after:bg-[rgba(189,202,216,.24)] after:rounded-[8px]' />
                                         <Image src={slide.image} className='w-full' alt='slide-image' width={730} height={500} />

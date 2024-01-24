@@ -1,5 +1,6 @@
 import { campaignAtom } from "@/constants"
 import { useAtom } from "jotai"
+import { NumericFormat, PatternFormat } from "react-number-format"
 
 export default function ProfitInput({ product }) {
     const [campaign, setCampaign] = useAtom(campaignAtom)
@@ -16,17 +17,14 @@ export default function ProfitInput({ product }) {
         })
     }
 
-    const onBlur = (value: number) => {
+    const onBlur = () => {
         const productCopy = { ...product }
 
-        if (value > product.maxCost) {
+        if (productCopy.sellingPrice > product.maxCost) {
             productCopy.sellingPrice = product.maxCost
         }
-        else if (value < product.baseCost) {
+        else if (productCopy.sellingPrice < product.baseCost) {
             productCopy.sellingPrice = product.baseCost
-        }
-        else {
-            productCopy.sellingPrice = value
         }
 
         const filteredProducts = campaign.products.map((product) => product._id === productCopy._id ? productCopy : product)
@@ -37,6 +35,6 @@ export default function ProfitInput({ product }) {
     }
 
     return <div>
-        <input onBlur={(e) => onBlur(Number(e.target.value))} onChange={(e) => onChange(Number(e.target.value))} value={product.sellingPrice || ''} className="border-2 text-right border-slate-300 outline-gray-600 text-gray-600 text-sm rounded-lg px-3 py-2 pl-5 font-semibold" type="number" />
+        <NumericFormat className="max-w-[170px] border-2 text-right border-slate-300 outline-gray-600 text-gray-600 text-sm rounded-lg px-3 py-2 pl-5 font-semibold" onBlur={onBlur} value={product.sellingPrice || ''} onValueChange={(value) => onChange(Number(value.value))} displayType="input" type="text" thousandSeparator suffix=" so'm" />
     </div>
 }

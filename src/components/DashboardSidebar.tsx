@@ -48,11 +48,17 @@ export default function Sidebar() {
   const toggleSidebar = () => {
     if (isOpen) {
       setIsOpen(false)
+      document.body.style.setProperty('overflow', 'unset')
     }
     else {
       document.body.style.setProperty('overflow', 'hidden')
       setIsOpen(true)
     }
+  }
+
+  const onLink = () => {
+    setIsOpen(false)
+    document.body.style.setProperty('overflow', 'unset')
   }
 
   const isActive = (link) => {
@@ -119,7 +125,7 @@ export default function Sidebar() {
               navigation.map((link, index) => (
                 <li key={index}>
                   <Link
-                    onClick={() => setIsOpen(false)}
+                    onClick={onLink}
                     href={link.href}
                     className={`${isActive(link) ? 'text-slate-600 bg-white bg-opacity-75' : 'text-white hover:bg-gray-500'} flex transition-all items-center p-2 rounded-lg group`}
                   >

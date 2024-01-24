@@ -102,33 +102,37 @@ export default function Campaigns() {
     return (
         <div id="campaigns">
             <header className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-slate-600 my-8">Campaigns</h1>
+                <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-8">Campaigns</h1>
                 <UserMenu />
             </header>
 
             <div>
-                <div className="flex items-end justify-between px-[12%] my-16">
-                    <div className="flex flex-col items-center mb-1">
-                        <Image src={account} width={124} height={124} alt="account-img" />
-                        <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
-                            Create your account
-                            <MdCheck className="ml-2 text-green-600 text-xl" />
-                        </h5>
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 lg:gap-4 items-end justify-center px-[12%] my-16">
+                    <div className="flex items-end m-auto justify-center">
+                        <div className="flex flex-col items-center mb-1">
+                            <Image src={account} width={124} height={124} alt="account-img" />
+                            <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
+                                Create your account
+                                <MdCheck className="ml-2 text-green-600 text-xl" />
+                            </h5>
+                        </div>
+                        <div className="text-2xl hidden md:block text-slate-500">
+                            <GoChevronRight />
+                        </div>
                     </div>
-                    <div className="text-2xl text-slate-500">
-                        <GoChevronRight />
+                    <div className="flex items-end m-auto justify-center">
+                        <div className="flex flex-col items-center mb-1">
+                            <Image src={campaign} width={124} height={124} alt="account-img" />
+                            <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
+                                Launch your first campaign
+                                <MdCheck className="ml-2 text-green-600 text-xl hidden" />
+                            </h5>
+                        </div>
+                        <div className="text-2xl hidden md:block text-slate-500">
+                            <GoChevronRight />
+                        </div>
                     </div>
-                    <div className="flex flex-col items-center mb-1">
-                        <Image src={campaign} width={124} height={124} alt="account-img" />
-                        <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
-                            Launch your first campaign
-                            <MdCheck className="ml-2 text-green-600 text-xl hidden" />
-                        </h5>
-                    </div>
-                    <div className="text-2xl text-slate-500">
-                        <GoChevronRight />
-                    </div>
-                    <div className="flex flex-col items-center mb-1">
+                    <div className="flex flex-col m-auto items-center mb-1">
                         <Image src={sale} width={124} height={124} alt="account-img" />
                         <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
                             Get your first sale
@@ -148,8 +152,8 @@ export default function Campaigns() {
                         <thead>
                             <tr>
                                 <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">NAME</th>
-                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">SOLD</th>
-                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">TOTAL EARNED</th>
+                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 hidden md:table-cell">SOLD</th>
+                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 hidden md:table-cell">TOTAL EARNED</th>
                                 <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">STATUS</th>
                                 <th></th>
                             </tr>
@@ -186,14 +190,14 @@ export default function Campaigns() {
                                                     </div>
                                                 </Link>
                                             </td>
-                                            <td>
+                                            <td className="hidden md:table-cell">
                                                 <div className="text-sm text-slate-600">
                                                     {
                                                         campaign.status === 'Draft' ? <FaMinus /> : '0'
                                                     }
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td className="hidden md:table-cell">
                                                 <div className="text-sm text-slate-600">
                                                     <FaMinus />
                                                 </div>
@@ -315,7 +319,7 @@ export default function Campaigns() {
                 </div>
             </div>
 
-            <div className="py-8 px-7 max-w-xl mt-20 bg-white border border-gray-200 rounded-2xl shadow-lg">
+            <div className="py-4 px-3 lg:py-8 lg:px-7 max-w-xl mt-20 bg-white border border-gray-200 rounded-2xl shadow-lg">
                 <HelpCard />
             </div>
 

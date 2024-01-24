@@ -320,7 +320,8 @@ class CampaignTools {
                     }
                 }
             })
-        } else {
+        }
+        else if (campaignId) {
             return designNavigation.map((link) => {
                 if (campaign.campaignLevel >= link.level) {
                     return {
@@ -333,6 +334,23 @@ class CampaignTools {
                     return {
                         ...link,
                         href: `${link.href}/${campaignId}`
+                    }
+                }
+            })
+        }
+        else {
+            return designNavigation.map((link) => {
+                if (campaign.campaignLevel >= link.level) {
+                    return {
+                        ...link,
+                        passed: true,
+                        href: `${link.href}`
+                    }
+                }
+                else {
+                    return {
+                        ...link,
+                        href: `${link.href}`
                     }
                 }
             })

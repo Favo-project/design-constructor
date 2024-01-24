@@ -20,7 +20,7 @@ export default function Stores() {
     return (
         <div id="stores">
             <header className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-slate-600 my-8">Store</h1>
+                <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-8">Store</h1>
                 <UserMenu />
             </header>
 

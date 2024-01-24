@@ -5,7 +5,7 @@ export default function Catalog() {
     return (
         <section className="bg-[#f5f8fc] overflow-hidden py-16">
             <div className="container m-auto max-w-7xl">
-                <div className="grid grid-cols-3 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 items-center">
                     <div className="px-4">
                         <h2 className="text-2xl text-slate-700 tracking-wide font-semibold mb-8">Choose the custom apparel you want to sell online</h2>
                         <p className="text-slate-700 tracking-wide font-sans mb-10">Browse our curated selection of premium t-shirts, hoodies, tank tops and more. Find a variety of styles, sizes, colors and fabric options like ringspun cotton, polyblends, heavyweights and more.</p>

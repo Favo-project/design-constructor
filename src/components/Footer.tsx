@@ -7,8 +7,8 @@ export default function Footer() {
   return (
     <div className="py-12 bg-slate-600">
       <footer className="container mx-auto max-w-7xl px-4">
-        <ul className="grid grid-cols-4 mx-2 my-6">
-          <div>
+        <ul className="grid lg:grid-cols-4 grid-cols-2 gap-3 mx-2 my-6">
+          <div className="mb-6">
             <Link href={'/'} className="logo p-2 mb-6 rounded-full bg-white bg-opacity-90 inline-block w-12 h-12 shadow-lg hover:shadow-indigo-600">
               <img
                 width={32}
@@ -60,7 +60,7 @@ export default function Footer() {
             </li>
           </ul>
         </ul>
-        <div className="w-full px-12 py-8 mt-16 flex justify-between items-center rounded-2xl bg-gray-700">
+        <div className="w-full lg:px-12 px-6 py-8 mt-16 flex justify-between items-center rounded-2xl bg-gray-700">
           <p className="text-slate-300 font-sans tracking-tight">© 2023 ArtVibe.uz</p>
 
           <div className="flex items-center gap-3">

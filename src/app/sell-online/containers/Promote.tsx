@@ -4,10 +4,10 @@ import { promote1, promote2 } from "../assets";
 export default function Promote() {
     return (
         <section className="relative flex items-center justify-center bg-[#fef0f1] min-h-[600px] overflow-hidden">
-            <div className="absolute -bottom-6 -left-[200px] w-[700px]">
+            <div className="absolute -bottom-6 -left-[200px] lg:w-[700px] w-[400px]">
                 <Image className="w-full" src={promote1} alt="promote-image" width={800} height={400} />
             </div>
-            <div className="absolute -top-12 -right-28 w-[400px]">
+            <div className="absolute -top-12 -right-28 lg:w-[400px] w-[200px]">
                 <Image className="w-full" src={promote2} alt="promote-image" width={800} height={400} />
             </div>
             <div className="relative pl-44 z-30 flex flex-col items-start">

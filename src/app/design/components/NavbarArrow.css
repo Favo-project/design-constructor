@@ -1,0 +1,24 @@
+.navbar-arrow::before {
+  width: 0;
+  border-top: 35px solid transparent;
+  border-bottom: 35px solid transparent;
+  border-left: 18px solid rgb(203 213 225 / .7);
+  content: "";
+  display: inline-block;
+  position: absolute;
+  height: 64px;
+  right: 0;
+  top: 0;
+}
+.navbar-arrow::after {
+  width: 0;
+  border-top: 35px solid transparent;
+  border-bottom: 35px solid transparent;
+  border-left: 18px solid #fff;
+  content: "";
+  display: block;
+  height: 64px;
+  position: absolute;
+  right: 2px;
+  top: 0;
+}

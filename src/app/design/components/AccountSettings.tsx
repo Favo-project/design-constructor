@@ -6,11 +6,19 @@ import { Fragment, useEffect, useState } from 'react'
 import { FileDrop } from "@/components/FileDrop";
 import { RxCross1 } from "react-icons/rx";
 import Image from "next/image";
+import { useAtom } from "jotai";
+import { authAtom, userAtom } from "@/constants";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function AccountSettings() {
+    const router = useRouter()
     const [isLogoDialog, setIsLogoDialog] = useState(false)
     const [file, setFile] = useState<File>()
     const [base64Img, setBase64Img] = useState<string>('')
+
+    const [user, setUser] = useAtom(userAtom)
+    const [auth, setAuth] = useAtom(authAtom)
 
     useEffect(() => {
         if (file?.name && file?.size) {
@@ -33,19 +41,55 @@ export default function AccountSettings() {
     }
 
     const onUpload = async () => {
-        console.log('should load profile pic');
+        const userPhoto = new FormData()
+        userPhoto.append('photo', file)
+
+        try {
+            const { data: response } = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/users`, userPhoto, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${auth || localStorage.getItem('user_at')}`
+                }
+            })
+
+            setUser({ ...user, ...response.data })
+            setAuth(response.newToken)
+            localStorage.setItem('user_at', response.newToken)
+        }
+        catch (err) {
+            if (err?.response?.status === 403) {
+                router.push('/')
+                setAuth('')
+                setUser({
+                    ...userAtom.init
+                })
+                localStorage.removeItem('user_at')
+            }
+
+            console.log(err?.message);
+        }
     }
 
     return (
         <>
             <div className="flex items-center mt-4">
                 <button className="relative mr-2 p-0.5 flex items-center justify-center rounded-full border border-dashed border-gray-400" onClick={openModal}>
-                    <span className="text-4xl text-gray-300">
-                        <BiSolidUserCircle />
-                    </span>
-                    <span className="flex items-center justify-center absolute bottom-0 right-0 rounded-full p-[1.5px] text-xs bg-green-700 text-white">
-                        <AiOutlinePlus />
-                    </span>
+                    {
+                        user.photo ? (
+                            <span className="text-xl w-7 h-7">
+                                <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
+                            </span>
+                        ) : (
+                            <>
+                                <span className="text-4xl text-gray-300">
+                                    <BiSolidUserCircle />
+                                </span>
+                                <span className="flex items-center justify-center absolute bottom-0 right-0 rounded-full p-[1.5px] text-xs bg-green-700 text-white">
+                                    <AiOutlinePlus />
+                                </span>
+                            </>
+                        )
+                    }
                 </button>
                 <p className="text-gray-600 font-medium">
                     by <span>Dilrozbek Raximov</span>
@@ -114,8 +158,9 @@ export default function AccountSettings() {
                                             Cancel
                                         </button>
                                         <button
+                                            disabled={!file}
                                             type="button"
-                                            className="px-4 py-2.5 text-sm uppercase font-sans font-semibold text-white bg-indigo-500 rounded-md"
+                                            className="px-4 py-2.5 text-sm uppercase font-sans font-semibold text-white bg-indigo-500 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
                                             onClick={() => onUpload()}
                                         >
                                             Upload

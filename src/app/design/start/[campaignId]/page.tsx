@@ -392,57 +392,116 @@ export default function Start() {
     });
 
     canvas.on("mouse:move", (event) => {
-      if (canvasValues.current.isPanning && !event.target) {
-        const deltaX = event.e.clientX - canvasValues.current.lastX;
-        const deltaY = event.e.clientY - canvasValues.current.lastY;
-        canvasValues.current.lastX = event.e.clientX;
-        canvasValues.current.lastY = event.e.clientY;
+      if (event.e.type === 'mousemove') {
+        if (canvasValues.current.isPanning && !event.target) {
+          const deltaX = event.e.clientX - canvasValues.current.lastX;
+          const deltaY = event.e.clientY - canvasValues.current.lastY;
+          canvasValues.current.lastX = event.e.clientX;
+          canvasValues.current.lastY = event.e.clientY;
 
-        // Calculate the updated offset values
-        let newOffsetX = canvasValues.current.offsetX + deltaX;
-        let newOffsetY = canvasValues.current.offsetY + deltaY;
+          // Calculate the updated offset values
+          let newOffsetX = canvasValues.current.offsetX + deltaX;
+          let newOffsetY = canvasValues.current.offsetY + deltaY;
 
-        // Ensure the new offset values stay within the defined limits
-        newOffsetX = Math.max(
-          canvasValues.current.MIN_OFFSET_X,
-          Math.min(canvasValues.current.MAX_OFFSET_X, newOffsetX)
-        );
-        newOffsetY = Math.max(
-          canvasValues.current.MIN_OFFSET_Y,
-          Math.min(canvasValues.current.MAX_OFFSET_Y, newOffsetY)
-        );
+          // Ensure the new offset values stay within the defined limits
+          newOffsetX = Math.max(
+            canvasValues.current.MIN_OFFSET_X,
+            Math.min(canvasValues.current.MAX_OFFSET_X, newOffsetX)
+          );
+          newOffsetY = Math.max(
+            canvasValues.current.MIN_OFFSET_Y,
+            Math.min(canvasValues.current.MAX_OFFSET_Y, newOffsetY)
+          );
 
-        // Update the canvas viewport
-        canvasValues.current.offsetX = newOffsetX;
-        canvasValues.current.offsetY = newOffsetY;
+          // Update the canvas viewport
+          canvasValues.current.offsetX = newOffsetX;
+          canvasValues.current.offsetY = newOffsetY;
 
-        if (canvasValues.current.scale === 1) {
-          canvas.selection = true
+          if (canvasValues.current.scale === 1) {
+            canvas.selection = false
+          }
+          else {
+            canvas.selection = false;
+            canvas.setCursor("grab");
+          }
+
+          // Render the canvas to apply the changes
+          updateCanvasViewport();
         }
-        else {
-          canvas.selection = false;
-          canvas.setCursor("grab");
-        }
+      }
+      else if (event.e.type === 'touchmove') {
+        const position = event.e.touches[0]
+        if (canvasValues.current.isPanning && !event.target) {
+          const deltaX = position.clientX - canvasValues.current.lastX;
+          const deltaY = position.clientY - canvasValues.current.lastY;
+          canvasValues.current.lastX = position.clientX;
+          canvasValues.current.lastY = position.clientY;
 
-        // Render the canvas to apply the changes
-        updateCanvasViewport();
+          // Calculate the updated offset values
+          let newOffsetX = canvasValues.current.offsetX + deltaX;
+          let newOffsetY = canvasValues.current.offsetY + deltaY;
+
+          // Ensure the new offset values stay within the defined limits
+          newOffsetX = Math.max(
+            canvasValues.current.MIN_OFFSET_X,
+            Math.min(canvasValues.current.MAX_OFFSET_X, newOffsetX)
+          );
+          newOffsetY = Math.max(
+            canvasValues.current.MIN_OFFSET_Y,
+            Math.min(canvasValues.current.MAX_OFFSET_Y, newOffsetY)
+          );
+
+          // Update the canvas viewport
+          canvasValues.current.offsetX = newOffsetX;
+          canvasValues.current.offsetY = newOffsetY;
+
+          if (canvasValues.current.scale === 1) {
+            canvas.selection = false
+          }
+          else {
+            canvas.selection = false;
+            canvas.setCursor("grab");
+          }
+
+          // Render the canvas to apply the changes
+          updateCanvasViewport();
+        }
       }
     });
 
     canvas.on("mouse:down", (event) => {
-      if (!event.target) {
-        if (canvasValues.current.scale === 1) {
-          canvas.setCursor("default");
-        }
-        else {
-          canvas.setCursor("grab");
-        }
+      if (event.e.type === 'mousedown') {
+        if (!event.target) {
+          if (canvasValues.current.scale === 1) {
+            canvas.setCursor("default");
+          }
+          else {
+            canvas.setCursor("grab");
+          }
 
-        canvasValues.current.isPanning = true;
-        canvasValues!.current!.lastX = event.e.clientX;
-        canvasValues!.current!.lastY = event.e.clientY;
-        canvas.renderAll();
+          canvasValues.current.isPanning = true;
+          canvasValues!.current!.lastX = event.e.clientX;
+          canvasValues!.current!.lastY = event.e.clientY;
+          canvas.renderAll();
+        }
       }
+      else if (event.e.type === 'touchstart') {
+        const position = event.e.touches[0]
+        if (!event.target) {
+          if (canvasValues.current.scale === 1) {
+            canvas.setCursor("default");
+          }
+          else {
+            canvas.setCursor("grab");
+          }
+
+          canvasValues.current.isPanning = true;
+          canvasValues!.current!.lastX = position.clientX;
+          canvasValues!.current!.lastY = position.clientY;
+          canvas.renderAll();
+        }
+      }
+
     });
 
     canvas.on("mouse:up", () => {
@@ -822,11 +881,26 @@ export default function Start() {
     setMultipleObj([])
   }
 
+  useEffect(() => {
+    if (document.body.clientWidth < 1024) {
+      containerRef.current.style.width = `${document.body.clientWidth}px`
+    }
+    const resizeHandler = () => {
+      if (document.body.clientWidth < 1024) {
+        containerRef.current.style.width = `${document.body.clientWidth}px`
+      }
+    }
+
+    window.addEventListener('resize', resizeHandler)
+
+    return () => window.removeEventListener('resize', resizeHandler)
+  }, [])
+
   return (
     <div id="designer">
       <div className="grid sm:grid-cols-1 lg:grid-cols-3">
-        <div id="design-content" ref={containerRef} className="relative">
-          <div className="lg:fixed top-0 mt-20 overflow-hidden left-0 bottom-0 sm:w-[100vw] lg:w-[66.6vw] flex items-center justify-center">
+        <div id="design-content" ref={containerRef} className="relative max-h-[600px] sm:max-h-[700px] md:max-w-none overflow-hidden">
+          <div className="lg:fixed top-0 bottom-0 md:mt-20 mt-8 overflow-hidden sm:w-[100vw] lg:w-[65.7vw] flex items-center justify-center">
             {
               loading ? (
                 <div className="absolute bg-white bg-opacity-20 z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center text-4xl">
@@ -839,7 +913,7 @@ export default function Start() {
             </div>
             <div
               id="controls"
-              className="flex items-center p-3 absolute bottom-16 left-[50%] translate-x-[-50%] rounded-md bg-white"
+              className="flex items-center justify-center w-[80%] md:w-[60%] px-12 py-4 lg:w-auto border-2 border-slate-300 lg:p-3 absolute md:bottom-16 bottom-4 left-[50%] translate-x-[-50%] rounded-md bg-white"
             >
               <button
                 onClick={onChangeSide}
@@ -878,7 +952,7 @@ export default function Start() {
           </div>
         </div>
         <div></div>
-        <div className="sm:p-4 lg:p-8 shadow-xl min-h-[100vh]">
+        <div className="px-6 lg:p-8  shadow-xl min-h-[100vh]">
           <h2 className="text-gray-700 text-2xl font-semibold mt-6">
             Create your design
           </h2>
