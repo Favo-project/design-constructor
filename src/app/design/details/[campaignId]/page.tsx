@@ -1,5 +1,5 @@
 'use client'
-import { campaignAtom } from '@/constants'
+import { campaignAtom, isSavedAtom } from '@/constants'
 import { useAtom } from 'jotai'
 import { useParams, useRouter } from 'next/navigation'
 import { useLayoutEffect, useState } from 'react'
@@ -8,6 +8,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 export default function Details() {
     const { campaignId } = useParams()
     const [campaign, setCampaign] = useAtom(campaignAtom)
+    const [isSaved] = useAtom(isSavedAtom)
 
     const [addButton, setAddButton] = useState(false)
     const [newTag, setNewTag] = useState('')
@@ -171,7 +172,7 @@ export default function Details() {
                 <div className='flex flex-wrap gap-3'>
                     {
                         tags.map((tag, index) => (
-                            <button onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition`} key={index}>{tag.name}</button>
+                            <button disabled={isSaved} onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition disabled:opacity-70 disabled:hover:border-slate-300`} key={index}>{tag.name}</button>
                         ))
                     }
                 </div>
@@ -182,7 +183,7 @@ export default function Details() {
                 <div className='flex flex-wrap gap-3'>
                     {
                         additionalTags.map((tag, index) => (
-                            <button onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition`} key={index}>{tag.name}</button>
+                            <button disabled={isSaved} onClick={() => onToggleSelect(tag)} className={`${isSelected(tag.name) ? 'bg-slate-600 border-slate-600 text-white' : 'border-slate-300 text-slate-600'} text-md px-4 py-2 rounded-full border-2 hover:border-slate-600 transition disabled:opacity-70 disabled:hover:border-slate-300`} key={index}>{tag.name}</button>
                         ))
                     }
                 </div>

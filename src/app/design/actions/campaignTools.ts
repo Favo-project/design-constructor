@@ -219,7 +219,8 @@ class CampaignTools {
                     angle: elem.angle,
                     flipX: elem.flipX,
                     flipY: elem.flipY,
-                    src: elem?._element?.src
+                    src: elem?._element?.src,
+                    imgUrl: elem.imgUrl
                 }
             }
         })

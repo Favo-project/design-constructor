@@ -11,7 +11,7 @@ import { PiCaretRightThin } from "react-icons/pi";
 import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
-import { authAtom, campaignAtom, campaignStart, toastAtom, userAtom } from "@/constants";
+import { authAtom, campaignAtom, campaignStart, isSavedAtom, toastAtom, userAtom } from "@/constants";
 import { useRouter, useParams, usePathname } from "next/navigation";
 import { FaRegUserCircle } from "react-icons/fa";
 import { campaignTools, designNavigation, launchedNavigation } from "../actions/campaignTools";
@@ -32,7 +32,7 @@ export default function DesignNavbar() {
   const [launchDialog, setLaunchDialog] = useState(false)
 
   const [loading, setLoading] = useState(false)
-  const [isSaved, setIsSaved] = useState(false)
+  const [isSaved, setIsSaved] = useAtom(isSavedAtom)
 
   const [user, setUser] = useAtom(userAtom)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -236,7 +236,7 @@ export default function DesignNavbar() {
         </div>
         <div className="flex lg:flex-1 lg:justify-end gap-3 items-center">
           <SaveButton loaded={user.loaded} onSave={onSave} loading={loading} isSaved={isSaved} />
-          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} onSave={onSave} />
+          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} onSave={onSave} isSaved={isSaved} />
 
           <div className="hidden lg:block">
             {

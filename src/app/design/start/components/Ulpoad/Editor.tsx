@@ -111,7 +111,7 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
                 <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Preview</h3>
                 <div className="flex">
                     <div className="p-1 rounded-md bg-indigo-300">
-                        <Image src={selectedObj?.object?._element?.currentSrc} alt="preview-img" width={65} height={65} />
+                        <Image src={selectedObj?.object?.imgUrl} alt="preview-img" width={65} height={65} />
                     </div>
                 </div>
             </div>

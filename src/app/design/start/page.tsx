@@ -870,7 +870,7 @@ export default function Start() {
                 </div>
               ) : null
             }
-            <div id="design-container" ref={designContainer}>
+            <div id="design-container" className="scale-75 sm:scale-90 -mt-14 md:mt-auto md:scale-100" ref={designContainer}>
               <canvas id="design" className="overflow-scroll touch-none" ref={canvasRef} />
             </div>
             <div
@@ -914,7 +914,7 @@ export default function Start() {
           </div>
         </div>
         <div></div>
-        <div className="px-6 lg:p-8 shadow-xl min-h-[100vh]">
+        <div className="px-6 lg:p-8 shadow-xl min-h-[100vh] relative z-40">
           <h2 className="text-gray-700 text-2xl font-semibold mt-6">
             Create your design
           </h2>

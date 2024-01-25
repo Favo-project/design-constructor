@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { BsCheckLg } from "react-icons/bs";
 import { FaHeading } from 'react-icons/fa6'
 import { GrEdit, GrTag } from 'react-icons/gr'
@@ -27,7 +27,7 @@ export default function Preview() {
     const [currentProduct, setCurrentProduct] = useState(campaign.products[0])
 
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         let campaignTitle = campaign.title
 
         setCurrentProduct({ ...campaign.products[0] })
@@ -59,6 +59,7 @@ export default function Preview() {
     }
 
     const loadImage = (imgUrl) => {
+        console.log(currentProduct?.colors[currentColor].designImg[side]);
         let origUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/files${imgUrl}`
 
         const imgElement = document.createElement('img')
@@ -86,12 +87,14 @@ export default function Preview() {
         return product?.sizes
     }
 
+    console.log(currentProduct?.colors[currentColor].designImg[side]);
+
     return <div className="container relative m-auto">
         <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-10 gap-2 py-10 mt-6">
             <div className="md:sticky flex justify-end top-28 h-min bg-transparent">
                 <div className="relative w-[600px] h-[600px]m max-h-[600px] bg-transparent">
                     <div className="border-0">
-                        <Image priority style={{ objectFit: 'cover', border: 0 }} className="block w-full h-full border-0 no-underline" src={loadImage(currentProduct?.colors[currentColor].designImg[side])} alt="product-img" width={600} height={600} />
+                        <Image className="block w-full h-full" onLoad={() => loadImage(currentProduct?.colors[currentColor].designImg[side])} priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors[currentColor].designImg[side]}`} alt="product-img" width={600} height={600} />
                         <div>
                             <div className="w-full h-[1px] absolute top-0 block z-10 bg-white" />
                             <div className="w-[1px] h-full absolute left-0 top-0 block z-10 bg-white" />

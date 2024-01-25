@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from "react"
 import Link from "next/link"
 import { campaignTools, navigation } from "../actions/campaignTools"
 
-export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, onSave }) {
+export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, onSave, isSaved }) {
     const pathname = usePathname()
     const { campaignId } = useParams()
     const [isNext, setIsNext] = useState(false)
@@ -60,7 +60,7 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         )
     }
 
-    if (!isNext) {
+    if (!isNext || isSaved) {
         return (
             <button disabled className="bg-indigo-500 rounded-md text-white shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
                 Next

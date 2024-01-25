@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 
 interface CanvasObj extends fabric.Image {
-  relativeTop?: number, side?: string, canvasId?: string, objType?: string
+  relativeTop?: number, side?: string, canvasId?: string, objType?: string, imgUrl?: string
 }
 
 export default function Upload({ campaign, setCampaign, canvasRef, canvasValues }) {
@@ -62,6 +62,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
         fabricImage.side = campaign.selected.side
         fabricImage.canvasId = uuidv4()
         fabricImage.objType = 'image'
+        fabricImage.imgUrl = `${process.env.NEXT_PUBLIC_BASE_URL}` + response.data.image
         setCampaign({ ...campaign, design: { ...campaign.design, [campaign.selected.side]: [...campaign.design[campaign.selected.side], fabricImage] } })
 
         setFile(null)

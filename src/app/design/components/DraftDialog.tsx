@@ -34,6 +34,7 @@ export default function DraftDialog({ isOpen, closeModal }) {
                 localStorage.removeItem('user_at')
                 router.push('/')
             }
+            console.log(e);
         }
     }
 

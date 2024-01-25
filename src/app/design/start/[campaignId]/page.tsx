@@ -952,7 +952,7 @@ export default function Start() {
           </div>
         </div>
         <div></div>
-        <div className="px-6 lg:p-8  shadow-xl min-h-[100vh]">
+        <div className="px-6 lg:p-8  shadow-xl min-h-[100vh] relative z-40">
           <h2 className="text-gray-700 text-2xl font-semibold mt-6">
             Create your design
           </h2>

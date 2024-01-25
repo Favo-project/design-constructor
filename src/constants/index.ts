@@ -249,3 +249,5 @@ interface IToast {
 }
 
 export const toastAtom = atom<IToast>({ type: '', message: '' }) // type = warning | info | success | error
+
+export const isSavedAtom = atom(false)

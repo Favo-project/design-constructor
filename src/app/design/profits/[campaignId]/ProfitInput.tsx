@@ -1,9 +1,10 @@
-import { campaignAtom } from "@/constants"
+import { campaignAtom, isSavedAtom } from "@/constants"
 import { useAtom } from "jotai"
 import { NumericFormat, PatternFormat } from "react-number-format"
 
 export default function ProfitInput({ product }) {
     const [campaign, setCampaign] = useAtom(campaignAtom)
+    const [isSaved] = useAtom(isSavedAtom)
 
     const onChange = (value: number) => {
         const productCopy = { ...product }
@@ -35,6 +36,6 @@ export default function ProfitInput({ product }) {
     }
 
     return <div>
-        <NumericFormat className="max-w-[170px] border-2 text-right border-slate-300 outline-gray-600 text-gray-600 text-sm rounded-lg px-3 py-2 pl-5 font-semibold" onBlur={onBlur} value={product.sellingPrice || ''} onValueChange={(value) => onChange(Number(value.value))} displayType="input" type="text" thousandSeparator suffix=" so'm" />
+        <NumericFormat disabled={isSaved} className="max-w-[170px] border-2 text-right border-slate-300 outline-gray-600 text-gray-600 text-sm rounded-lg px-3 py-2 pl-5 font-semibold" onBlur={onBlur} value={product.sellingPrice || ''} onValueChange={(value) => onChange(Number(value.value))} displayType="input" type="text" thousandSeparator suffix=" so'm" />
     </div>
 }

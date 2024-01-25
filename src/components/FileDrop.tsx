@@ -27,19 +27,19 @@ export function FileDrop({ file, setFile }: any) {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer ${isOver ? " bg-gray-100 border-gray-900 border-5 " : ""
+        className={`mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 lg:px-6 lg:py-10 px-2 py-3 cursor-pointer ${isOver ? " bg-gray-100 border-gray-900 border-5 " : ""
           }`}
       >
         <div className="text-center">
           {file ? (
-            <div className="flex items-center cursor-auto rounded-md py-1 px-2 text-sm bg-slate-200">
+            <div className="flex items-center cursor-auto rounded-md py-1 px-2 text-sm bg-slate-200 md:max-w-[280px] lg:max-w-sm max-w-[250px] w-full overflow-hidden">
               <button
                 onClick={() => setFile("")}
                 className="text-sm p-1.5 mr-2 cursor-pointer"
               >
                 <RxCross1 />
-              </button>{" "}
-              {file.name}
+              </button>
+              <span className="w-full text-sm">{file.name}</span>
             </div>
           ) : (
             <>
