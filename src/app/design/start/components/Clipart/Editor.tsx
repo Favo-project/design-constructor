@@ -8,6 +8,7 @@ import { BsCheckLg } from "react-icons/bs"
 import { LuFlipHorizontal2, LuFlipVertical2 } from "react-icons/lu"
 import Image from "next/image";
 import { colors } from "@/constants"
+import { IoMdClose } from "react-icons/io"
 
 export default function ClipartEditor({ selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
     const [selectedColor, setSelectedColor] = useState(null)
@@ -155,6 +156,9 @@ export default function ClipartEditor({ selectedObj, campaign, setCampaign, canv
                                     >
                                         <Popover.Panel className="lg:absolute fixed top-20 right-12 left-0 bg-white lg:-bottom-32 lg:top-auto lg:left-auto lg:-right-32 z-20 mt-3 w-screen max-w-sm transform lg:max-w-sm">
                                             <div className="overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                                <span onClick={close} className="text-3xl text-slate-500 absolute top-3 right-2 p-3">
+                                                    <IoMdClose />
+                                                </span>
                                                 <div className="p-7">
                                                     <h3 className="text-2xl text-slate-800 font-mono mb-4">Choose color</h3>
                                                     <p className="text-slate-700 text-sm font-mono mb-4">USED IN YOUR DESIGN</p>

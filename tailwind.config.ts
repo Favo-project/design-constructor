@@ -1,5 +1,11 @@
 import type { Config } from 'tailwindcss'
 
+const colors = {
+  'magenta': '#FF00CC',
+  'blue': '#333399',
+  'dark': '#121212'
+}
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,6 +19,7 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors,
     },
   },
   plugins: [],

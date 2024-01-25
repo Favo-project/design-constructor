@@ -908,7 +908,7 @@ export default function Start() {
                 </div>
               ) : null
             }
-            <div id="design-container" ref={designContainer}>
+            <div id="design-container" className="scale-75 sm:scale-90 -mt-14 md:mt-auto md:scale-100" ref={designContainer}>
               <canvas id="design" ref={canvasRef} />
             </div>
             <div

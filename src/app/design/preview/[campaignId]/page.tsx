@@ -33,9 +33,9 @@ export default function Preview() {
         setCurrentProduct({ ...campaign.products[0] })
         if (campaignTitle === 'Draft campaign') {
             campaignTitle = ''
+            setCampaign({ ...campaign, title: campaignTitle })
         }
-        setCampaign({ ...campaign, title: campaignTitle })
-    }, [campaignId])
+    }, [campaign])
 
     const flipSide = (side) => {
         setImgLoading(true)
