@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { fabric } from 'fabric'
 import { v4 as uuidv4 } from 'uuid'
+import SolidBtn from "@/components/form-elements/SolidBtn";
 
 export default function Text({ campaign, setCampaign, canvasRef, canvasValues }) {
   const [text, setText] = useState("");
@@ -56,11 +57,11 @@ export default function Text({ campaign, setCampaign, canvasRef, canvasValues })
             name="text"
             placeholder="Your text"
             rows={4}
-            className="block w-full font-semibold text-gray-600 outline-none rounded-md border-0 py-4 px-3 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-md sm:leading-6"
+            className="block w-full font-semibold text-gray-600 outline-none rounded-md border-0 py-4 px-3 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue sm:text-md sm:leading-6"
           ></textarea>
         </div>
         <div className="flex flex-1 items-center justify-end mt-4">
-          <button onClick={addText} disabled={!text} className="bg-indigo-500 text-slate-100 py-2 px-4 rounded-md bg-opacity-80 hover:bg-opacity-100 disabled:bg-opacity-60 disabled:cursor-not-allowed">Add text</button>
+          <SolidBtn onClick={addText} disabled={!text} >Add text</SolidBtn>
         </div>
       </div>
     </div>

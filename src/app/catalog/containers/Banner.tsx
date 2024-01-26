@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { bannerImg } from "../assets";
-import Link from "next/link";
+import SolidBtn from "@/components/form-elements/SolidBtn";
 
 export default function Banner() {
     return (
@@ -11,12 +11,12 @@ export default function Banner() {
                         <Image src={bannerImg} alt="banner-image" width={780} height={560} />
                     </div>
                     <div className="md:col-start-11 md:col-span-7 md:row-start-1 px-7 py-14 bg-white rounded-xl shadow-lg">
-                        <h2 className="lg:text-5xl text-3xl text-slate-700 font-bold font-sans tracking-wide leading-tight mb-10">
+                        <h2 className="lg:text-5xl text-3xl text-gray-700 font-bold font-sans tracking-wide leading-tight mb-10">
                             Create something great today
                         </h2>
-                        <Link className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all" href={'/dashboard/overview'}>
+                        <SolidBtn href={'/dashboard/overview'}>
                             Start designing
-                        </Link>
+                        </SolidBtn>
                     </div>
                 </div>
             </div>

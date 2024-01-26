@@ -4,6 +4,7 @@ import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import { helpImg } from '../../assets'
 import Link from 'next/link'
+import SolidBtn from '@/components/form-elements/SolidBtn'
 
 const questions = [
     { id: 1, text: 'Please select from the list' },
@@ -112,9 +113,9 @@ export default function SpecialQuestion() {
                                     <label className='block font-semibold uppercase font-mono tracking-widest text-slate-700 mb-3' htmlFor='message'>YOUR MESSAGE*</label>
                                     <textarea required className='w-full px-4 py-2.5 font-semibold border-2 border-slate-300 outline-none focus:border-slate-600 text-slate-600 placeholder:text-slate-400 rounded-lg transition-all' value={message} onChange={(e) => setMessage(e.target.value)} placeholder='Any additional notes?' name='message' id='message' rows={4} />
                                 </div>
-                                <button disabled={!email || !message} className="font-sans font-bold px-5 py-3 bg-indigo-500 text-white uppercase tracking-wider rounded-lg shadow-lg disabled:bg-indigo-400">
+                                <SolidBtn disabled={!email || !message}>
                                     Send message
-                                </button>
+                                </SolidBtn>
                             </form>
                         </>
                     )

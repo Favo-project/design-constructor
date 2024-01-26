@@ -1,6 +1,5 @@
 'use client'
 import { Fragment, useLayoutEffect, useState } from 'react'
-import UserMenu from "../../components/UserMenu";
 import { Tab } from '@headlessui/react'
 import { Menu, Transition } from '@headlessui/react'
 import { authAtom, campaignAtom, userAtom } from "@/constants";
@@ -20,6 +19,8 @@ import { BiCopy, BiSolidCopy } from 'react-icons/bi';
 import CampaignDelete from '../../components/CampaignDelete';
 import { VscDebugRestart } from 'react-icons/vsc';
 import DraftDialog from '@/app/design/components/DraftDialog';
+import SolidBtn from '@/components/form-elements/SolidBtn';
+import UserDropdown from '@/components/UserDropdown';
 
 export default function Details() {
     const router = useRouter()
@@ -112,16 +113,16 @@ export default function Details() {
                             <GoChevronLeft />
                         </Link>
                         <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-5 lg:ml-3">{campaign?.title}</h1>
-                        <UserMenu />
+                        <UserDropdown />
                     </header>
                     <div className="flex items-center mb-14 gap-4 lg:ml-3">
-                        <Link href={`/${campaignId}`} className="font-sans hover:text-indigo-500 text-slate-400 flex items-center transition-all">
+                        <Link href={`/${campaignId}`} className="font-sans hover:text-magenta text-slate-400 flex items-center transition-all">
                             <span className="md:text-2xl text-xl mr-2">
                                 <MdOpenInNew />
                             </span>
                             See campaign
                         </Link>
-                        <button className="font-sans hover:text-indigo-500 text-slate-400 flex items-center transition-all">
+                        <button className="font-sans hover:text-magenta text-slate-400 flex items-center transition-all">
                             <span className="md:text-2xl text-xl mr-2">
                                 <FiLink />
                             </span>
@@ -158,7 +159,7 @@ export default function Details() {
                             <div>
                                 <Menu as="div" className="relative inline-block text-left p-3">
                                     <div>
-                                        <Menu.Button className="p-2 relative text-2xl outline-none rounded-lg border-2 border-slate-100 text-indigo-600 shadow-lg hover:shadow-none hover:border-slate-400 transition-all">
+                                        <Menu.Button className="p-2.5 relative text-2xl outline-none rounded-sm border-2 border-slate-100 text-magenta shadow-lg hover:shadow-none hover:border-gray-800 transition-all">
                                             <BsThreeDots />
                                         </Menu.Button>
                                     </div>
@@ -264,9 +265,9 @@ export default function Details() {
                                     </Transition>
                                 </Menu>
                             </div>
-                            <Link href={`/${campaignId}`} className='px-4 py-2.5 rounded-lg bg-indigo-600 shadow-md text-white font-semibold'>
+                            <SolidBtn href={`/${campaignId}`}>
                                 See page
-                            </Link>
+                            </SolidBtn>
                         </div>
                     </div>
                     <div className='mb-6'>
@@ -326,7 +327,7 @@ export default function Details() {
                     </div>
                     <div>
                         <h2 className='text-2xl font-semibold text-slate-700 font-sans mb-6'>Share</h2>
-                        <div className='border-2 border-slate-200 rounded-lg lgp-10 p-4 lg:w-min'>
+                        <div className='border-2 border-slate-200 rounded-lg lgp-10 p-4 lg:max-w-md'>
                             <div className='flex flex-col mb-8'>
                                 <h3 className='text-xl font-semibold text-slate-600 mb-2'>Share on social</h3>
                                 <div className='flex items-center flex-wrap gap-6'>

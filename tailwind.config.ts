@@ -22,6 +22,11 @@ const config: Config = {
       colors,
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('child', '& > div');
+      addVariant('child-hover', '& > div:hover');
+    }
+  ],
 }
 export default config

@@ -69,7 +69,7 @@ export default function DashboardLayout({
           user.loaded ? (
             <>
               <DashboardSidebar />
-              <div className="lg:p-8 p-4 lg:ml-56 bg-[#fff] h-[100vh] overflow-y-auto">
+              <div className="lg:p-8 p-4 lg:ml-56 bg-[#fff] lg:h-[100vh] h-[90vh] overflow-y-auto">
                 {children}
               </div>
             </>

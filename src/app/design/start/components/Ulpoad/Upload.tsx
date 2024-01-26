@@ -4,6 +4,7 @@ import { useState } from "react";
 import { fabric } from 'fabric'
 import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
+import SolidBtn from "@/components/form-elements/SolidBtn";
 
 interface CanvasObj extends fabric.Image {
   relativeTop?: number, side?: string, canvasId?: string, objType?: string, imgUrl?: string
@@ -99,13 +100,12 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
             Bonfire’s Terms of Use.
           </label>
         </div>
-        <button
+        <SolidBtn
           onClick={onUpload}
           disabled={!userRights || !file || loading}
-          className="p-4 w-full justify-center items-center text-slate-100 bg-indigo-600 bg-opacity-75 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {loading ? 'Uploading...' : 'Upload'}
-        </button>
+        </SolidBtn>
       </div>
     </div>
   );

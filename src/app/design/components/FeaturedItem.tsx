@@ -67,7 +67,7 @@ export default function FeaturedItem({ currentProduct, currentColor, setCurrentC
                             {({ open, close }) => (
                                 <>
                                     <Popover.Button
-                                        className={'px-3 py-2 text-sm font-semibold rounded-lg border-2 shadow-lg bg-white border-slate-100 text-indigo-500 hover:border-slate-300 transition-all'}
+                                        className={'px-3 py-2 text-sm font-semibold rounded-md border-2 shadow-lg bg-white border-slate-100 text-magenta hover:border-slate-300 transition-all'}
                                     >
                                         Set item as featured
                                     </Popover.Button>
@@ -86,14 +86,14 @@ export default function FeaturedItem({ currentProduct, currentColor, setCurrentC
                                                     <h4 className='text-slate-700 font-sans mb-2'>Set as featured item for:</h4>
                                                     {
                                                         !isProductFeatured() && (
-                                                            <button onClick={() => { featureProduct(); close() }} className='w-full px-6 py-2.5 bg-indigo-600 text-sm text-white shadow mb-4 font-semibold rounded-md hover:shadow-md transition-all'>
+                                                            <button onClick={() => { featureProduct(); close() }} className='w-full px-6 py-2.5 bg-blue text-sm text-white shadow mb-4 font-semibold rounded-sm hover:shadow-md transition-all'>
                                                                 Entire campaign
                                                             </button>
                                                         )
                                                     }
                                                     {
                                                         !isColorFeatured() && (
-                                                            <button onClick={() => { featureColor(); close() }} className='w-full px-6 py-2.5 border border-slate-600 text-sm text-slate-600 shadow font-semibold rounded-md hover:shadow-md hover:bg-slate-600 hover:text-white transition-all'>
+                                                            <button onClick={() => { featureColor(); close() }} className='w-full px-6 py-2.5 border border-dark text-sm text-slate-600 shadow font-semibold rounded-sm hover:shadow-md hover:bg-dark hover:text-white transition-all'>
                                                                 This product style
                                                             </button>
                                                         )

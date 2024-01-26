@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Hero() {
     return (
-        <header className="py-12">
+        <header className="py-12 pt-32">
             <div className="container m-auto max-w-7xl px-6">
                 <div className="mb-8">
                     <ul className="flex items-center gap-2">
@@ -24,8 +24,8 @@ export default function Hero() {
                     </ul>
                 </div>
                 <div>
-                    <h1 className="text-3xl font-sans font-semibold tracking-wide text-slate-700 mb-8">T-shirt design templates</h1>
-                    <p className="text-xl text-slate-600 font-medium font-sans tracking-wide">A collection of free t-shirt templates & design ideas for your custom t-shirt.</p>
+                    <h1 className="text-3xl font-sans font-semibold tracking-wide text-dark mb-8">T-shirt design templates</h1>
+                    <p className="text-xl text-gray-700 font-medium font-sans tracking-wide">A collection of free t-shirt templates & design ideas for your custom t-shirt.</p>
                 </div>
             </div>
         </header>

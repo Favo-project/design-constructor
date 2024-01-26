@@ -1,3 +1,5 @@
+import OutlineBtn from "./form-elements/OutlineBtn";
+
 export default function HelpCard() {
     return (
         <div>
@@ -7,7 +9,7 @@ export default function HelpCard() {
             <p className="mb-6 font-normal text-gray-700">
                 Have your questions answered without having to wait.
             </p>
-            <button className="px-4 py-2 rounded-lg border border-indigo-500 text-indigo-600 font-semibold shadow-lg transition-all">Get help now</button>
+            <OutlineBtn>Get help now</OutlineBtn>
         </div>
     )
 }

@@ -37,7 +37,7 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
     if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
         if (campaign.status === 'Launched') {
             return (
-                <button onClick={onSave} disabled={!loaded || loading} className="text-sm flex uppercase tracking-tight bg-indigo-500 text-white rounded-md">
+                <button onClick={onSave} disabled={!loaded || loading} className="text-sm flex uppercase tracking-tight bg-gradient-to-r from-magenta to-blue text-white rounded-md">
                     <Link href={nextUrl} className="block text-white rounded-md shadow-md px-2 p-2">
                         Save & Close
                     </Link>
@@ -47,14 +47,14 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
 
         if (!isLaunch) {
             return (
-                <button disabled className="block bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
+                <button disabled className="block bg-gradient-to-r from-magenta to-blue text-white rounded-md shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                     Launch
                 </button>
             )
         }
 
         return (
-            <button onClick={onLaunch} disabled={!loaded || loading} className="block bg-indigo-500 text-white rounded-md shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
+            <button onClick={onLaunch} disabled={!loaded || loading} className="block bg-gradient-to-r from-magenta to-blue text-white rounded-md shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                 Launch
             </button>
         )
@@ -62,14 +62,14 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
 
     if (!isNext || isSaved) {
         return (
-            <button disabled className="bg-indigo-500 rounded-md text-white shadow-md px-3 p-1 disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
+            <button disabled className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                 Next
             </button>
         )
     }
 
     return (
-        <button onClick={onNext} disabled={!loaded || loading} className="bg-indigo-500 rounded-md disabled:bg-indigo-300 disabled:shadow-none disabled:cursor-not-allowed">
+        <button onClick={onNext} disabled={!loaded || loading} className="bg-gradient-to-r from-magenta to-blue rounded-md disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
             <Link href={nextUrl} className="block text-white rounded-md shadow-md px-3 p-1">
                 Next
             </Link>

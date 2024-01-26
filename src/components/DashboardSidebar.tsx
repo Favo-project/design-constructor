@@ -1,4 +1,6 @@
 'use client'
+import { LogoPrimary } from "@/assets";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -74,13 +76,13 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div className="lg:hidden p-2 bg-gray-700">
+      <div className="lg:hidden p-2 bg-dark">
         <button
           data-drawer-target="default-sidebar"
           data-drawer-toggle="default-sidebar"
           aria-controls="default-sidebar"
           type="button"
-          className="inline-flex items-center transition p-3 text-sm rounded-lg focus:outline-none focus:ring-2 text-gray-400 hover:bg-slate-300"
+          className="inline-flex items-center transition p-3 text-sm rounded-lg focus:outline-none focus:ring-2 text-white hover:text-magenta"
           onClick={toggleSidebar}
         >
           <span className="sr-only">Open sidebar</span>
@@ -107,18 +109,9 @@ export default function Sidebar() {
         className={`fixed top-0 left-0 z-40 w-56 h-screen transition-all lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-700">
-          <Link href={'/dashboard/overview'} className="flex flex-col items-center my-6">
-            <img
-              width={32}
-              height={32}
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="logo"
-            />
-            <span className="block mt-3 text-2xl text-slate-100 font-thin font-mono tracking-wider">
-              ArtVibe
-            </span>
+        <div className="h-full px-3 py-4 overflow-y-auto bg-dark">
+          <Link href={'/dashboard/overview'} className="flex flex-col items-center justify-center mt-8 mb-14">
+            <Image src={LogoPrimary} alt="artvibe-logo" width={60} height={38} />
           </Link>
           <ul className="space-y-4 font-medium">
             {
@@ -127,9 +120,9 @@ export default function Sidebar() {
                   <Link
                     onClick={onLink}
                     href={link.href}
-                    className={`${isActive(link) ? 'text-slate-600 bg-white bg-opacity-75' : 'text-white hover:bg-gray-500'} flex transition-all items-center p-2 rounded-lg group`}
+                    className={`${isActive(link) ? 'text-gray-800 bg-white bg-opacity-75' : 'text-white hover:text-transparent hover:bg-gradient-to-r from-magenta to-blue hover:bg-clip-text'} flex transition-all items-center p-2 rounded-lg group`}
                   >
-                    <span className={`${isActive(link) ? 'text-slate-600' : 'text-gray-400 group-hover:text-white'} transition duration-75`}>
+                    <span className={`${isActive(link) ? 'text-gray-800' : 'text-white group-hover:text-magenta'} transition duration-75`}>
                       {link.icon}
                     </span>
                     <span className="ml-3">{link.name}</span>

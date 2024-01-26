@@ -21,7 +21,7 @@ export default function SaveButton({ loaded, onSave, loading, isSaved }) {
     }
 
     return (
-        <button onClick={onSave} className="text-indigo-500 font-sans font-semibold mr-1">
+        <button onClick={onSave} className="text-magenta font-sans font-semibold mr-1">
             Save
         </button>
     )

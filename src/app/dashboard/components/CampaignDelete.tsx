@@ -1,3 +1,4 @@
+import SolidBtn from '@/components/form-elements/SolidBtn'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { GoBell } from 'react-icons/go'
@@ -34,13 +35,13 @@ export default function CampaignDelete({ campaignId, title, isOpen, closeModal, 
                             >
                                 <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     <div className='mt-4 mb-6 flex justify-center'>
-                                        <span className='w-16 h-16 rounded-full border-2 border-indigo-500 text-indigo-500 flex items-center justify-center text-2xl'>
+                                        <span className='w-16 h-16 rounded-full border-2 border-magenta text-magenta flex items-center justify-center text-2xl'>
                                             <GoBell />
                                         </span>
                                     </div>
                                     <Dialog.Title
                                         as="h3"
-                                        className="px-10 text-xl text-indigo-600 font-medium leading-6 text-center"
+                                        className="px-10 text-xl text-magenta font-medium leading-6 text-center"
                                     >
                                         Are you sure you want to delete this campaign &quot;{title}&quot;
                                     </Dialog.Title>
@@ -49,16 +50,15 @@ export default function CampaignDelete({ campaignId, title, isOpen, closeModal, 
                                     </div>
 
                                     <div className="mt-4 flex items-center justify-end gap-3">
-                                        <button onClick={closeModal} className='font-sans text-indigo-500'>
+                                        <button onClick={closeModal} className='font-sans text-magenta'>
                                             Cancel
                                         </button>
-                                        <button
+                                        <SolidBtn
                                             type="button"
-                                            className="px-4 py-2.5 text-sm uppercase font-sans font-semibold text-white bg-indigo-500 rounded-md"
                                             onClick={() => onDelete(campaignId)}
                                         >
                                             Yes, Delete!
-                                        </button>
+                                        </SolidBtn>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

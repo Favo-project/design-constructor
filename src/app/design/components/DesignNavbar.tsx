@@ -1,13 +1,12 @@
 "use client";
 
-import { Bars3Icon, ChevronUpIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { AiOutlineHome } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout, MdCheck } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { PiCaretRightThin } from "react-icons/pi";
 import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
@@ -22,6 +21,8 @@ import LaunchDialog from "./LaunchDialog";
 import Image from "next/image";
 import NavbarArrow from "./NavbarArrow";
 import Toasts from "@/components/Toasts";
+import { LogoMain } from "@/assets";
+import UserDropdown from "@/components/UserDropdown";
 
 export default function DesignNavbar() {
   const [toast, setToast] = useAtom(toastAtom)
@@ -42,6 +43,7 @@ export default function DesignNavbar() {
   const [campaignBlank, setCampaignBlank] = useAtom(campaignStart)
 
   const onLogout = () => {
+    setMobileMenuOpen(false)
     try {
       setAuth('')
       setUser({
@@ -178,18 +180,23 @@ export default function DesignNavbar() {
       <LaunchDialog isOpen={launchDialog} closeModal={closeLaunchModal} />
 
       <nav
-        className="flex z-50 fixed top-0 left-0 right-0 bg-white items-center justify-between p-6 lg:px-8 lg:py-0 shadow-sm"
+        className="flex z-50 fixed top-0 left-0 right-0 bg-white items-center justify-between p-4 lg:px-8 lg:py-0 shadow-sm"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="logo"
-            />
-          </Link>
+          {
+            user.loaded ? (
+              <Link href={'/'} className="block scale-75 md:scale-100">
+                <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
+              </Link>
+            ) : (
+              <AuthModal>
+                <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
+                  Log in
+                </div>
+              </AuthModal>
+            )
+          }
         </div>
         <div className="order-3 flex lg:hidden">
           <button
@@ -205,7 +212,7 @@ export default function DesignNavbar() {
           {campaignTools.navigation(campaign, campaignId).map((link, index) => (
             <div key={index} className="flex items-center">
               {isActive(index) ? (
-                <span className="text-white bg-indigo-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold mr-1">
+                <span className="text-white bg-magenta rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold mr-1">
                   {index + 1}
                 </span>
               ) : (
@@ -218,7 +225,7 @@ export default function DesignNavbar() {
                   <div className="flex items-center">
                     <Link
                       href={link.href}
-                      className="text-sm py-6 font-semibold leading-6 text-slate-700 hover:text-indigo-500 transition-all"
+                      className="text-sm py-6 font-semibold leading-6 text-slate-700 hover:text-magenta transition-all"
                     >
                       {link.name}
                     </Link>
@@ -242,59 +249,7 @@ export default function DesignNavbar() {
             {
               user.loaded ? (
                 <div>
-                  <Menu as="div" className="relative inline-block text-left">
-                    <div>
-                      <Menu.Button className="inline-flex w-full items-center border-slate-200 border justify-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                        <span className="text-xl w-6 h-6 mr-1">
-                          {
-                            user.photo ? (
-                              <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
-                            ) : (
-                              <FaRegUserCircle className="w-full h-full" />
-                            )
-                          }
-                        </span>
-                        <ChevronDownIcon
-                          className="-mr-1 ml-1 h-5 w-5 text-lg text-slate-600"
-                          aria-hidden="true"
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as="div"
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute overflow-hidden right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-                        <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">Welcome, {user.name}!</h3>
-                        <Menu.Item as="div">
-                          <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
-                            <span className="text-2xl mr-2 text-slate-500">
-                              <AiOutlineHome />
-                            </span> Dashboard
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item as="div">
-                          <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
-                            <span className="text-2xl mr-2 text-slate-500">
-                              <IoSettingsOutline />
-                            </span> Account Settings
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item as="div">
-                          <button onClick={onLogout} className="w-full flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100">
-                            <span className="text-2xl mr-2 text-slate-500">
-                              <MdLogout />
-                            </span> Logout
-                          </button>
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
+                  <UserDropdown />
                 </div>
               ) : (
                 <AuthModal>
@@ -315,16 +270,14 @@ export default function DesignNavbar() {
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-50 bg-black bg-opacity-25" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-4 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </a>
+              <Link href={'/'} className="block scale-75 md:scale-100">
+                <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
+              </Link>
+            </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -340,7 +293,7 @@ export default function DesignNavbar() {
                 {campaignTools.navigation(campaign, campaignId).map((link, index) => (
                   <div key={index} className="flex items-center">
                     {isActive(index) ? (
-                      <span className="text-white bg-indigo-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold mr-1">
+                      <span className="text-white bg-magenta rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold mr-1">
                         {index + 1}
                       </span>
                     ) : (
@@ -354,7 +307,7 @@ export default function DesignNavbar() {
                           <Link
                             href={link.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="text-sm py-6 font-semibold leading-6 text-slate-700 hover:text-indigo-500 transition-all"
+                            className="text-sm py-4 font-semibold leading-6 text-slate-700 hover:text-transparent hover:bg-gradient-to-r from-magenta to-blue hover:bg-clip-text transition-all"
                           >
                             {link.name}
                           </Link>
@@ -363,7 +316,7 @@ export default function DesignNavbar() {
                           </span>
                         </div>
                       ) : (
-                        <button className="text-sm py-6 font-semibold leading-6 text-slate-700 cursor-default">{link.name}</button>
+                        <button className="text-sm py-4 font-semibold leading-6 text-slate-700 cursor-default">{link.name}</button>
                       )
                     }
                   </div>
@@ -373,60 +326,22 @@ export default function DesignNavbar() {
                 {
                   user.loaded ? (
                     <div>
-                      <Menu as="div" className="relative inline-block text-left">
-                        <div>
-                          <Menu.Button className="inline-flex w-full border border-slate-200 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-300/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                            <span className="text-xl w-6 h-6 mr-1">
-                              {
-                                user.photo ? (
-                                  <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={20} height={20} />
-                                ) : (
-                                  <FaRegUserCircle className="w-full h-full" />
-                                )
-                              }
-                            </span>
-                            {user.name}
-                            <ChevronUpIcon
-                              className="-mr-1 ml-2 h-5 w-5 text-slate-600"
-                              aria-hidden="true"
-                            />
-                          </Menu.Button>
-                        </div>
-                        <Transition
-                          as="div"
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items className="absolute -translate-y-[calc(100%+50px)] overflow-hidden left-0 mt-2 w-56 origin-bottom-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-                            <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">Welcome, {user.name}!</h3>
-                            <Menu.Item as="div">
-                              <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
-                                <span className="text-2xl mr-2 text-slate-500">
-                                  <AiOutlineHome />
-                                </span> Dashboard
-                              </Link>
-                            </Menu.Item>
-                            <Menu.Item as="div">
-                              <Link className="flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
-                                <span className="text-2xl mr-2 text-slate-500">
-                                  <IoSettingsOutline />
-                                </span> Account Settings
-                              </Link>
-                            </Menu.Item>
-                            <Menu.Item as="div">
-                              <button onClick={onLogout} className="w-full flex items-center px-3 py-2.5 text-indigo-400 font-sans font-semibold hover:bg-slate-100">
-                                <span className="text-2xl mr-2 text-slate-500">
-                                  <MdLogout />
-                                </span> Logout
-                              </button>
-                            </Menu.Item>
-                          </Menu.Items>
-                        </Transition>
-                      </Menu>
+                      <h3 className="flex flex-wrap py-3 tracking-tight text-slate-700">Welcome, <strong className='ml-1 block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
+                      <Link onClick={() => setMobileMenuOpen(false)} className="flex items-center mb-2 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
+                        <span className="text-2xl mr-2">
+                          <AiOutlineHome />
+                        </span> Dashboard
+                      </Link>
+                      <Link onClick={() => setMobileMenuOpen(false)} className="flex items-center mb-2 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
+                        <span className="text-2xl mr-2">
+                          <IoSettingsOutline />
+                        </span> Account Settings
+                      </Link>
+                      <button onClick={onLogout} className="w-full flex items-center mb-2 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100">
+                        <span className="text-2xl mr-2">
+                          <MdLogout />
+                        </span> Logout
+                      </button>
                     </div>
                   ) : (
                     <AuthModal>

@@ -1,8 +1,8 @@
 'use client'
-import Link from "next/link"
 import AuthModal from "./AuthModal"
 import { useAtom } from "jotai"
 import { userAtom } from "@/constants"
+import SolidBtn from "./form-elements/SolidBtn"
 
 export default function StartBtn({ href = '/dashboard/overview', context = 'Get started', contextOut = 'Get started' }) {
     const [user] = useAtom(userAtom)
@@ -10,20 +10,17 @@ export default function StartBtn({ href = '/dashboard/overview', context = 'Get 
     return (
         user.loaded ? (
             <>
-                <Link
+                <SolidBtn
                     href={href}
-                    className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
                 >
                     {context}
-                </Link>
+                </SolidBtn>
             </>
         ) : (
             <AuthModal>
-                <div
-                    className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
-                >
+                <SolidBtn div>
                     {contextOut}
-                </div>
+                </SolidBtn>
             </AuthModal>
         )
     )

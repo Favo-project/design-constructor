@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="bg-slate-500 text-white text-xs text-center z-[300] fixed bottom-0 right-0 left-0">Web-site test jarayonida. Xatoliklar yuz berishi mumkin!</div>
-        <NextTopLoader showSpinner={false} color="#7752FE" />
+        <NextTopLoader showSpinner={false} color="#FF00CC" />
         <Provider>
           {children}
         </Provider>

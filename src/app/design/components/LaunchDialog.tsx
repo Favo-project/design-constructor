@@ -1,3 +1,4 @@
+import SolidBtn from '@/components/form-elements/SolidBtn'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -97,8 +98,8 @@ export default function LaunchDialog({ isOpen, closeModal }) {
                                         </div>
                                     </div>
                                     <div className='flex items-center justify-between mt-6'>
-                                        <Link href="/dashboard/overview" className='font-medium text-indigo-500 font-sans flex items-center'><span className='text-lg mr-1 flex items-center justify-center'><GoChevronLeft /></span> Dashboard</Link>
-                                        <Link href={`/${campaignId}`} className='px-3 py-2 text-white bg-indigo-600 rounded-md shadow-md font-semibold'>See campaign</Link>
+                                        <Link href="/dashboard/overview" className='font-medium text-magenta font-sans flex items-center'><span className='text-lg mr-1 flex items-center justify-center'><GoChevronLeft /></span> Dashboard</Link>
+                                        <SolidBtn href={`/${campaignId}`}>See campaign</SolidBtn>
                                     </div>
                                 </div>
                             </Dialog.Panel>

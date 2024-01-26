@@ -20,6 +20,8 @@ import CampaignDelete from "../components/CampaignDelete";
 import Loader from "@/components/Loader";
 import { BiCopy, BiSolidCopy } from "react-icons/bi";
 import { FaCircle, FaRegCircle } from "react-icons/fa6";
+import UserDropdown from "@/components/UserDropdown";
+import OutlineBtn from "@/components/form-elements/OutlineBtn";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false)
@@ -107,8 +109,8 @@ export default function Dashboard() {
       <CampaignDelete closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={title} campaignId={campaignId} />
 
       <header className="flex items-center justify-between">
-        <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-8">Overview</h1>
-        <UserMenu />
+        <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">Overview</h1>
+        <UserDropdown />
       </header>
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
         <div className="flex flex-col gap-8">
@@ -117,7 +119,7 @@ export default function Dashboard() {
               <h3 className="text-2xl font-semibold tracking-tight text-gray-600">
                 Campaigns
               </h3>
-              <Link href={'/design/start'} className="p-1 text-indigo-600 hover:text-indigo-400 transition text-sm">
+              <Link href={'/design/start'} className="p-1 text-magenta hover:text-transparent hover:bg-gradient-to-r from-magenta to-blue hover:bg-clip-text transition text-sm">
                 Start new
               </Link>
             </header>
@@ -300,9 +302,9 @@ export default function Dashboard() {
               </tbody>
             </table>
             <div className="flex justify-end mt-4">
-              <Link href={'/dashboard/campaigns'} className="px-4 py-2 rounded-lg border border-indigo-500 text-indigo-600 font-semibold shadow-lg transition-all">
+              <OutlineBtn href={'/dashboard/campaigns'}>
                 See all
-              </Link>
+              </OutlineBtn>
             </div>
           </div>
           <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
@@ -316,9 +318,9 @@ export default function Dashboard() {
                   NO PAYOUTS YET
                 </h4>
                 <p className="text-sm text-slate-600 text-center tracking-wide mb-3">No payouts available yet. Don’t worry, we will email you when the first one is ready.</p>
-                <Link href={'/dashboard/payouts'} className="px-3 py-2 border-2 border-slate-400 rounded-md text-slate-600 text-sm uppercase font-sans tracking-widest">
+                <OutlineBtn href={'/dashboard/payouts'}>
                   LEARN MORE
-                </Link>
+                </OutlineBtn>
               </div>
             </div>
           </div>

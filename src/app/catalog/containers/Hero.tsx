@@ -4,7 +4,7 @@ import { heroImg } from "../assets";
 
 export default function Hero() {
     return (
-        <header className="py-12">
+        <header className="py-12 pt-32">
             <div className="container m-auto max-w-7xl overflow-hidden">
                 <div className="px-6 mb-8">
                     <ul className="flex items-center gap-2">

@@ -1,8 +1,8 @@
-import HelpCard from "@/components/HelpCard"
 import Image from "next/image"
-import Link from "next/link"
 import { useState } from "react"
 import { helpImg } from "../../assets"
+import SolidBtn from "@/components/form-elements/SolidBtn"
+import OutlineBtn from "@/components/form-elements/OutlineBtn"
 
 export default function GeneralQuestion() {
     const [name, setName] = useState('')
@@ -16,7 +16,7 @@ export default function GeneralQuestion() {
                     <h2 className="text-2xl font-sans font-semibold tracking-wide text-slate-700 mb-5">Get instant answers in our Help Center</h2>
                     <p className="font-medium font-sans tracking-wide text-slate-700 mb-5">Have your questions answered without having to wait.</p>
                     <div className="inline-block shadow-xl hover:shadow-none transition-all rounded-lg">
-                        <Link href={'/help'} className="inline-block font-medium font-sans text-indigo-600 bg-white px-5 py-3 rounded-lg hover:shadow-[inset_0_0_0_2px_#4f46e5] hover:transition-all">Get help now</Link>
+                        <OutlineBtn href={'/help'}>Get help now</OutlineBtn>
                     </div>
                 </div>
                 <div>
@@ -41,9 +41,9 @@ export default function GeneralQuestion() {
                     <label className='block font-semibold uppercase font-mono tracking-widest text-slate-700 mb-3' htmlFor='message'>YOUR MESSAGE*</label>
                     <textarea required className='w-full px-4 py-2.5 font-semibold border-2 border-slate-300 outline-none focus:border-slate-600 text-slate-600 placeholder:text-slate-400 rounded-lg transition-all' value={message} onChange={(e) => setMessage(e.target.value)} placeholder='Any additional notes?' name='message' id='message' rows={4} />
                 </div>
-                <button disabled={!email || !message} className="font-sans font-bold px-5 py-3 bg-indigo-500 text-white uppercase tracking-wider rounded-lg shadow-lg disabled:bg-indigo-400">
+                <SolidBtn type="submit" disabled={!email || !message} className="font-sans font-bold px-5 py-3 bg-indigo-500 text-white uppercase tracking-wider rounded-lg shadow-lg disabled:bg-indigo-400">
                     Send message
-                </button>
+                </SolidBtn>
             </form>
         </div>
     )

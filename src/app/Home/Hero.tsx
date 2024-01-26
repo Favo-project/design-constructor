@@ -3,17 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { heroImg1, heroImg2, heroImg3, heroImg4, heroImg5 } from "./assets";
 import { GoSearch } from "react-icons/go";
-import { campaignAtom, userAtom } from "@/constants";
+import { userAtom } from "@/constants";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import OutlineBtn from "@/components/form-elements/OutlineBtn";
+import SolidBtn from "@/components/form-elements/SolidBtn";
 
 export default function Hero() {
   const [user] = useAtom(userAtom)
-  const [campaign, setCampaign] = useAtom(campaignAtom)
 
   return (
-    <div className="bg-white">
-      <div className="relative isolate px-6 lg:pt-14 pt-8 lg:px-8">
+    <div className="bg-white pt-[70px]">
+      <div className="relative isolate px-6 lg:pt-14 pt-8 lg:px-5">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -29,33 +29,30 @@ export default function Hero() {
 
         <div className="container m-auto max-w-7xl flex lg:flex-nowrap flex-wrap gap-10">
           <div className="py-10 sm:py-14 lg:py-20">
-            <h1 className="text-[36px] max-w-lg font-semibold leading-tight font-sans tracking-wide text-gray-700 sm:text-[48px]">
+            <h1 className="text-[36px] max-w-lg font-semibold leading-tight font-sans tracking-wide text-gray-800 sm:text-[48px]">
               Design your next favorite custom shirt
             </h1>
             <div className="mt-10 flex items-center gap-x-4 mb-12">
               {
                 user.loaded ? (
                   <>
-                    <Link
+                    <SolidBtn
                       href="/design/start"
-                      className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
                     >
                       Start designing
-                    </Link>
-                    <Link
+                    </SolidBtn>
+                    <OutlineBtn
                       href="/dashboard/overview"
-                      className="rounded-md bg-transparent px-4 py-[12.5px] text-sm font-semibold text-slate-600 shadow-sm border-2 border-slate-500 hover:bg-slate-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600 transition-all"
                     >
                       Dashboard
-                    </Link>
+                    </OutlineBtn>
                   </>
                 ) : (
-                  <Link
+                  <SolidBtn
                     href="/design/start"
-                    className="rounded-md bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all"
                   >
                     Start designing
-                  </Link>
+                  </SolidBtn>
                 )
               }
 

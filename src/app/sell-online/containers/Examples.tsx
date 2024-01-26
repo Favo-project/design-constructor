@@ -18,7 +18,7 @@ export default function Examples() {
     return (
         <section className="py-16">
             <div className="container m-auto max-w-7xl">
-                <h3 className="text-center font-sans text-2xl text-slate-700 tracking-wide max-w-[515px] m-auto mb-16">Sell shirts online without inventory through a Bonfire campaign. It`s 100% free, you get a fast payout, and we`ll ship your products directly to your buyers.</h3>
+                <h3 className="text-center font-sans md:text-2xl text-xl text-slate-700 tracking-wide max-w-[515px] m-auto mb-16">Sell shirts online without inventory through a Bonfire campaign. It`s 100% free, you get a fast payout, and we`ll ship your products directly to your buyers.</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:gap-12 gap-8 md:gap-10 px-6 xl:px-2">
                     {
                         images.map((image, index) => (

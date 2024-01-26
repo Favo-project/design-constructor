@@ -50,7 +50,7 @@ export function FileDrop({ file, setFile }: any) {
               <div className="mt-4 flex flex-col text-sm leading-6 text-gray-600">
                 <label
                   htmlFor="file-upload"
-                  className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none ring-2 ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                  className="relative cursor-pointer rounded-md bg-white font-semibold text-blue focus-within:outline-none ring-2 ring-blue focus-within:ring-offset-2 hover:text-blue/70"
                 >
                   <span>Choose a file</span>
                   <input

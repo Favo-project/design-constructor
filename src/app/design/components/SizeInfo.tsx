@@ -14,7 +14,7 @@ export default function SizeInfo() {
 
     return (
         <div>
-            <button onClick={openModal} type='button' className="text-indigo-500 font-sans hover:opacity-75 transition">Size & fabric info</button>
+            <button onClick={openModal} type='button' className="text-magenta font-sans hover:opacity-75 transition">Size & fabric info</button>
 
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={closeModal}>

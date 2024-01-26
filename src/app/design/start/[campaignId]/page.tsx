@@ -958,7 +958,7 @@ export default function Start() {
           </h2>
           <div className="w-full px-2 py-6 sm:px-0">
             <Tab.Group onChange={onChangeTab} selectedIndex={tabIndex}>
-              <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+              <Tab.List className="flex space-x-1 rounded-xl bg-blue/10 p-1">
                 {Object.keys(categories).map((category) => (
                   <Tab
                     onClick={() => onChangeTab(tabIndex)}
@@ -969,7 +969,7 @@ export default function Start() {
                         "focus:outline-none",
                         selected
                           ? "bg-white shadow"
-                          : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                          : "text-blue-100 hover:bg-white/[0.12] hover:text-magenta transition-all"
                       )
                     }
                   >

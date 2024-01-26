@@ -10,6 +10,7 @@ import { useAtom } from "jotai";
 import { authAtom, userAtom } from "@/constants";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import SolidBtn from "@/components/form-elements/SolidBtn";
 
 export default function AccountSettings() {
     const router = useRouter()
@@ -154,17 +155,16 @@ export default function AccountSettings() {
                                     </div>
 
                                     <div className="flex justify-end mt-8 gap-5">
-                                        <button onClick={closeModal} className='font-sans text-indigo-500'>
+                                        <button onClick={closeModal} className='font-sans text-magenta'>
                                             Cancel
                                         </button>
-                                        <button
+                                        <SolidBtn
                                             disabled={!file}
                                             type="button"
-                                            className="px-4 py-2.5 text-sm uppercase font-sans font-semibold text-white bg-indigo-500 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
                                             onClick={() => onUpload()}
                                         >
                                             Upload
-                                        </button>
+                                        </SolidBtn>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

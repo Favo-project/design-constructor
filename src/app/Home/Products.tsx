@@ -1,11 +1,10 @@
 'use client'
 import CampaignCard from "@/components/CampaignCard"
 import Loader from "@/components/Loader"
+import OutlineBtn from "@/components/form-elements/OutlineBtn"
 import { authAtom, userAtom } from "@/constants"
 import axios from "axios"
 import { useAtom } from "jotai"
-import Image from "next/image"
-import Link from "next/link"
 import { useLayoutEffect, useState } from "react"
 
 export default function Products() {
@@ -64,9 +63,10 @@ export default function Products() {
                     </div>
 
                     <div className="flex justify-center">
-                        <Link href={'/shop'} className="px-3 py-2.5 rounded-lg bg-white text-slate-600 border-2 border-slate-600 font-semibold hover:bg-slate-600 hover:text-white transition">
+                        <OutlineBtn href={'/shop'}
+                        >
                             See all
-                        </Link>
+                        </OutlineBtn>
                     </div>
                 </div>
             )}

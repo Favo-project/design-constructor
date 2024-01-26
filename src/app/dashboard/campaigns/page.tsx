@@ -17,6 +17,8 @@ import { useAtom } from "jotai";
 import { authAtom, campaignAtom, userAtom } from "@/constants";
 import Loader from "@/components/Loader";
 import CampaignDelete from "../components/CampaignDelete";
+import UserDropdown from "@/components/UserDropdown";
+import SolidBtn from "@/components/form-elements/SolidBtn";
 
 
 export default function Campaigns() {
@@ -102,8 +104,8 @@ export default function Campaigns() {
     return (
         <div id="campaigns">
             <header className="flex items-center justify-between">
-                <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-8">Campaigns</h1>
-                <UserMenu />
+                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">Campaigns</h1>
+                <UserDropdown />
             </header>
 
             <div>
@@ -143,9 +145,9 @@ export default function Campaigns() {
 
                 <div>
                     <header className="flex items-center justify-between mb-6">
-                        <Link href={'/design/start'} className="font-bold text-white bg-indigo-600 py-2.5 font-sans px-4 rounded-lg shadow-md">
+                        <SolidBtn href={'/design/start'}>
                             Start new
-                        </Link>
+                        </SolidBtn>
                     </header>
 
                     <table className="text-left w-full">

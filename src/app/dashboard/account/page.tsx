@@ -9,6 +9,8 @@ import { authAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { PatternFormat } from "react-number-format";
+import SolidBtn from "@/components/form-elements/SolidBtn";
+import UserDropdown from "@/components/UserDropdown";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -70,8 +72,8 @@ export default function Account() {
     return (
         <div id="account">
             <header className="flex items-center justify-between">
-                <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-8">Account</h1>
-                <UserMenu />
+                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">Account</h1>
+                <UserDropdown />
             </header>
 
             <div>
@@ -96,7 +98,7 @@ export default function Account() {
                                             ' outline-none',
                                             selected
                                                 ? 'text-gray-800 border-b-[1.5px] font-semibold border-b-gray-800'
-                                                : 'text-gray-400 hover:text-indigo-500'
+                                                : 'text-gray-400 hover:text-magenta'
                                         )
                                     }
                                 >
@@ -109,7 +111,7 @@ export default function Account() {
                                             ' outline-none',
                                             selected
                                                 ? 'text-gray-800 border-b-[1.5px] font-semibold border-b-gray-800'
-                                                : 'text-gray-400 hover:text-indigo-500'
+                                                : 'text-gray-400 hover:text-magenta'
                                         )
                                     }
                                 >
@@ -122,7 +124,7 @@ export default function Account() {
                                             ' outline-none',
                                             selected
                                                 ? 'text-gray-800 border-b-[1.5px] font-semibold border-b-gray-800'
-                                                : 'text-gray-400 hover:text-indigo-500'
+                                                : 'text-gray-400 hover:text-magenta'
                                         )
                                     }
                                 >
@@ -161,9 +163,9 @@ export default function Account() {
                                             <p className="text-slate-600 text-sm mt-2">JPG or PNG. Maximum size of 5MB.</p>
                                         </div>
                                         <div>
-                                            <button type="submit" className="px-4 py-3 bg-green-600 text-white font-sans tracking-widest uppercase text-sm font-semibold rounded-lg shadow-md">
+                                            <SolidBtn type="submit">
                                                 SAVE CHANGES
-                                            </button>
+                                            </SolidBtn>
                                         </div>
                                     </form>
                                 </Tab.Panel>
@@ -178,9 +180,9 @@ export default function Account() {
                                             <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="confirm-password" />
                                         </div>
                                         <div>
-                                            <button className="px-4 py-3 bg-green-600 text-white font-sans tracking-widest uppercase text-sm font-semibold rounded-lg shadow-md">
+                                            <SolidBtn>
                                                 CHANGE PASSWORD
-                                            </button>
+                                            </SolidBtn>
                                         </div>
                                     </form>
                                 </Tab.Panel>

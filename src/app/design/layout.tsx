@@ -38,7 +38,9 @@ export default function DesignLayout({
       }
       catch (err) {
         if (err?.response?.status === 403) {
-          router.push('/')
+          if (campaignId) {
+            router.push('/')
+          }
           setAuth('')
           setUser({
             ...userAtom.init

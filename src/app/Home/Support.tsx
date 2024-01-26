@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Support() {
     return (
-        <section className="bg-[#3d4853] overflow-hidden">
+        <section className="bg-dark bg-opacity-90 overflow-hidden">
             <div className="container m-auto max-w-7xl" >
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 items-center">
                     <div className="p-4">

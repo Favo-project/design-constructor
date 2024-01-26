@@ -39,3 +39,8 @@
   src: url("../../public/fonts/Quicksand-VariableFont_wght.ttf")
     format("truetype");
 }
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  color: #fff;
+}
