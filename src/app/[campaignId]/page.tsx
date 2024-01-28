@@ -206,17 +206,6 @@ export default function Campaign({ campaign }) {
                         <div ref={cartBtn} className="lg:my-10 my-6">
                             <SolidBtn>
                                 Add to cart
-                                <form method="post" action="/your-after-payment-url">
-                                    <script defer src="https://my.click.uz/pay/checkout.js"
-                                        className="uzcard_payment_button"
-                                        data-service-id="MERCHANT_SERVICE_ID"
-                                        data-merchant-id="MERCHANT_ID"
-                                        data-transaction-param="MERCHANT_TRANS_ID"
-                                        data-merchant-user-id="MERCHANT_USER_ID"
-                                        data-amount="MERCHANT_TRANS_AMOUNT"
-                                        data-card-type="MERCHANT_CARD_TYPE"
-                                        data-label="Pay" />
-                                </form>
                                 <span className="text-white ml-2 text-lg"><BsCartPlus /></span>
                             </SolidBtn>
 
