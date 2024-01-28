@@ -47,7 +47,7 @@ export default function Content({ campaigns }) {
 
     return (
         <main className="py-8">
-            <div className="container m-auto max-w-7xl px-6">
+            <div className="container m-auto max-w-7xl px-4">
                 <div className="max-w-3xl">
                     <h3 className="font-sans uppercase font-semibold text-slate-700 tracking-wider p-2 mb-4">BY CATEGORY</h3>
                     <ul className="grid grid-cols-3">
@@ -64,7 +64,7 @@ export default function Content({ campaigns }) {
                 </div>
                 <div className="pt-14">
                     <h2 className="text-2xl font-medium font-sans text-slate-700 mb-4">Popular</h2>
-                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+                    <div className="grid md:grid-cols-3 grid-cols-2 gap-10">
                         {
                             campaigns.map((campaign, index) => (
                                 <CampaignCard key={index} campaign={campaign} />

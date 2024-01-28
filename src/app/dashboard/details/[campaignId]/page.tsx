@@ -284,7 +284,7 @@ export default function Details() {
                                                 'flex py-2.5 font-medium outline-none leading-5 border-b-2',
                                                 selected
                                                     ? 'text-slate-700 border-slate-700'
-                                                    : 'text-slate-400 hover:text-indigo-500 border-white'
+                                                    : 'text-slate-400 hover:text-magenta border-white'
                                             )
                                         }
                                     >
@@ -296,7 +296,7 @@ export default function Details() {
                                                 'flex py-2.5 font-medium outline-none leading-5 border-b-2',
                                                 selected
                                                     ? 'text-slate-700 border-slate-700'
-                                                    : 'text-slate-400 hover:text-indigo-500 border-white'
+                                                    : 'text-slate-400 hover:text-magenta border-white'
                                             )
                                         }
                                     >

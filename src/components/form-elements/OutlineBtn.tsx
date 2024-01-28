@@ -30,6 +30,14 @@ export default function OutlineBtn({
         </Link>
     }
 
+    if (disabled) {
+        return (
+            <button disabled className={`inline-flex text-sm items-center px-4 py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white disabled:opacity-60 disabled:cursor-not-allowed ${className}`}>
+                {children}
+            </button>
+        )
+    }
+
     return (
         <button disabled={disabled} type={type} onClick={onClick}
             className={`inline-flex text-sm items-center px-4 py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white disabled:opacity-60 disabled:cursor-not-allowed ${className}`}>

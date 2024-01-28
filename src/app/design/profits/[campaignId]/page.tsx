@@ -3,7 +3,7 @@ import { campaignAtom } from "@/constants";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import { BsQuestionCircle } from "react-icons/bs";
-import { formatCurrency } from "../../actions/campaignTools";
+import { formatCurrency } from "../../../../actions/campaignTools";
 import ProfitInput from "./ProfitInput";
 
 export default function Profits() {

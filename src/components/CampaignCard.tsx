@@ -1,5 +1,5 @@
 'use client'
-import { formatCurrency } from "@/app/design/actions/campaignTools"
+import { formatCurrency } from "@/actions/campaignTools"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"

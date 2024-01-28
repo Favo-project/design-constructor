@@ -1,10 +1,15 @@
 'use client'
 import { Tab } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { authAtom } from '@/constants'
 import { PatternFormat } from 'react-number-format';
 import axios from 'axios'
+import SolidBtn from './form-elements/SolidBtn'
+import { LogoMain } from '@/assets'
+import Link from 'next/link'
+import Image from 'next/image'
+import Checkbox from './form-elements/Checkbox'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -12,6 +17,8 @@ function classNames(...classes) {
 
 export default function Auth({ closeModal }) {
     const [auth, setAuth] = useAtom(authAtom)
+    const [selectedIdx, setSelectedIdx] = useState(0)
+    const [errorMsg, setErrorMsg] = useState('')
 
     const [loginPhone, setLoginPhone] = useState('')
     const [loginPassword, setLoginPassword] = useState('')
@@ -44,6 +51,7 @@ export default function Auth({ closeModal }) {
                 }
             }
             catch (e) {
+                setErrorMsg(e?.response?.data?.error || 'Xatolik yuz berdi!')
                 console.log(e.message);
                 localStorage.removeItem('user_at')
                 setAuth('')
@@ -79,7 +87,8 @@ export default function Auth({ closeModal }) {
                 }
             }
             catch (e) {
-                console.log(e.message);
+                setErrorMsg(e?.response?.data?.error || 'Xatolik yuz berdi!')
+                console.log(e?.message);
                 localStorage.removeItem('user_at')
                 setAuth('')
             }
@@ -87,6 +96,16 @@ export default function Auth({ closeModal }) {
 
         fetch()
     }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (errorMsg) {
+                setErrorMsg('')
+            }
+        }, 5000)
+
+        return () => clearTimeout(timeout)
+    }, [errorMsg])
 
 
     const clear = () => {
@@ -99,29 +118,36 @@ export default function Auth({ closeModal }) {
 
     return (
         <div>
-            <h2 className='text-xl font-semibold font-sans text-slate-700 mb-3'>Authentication</h2>
+            <div className='flex flex-col items-center justify-center mt-4 mb-6'>
+                <Link onClick={closeModal} href={'/'} className="block">
+                    <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
+                </Link>
+                <p className='text-center h-6 mt-5 flex items-center justify-center text-red-500 font-sans font-medium text-lg'><span>{errorMsg}</span></p>
+            </div>
             <div>
-                <Tab.Group>
+                <Tab.Group selectedIndex={selectedIdx}>
                     <Tab.List className="flex space-x-1 rounded-xl p-1 mb-5">
                         <Tab
+                            onClick={() => setSelectedIdx(0)}
                             className={({ selected }) =>
                                 classNames(
                                     'w-full py-2.5 text-sm font-medium leading-5 outline-none',
                                     selected
-                                        ? 'text-indigo-500 border-b-2 border-indigo-500'
-                                        : 'text-slate-600 hover:shadow shadow-lg hover:text-indigo-500'
+                                        ? 'text-magenta border-b-2 border-magenta'
+                                        : 'text-blue border shadow-md border-blue hover:text-magenta rounded-md'
                                 )
                             }
                         >
                             Sign in
                         </Tab>
                         <Tab
+                            onClick={() => setSelectedIdx(1)}
                             className={({ selected }) =>
                                 classNames(
                                     'w-full py-2.5 text-sm font-medium leading-5 outline-none',
                                     selected
-                                        ? 'text-indigo-500 border-b-2 border-indigo-500'
-                                        : 'text-slate-600 hover:shadow shadow-lg hover:text-indigo-500'
+                                        ? 'text-magenta border-b-2 border-magenta'
+                                        : 'text-blue border shadow-md border-blue hover:text-magenta rounded-md'
                                 )
                             }
                         >
@@ -132,7 +158,7 @@ export default function Auth({ closeModal }) {
                         <Tab.Panel className={'outline-none'}>
                             <form onSubmit={onLoginSubmit}>
                                 <div className='flex flex-col w-full mb-4'>
-                                    <label className='text-sm text-slate-500 mb-2' htmlFor="phone">Phone<span className='text-red-500'>*</span></label>
+                                    <label className='text-sm text-slate-500 mb-2' htmlFor="phone-login">Phone<span className='text-red-500'>*</span></label>
                                     <PatternFormat
                                         value={loginPhone}
                                         type="tel"
@@ -140,29 +166,32 @@ export default function Auth({ closeModal }) {
                                         mask="_"
                                         onValueChange={value => setLoginPhone(value.value)}
                                         required
-                                        className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition'
-                                        name='phone'
-                                        id='phone'
+                                        className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition'
+                                        name='phone-login'
+                                        id='phone-login'
                                         placeholder='Phone'
                                     />
                                 </div>
                                 <div className='flex flex-col w-full mb-4'>
-                                    <label className='text-sm text-slate-500 mb-2' htmlFor="password">Password<span className='text-red-500'>*</span></label>
-                                    <input value={loginPassword} onChange={e => setLoginPassword(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition' type="password" name='password' id='password' placeholder='Password' required />
+                                    <label className='text-sm text-slate-500 mb-2' htmlFor="password-login">Password<span className='text-red-500'>*</span></label>
+                                    <input value={loginPassword} onChange={e => setLoginPassword(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition' type="password" name='password-login' id='password-login' placeholder='Password' required />
                                 </div>
-                                <div className='w-full mb-6 mt-8'>
-                                    <button className='w-full text-white font-medium font-sans px-4 py-2.5 rounded-md bg-indigo-600' type='submit'>Signin</button>
+                                <div className='my-6 text-center text-gray-700'>
+                                    <p>New user? <button onClick={() => setSelectedIdx(1)} className='font-sans font-semibold text-magenta'>Sign up</button> </p>
+                                </div>
+                                <div className='w-full my-6'>
+                                    <SolidBtn type='submit' className='w-full text-center justify-center'>Signin</SolidBtn>
                                 </div>
                             </form>
                         </Tab.Panel>
                         <Tab.Panel className={'outline-none'}>
                             <form onSubmit={onRegisterSubmit}>
                                 <div className='flex flex-col w-full mb-4'>
-                                    <label className='text-sm text-slate-500 mb-2' htmlFor="name">Name<span className='text-red-500'>*</span></label>
-                                    <input value={registerName} onChange={e => setRegisterName(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition' type="text" name='name' id='name' placeholder='Name' required />
+                                    <label className='text-sm text-slate-500 mb-2' htmlFor="name-register">Name<span className='text-red-500'>*</span></label>
+                                    <input value={registerName} onChange={e => setRegisterName(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition' type="text" name='name-register' id='name-register' placeholder='Name' required />
                                 </div>
                                 <div className='flex flex-col w-full mb-4'>
-                                    <label className='text-sm text-slate-500 mb-2' htmlFor="phone">Phone<span className='text-red-500'>*</span></label>
+                                    <label className='text-sm text-slate-500 mb-2' htmlFor="phone-register">Phone<span className='text-red-500'>*</span></label>
                                     <PatternFormat
                                         value={registerPhone}
                                         type="tel"
@@ -170,22 +199,21 @@ export default function Auth({ closeModal }) {
                                         mask="_"
                                         onValueChange={value => setRegisterPhone(value.value)}
                                         required
-                                        className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition'
-                                        name='phone'
-                                        id='phone'
+                                        className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition'
+                                        name='phone-register'
+                                        id='phone-register'
                                         placeholder='Phone'
                                     />
                                 </div>
                                 <div className='flex flex-col w-full mb-4'>
-                                    <label className='text-sm text-slate-500 mb-2' htmlFor="password">Password<span className='text-red-500'>*</span></label>
-                                    <input value={registerPassword} onChange={e => setRegisterPassword(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-indigo-500 transition' type="password" name='password' id='password' placeholder='Password' required />
+                                    <label className='text-sm text-slate-500 mb-2' htmlFor="password-register">Password<span className='text-red-500'>*</span></label>
+                                    <input value={registerPassword} onChange={e => setRegisterPassword(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition' type="password" name='password-register' id='password-register' placeholder='Password' required />
                                 </div>
                                 <div className='flex mt-6'>
-                                    <input type="checkbox" name='policy' id='policy' required />
-                                    <label className='leading-6 ml-3 text-slate-500' htmlFor="policy">I agree to ArtVibe`s Privacy Policy & Terms and Conditions</label>
+                                    <Checkbox>I agree to <span className='bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text font-medium'>ArtVibe</span>`s Privacy Policy & Terms and Conditions</Checkbox>
                                 </div>
                                 <div className='w-full mb-6 mt-6'>
-                                    <button className='w-full text-white font-medium font-sans px-4 py-2.5 rounded-md bg-indigo-600' type='submit'>Signup</button>
+                                    <SolidBtn type='submit' className='w-full text-center justify-center'>Signup</SolidBtn>
                                 </div>
                             </form>
                         </Tab.Panel>

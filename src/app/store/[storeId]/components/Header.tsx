@@ -4,7 +4,7 @@ import HeaderImg from '../wallhaven-k7zv97.jpg'
 export default function Header() {
     return (
         <header className="relative">
-            <div className="absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-30" />
+            <div className="absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-40" />
 
             <Image src={HeaderImg} className="w-full h-[450px] object-cover object-center" alt="store-header" width={1200} height={450} />
 

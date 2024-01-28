@@ -1,21 +1,14 @@
 "use client";
 
-import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useLayoutEffect, useState } from "react";
 import Link from "next/link";
-import AuthModal from "./AuthModal";
 import { useAtom } from "jotai";
-import { authAtom, userAtom } from "@/constants";
+import { userAtom } from "@/constants";
 import { Menu, Transition } from '@headlessui/react'
-import { AiOutlineHome } from "react-icons/ai";
-import { IoSettingsOutline, IoStorefrontOutline } from "react-icons/io5";
+import { IoStorefrontOutline } from "react-icons/io5";
 import { GiPencilBrush } from "react-icons/gi";
-import { MdLogout } from "react-icons/md";
-import { useRouter } from "next/navigation";
-import { FaRegUserCircle } from "react-icons/fa";
 import Image from "next/image";
-import axios from "axios";
 import { LogoMain } from "@/assets";
 import { GoChevronDown, GoChevronRight } from "react-icons/go";
 import { RiShoppingBag3Line } from "react-icons/ri";
@@ -23,7 +16,6 @@ import { BsImageAlt } from "react-icons/bs";
 import { PiTShirt } from "react-icons/pi";
 import UserDropdown from "./UserDropdown";
 import Cart from "./Cart";
-import { BsBarChart } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 
@@ -102,10 +94,9 @@ const dashboardLinks = [
 
 export default function Navbar() {
   const [isFixed, setIsFixed] = useState(false)
-  const [auth, setAuth] = useAtom(authAtom)
   const [user, setUser] = useAtom(userAtom)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handler = (e) => {
       if (window.scrollY > 50) {
         setIsFixed(true)
@@ -122,7 +113,7 @@ export default function Navbar() {
 
   return (
     <div className={`relative z-50`}>
-      <nav className={`fixed left-0 right-0 transition-all ${isFixed ? 'top-0 border-b border-slate-300 bg-white' : 'top-6'}`}>
+      <nav className={`fixed left-0 right-0 transition-all ${isFixed ? 'top-0 border-b border-slate-300 bg-[#fafafa]' : 'top-6'}`}>
         <div className="lg:block hidden">
           <div className="container m-auto max-w-7xl">
             <div className="px-4 py-3 flex items-center">

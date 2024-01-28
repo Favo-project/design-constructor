@@ -14,7 +14,7 @@ import { GoChevronDown } from 'react-icons/go'
 import { useLayoutEffect, useState } from 'react'
 import axios from 'axios'
 
-export default function UserDropdown({ className }: { className?: string }) {
+export default function UserDropdown({ className, theme = 'dark' }: { className?: string, theme?: 'dark' | 'light' }) {
     const router = useRouter()
     const [loading, setLoading] = useState(true)
 
@@ -72,8 +72,8 @@ export default function UserDropdown({ className }: { className?: string }) {
                 user.loaded ? (
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
-                            <Menu.Button className="flex items-center hover:bg-gray-200 px-2 py-1 rounded-md outline-none">
-                                <span className='text-xl text-dark mr-1'>
+                            <Menu.Button className={`flex items-center hover:bg-gray-200 px-2 py-1 rounded-md outline-none ${theme === 'light' ? 'text-white hover:bg-opacity-30' : 'text-dark'}`}>
+                                <span className='text-xl mr-1'>
                                     <GoChevronDown />
                                 </span>
                                 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-magenta">

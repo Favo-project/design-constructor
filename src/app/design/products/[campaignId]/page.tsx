@@ -4,7 +4,7 @@ import { useAtom } from "jotai"
 import DesignProducts from "../../start/components/Products";
 import { useLayoutEffect, useRef, useState } from "react"
 import { VscRefresh } from "react-icons/vsc"
-import { campaignUtils } from "../../actions/campaign"
+import { campaignUtils } from "../../../../actions/campaign"
 import { fabric } from 'fabric'
 import Loader from "@/components/Loader";
 import { IoTimeOutline } from "react-icons/io5";
@@ -159,7 +159,7 @@ export default function Products() {
                                         Want to edit your design?
                                     </h2>
                                     <p className="font-sans text-slate-700">
-                                        You can <button className="font-medium text-indigo-500" onClick={openModal}>revert your campaign to draft</button> to make any changes to your design.
+                                        You can <button className="font-medium text-magenta" onClick={openModal}>revert your campaign to draft</button> to make any changes to your design.
                                     </p>
                                 </div>
                             ) : null

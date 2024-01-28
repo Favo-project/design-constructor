@@ -105,11 +105,11 @@ export default function Clipart({ campaign, setCampaign, canvasRef, canvasValues
           <input
             type="text"
             name="search"
-            className="block w-full outline-none rounded-md border-0 py-3 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full outline-none rounded-md border-0 py-3 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-magenta sm:text-sm sm:leading-6"
             placeholder="Search for something"
           />
           <div className="absolute inset-y-0 right-0 flex items-center">
-            <button className="h-full rounded-md border-0 bg-transparent py-0 px-3 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+            <button className="h-full rounded-md border-0 bg-transparent py-0 px-3 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-magenta sm:text-sm">
               <BiSearch className="text-xl" />
             </button>
           </div>

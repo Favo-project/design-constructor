@@ -67,7 +67,7 @@ export default function Content() {
                 </div>
                 <div className="pt-14">
                     <h2 className="text-2xl font-medium font-sans text-slate-700 mb-4">Popular</h2>
-                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+                    <div className="grid md:grid-cols-3 grid-cols-2 gap-10">
                         {
                             designs.map((design, index) => (
                                 <div key={index}>

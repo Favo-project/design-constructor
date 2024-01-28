@@ -28,8 +28,8 @@ export default function Hero() {
         </div>
 
         <div className="container m-auto max-w-7xl flex lg:flex-nowrap flex-wrap gap-10">
-          <div className="py-10 sm:py-14 lg:py-20">
-            <h1 className="text-[36px] max-w-lg font-semibold leading-tight font-sans tracking-wide text-gray-800 sm:text-[48px]">
+          <div className="py-8 sm:py-12 lg:py-20">
+            <h1 className="text-[36px] md:text-[48px] max-w-lg font-bold leading-tight font-sans text-gray-800 ">
               Design your next favorite custom shirt
             </h1>
             <div className="mt-10 flex items-center gap-x-4 mb-12">
@@ -64,7 +64,7 @@ export default function Hero() {
               </button>
             </form>
           </div>
-          <div className="flex items-center flex-wrap justify-center gap-4 lg:gap-8">
+          <div className="items-center flex-wrap justify-center gap-4 xl:gap-8 hidden md:flex">
             <div className="flex flex-col lg:gap-6 gap-3">
               <div className="h-[150px] w-[150px] lg:h-[200px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl">
                 <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg5} alt="hero-image" />
@@ -81,7 +81,7 @@ export default function Hero() {
                 <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg4} alt="hero-image" width={180} height={100} />
               </div>
             </div>
-            <div className="h-max w-[150px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl hidden md:block">
+            <div className="h-max w-[150px] lg:w-[200px] rounded-[40px] overflow-hidden shadow-xl hidden xl:block">
               <Image className="w-[100%] h-[100%] object-cover hover:scale-125 transition-all duration-500" src={heroImg3} alt="hero-image" width={180} height={400} />
             </div>
           </div>

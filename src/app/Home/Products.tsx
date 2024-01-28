@@ -45,7 +45,7 @@ export default function Products() {
     }, [auth])
 
     return (
-        <main className="py-16">
+        <main className="md:py-16 py-8">
             {loading ? (
                 <div className="bg-white bg-opacity-20 z-50 flex items-center justify-center text-4xl w-full min-h-[450px]">
                     <Loader />
@@ -54,7 +54,7 @@ export default function Products() {
                 <div className="container m-auto max-w-7xl">
                     <h2 className="text-center text-slate-700 font-semibold tracking-widest font-sans text-xl mb-10">OUR BEST PRODUCTS</h2>
 
-                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mb-6 justify-center">
+                    <div className="grid md:grid-cols-3 grid-cols-2 mb-6 justify-center">
                         {
                             campaigns.map((campaign, index) => (
                                 <CampaignCard key={index} campaign={campaign} />

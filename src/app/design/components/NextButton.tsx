@@ -1,7 +1,7 @@
 import { useParams, usePathname } from "next/navigation"
 import { useLayoutEffect, useState } from "react"
 import Link from "next/link"
-import { campaignTools, navigation } from "../actions/campaignTools"
+import { campaignTools, navigation } from "../../../actions/campaignTools"
 
 export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, onSave, isSaved }) {
     const pathname = usePathname()
@@ -60,7 +60,7 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         )
     }
 
-    if (!isNext || isSaved) {
+    if (!isNext || isSaved || !loaded || loading) {
         return (
             <button disabled className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                 Next

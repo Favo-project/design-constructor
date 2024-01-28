@@ -34,14 +34,14 @@ export default function Store() {
                         1
                     </div>
                     <div>
-                        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
+                        <div className="grid md:grid-cols-3 grid-cols-2">
                             {
                                 products.map((product, index) => (
                                     <div key={index} className="flex flex-col items-center p-4">
                                         <div className="">
                                             <Image src={product.image} width={300} height={300} alt="product-image" />
                                         </div>
-                                        <Link className="text-slate-700 font-medium font-sans hover:text-indigo-600 transition" href="/">{product.name}</Link>
+                                        <Link className="text-slate-700 font-medium font-sans hover:text-magenta transition" href="/">{product.name}</Link>
                                     </div>
                                 ))
                             }

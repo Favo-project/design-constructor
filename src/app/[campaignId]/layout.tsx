@@ -12,12 +12,7 @@ import CampaignNavbar from "./components/CampaignNavbar";
 import Badges from "./components/Badges";
 
 
-export default function Layout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    const router = useRouter()
+export default function Layout() {
     const { campaignId } = useParams()
 
     const [loading, setLoading] = useState(true)
@@ -41,7 +36,6 @@ export default function Layout({
             }
             catch (err) {
                 if (err?.response?.status === 403) {
-                    router.push('/')
                     setAuth('')
                     setUser({
                         ...userAtom.init

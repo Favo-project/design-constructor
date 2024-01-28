@@ -1,15 +1,20 @@
 'use client'
 import Loader from "@/components/Loader";
 import Image from "next/image";
-import { formatCurrency } from "../design/actions/campaignTools";
-import { useState } from "react";
+import { formatCurrency } from "../../actions/campaignTools";
+import { useEffect, useRef, useState } from "react";
 import { BsCartPlus, BsCheckLg } from "react-icons/bs";
 import CampaignCreator from "./components/CampaignCreator";
 import SizeInfo from "../design/components/SizeInfo";
 import { PiWarningDiamond } from "react-icons/pi";
 import { GrTag } from "react-icons/gr";
+import SolidBtn from "@/components/form-elements/SolidBtn";
+import OutlineBtn from "@/components/form-elements/OutlineBtn";
 
 export default function Campaign({ campaign }) {
+    const cartBtn = useRef(null)
+    const [isCartBtn, setIsCartBtn] = useState(false)
+
     const [side, setSide] = useState('front')
     const [imgLoading, setImgLoading] = useState(false)
 
@@ -65,9 +70,33 @@ export default function Campaign({ campaign }) {
         return product?.sizes
     }
 
+    useEffect(() => {
+        const isInViewport = (elem) => {
+            const rect = elem.getBoundingClientRect()
+
+            const isinview = (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+
+            );
+
+            return isinview
+        }
+
+        const handler = (e) => {
+            setIsCartBtn(!isInViewport(cartBtn.current))
+        }
+
+        window.addEventListener('scroll', handler)
+
+        return () => window.removeEventListener('scroll', handler)
+    }, [])
+
     return (
         <div id="campaign">
-            <div className="container relative m-auto">
+            <div className="container relative m-auto md:pt-20 pt-12">
                 <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-10 gap-2 py-10 mt-6">
                     <div className="md:sticky flex lg:justify-end justify-center top-28 h-min bg-transparent">
                         <div className="relative w-[700px] h-[700px]m max-h-[700px] bg-transparent">
@@ -105,7 +134,7 @@ export default function Campaign({ campaign }) {
                     <div className="px-6 py-4 md:py-0 md:px-0">
                         <div className="lg:pt-5">
                             <h1 className="text-3xl font-sans font-bold text-slate-600 leading-normal mb-3">{campaign.title}</h1>
-                            <h4 className="relative inline-flex px-3 py-3.5 rounded-md bg-slate-100 font-sans font-medium text-slate-600 mb-2 after:block after:absolute after:left-[20px] after:-bottom-[19px] after:border-[10px] after:border-l-transparent after:border-r-transparent after:border-b-transparent after:border-t-slate-100">{campaign.description}</h4>
+                            <h4 className="relative inline-flex px-3 py-3.5 rounded-md bg-slate-200 font-sans font-medium text-slate-600 mb-2 after:block after:absolute after:left-[20px] after:-bottom-[19px] after:border-[10px] after:border-l-transparent after:border-r-transparent after:border-b-transparent after:border-t-slate-200">{campaign.description}</h4>
                         </div>
 
                         <CampaignCreator creator={campaign.creator} />
@@ -136,8 +165,8 @@ export default function Campaign({ campaign }) {
                                 {
                                     campaign.products.map((product, index) => (
                                         <button onClick={() => setProduct(product)} key={index} className={`${product.name === currentProduct.name ? (
-                                            'bg-slate-100 border-slate-300 bg-opacity-80'
-                                        ) : 'hover:shadow-lg hover:border-gray-100 border-slate-50'
+                                            'bg-slate-100 border-slate-400 bg-opacity-80'
+                                        ) : 'hover:shadow-lg hover:border-gray-100 border-slate-300'
                                             } flex cursor-pointer transition-all flex-col items-center lg:px-3 lg:py-5 px-2 py-4 border rounded-2xl w-[125px]`}>
                                             <div>
                                                 <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="42.96" height="48" viewBox="0 0 42.96 48"><defs><style>{`.product-picker-fill{fill:#BECBD8;}`}</style></defs><title>product-crewneck</title><path className="product-picker-fill" d="M1170.52,3666.55c-3,0-5.3-1.79-5.3-4.07a1,1,0,0,1,2,0c0,1.12,1.51,2.07,3.3,2.07A1,1,0,1,1,1170.52,3666.55Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1184.61,3709.48h-14.09a1,1,0,0,1,0-2h14.09A1,1,0,1,1,1184.61,3709.48Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1150,3704.43a1,1,0,0,1-1-1v-33.81a1,1,0,0,1,2,0v33.81A1,1,0,0,1,1150,3704.43Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1170.52,3666.55a1,1,0,0,1,0-2c1.79,0,3.3-.95,3.3-2.07a1,1,0,0,1,2,0C1175.83,3664.76,1173.5,3666.55,1170.52,3666.55Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1150,3670.46a1,1,0,0,1-.4-1.92l16.18-7a1,1,0,0,1,.79,1.84l-16.18,7A1,1,0,0,1,1150,3670.46Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1156.44,3704.43H1150a1,1,0,0,1,0-2h6.39A1,1,0,0,1,1156.44,3704.43Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1156.44,3709.48a1,1,0,0,1-1-1V3675a1,1,0,0,1,2,0v33.46A1,1,0,0,1,1156.44,3709.48Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1170.52,3709.48h-14.09a1,1,0,0,1,0-2h14.09A1,1,0,1,1,1170.52,3709.48Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1184.61,3709.48a1,1,0,0,1-1-1V3675a1,1,0,0,1,2,0v33.46A1,1,0,0,1,1184.61,3709.48Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1191,3670.46a1,1,0,0,1-.4-0.08l-16.18-7a1,1,0,0,1,.79-1.84l16.18,7A1,1,0,0,1,1191,3670.46Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1191,3704.43h-6.39a1,1,0,0,1,0-2H1191A1,1,0,0,1,1191,3704.43Z" transform="translate(-1149.04 -3661.48)"></path><path className="product-picker-fill" d="M1191,3704.43a1,1,0,0,1-1-1v-33.81a1,1,0,0,1,2,0v33.81A1,1,0,0,1,1191,3704.43Z" transform="translate(-1149.04 -3661.48)"></path></svg>
@@ -174,9 +203,28 @@ export default function Campaign({ campaign }) {
                             </div>
                         </div>
 
-                        <div className="lg:my-10 my-4">
-                            <button className="px-6 py-3 rounded-lg bg-indigo-600 text-white font-sans font-semibold flex items-center text-lg">Add to cart
-                                <span className="text-white ml-2 text-lg"><BsCartPlus /></span></button>
+                        <div ref={cartBtn} className="lg:my-10 my-6">
+                            <SolidBtn>
+                                Add to cart
+                                <form method="post" action="/your-after-payment-url">
+                                    <script defer src="https://my.click.uz/pay/checkout.js"
+                                        className="uzcard_payment_button"
+                                        data-service-id="MERCHANT_SERVICE_ID"
+                                        data-merchant-id="MERCHANT_ID"
+                                        data-transaction-param="MERCHANT_TRANS_ID"
+                                        data-merchant-user-id="MERCHANT_USER_ID"
+                                        data-amount="MERCHANT_TRANS_AMOUNT"
+                                        data-card-type="MERCHANT_CARD_TYPE"
+                                        data-label="Pay" />
+                                </form>
+                                <span className="text-white ml-2 text-lg"><BsCartPlus /></span>
+                            </SolidBtn>
+
+                            <div className={`fixed md:hidden block right-4 z-40 ${isCartBtn ? 'bottom-12' : '-bottom-12'} transition-all duration-300`}>
+                                <button className="p-4 text-2xl border-2 border-magenta rounded-full bg-white shadow-2xl hover:text-magenta transition-all">
+                                    <BsCartPlus />
+                                </button>
+                            </div>
                         </div>
 
                         <div className="lg:my-10 my-4">
@@ -197,6 +245,6 @@ export default function Campaign({ campaign }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

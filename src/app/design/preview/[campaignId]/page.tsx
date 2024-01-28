@@ -10,7 +10,7 @@ import { useAtom } from "jotai";
 import { campaignAtom } from "@/constants";
 import { useParams } from "next/navigation";
 import Loader from "@/components/Loader";
-import { formatCurrency } from "../../actions/campaignTools";
+import { formatCurrency } from "../../../../actions/campaignTools";
 import { PiWarningDiamond } from "react-icons/pi";
 import AccountSettings from "../../components/AccountSettings";
 import SizeInfo from "../../components/SizeInfo";

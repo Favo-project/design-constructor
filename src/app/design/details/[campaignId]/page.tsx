@@ -193,7 +193,7 @@ export default function Details() {
                             addButton ? (
                                 <form autoFocus onSubmit={onAddTag} className='flex'>
                                     <input onChange={(e) => setNewTag(e.target.value)} value={newTag} className='border-2 rounded-md text-gray-600 font-medium outline-none px-4 py-2 border-slate-300 bg-white' autoFocus type="text" />
-                                    <button type='submit' className='text-lg rounded-md text-white h-full px-4 py-3 flex justify-center items-center bg-indigo-600'>
+                                    <button type='submit' className='text-lg rounded-md text-white h-full px-4 py-3 flex justify-center items-center bg-blue'>
                                         <AiOutlinePlus />
                                     </button>
                                 </form>

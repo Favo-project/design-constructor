@@ -248,7 +248,7 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
                     <div className="flex items-center justify-between">
                         <Listbox value={selectedFont} onChange={onChangeFont}>
                             <div className="relative z-15 mt-1">
-                                <Listbox.Button className="relative w-40 cursor-pointer rounded-lg bg-gray-100 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-300 sm:text-sm">
+                                <Listbox.Button className="relative w-40 cursor-pointer rounded-lg bg-gray-100 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-magenta focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-magenta/40 sm:text-sm">
                                     <span className="block truncate">{selectedFont}</span>
                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                         <ChevronUpDownIcon
@@ -268,7 +268,7 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
                                             <Listbox.Option
                                                 key={personIdx}
                                                 className={({ active }) =>
-                                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-indigo-100 text-indigo-900' : 'text-gray-900'
+                                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-indigo-100 text-blue' : 'text-gray-900'
                                                     }`
                                                 }
                                                 value={person}

@@ -27,7 +27,7 @@ import FontFaceObserver from 'fontfaceobserver'
 import { campaignAtom, fonts, canvas, authAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
-import { campaignUtils } from "../../actions/campaign";
+import { campaignUtils } from "../../../../actions/campaign";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
