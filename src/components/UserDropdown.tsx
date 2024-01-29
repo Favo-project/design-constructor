@@ -81,7 +81,7 @@ export default function UserDropdown({ className, theme = 'dark' }: { className?
                                         user.photo ? (
                                             <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={28} height={28} />
                                         ) : (
-                                            <FaRegUserCircle className="w-full h-full text-dark" />
+                                            <FaRegUserCircle className="w-full h-full" />
                                         )
                                     }
                                 </div>

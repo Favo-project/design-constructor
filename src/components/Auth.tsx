@@ -177,7 +177,7 @@ export default function Auth({ closeModal }) {
                                     <input value={loginPassword} onChange={e => setLoginPassword(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition' type="password" name='password-login' id='password-login' placeholder='Password' required />
                                 </div>
                                 <div className='my-6 text-center text-gray-700'>
-                                    <p>New user? <button onClick={() => setSelectedIdx(1)} className='font-sans font-semibold text-magenta'>Sign up</button> </p>
+                                    <p>New user? <button type='button' onClick={() => setSelectedIdx(1)} className='font-sans font-semibold text-magenta'>Sign up</button> </p>
                                 </div>
                                 <div className='w-full my-6'>
                                     <SolidBtn type='submit' className='w-full text-center justify-center'>Signin</SolidBtn>
@@ -210,7 +210,7 @@ export default function Auth({ closeModal }) {
                                     <input value={registerPassword} onChange={e => setRegisterPassword(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition' type="password" name='password-register' id='password-register' placeholder='Password' required />
                                 </div>
                                 <div className='flex mt-6'>
-                                    <Checkbox>I agree to <span className='bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text font-medium'>ArtVibe</span>`s Privacy Policy & Terms and Conditions</Checkbox>
+                                    <Checkbox required={true}>I agree to <span className='bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text font-medium'>ArtVibe</span>`s Privacy Policy & Terms and Conditions</Checkbox>
                                 </div>
                                 <div className='w-full mb-6 mt-6'>
                                     <SolidBtn type='submit' className='w-full text-center justify-center'>Signup</SolidBtn>

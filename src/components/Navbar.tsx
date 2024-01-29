@@ -246,8 +246,9 @@ export default function Navbar() {
               </Link>
 
               <div className="flex-2 flex items-center">
-                <UserDropdown className="hidden md:block" />
-                <Cart />
+                {
+                  user.loaded ? <Cart /> : <UserDropdown />
+                }
               </div>
             </div>
           </div>
