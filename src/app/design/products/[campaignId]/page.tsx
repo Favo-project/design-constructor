@@ -168,9 +168,9 @@ export default function Products() {
                 </div>
                 <div></div>
                 <div className="px-4 lg:p-8 shadow-xl min-h-[100vh]">
-                    <h2 className="text-gray-700 text-2xl font-semibold mt-6">
+                    <h3 className="text-gray-700 text-2xl font-semibold mt-6">
                         Edit your products
-                    </h2>
+                    </h3>
                     <p className="p-3 bg-slate-200 rounded-lg text-slate-600 font-medium text-sm flex items-center mt-8 tracking-normal"><span className="text-xl text-slate-600 mr-1.5"><IoTimeOutline /></span> Any changes will apply to all future orders.</p>
                     <div className="w-full px-2 sm:px-0">
                         <div className="rounded-xl bg-white py-3 ring-white focus:outline-none">

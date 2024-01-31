@@ -5,9 +5,14 @@ import Image from "next/image";
 import { BsQuestionCircle } from "react-icons/bs";
 import { formatCurrency } from "../../../../actions/campaignTools";
 import ProfitInput from "./ProfitInput";
+import { useEffect } from "react";
 
 export default function Profits() {
     const [campaign] = useAtom(campaignAtom)
+
+    useEffect(() => {
+
+    }, [campaign])
 
     return <div>
         <div className="container m-auto w-full max-w-7xl pt-12 px-6">

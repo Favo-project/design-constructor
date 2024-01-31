@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import DesignNavbar from "./components/DesignNavbar";
 import { useAtom } from "jotai";
-import { authAtom, campaignAtom, userAtom } from "@/constants";
+import { authAtom, campaignAtom, fonts, userAtom } from "@/constants";
+import FontFaceObserver from 'fontfaceobserver'
 import Loader from "@/components/Loader";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
@@ -20,6 +21,14 @@ export default function DesignLayout({
   const [user, setUser] = useAtom(userAtom)
   const [auth, setAuth] = useAtom(authAtom)
   const [campaign, setCampaign] = useAtom(campaignAtom)
+
+  useLayoutEffect(() => {
+    fonts.forEach((font) => {
+      if (font === 'Arial') return
+      const myfont = new FontFaceObserver(font);
+      myfont.load()
+    })
+  }, [])
 
   useEffect(() => {
     const fetchUser = async () => {

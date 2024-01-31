@@ -241,7 +241,7 @@ export const campaignAtom = atom({ ...initCampaign })
 
 export const campaignStart = atom({ ...initCampaign })
 
-export const canvas = atom({})
+export const canvasAtom = atom({})
 
 interface IToast {
   type: 'warning' | 'info' | 'success' | 'error' | '',

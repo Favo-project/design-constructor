@@ -88,7 +88,7 @@ class Campaign {
     // add image to canvas instance
     async addImage(canvas: fabric.Canvas, obj, pArea) {
         return await executeAsyncOperation((cb) => {
-            fabric.Image.fromURL(obj.src, (image) => {
+            fabric.Image.fromURL(obj.imgUrl, (image) => {
                 image.set({
                     ...obj,
                     top: pArea.top - pArea.height / 2 + obj.relativeTop + obj.height / 2,

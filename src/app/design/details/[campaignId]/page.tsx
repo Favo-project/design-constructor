@@ -188,7 +188,7 @@ export default function Details() {
                     }
                 </div>
                 <div className='mt-6'>
-                    <button type='button' onClick={() => setAddButton(true)}>
+                    <button disabled={isSaved} type='button' onClick={() => setAddButton(true)}>
                         {
                             addButton ? (
                                 <form autoFocus onSubmit={onAddTag} className='flex'>

@@ -23,8 +23,7 @@ import TextEditor from "../components/Text/Editor";
 import ClipartEditor from "../components/Clipart/Editor";
 import ImageEditor from "../components/Ulpoad/Editor";
 import MultipleEditor from "../components/MultipleEditor";
-import FontFaceObserver from 'fontfaceobserver'
-import { campaignAtom, fonts, canvas, authAtom, userAtom } from "@/constants";
+import { campaignAtom, canvasAtom, authAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { campaignUtils } from "../../../../actions/campaign";
@@ -34,7 +33,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function Start() {
-  const [canvasExp, setCanvas] = useAtom(canvas)
+  const [canvasExp, setCanvas] = useAtom(canvasAtom)
   const { campaignId } = useParams()
 
   const router = useRouter()
@@ -101,18 +100,31 @@ export default function Start() {
   // campaign state
   const [campaign, setCampaign] = useAtom(campaignAtom);
 
-  useLayoutEffect(() => {
-    fonts.forEach((font) => {
-      if (font === 'Arial') return
-      const myfont = new FontFaceObserver(font);
-      myfont.load()
-    })
+  const setPrintClip = (obj) => {
+    if (obj.set) {
+      obj?.set({
+        clipPath: new fabric.Rect({
+          originX: 'center',
+          originY: 'center',
+          top: canvasRef.printableArea.top,
+          left: canvasRef.printableArea.left,
+          width: canvasRef.printableArea.width,
+          height: canvasRef.printableArea.height,
+          absolutePositioned: true,
+          fill: 'transparent'
+        })
+      })
+    }
+  }
 
+  useLayoutEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: canvasValues.current.CANVAS_WIDTH,
       height: canvasValues.current.CANVAS_HEIGHT,
       selection: true,
-      imageSmoothingEnabled: true
+      imageSmoothingEnabled: true,
+      preserveObjectStacking: true,
+      allowTouchScrolling: true
     });
 
     setCanvas(canvas)
@@ -418,7 +430,7 @@ export default function Start() {
           canvasValues.current.offsetY = newOffsetY;
 
           if (canvasValues.current.scale === 1) {
-            canvas.selection = false
+            canvas.selection = true
           }
           else {
             canvas.selection = false;
@@ -456,7 +468,7 @@ export default function Start() {
           canvasValues.current.offsetY = newOffsetY;
 
           if (canvasValues.current.scale === 1) {
-            canvas.selection = false
+            canvas.selection = true
           }
           else {
             canvas.selection = false;
@@ -585,18 +597,22 @@ export default function Start() {
 
       options.target.relativeTop = (options.target.top - options.target.height / 2) - (canvasRef.printableArea.top - canvasRef.printableArea.height / 2)
 
-      if (options.target.canvasId) {
+      if (options.target.canvasId) { // this if is for canvas objects like text, image or upload which contain single object
         canvas.forEachObject((obj) => {
           if (obj.ignore) return;
+          const boundOffset = obj.getBoundingRect()
+
           delete canvasValues.current.areaCrossed[canvasValues.current.side]['group']
 
-          const objWidth1 = obj.width * obj.scaleX
-          const objHeight1 = obj.height * obj.scaleY
+          // calculate the offsets of the object
+          const objWidth1 = boundOffset.width / canvasValues.current.scale
+          const objHeight1 = boundOffset.height / canvasValues.current.scale
           const objWidth2 = canvasRef.printableArea.width
           const objHeight2 = canvasRef.printableArea.height
 
-          const left1 = obj.left - objWidth1 / 2
-          const top1 = obj.top - objHeight1 / 2
+          // calculate the borders of the object
+          const left1 = boundOffset.left / canvasValues.current.scale
+          const top1 = boundOffset.top / canvasValues.current.scale
           const right1 = left1 + objWidth1
           const bottom1 = top1 + objHeight1
 
@@ -612,6 +628,11 @@ export default function Start() {
             canvasRef.printableArea.set({
               stroke: 'red'
             })
+
+            // moves print area and print text to high level stack
+            canvas.bringToFront(canvasRef.printableArea)
+            canvas.bringToFront(canvasRef.areaText)
+
             return canvas.renderAll()
           } else {
             canvasValues.current.areaCrossed[canvasValues.current.side][obj.canvasId] = false
@@ -619,26 +640,39 @@ export default function Start() {
             canvasRef.printableArea.set({
               stroke: 'white'
             })
+
+            // moves print area and print text to high level stack
+            canvas.bringToFront(canvasRef.printableArea)
+            canvas.bringToFront(canvasRef.areaText)
+
             return canvas.renderAll()
           }
         })
       }
-      else {
+      else { // this else is for the canvas objects like clipart, which contain multiple objects
+
+        // define the cavnas object and its children objects
         const obj = options.target
         const childrenObjects = obj._objects
 
+        // boundingRect identifies position and offsets of the object even it rotates or scales
+        const boundOffset = obj.getBoundingRect()
+
+        // this is for groups if group crosses the print border only certain objects will lose opacity
         childrenObjects.forEach((item) => {
           item.set({ opacity: 1 })
           delete canvasValues.current.areaCrossed[canvasValues.current.side][item.canvasId]
         })
 
-        const objWidth1 = obj.width * obj.scaleX
-        const objHeight1 = obj.height * obj.scaleY
+        // calculate the offsets of the object
+        const objWidth1 = boundOffset.width / canvasValues.current.scale
+        const objHeight1 = boundOffset.height / canvasValues.current.scale
         const objWidth2 = canvasRef.printableArea.width
         const objHeight2 = canvasRef.printableArea.height
 
-        const left1 = obj.left - objWidth1 / 2
-        const top1 = obj.top - objHeight1 / 2
+        // calculate the borders of the object
+        const left1 = boundOffset.left / canvasValues.current.scale
+        const top1 = boundOffset.top / canvasValues.current.scale
         const right1 = left1 + objWidth1
         const bottom1 = top1 + objHeight1
 
@@ -654,6 +688,11 @@ export default function Start() {
           canvasRef.printableArea.set({
             stroke: 'red'
           })
+
+          // moves print area and print text to high level stack
+          canvas.bringToFront(canvasRef.printableArea)
+          canvas.bringToFront(canvasRef.areaText)
+
           return canvas.renderAll()
         } else {
           canvasValues.current.areaCrossed[canvasValues.current.side]['group'] = false
@@ -661,6 +700,11 @@ export default function Start() {
           canvasRef.printableArea.set({
             stroke: 'white'
           })
+
+          // moves print area and print text to high level stack
+          canvas.bringToFront(canvasRef.printableArea)
+          canvas.bringToFront(canvasRef.areaText)
+
           return canvas.renderAll()
         }
       }
@@ -670,6 +714,8 @@ export default function Start() {
       'object:moving': onCross,
       'object:scaling': onCross,
       'object:rotating': onCross,
+      'object:resizing': onCross,
+      'object:modified': onCross,
     });
 
     const onCanvasOver = () => {
@@ -752,6 +798,8 @@ export default function Start() {
       };
 
       const printableArea = campaign.products[campaign.selected.product].printableArea[campaign.selected.side]
+
+      // changing positions and offsets of print area according to current project
       canvasRef.printableArea.set({
         top: printableArea.top,
         left: printableArea.left,
@@ -767,6 +815,14 @@ export default function Start() {
         left: canvasValues.current.CANVAS_WIDTH / 2,
         height: printableArea.height,
       })
+
+      // setting clippath to object
+      Object.values(campaign.design).forEach(side => {
+        side.forEach(obj => {
+          setPrintClip(obj)
+        })
+      })
+
       canvas.requestRenderAll()
     }
 

@@ -98,6 +98,8 @@ class CampaignTools {
         camp.design.front = filteredFront
         camp.design.back = filteredBack
 
+        console.log(camp.design.front.length || camp.design.back.length);
+
         if (camp.design.front.length || camp.design.back.length) {
             try {
                 const { data: response } = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/${campaignId}`, camp, {

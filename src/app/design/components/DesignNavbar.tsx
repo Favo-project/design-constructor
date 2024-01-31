@@ -68,6 +68,7 @@ export default function DesignNavbar() {
 
         setIsSaved(true)
         setCampaign({ ...campaign, ...response.data })
+        console.log({ ...campaign, ...response.data });
 
         setTimeout(() => {
           setIsSaved(false)
@@ -183,19 +184,26 @@ export default function DesignNavbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          {
-            user.loaded ? (
-              <Link href={'/'} className="block scale-75 md:scale-100">
-                <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
-              </Link>
-            ) : (
-              <AuthModal>
-                <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
-                  Log in
-                </div>
-              </AuthModal>
-            )
-          }
+          <div className="lg:hidden">
+            {
+              user.loaded ? (
+                <Link href={'/'} className="block scale-75 md:scale-100">
+                  <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
+                </Link>
+              ) : (
+                <AuthModal>
+                  <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
+                    Log in
+                  </div>
+                </AuthModal>
+              )
+            }
+          </div>
+          <div className="hidden lg:block">
+            <Link href={'/'} className="block scale-75 md:scale-100">
+              <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
+            </Link>
+          </div>
         </div>
         <div className="order-3 flex lg:hidden">
           <button
@@ -252,8 +260,8 @@ export default function DesignNavbar() {
                 </div>
               ) : (
                 <AuthModal>
-                  <div className="text-slate-700 font-sans font-semibold px-1 p-1">
-                    Log in <span aria-hidden="true">&rarr;</span>
+                  <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
+                    Log in
                   </div>
                 </AuthModal>
               )
@@ -344,8 +352,8 @@ export default function DesignNavbar() {
                     </div>
                   ) : (
                     <AuthModal>
-                      <div className="text-sm font-semibold leading-6 text-gray-900">
-                        Log in <span aria-hidden="true">&rarr;</span>
+                      <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
+                        Log in
                       </div>
                     </AuthModal>
                   )
