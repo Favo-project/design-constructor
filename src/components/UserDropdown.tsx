@@ -67,19 +67,22 @@ export default function UserDropdown({ className, theme = 'dark' }: { className?
     }
 
     return (
-        <div className={`flex items-center mr-3 ${className}`}>
+        <div className={`flex items-center sm:mr-3 ${className}`}>
             {
                 user.loaded ? (
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
                             <Menu.Button className={`flex items-center hover:bg-gray-200 px-2 py-1 rounded-md outline-none ${theme === 'light' ? 'text-white hover:bg-opacity-30' : 'text-dark'}`}>
-                                <span className='text-xl mr-1'>
+                                {/* <span className='text-xl mr-1 sm:block hidden'>
                                     <GoChevronDown />
+                                </span> */}
+                                <span className='bg-gradient-to-r from-magenta to-blue bg-clip-text text-lg text-transparent font-medium mr-2'>
+                                    UZ
                                 </span>
-                                <div className="flex items-center justify-center w-8 h-8 rounded-full border border-magenta">
+                                <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-magenta">
                                     {
                                         user.photo ? (
-                                            <Image className='w-full h-full rounded-full' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={28} height={28} />
+                                            <Image className='w-full h-full rounded-full object-cover' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={28} height={28} />
                                         ) : (
                                             <FaRegUserCircle className="w-full h-full" />
                                         )

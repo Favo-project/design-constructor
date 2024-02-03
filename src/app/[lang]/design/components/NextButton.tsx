@@ -1,7 +1,7 @@
 import { useParams, usePathname } from "next/navigation"
 import { useLayoutEffect, useState } from "react"
 import Link from "next/link"
-import { campaignTools, navigation } from "../../../actions/campaignTools"
+import { campaignTools, navigation } from "@/actions/campaignTools"
 import CrossedDialog from "./CrossedDialog"
 import { useAtom } from "jotai"
 import { campaignPrintCrossed } from "@/constants"

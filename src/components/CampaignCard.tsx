@@ -1,34 +1,15 @@
-'use client'
 import { formatCurrency } from "@/actions/campaignTools"
-import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 import CampaignImage from "./CampaignImage"
+import { Locale } from "@/i18n.config"
 
-export default function CampaignCard({ campaign }) {
+export default function CampaignCard({ campaign, params }: { campaign, params: { lang: Locale } }) {
     const product = campaign.products[0]
-    const [imgLoading, setImgLoading] = useState(true)
 
-    const loadImage = (imgUrl) => {
-        let origUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/files${imgUrl}`
-
-        const imgElement = document.createElement('img')
-        imgElement.crossOrigin = 'anonymous';
-        imgElement.src = origUrl
-
-        imgElement.onload = () => {
-            setTimeout(() => {
-                setImgLoading(false)
-            }, 350)
-        }
-
-        return origUrl
-    }
-
-    console.log(product);
+    console.log(params);
 
     return (
-        <Link className="block max-w-md w-full m-auto p-2 pb-3 transition-all" href={`/${campaign._id}`}>
+        <Link className="block max-w-md w-full m-auto p-2 pb-3 transition-all" href={`/campaign/${campaign._id}`}>
             <div className="flex flex-col">
                 <header className="relative">
                     <div className="z-10 w-full h-full top-0 bottom-0 left-0 right-0 opacity-0 absolute hover:opacity-100 transition-all duration-300">

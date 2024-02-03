@@ -1,8 +1,7 @@
 "use client";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Dialog, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Dialog } from '@headlessui/react'
 import { AiOutlineHome } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout, MdCheck } from "react-icons/md";
@@ -12,7 +11,7 @@ import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
 import { authAtom, campaignAtom, campaignStart, designAtom, isSavedAtom, toastAtom, userAtom } from "@/constants";
 import { useRouter, useParams, usePathname } from "next/navigation";
-import { campaignTools, designNavigation, launchedNavigation } from "../../../actions/campaignTools";
+import { campaignTools, designNavigation, launchedNavigation } from "@/actions/campaignTools";
 import SaveButton from "./SaveButton";
 import NextButton from "./NextButton";
 import SaveDialog from "./SaveDialog";

@@ -12,13 +12,12 @@ import Loading from "../../components/loading";
 import { FiLink } from "react-icons/fi";
 import { MdDelete, MdDeleteOutline, MdModeEdit, MdOpenInNew, MdOutlineEdit } from "react-icons/md";
 import { CiShoppingCart } from "react-icons/ci";
-import Image from "next/image";
 import { FaCircle, FaRegCircle } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
 import { BiCopy, BiSolidCopy } from 'react-icons/bi';
 import CampaignDelete from '../../components/CampaignDelete';
 import { VscDebugRestart } from 'react-icons/vsc';
-import DraftDialog from '@/app/design/components/DraftDialog';
+import DraftDialog from '@/app/[lang]/design/components/DraftDialog';
 import SolidBtn from '@/components/form-elements/SolidBtn';
 import UserDropdown from '@/components/UserDropdown';
 import CampaignImage from '@/components/CampaignImage';
@@ -116,7 +115,7 @@ export default function Details() {
                         <UserDropdown />
                     </header>
                     <div className="flex items-center mb-14 gap-4 lg:ml-3">
-                        <Link href={`/${campaignId}`} className="font-sans hover:text-magenta text-slate-400 flex items-center transition-all">
+                        <Link href={`/campaign/${campaignId}`} className="font-sans hover:text-magenta text-slate-400 flex items-center transition-all">
                             <span className="md:text-2xl text-xl mr-2">
                                 <MdOpenInNew />
                             </span>

@@ -1,9 +1,9 @@
 'use client'
-import { formatCurrency } from "../../actions/campaignTools";
+import { formatCurrency } from "@/actions/campaignTools";
 import { useEffect, useRef, useState } from "react";
 import { BsCartPlus, BsCheckLg } from "react-icons/bs";
 import CampaignCreator from "./components/CampaignCreator";
-import SizeInfo from "../design/components/SizeInfo";
+import SizeInfo from "../../design/components/SizeInfo";
 import { PiWarningDiamond } from "react-icons/pi";
 import { GrTag } from "react-icons/gr";
 import SolidBtn from "@/components/form-elements/SolidBtn";

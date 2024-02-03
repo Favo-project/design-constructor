@@ -248,9 +248,8 @@ export default function Navbar() {
               </Link>
 
               <div className="flex-2 flex items-center">
-                {
-                  user.loaded ? <Cart /> : <UserDropdown />
-                }
+                <UserDropdown />
+                <Cart />
               </div>
             </div>
           </div>

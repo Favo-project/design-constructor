@@ -4,7 +4,7 @@ import { useAtom } from "jotai"
 import DesignProducts from "../../start/components/Products";
 import { useLayoutEffect, useRef, useState } from "react"
 import { VscRefresh } from "react-icons/vsc"
-import { campaignUtils } from "../../../../actions/campaign"
+import { campaignUtils } from "@/actions/campaign"
 import { fabric } from 'fabric'
 import Loader from "@/components/Loader";
 import { IoTimeOutline } from "react-icons/io5";

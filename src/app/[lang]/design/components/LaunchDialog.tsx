@@ -2,7 +2,7 @@ import SolidBtn from '@/components/form-elements/SolidBtn'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { GoChevronLeft } from 'react-icons/go'
 
 export default function LaunchDialog({ isOpen, closeModal }) {

@@ -7,7 +7,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { FiVideo } from "react-icons/fi";
 import { useAtom } from "jotai";
 import { campaignAtom, designAtom } from "@/constants";
-import { formatCurrency } from "../../../../actions/campaignTools";
+import { formatCurrency } from "@/actions/campaignTools";
 import { PiWarningDiamond } from "react-icons/pi";
 import AccountSettings from "../../components/AccountSettings";
 import SizeInfo from "../../components/SizeInfo";

@@ -26,7 +26,7 @@ import MultipleEditor from "../components/MultipleEditor";
 import { campaignAtom, canvasAtom, authAtom, userAtom, designAtom, campaignPrintCrossed } from "@/constants";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
-import { campaignUtils } from "../../../../actions/campaign";
+import { campaignUtils } from "@/actions/campaign";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");

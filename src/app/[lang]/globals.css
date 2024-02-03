@@ -14,29 +14,29 @@
 
 @font-face {
   font-family: "RobotoMono";
-  src: url("../../public/fonts/RobotoMono-VariableFont_wght.ttf")
+  src: url("../../../public/fonts/RobotoMono-VariableFont_wght.ttf")
     format("truetype");
 }
 
 @font-face {
   font-family: "Inconsolata";
-  src: url("../../public/fonts/Inconsolata-VariableFont_wdth,wght.ttf")
+  src: url("../../../public/fonts/Inconsolata-VariableFont_wdth,wght.ttf")
     format("truetype");
 }
 
 @font-face {
   font-family: "VT323";
-  src: url("../../public/fonts/VT323-Regular.ttf") format("truetype");
+  src: url("../../../public/fonts/VT323-Regular.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Pacifico";
-  src: url("../../public/fonts/Pacifico-Regular.ttf") format("truetype");
+  src: url("../../../public/fonts/Pacifico-Regular.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Quicksand";
-  src: url("../../public/fonts/Quicksand-VariableFont_wght.ttf")
+  src: url("../../../public/fonts/Quicksand-VariableFont_wght.ttf")
     format("truetype");
 }
 

@@ -19,7 +19,7 @@ export default function Cart({ theme }: { theme?: 'dark' | 'light' }) {
 
     return (
         <div>
-            <button onClick={openModal} className={`text-2xl transition-all px-3 py-2 ${theme === 'light' ? 'text-white' : 'text-dark'}`}>
+            <button onClick={openModal} className={`sm:text-2xl text-xl transition-all p-2 sm:px-3 sm:py-2 ${theme === 'light' ? 'text-white' : 'text-dark'}`}>
                 <BsCart4 />
             </button>
 
