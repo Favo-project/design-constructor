@@ -97,7 +97,7 @@ export default function Navbar() {
   const [user, setUser] = useAtom(userAtom)
 
   useLayoutEffect(() => {
-    const handler = (e) => {
+    const handler = () => {
       if (window.scrollY > 50) {
         setIsFixed(true)
       }
@@ -105,6 +105,8 @@ export default function Navbar() {
         setIsFixed(false)
       }
     }
+
+    handler()
 
     window.addEventListener('scroll', handler)
 

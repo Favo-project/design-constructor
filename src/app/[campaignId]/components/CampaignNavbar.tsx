@@ -44,7 +44,7 @@ export default function CampaignNavbar() {
     const [user, setUser] = useAtom(userAtom)
 
     useLayoutEffect(() => {
-        const handler = (e) => {
+        const handler = () => {
             if (window.scrollY > 50) {
                 setIsFixed(true)
             }
@@ -52,6 +52,8 @@ export default function CampaignNavbar() {
                 setIsFixed(false)
             }
         }
+
+        handler()
 
         window.addEventListener('scroll', handler)
 

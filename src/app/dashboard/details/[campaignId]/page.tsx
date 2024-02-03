@@ -21,6 +21,7 @@ import { VscDebugRestart } from 'react-icons/vsc';
 import DraftDialog from '@/app/design/components/DraftDialog';
 import SolidBtn from '@/components/form-elements/SolidBtn';
 import UserDropdown from '@/components/UserDropdown';
+import CampaignImage from '@/components/CampaignImage';
 
 export default function Details() {
     const router = useRouter()
@@ -45,7 +46,6 @@ export default function Details() {
                 })
 
                 setCampaign(response.data)
-                console.log(response.data);
                 setLoading(false)
             }
             catch (e) {
@@ -132,7 +132,8 @@ export default function Details() {
                     <div className='flex items-center md:flex-nowrap flex-wrap gap-5 mb-10 justify-between'>
                         <div className='flex items-center gap-3'>
                             <div>
-                                <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} width={44} height={44} alt="campaign-img" />
+                                <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
+                                {/* <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} width={44} height={44} alt="campaign-img" /> */}
                             </div>
                             <div>
                                 <h4 className='flex items-center gap-2 font-bold text-slate-600 mb-1'>

@@ -94,12 +94,24 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
     }
 
     const onChangeFont = (font) => {
-        const canvas = canvasRef.canvas
-        setSelectedFont(font)
 
-        selectedObj.object.set("fontFamily", font);
-        setSize(Math.floor(selectedObj.object.width))
-        canvas.renderAll();
+        const setFont = (fontFamily) => {
+            const canvas = canvasRef.canvas
+            setSelectedFont(fontFamily)
+
+            selectedObj.object.set("fontFamily", fontFamily);
+            setSize(Math.floor(selectedObj.object.width))
+            canvas.renderAll();
+        }
+
+        if (font === 'Arial') {
+            setFont('Arial')
+        } else {
+            const myfont = new FontFaceObserver(font);
+            myfont.load().then(
+                () => setFont(font)
+            )
+        }
     }
 
     const onChangeColor = (color) => {
@@ -248,7 +260,7 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
                     <div className="flex items-center justify-between">
                         <Listbox value={selectedFont} onChange={onChangeFont}>
                             <div className="relative z-15 mt-1">
-                                <Listbox.Button className="relative w-40 cursor-pointer rounded-lg bg-gray-100 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-magenta focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-magenta/40 sm:text-sm">
+                                <Listbox.Button className="relative w-44 cursor-pointer rounded-lg bg-gray-100 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-magenta focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-magenta/40 sm:text-sm">
                                     <span className="block truncate">{selectedFont}</span>
                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                         <ChevronUpDownIcon
@@ -263,23 +275,26 @@ export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, 
                                     leaveFrom="opacity-100"
                                     leaveTo="opacity-0"
                                 >
-                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {fonts.map((person, personIdx) => (
+                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-72 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                        {fonts.map((font, idx) => (
                                             <Listbox.Option
-                                                key={personIdx}
+                                                key={idx}
                                                 className={({ active }) =>
                                                     `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-indigo-100 text-blue' : 'text-gray-900'
                                                     }`
                                                 }
-                                                value={person}
+                                                value={font}
                                             >
                                                 {({ selected }) => (
                                                     <>
                                                         <span
-                                                            className={`block truncate ${selected ? 'font-medium' : 'font-normal'
+                                                            style={{
+                                                                fontFamily: font
+                                                            }}
+                                                            className={`block truncate text-[17px] ${selected ? 'font-medium' : 'font-normal'
                                                                 }`}
                                                         >
-                                                            {person}
+                                                            {font}
                                                         </span>
                                                         {selected ? (
                                                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-indigo-600">

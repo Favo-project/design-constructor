@@ -1,7 +1,6 @@
-import { SVGAttributes, useState, useEffect } from "react";
+import { SVGAttributes, useEffect } from "react";
 import { RadioGroup } from "@headlessui/react";
 import Image from "next/image";
-import { PreTee, ClassTee, ComfSleeve, Hoodie, Sweatshirt } from "../assets";
 import { useParams } from "next/navigation";
 
 const shirts = [
@@ -160,7 +159,6 @@ export default function Products({ campaign, setCampaign, canvasRef, canvasValue
     for (const side in campaign.design) {
       if (campaign.design[side].length) {
         campaign.design[side].forEach((elem) => {
-          console.log(printableArea, campaign.design[side]);
           elem.top = (printableArea.top - printableArea.height / 2) + elem.height / 2 + elem.relativeTop
           canvasRef.canvas.requestRenderAll()
         })

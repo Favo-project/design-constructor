@@ -4,14 +4,12 @@ import {
   UserIcon,
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
-import Image from "next/image";
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useLayoutEffect, useState } from 'react'
 import { MdDelete, MdDeleteOutline, MdModeEdit, MdOutlineEdit } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import HelpCard from "@/components/HelpCard";
 import Link from "next/link";
-import UserMenu from "../components/UserMenu";
 import { authAtom, campaignAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -22,6 +20,7 @@ import { BiCopy, BiSolidCopy } from "react-icons/bi";
 import { FaCircle, FaRegCircle } from "react-icons/fa6";
 import UserDropdown from "@/components/UserDropdown";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
+import CampaignImage from "@/components/CampaignImage";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false)
@@ -178,7 +177,7 @@ export default function Dashboard() {
                           <td>
                             <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                               <div>
-                                <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} alt="product-img" width={48} height={48} />
+                                <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
                               </div>
                               <div>
                                 <p className="text-sm font-medium">{campaign.title}</p>

@@ -1,9 +1,8 @@
 'use client'
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DesignNavbar from "./components/DesignNavbar";
 import { useAtom } from "jotai";
-import { authAtom, campaignAtom, fonts, userAtom } from "@/constants";
-import FontFaceObserver from 'fontfaceobserver'
+import { authAtom, campaignAtom, designAtom, userAtom } from "@/constants";
 import Loader from "@/components/Loader";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
@@ -21,14 +20,7 @@ export default function DesignLayout({
   const [user, setUser] = useAtom(userAtom)
   const [auth, setAuth] = useAtom(authAtom)
   const [campaign, setCampaign] = useAtom(campaignAtom)
-
-  useLayoutEffect(() => {
-    fonts.forEach((font) => {
-      if (font === 'Arial') return
-      const myfont = new FontFaceObserver(font);
-      myfont.load()
-    })
-  }, [])
+  const [savedDesign, setSavedDesign] = useAtom(designAtom)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -49,14 +41,17 @@ export default function DesignLayout({
         if (err?.response?.status === 403) {
           if (campaignId) {
             router.push('/')
+          } else {
+            setLoadingUser(false)
           }
           setAuth('')
           setUser({
             ...userAtom.init
           })
           localStorage.removeItem('user_at')
+        } else {
+          setLoadingUser(false)
         }
-        setLoadingUser(false)
       }
     }
     fetchUser()
@@ -71,7 +66,13 @@ export default function DesignLayout({
             }
           })
 
-          setCampaign({ ...campaignAtom.init, ...response.data })
+          setCampaign({
+            ...campaign,
+            ...response.data,
+          })
+          setSavedDesign({
+            ...response.data.design
+          })
           setLoadingCampaign(false)
         }
         catch (err) {

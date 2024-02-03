@@ -5,6 +5,7 @@ import { fabric } from 'fabric'
 import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 import SolidBtn from "@/components/form-elements/SolidBtn";
+import Checkbox from "@/components/form-elements/Checkbox";
 
 interface CanvasObj extends fabric.Image {
   relativeTop?: number, side?: string, canvasId?: string, objType?: string, imgUrl?: string
@@ -86,19 +87,12 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
       <div>
         <FileDrop setFile={setFile} file={file} />
         <div className="flex items-center py-4">
-          <input
-            checked={userRights}
-            onChange={(e) => setUserRights(!userRights)}
-            type="checkbox"
-            name="user-rights"
-            id="user-rights"
-            className="block w-10 h-10 mr-3"
-          />
-          <label htmlFor="user-rights">
+          <Checkbox required checked={userRights}
+            onChange={() => setUserRights(!userRights)} className="text-sm" >
             By uploading the image, I agree that I have the legal right to
             reproduce and sell the design, and that I am in full compliance with
-            Bonfire’s Terms of Use.
-          </label>
+            <span className="font-medium bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text ml-1">ArtVibe</span>’s Terms of Use.
+          </Checkbox>
         </div>
         <SolidBtn
           onClick={onUpload}

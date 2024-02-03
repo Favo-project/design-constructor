@@ -23,9 +23,9 @@ import TextEditor from "./components/Text/Editor";
 import ClipartEditor from "./components/Clipart/Editor";
 import ImageEditor from "./components/Ulpoad/Editor";
 import MultipleEditor from "./components/MultipleEditor";
-import { campaignAtom, canvasAtom, campaignStart } from "@/constants";
+import { campaignAtom, canvasAtom, campaignStart, campaignPrintCrossed } from "@/constants";
 import { useAtom } from "jotai";
-
+import { campaignUtils } from "@/actions/campaign";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -96,20 +96,8 @@ export default function Start() {
   const [campaign, setCampaign] = useAtom(campaignStart);
   const [campaignOld, setCampaignOld] = useAtom(campaignAtom);
 
-  const setPrintClip = (obj) => {
-    obj?.set({
-      clipPath: new fabric.Rect({
-        originX: 'center',
-        originY: 'center',
-        top: canvasRef.printableArea.top,
-        left: canvasRef.printableArea.left,
-        width: canvasRef.printableArea.width,
-        height: canvasRef.printableArea.height,
-        absolutePositioned: true,
-        fill: 'transparent'
-      })
-    })
-  }
+  // state for identifing the print area cross
+  const [printCrossed, setPrintCrossed] = useAtom(campaignPrintCrossed)
 
   useEffect(() => {
     setCampaignOld({ ...campaignAtom.init })
@@ -261,7 +249,6 @@ export default function Start() {
     fabric.Group.prototype.cornerStrokeColor = 'white'
     fabric.Group.prototype.cornerSize = 10
     fabric.Group.prototype.rotatingPointOffset = 12
-
   }, []);
 
   useEffect(() => {
@@ -527,8 +514,8 @@ export default function Start() {
       limitObjectWithinCanvas(options.target, canvas)
 
       // Define a threshold for how close an object should be to snap to the central line
-      const snapThreshold = 10; // Adjust as needed
-      const closeThreshold = 20; // Color as needed
+      const snapThreshold = 7; // Adjust as needed
+      const closeThreshold = 15; // Color as needed
 
       // Calculate the distance from the object's center to the central line
       const objectCenterX = object.left
@@ -551,6 +538,76 @@ export default function Start() {
       }
     }
 
+    // checks obj if it is crossed the printable area in the campaign
+    const checkCrossObj = (obj) => {
+      if (obj.ignore) return;
+
+      checkCrossArea()
+
+      const boundOffset = obj.getBoundingRect()
+
+      delete canvasValues.current.areaCrossed[canvasValues.current.side]['group']
+
+      // calculate the offsets of the object
+      const objWidth1 = boundOffset.width / canvasValues.current.scale
+      const objHeight1 = boundOffset.height / canvasValues.current.scale
+      const objWidth2 = canvasRef.printableArea.width
+      const objHeight2 = canvasRef.printableArea.height
+
+      // calculate the borders of the object
+      const left1 = boundOffset.left / canvasValues.current.scale
+      const top1 = boundOffset.top / canvasValues.current.scale
+      const right1 = left1 + objWidth1
+      const bottom1 = top1 + objHeight1
+
+      // Calculate the boundaries of object2
+      const left2 = canvasRef.printableArea.left - objWidth2 / 2
+      const top2 = canvasRef.printableArea.top - objHeight2 / 2
+      const right2 = left2 + objWidth2
+      const bottom2 = top2 + objHeight2
+      // Check if object1 has crossed out of object2
+      if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
+        canvasValues.current.areaCrossed[canvasValues.current.side][obj.canvasId] = true
+        // obj.set({ opacity: 0.5 }) changed because it affects image converting in server
+        canvasRef.printableArea.set({
+          stroke: 'red'
+        })
+
+        // moves print area and print text to high level stack
+        canvas.bringToFront(canvasRef.printableArea)
+        canvas.bringToFront(canvasRef.areaText)
+
+        return canvas.renderAll()
+      } else {
+        canvasValues.current.areaCrossed[canvasValues.current.side][obj.canvasId] = false
+        obj.set({ opacity: 1 })
+        canvasRef.printableArea.set({
+          stroke: 'white'
+        })
+
+        // moves print area and print text to high level stack
+        canvas.bringToFront(canvasRef.printableArea)
+        canvas.bringToFront(canvasRef.areaText)
+
+        return canvas.renderAll()
+      }
+    }
+
+    // checks if there any objects which crossed the print area, and marks it to campaign data
+    const checkCrossArea = () => {
+      const objects = []
+
+      Object.values(canvasValues.current.areaCrossed).map(elem => {
+        objects.push(...Object.values(elem))
+      })
+      if (objects.includes(true)) {
+        setPrintCrossed(true)
+      }
+      else {
+        setPrintCrossed(false)
+      }
+    }
+
     function onCross(options) {
       moveLimit(options)
 
@@ -558,114 +615,20 @@ export default function Start() {
 
       if (options.target.canvasId) { // this if is for canvas objects like text, image or upload which contain single object
         canvas.forEachObject((obj) => {
-          if (obj.ignore) return;
-          const boundOffset = obj.getBoundingRect()
-
-          delete canvasValues.current.areaCrossed[canvasValues.current.side]['group']
-
-          // calculate the offsets of the object
-          const objWidth1 = boundOffset.width / canvasValues.current.scale
-          const objHeight1 = boundOffset.height / canvasValues.current.scale
-          const objWidth2 = canvasRef.printableArea.width
-          const objHeight2 = canvasRef.printableArea.height
-
-          // calculate the borders of the object
-          const left1 = boundOffset.left / canvasValues.current.scale
-          const top1 = boundOffset.top / canvasValues.current.scale
-          const right1 = left1 + objWidth1
-          const bottom1 = top1 + objHeight1
-
-          // Calculate the boundaries of object2
-          const left2 = canvasRef.printableArea.left - objWidth2 / 2
-          const top2 = canvasRef.printableArea.top - objHeight2 / 2
-          const right2 = left2 + objWidth2
-          const bottom2 = top2 + objHeight2
-          // Check if object1 has crossed out of object2
-          if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
-            canvasValues.current.areaCrossed[canvasValues.current.side][obj.canvasId] = true
-            // obj.set({ opacity: 0.5 }) changed because it affects image converting in server
-            canvasRef.printableArea.set({
-              stroke: 'red'
-            })
-
-            // moves print area and print text to high level stack
-            canvas.bringToFront(canvasRef.printableArea)
-            canvas.bringToFront(canvasRef.areaText)
-
-            return canvas.renderAll()
-          } else {
-            canvasValues.current.areaCrossed[canvasValues.current.side][obj.canvasId] = false
-            obj.set({ opacity: 1 })
-            canvasRef.printableArea.set({
-              stroke: 'white'
-            })
-
-            // moves print area and print text to high level stack
-            canvas.bringToFront(canvasRef.printableArea)
-            canvas.bringToFront(canvasRef.areaText)
-
-            return canvas.renderAll()
-          }
+          checkCrossObj(obj)
         })
       }
       else { // this else is for the canvas objects like clipart, which contain multiple objects
-
         // define the cavnas object and its children objects
         const obj = options.target
         const childrenObjects = obj._objects
 
-        // boundingRect identifies position and offsets of the object even it rotates or scales
-        const boundOffset = obj.getBoundingRect()
-
         // this is for groups if group crosses the print border only certain objects will lose opacity
         childrenObjects.forEach((item) => {
-          item.set({ opacity: 1 })
           delete canvasValues.current.areaCrossed[canvasValues.current.side][item.canvasId]
         })
 
-        // calculate the offsets of the object
-        const objWidth1 = boundOffset.width / canvasValues.current.scale
-        const objHeight1 = boundOffset.height / canvasValues.current.scale
-        const objWidth2 = canvasRef.printableArea.width
-        const objHeight2 = canvasRef.printableArea.height
-
-        // calculate the borders of the object
-        const left1 = boundOffset.left / canvasValues.current.scale
-        const top1 = boundOffset.top / canvasValues.current.scale
-        const right1 = left1 + objWidth1
-        const bottom1 = top1 + objHeight1
-
-        // Calculate the boundaries of object2
-        const left2 = canvasRef.printableArea.left - objWidth2 / 2
-        const top2 = canvasRef.printableArea.top - objHeight2 / 2
-        const right2 = left2 + objWidth2
-        const bottom2 = top2 + objHeight2
-        // Check if object1 has crossed out of object2
-        if (right1 > right2 || left1 < left2 || bottom1 > bottom2 || top1 < top2) {
-          canvasValues.current.areaCrossed[canvasValues.current.side]['group'] = true
-          // obj.set({ opacity: 0.5 }) changed because it affects image converting in server
-          canvasRef.printableArea.set({
-            stroke: 'red'
-          })
-
-          // moves print area and print text to high level stack
-          canvas.bringToFront(canvasRef.printableArea)
-          canvas.bringToFront(canvasRef.areaText)
-
-          return canvas.renderAll()
-        } else {
-          canvasValues.current.areaCrossed[canvasValues.current.side]['group'] = false
-          obj.set({ opacity: 1 })
-          canvasRef.printableArea.set({
-            stroke: 'white'
-          })
-
-          // moves print area and print text to high level stack
-          canvas.bringToFront(canvasRef.printableArea)
-          canvas.bringToFront(canvasRef.areaText)
-
-          return canvas.renderAll()
-        }
+        checkCrossObj(obj)
       }
     }
 
@@ -778,7 +741,7 @@ export default function Start() {
       // setting clippath to object
       Object.values(campaign.design).forEach(side => {
         side.forEach(obj => {
-          setPrintClip(obj)
+          campaignUtils.setPrintClip(obj, canvasRef.printableArea)
         })
       })
 
@@ -907,7 +870,9 @@ export default function Start() {
 
     window.addEventListener('resize', resizeHandler)
 
-    return () => window.removeEventListener('resize', resizeHandler)
+    return () => {
+      window.removeEventListener('resize', resizeHandler)
+    }
   }, [])
 
 

@@ -1,5 +1,5 @@
 'use client'
-import { campaignAtom } from "@/constants"
+import { campaignAtom, designAtom } from "@/constants"
 import { useAtom } from "jotai"
 import DesignProducts from "../../start/components/Products";
 import { useLayoutEffect, useRef, useState } from "react"
@@ -15,9 +15,14 @@ export default function Products() {
     const router = useRouter()
     const { campaignId } = useParams()
     const [isOpen, setIsOpen] = useState(false)
-    const [campaign, setCampaign] = useAtom(campaignAtom)
     const [loading, setLoading] = useState(false)
     const [toEdit, setToEdit] = useState(false)
+
+    // campaign state
+    const [campaign, setCampaign] = useAtom(campaignAtom)
+
+    // design state to save design object from server
+    const [savedDesign] = useAtom(designAtom)
 
     function closeModal() {
         setIsOpen(false)
@@ -81,7 +86,7 @@ export default function Products() {
         canvasRef.canvas = canvas;
 
         const fetch = async () => {
-            const design = await campaignUtils.addObjects(canvasRef.canvas, campaign.design, campaign.products[0].printableArea, campaign.selected.side)
+            const design = await campaignUtils.addObjects(canvasRef.canvas, savedDesign, campaign.products[0].printableArea, campaign.selected.side)
             canvasRef.canvas.renderAll()
 
             setCampaign({
@@ -121,6 +126,15 @@ export default function Products() {
                 setLoading(false)
                 canvas.setBackgroundImage(fabricImage, canvas.renderAll.bind(canvas));
             };
+
+            const printableArea = campaign.products[campaign.selected.product].printableArea[campaign.selected.side]
+
+            // setting clippath to object
+            Object.values(campaign.design).forEach(side => {
+                side.forEach(obj => {
+                    campaignUtils.setPrintClip(obj, printableArea)
+                })
+            })
 
             canvas.requestRenderAll()
         }

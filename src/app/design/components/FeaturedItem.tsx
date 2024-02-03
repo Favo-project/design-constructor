@@ -58,7 +58,7 @@ export default function FeaturedItem({ currentProduct, currentColor, setCurrentC
         <>
             {
                 isProductFeatured() && isColorFeatured() ? (
-                    <button className='absolute bottom-5 left-[35%] px-3 py-2 text-sm font-semibold rounded-lg border-2 shadow-lg bg-white border-slate-100 text-magenta hover:border-slate-300 transition-all flex items-center '>
+                    <button className='absolute bottom-5 left-1/2 -translate-x-1/2 px-3 py-2 text-sm font-semibold rounded-lg border-2 shadow-lg bg-white border-slate-100 text-magenta hover:border-slate-300 transition-all flex items-center '>
                         Featured Item <span className='text-green-600 text-lg ml-1'><MdCheck /></span>
                     </button>
                 ) : (

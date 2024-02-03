@@ -10,7 +10,6 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from 'next/navigation'
 import HelpCard from "@/components/HelpCard";
 import Link from "next/link";
-import UserMenu from "../components/UserMenu";
 import { BiCopy, BiSolidCopy } from "react-icons/bi";
 import axios from "axios";
 import { useAtom } from "jotai";
@@ -19,6 +18,7 @@ import Loader from "@/components/Loader";
 import CampaignDelete from "../components/CampaignDelete";
 import UserDropdown from "@/components/UserDropdown";
 import SolidBtn from "@/components/form-elements/SolidBtn";
+import CampaignImage from "@/components/CampaignImage";
 
 
 export default function Campaigns() {
@@ -47,7 +47,6 @@ export default function Campaigns() {
                 })
 
                 setCampaigns(response.data)
-                console.log(response.data);
                 setLoading(false)
             }
             catch (e) {
@@ -100,6 +99,8 @@ export default function Campaigns() {
             }
         }
     }
+
+    console.log(campaigns);
 
     return (
         <div id="campaigns">
@@ -184,7 +185,7 @@ export default function Campaigns() {
                                             <td>
                                                 <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                                                     <div>
-                                                        <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} alt="product-img" width={48} height={48} />
+                                                        <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-medium">{campaign.title}</p>

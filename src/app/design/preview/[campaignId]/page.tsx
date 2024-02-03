@@ -1,31 +1,27 @@
 'use client'
-import Image from "next/image";
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsCheckLg } from "react-icons/bs";
 import { FaHeading } from 'react-icons/fa6'
 import { GrEdit, GrTag } from 'react-icons/gr'
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { FiVideo } from "react-icons/fi";
 import { useAtom } from "jotai";
-import { campaignAtom } from "@/constants";
-import { useParams } from "next/navigation";
-import Loader from "@/components/Loader";
+import { campaignAtom, designAtom } from "@/constants";
 import { formatCurrency } from "../../../../actions/campaignTools";
 import { PiWarningDiamond } from "react-icons/pi";
 import AccountSettings from "../../components/AccountSettings";
 import SizeInfo from "../../components/SizeInfo";
 import FeaturedItem from "../../components/FeaturedItem";
-import { IoEyeOutline } from "react-icons/io5";
+import CampaignImage from "@/components/CampaignImage";
 
 export default function Preview() {
-    const { campaignId } = useParams()
     const [side, setSide] = useState('front')
     const [imgLoading, setImgLoading] = useState(false)
     const [campaign, setCampaign] = useAtom(campaignAtom)
 
     const [currentColor, setCurrentColor] = useState(0)
     const [currentProduct, setCurrentProduct] = useState(campaign.products[0])
-
+    const [savedDesign] = useAtom(designAtom)
 
     useEffect(() => {
         let campaignTitle = campaign.title
@@ -35,7 +31,7 @@ export default function Preview() {
             campaignTitle = ''
             setCampaign({ ...campaign, title: campaignTitle })
         }
-    }, [campaign])
+    }, [])
 
     const flipSide = (side) => {
         setImgLoading(true)
@@ -58,23 +54,6 @@ export default function Preview() {
         setCurrentColor(index)
     }
 
-    const loadImage = (imgUrl) => {
-        console.log(currentProduct?.colors[currentColor].designImg[side]);
-        let origUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/files${imgUrl}`
-
-        const imgElement = document.createElement('img')
-        imgElement.crossOrigin = 'anonymous';
-        imgElement.src = origUrl
-
-        imgElement.onload = () => {
-            setTimeout(() => {
-                setImgLoading(false)
-            }, 350)
-        }
-
-        return origUrl
-    }
-
     const getCurrentPrice = () => {
         const product = campaign.products.find((p) => p.name === currentProduct?.name)
 
@@ -87,37 +66,21 @@ export default function Preview() {
         return product?.sizes
     }
 
-    console.log(currentProduct?.colors[currentColor].designImg[side]);
-
     return <div className="container relative m-auto">
         <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-10 gap-2 py-10 mt-6">
-            <div className="md:sticky flex justify-end top-28 h-min bg-transparent">
-                <div className="relative w-[600px] h-[600px]m max-h-[600px] bg-transparent">
+            <div className="md:sticky flex lg:justify-end justify-center top-28 h-min bg-transparent">
+                <div className="relative w-full max-w-[600px] bg-transparent">
                     <div className="border-0">
-                        <Image className="block w-full h-full" onLoad={() => loadImage(currentProduct?.colors[currentColor].designImg[side])} priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors[currentColor].designImg[side]}`} alt="product-img" width={600} height={600} />
-                        <div>
-                            <div className="w-full h-[1px] absolute top-0 block z-10 bg-white" />
-                            <div className="w-[1px] h-full absolute left-0 top-0 block z-10 bg-white" />
-                            <div className="w-full h-[1px] absolute bottom-0 block z-10 bg-white" />
-                            <div className="w-[1px] h-full absolute right-0 top-0 block z-10 bg-white" />
-                        </div>
+                        <CampaignImage design={savedDesign[side]} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} main />
                     </div>
-
-                    {
-                        imgLoading && (
-                            <div className="absolute z-20 top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-white bg-opacity-40">
-                                <Loader />
-                            </div>
-                        )
-                    }
 
                     <div>
                         <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1 z-10">
                             <button onClick={() => flipSide('front')} className={`${side === 'front' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2 transition-all`}>
-                                <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors[currentColor].designImg['front']}`} alt="product-img" width={30} height={30} />
+                                <CampaignImage design={campaign.design['front']} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} width={30} />
                             </button>
                             <button onClick={() => flipSide('back')} className={`${side === 'back' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2  hover:border-slate-300 transition-all`}>
-                                <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors[currentColor].designImg['back']}`} alt="product-img" width={30} height={30} />
+                                <CampaignImage design={campaign.design['back']} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} width={30} />
                             </button>
                         </div>
                         <FeaturedItem currentProduct={currentProduct} currentColor={currentColor} setCurrentColor={setCurrentColor} />

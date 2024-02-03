@@ -1,6 +1,5 @@
 'use client'
 import Image from "next/image";
-import Link from "next/link";
 import { heroImg1, heroImg2, heroImg3, heroImg4, heroImg5 } from "./assets";
 import { GoSearch } from "react-icons/go";
 import { userAtom } from "@/constants";

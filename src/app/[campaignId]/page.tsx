@@ -10,6 +10,7 @@ import { PiWarningDiamond } from "react-icons/pi";
 import { GrTag } from "react-icons/gr";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
+import CampaignImage from "@/components/CampaignImage";
 
 export default function Campaign({ campaign }) {
     const cartBtn = useRef(null)
@@ -94,14 +95,15 @@ export default function Campaign({ campaign }) {
         return () => window.removeEventListener('scroll', handler)
     }, [])
 
+
     return (
         <div id="campaign">
             <div className="container relative m-auto md:pt-20 pt-12">
                 <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-10 gap-2 py-10 mt-6">
                     <div className="md:sticky flex lg:justify-end justify-center top-28 h-min bg-transparent">
-                        <div className="relative w-[700px] h-[700px]m max-h-[700px] bg-transparent">
+                        <div className="relative w-full h-[700px]m max-h-[700px] bg-transparent">
                             <div className="border-0">
-                                <Image priority style={{ objectFit: 'cover', border: 0 }} className="block w-full h-full border-0 no-underline" src={loadImage(currentProduct?.colors[currentColor].designImg[side])} alt="product-img" width={700} height={700} />
+                                <CampaignImage design={campaign.design?.[side]} background={currentProduct?.colors[currentColor]?.image?.[side]} pArea={currentProduct.printableArea?.[side]} main />
                                 <div>
                                     <div className="w-full h-[1px] absolute top-0 block z-10 bg-white" />
                                     <div className="w-[1px] h-full absolute left-0 top-0 block z-10 bg-white" />
@@ -110,21 +112,13 @@ export default function Campaign({ campaign }) {
                                 </div>
                             </div>
 
-                            {
-                                imgLoading && (
-                                    <div className="absolute z-20 top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-white bg-opacity-40">
-                                        <Loader />
-                                    </div>
-                                )
-                            }
-
                             <div>
                                 <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1 z-10">
                                     <button onClick={() => flipSide('front')} className={`${side === 'front' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2 transition-all`}>
-                                        <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors[currentColor].designImg['front']}`} alt="product-img" width={30} height={30} />
+                                        <CampaignImage design={campaign.design?.['front']} pArea={currentProduct.printableArea?.[side]} background={currentProduct?.colors[currentColor].image?.[side]} width={30} />
                                     </button>
                                     <button onClick={() => flipSide('back')} className={`${side === 'back' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2  hover:border-slate-300 transition-all`}>
-                                        <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors[currentColor].designImg['back']}`} alt="product-img" width={30} height={30} />
+                                        <CampaignImage design={campaign.design?.['back']} pArea={currentProduct.printableArea?.[side]} background={currentProduct?.colors[currentColor].image?.[side]} width={30} />
                                     </button>
                                 </div>
                             </div>

@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
-import { authAtom, campaignAtom, campaignStart, isSavedAtom, toastAtom, userAtom } from "@/constants";
+import { authAtom, campaignAtom, campaignStart, designAtom, isSavedAtom, toastAtom, userAtom } from "@/constants";
 import { useRouter, useParams, usePathname } from "next/navigation";
 import { campaignTools, designNavigation, launchedNavigation } from "../../../actions/campaignTools";
 import SaveButton from "./SaveButton";
@@ -40,6 +40,7 @@ export default function DesignNavbar() {
 
   const [campaign, setCampaign] = useAtom(campaignAtom)
   const [campaignBlank, setCampaignBlank] = useAtom(campaignStart)
+  const [savedDesign, setSavedDesign] = useAtom(designAtom)
 
   const onLogout = () => {
     setMobileMenuOpen(false)
@@ -56,10 +57,6 @@ export default function DesignNavbar() {
     }
   }
 
-  // window.onbeforeunload = (e) => {
-  //   e.preventDefault()
-  // }
-
   const onSave = async () => {
     try {
       if (campaignId) {
@@ -68,7 +65,7 @@ export default function DesignNavbar() {
 
         setIsSaved(true)
         setCampaign({ ...campaign, ...response.data })
-        console.log({ ...campaign, ...response.data });
+        setSavedDesign({ ...response.data.design })
 
         setTimeout(() => {
           setIsSaved(false)
@@ -85,6 +82,7 @@ export default function DesignNavbar() {
         })
         router.push(`/design/start/${response.data._id}`)
         setCampaign({ ...campaign, ...response.data })
+        setSavedDesign({ ...response.data.design })
         return response.data
       }
     }
@@ -136,10 +134,10 @@ export default function DesignNavbar() {
     try {
       await onSave()
       const response = await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
-      await campaignTools.launchCampaign(auth, campaignId)
-      setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel })
+      const launchData = await campaignTools.launchCampaign(auth, campaignId)
+      setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel, status: launchData?.data?.status })
+      setToast({ type: "success", message: `Dizayn  - "${campaign.title}" yakullandi` })
       setLaunchDialog(true)
-      setToast({ type: "success", message: 'Dizayn yakullandi' })
     }
     catch (err) {
       if (err?.response?.status === 403) {

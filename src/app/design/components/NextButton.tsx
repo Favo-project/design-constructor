@@ -2,6 +2,9 @@ import { useParams, usePathname } from "next/navigation"
 import { useLayoutEffect, useState } from "react"
 import Link from "next/link"
 import { campaignTools, navigation } from "../../../actions/campaignTools"
+import CrossedDialog from "./CrossedDialog"
+import { useAtom } from "jotai"
+import { campaignPrintCrossed } from "@/constants"
 
 export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, onSave, isSaved }) {
     const pathname = usePathname()
@@ -10,6 +13,18 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
     const [isLaunch, setIsLaunch] = useState(false)
 
     const [nextUrl, setNextUrl] = useState('')
+    const [isCrossedOpen, setIsCrossedOpen] = useState(false)
+
+    // state for identifing the print area cross
+    const [printCrossed, setPrintCrossed] = useAtom(campaignPrintCrossed)
+
+    function closeCrossModal() {
+        setIsCrossedOpen(false)
+    }
+
+    function openCrossModal() {
+        setIsCrossedOpen(true)
+    }
 
     useLayoutEffect(() => {
         if (pathname.indexOf(navigation.start) !== -1 && campaignId) {
@@ -32,7 +47,16 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         setIsLaunch(campaignTools.launchCheck(campaign))
     }, [pathname, campaignId, campaign])
 
-
+    if (printCrossed === true) {
+        return (
+            <>
+                <button onClick={openCrossModal} className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
+                    Next
+                </button>
+                <CrossedDialog isOpen={isCrossedOpen} closeModal={closeCrossModal} nextUrl={nextUrl} onSave={onSave} />
+            </>
+        )
+    }
 
     if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
         if (campaign.status === 'Launched') {

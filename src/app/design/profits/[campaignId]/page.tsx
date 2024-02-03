@@ -1,14 +1,16 @@
 'use client'
-import { campaignAtom } from "@/constants";
+import { campaignAtom, designAtom } from "@/constants";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import { BsQuestionCircle } from "react-icons/bs";
 import { formatCurrency } from "../../../../actions/campaignTools";
 import ProfitInput from "./ProfitInput";
 import { useEffect } from "react";
+import CampaignImage from "@/components/CampaignImage";
 
 export default function Profits() {
     const [campaign] = useAtom(campaignAtom)
+    const [savedDesign] = useAtom(designAtom)
 
     useEffect(() => {
 
@@ -37,7 +39,7 @@ export default function Profits() {
                                     <td className="py-5">
                                         <div className="flex items-center gap-4">
                                             <div>
-                                                <Image priority src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${product.colors[0].designImg.front}`} alt="product-img" width={64} height={64} />
+                                                <CampaignImage background={product.colors[0].image.front} design={savedDesign.front} pArea={product.printableArea.front} width={64} />
                                             </div>
                                             <div>
                                                 <h4 className="font-bold text-gray-600">{product.name}</h4>

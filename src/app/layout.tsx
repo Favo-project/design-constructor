@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import NextTopLoader from 'nextjs-toploader';
 const inter = Inter({ subsets: ["latin"] });
 import { Provider } from 'jotai'
-import Toasts from "@/components/Toasts";
 
 export const metadata: Metadata = {
   title: "Favo design",

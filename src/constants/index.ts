@@ -238,8 +238,11 @@ export const userAtom = atom({
 })
 
 export const campaignAtom = atom({ ...initCampaign })
-
 export const campaignStart = atom({ ...initCampaign })
+
+export const designAtom = atom({ front: [], back: [] })
+
+export const campaignPrintCrossed = atom(false)
 
 export const canvasAtom = atom({})
 
