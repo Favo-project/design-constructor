@@ -103,7 +103,7 @@ export default function CampaignImage({ design, pArea, background, width = 600, 
             <div>
                 {
                     loading && main ? (
-                        <div className="absolute bg-white bg-opacity-20 z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+                        <div className="absolute bg-white z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center">
                             <Loader />
                         </div>
                     ) : null
