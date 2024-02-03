@@ -1,6 +1,4 @@
 'use client'
-import Loader from "@/components/Loader";
-import Image from "next/image";
 import { formatCurrency } from "../../actions/campaignTools";
 import { useEffect, useRef, useState } from "react";
 import { BsCartPlus, BsCheckLg } from "react-icons/bs";
@@ -9,7 +7,6 @@ import SizeInfo from "../design/components/SizeInfo";
 import { PiWarningDiamond } from "react-icons/pi";
 import { GrTag } from "react-icons/gr";
 import SolidBtn from "@/components/form-elements/SolidBtn";
-import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import CampaignImage from "@/components/CampaignImage";
 
 export default function Campaign({ campaign }) {
@@ -32,22 +29,6 @@ export default function Campaign({ campaign }) {
         }
     }
 
-    const loadImage = (imgUrl) => {
-        let origUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/files${imgUrl}`
-
-        const imgElement = document.createElement('img')
-        imgElement.crossOrigin = 'anonymous';
-        imgElement.src = origUrl
-
-        imgElement.onload = () => {
-            setTimeout(() => {
-                setImgLoading(false)
-            }, 350)
-        }
-
-        return origUrl
-    }
-
     const setProduct = (product) => {
         setImgLoading(true)
         setCurrentProduct(product)
@@ -60,16 +41,18 @@ export default function Campaign({ campaign }) {
     }
 
     const getCurrentPrice = () => {
-        const product = campaign.products.find((p) => p.name === currentProduct?.name)
+        const product = campaign.products.find((p) => p?.name === currentProduct?.name)
 
         return formatCurrency(product?.sellingPrice)
     }
 
     const getCurrentSizes = () => {
-        const product = campaign.products.find((p) => p.name === currentProduct?.name)
+        const product = campaign.products.find((p) => p?.name === currentProduct?.name)
 
         return product?.sizes
     }
+
+    console.log(campaign);
 
     useEffect(() => {
         const isInViewport = (elem) => {

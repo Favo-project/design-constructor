@@ -1,11 +1,10 @@
 'use client'
 import Image from "next/image";
 import { avatar } from "../assets";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Tab } from '@headlessui/react'
-import UserMenu from "../components/UserMenu";
 import axios from "axios";
-import { authAtom, userAtom } from "@/constants";
+import { authAtom, imageTypes, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { PatternFormat } from "react-number-format";
@@ -21,9 +20,22 @@ export default function Account() {
     const [password, setPassword] = useState('')
     const [confirm, setConfirm] = useState('')
     const [photo, setPhoto] = useState<File>()
+    const [imageError, setImageError] = useState('')
 
     const [user, setUser] = useAtom(userAtom)
     const [auth, setAuth] = useAtom(authAtom)
+
+    const imageFilter = (imgFile) => {
+        if (imgFile?.size > 1024 * 1024 * 5) {
+            setImageError('Maximum image size is 5MB')
+            return false
+        }
+        if (!imageTypes.includes(imgFile?.type)) {
+            setImageError('Only images allowed')
+            return false
+        }
+        return true
+    }
 
     const changeCredentials = async (e) => {
         e.preventDefault()
@@ -68,6 +80,22 @@ export default function Account() {
             ...user, [name]: value
         })
     }
+
+    const onUpload = (e) => {
+        if (imageFilter(e.target.files[0])) {
+            setPhoto(e.target.files[0])
+        }
+    }
+
+    console.log(imageError);
+
+    useEffect(() => {
+        if (imageError) {
+            setTimeout(() => {
+                setImageError('')
+            }, 5000)
+        }
+    }, [imageError])
 
     return (
         <div id="account">
@@ -158,9 +186,10 @@ export default function Account() {
                                             <input value={user.email} onChange={(e) => onChange('email', e.target.value)} className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="email" />
                                         </div>
                                         <div className="flex flex-col mb-12">
-                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="email">PHOTO</label>
-                                            <input onChange={(e) => setPhoto(e.target.files[0])} className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="file" id="email" />
+                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="photo">PHOTO</label>
+                                            <input onChange={onUpload} className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="file" id="photo" />
                                             <p className="text-slate-600 text-sm mt-2">JPG or PNG. Maximum size of 5MB.</p>
+                                            <span className="w-full text-red-600 font-medium text-sm">{imageError}</span>
                                         </div>
                                         <div>
                                             <SolidBtn type="submit">

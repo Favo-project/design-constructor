@@ -254,3 +254,13 @@ interface IToast {
 export const toastAtom = atom<IToast>({ type: '', message: '' }) // type = warning | info | success | error
 
 export const isSavedAtom = atom(false)
+
+export const imageTypes = [
+  'image/jpg',
+  'image/png',
+  'image/jpeg',
+  'image/svg+xml',
+  'image/svg',
+  'image/webp',
+  'image/gif',
+]
