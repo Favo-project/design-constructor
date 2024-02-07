@@ -2,7 +2,7 @@
 
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { Fragment, useLayoutEffect, useState } from "react";
-import Link from "next/link";
+
 import { useAtom } from "jotai";
 import { userAtom } from "@/constants";
 import { Menu, Transition } from '@headlessui/react'
@@ -18,81 +18,82 @@ import UserDropdown from "./UserDropdown";
 import Cart from "./Cart";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
+import Link from "./Link";
 
-const navigation = [
-  {
-    name: "Sell online", links: [
-      {
-        name: 'Sell online in a campaign',
-        href: '/sell-online',
-        icon: <LiaMoneyBillWaveSolid />
-      },
-      {
-        name: 'Create a merch store',
-        href: '/online-stores',
-        icon: <IoStorefrontOutline />
-      }
-    ]
-  },
-  {
-    name: "Customize", links: [
-      {
-        name: 'Product catalog',
-        href: '/catalog',
-        icon: <RiShoppingBag3Line />
-      },
-      {
-        name: 'Design templates',
-        href: '/templates',
-        icon: <BsImageAlt />
-      }
-    ]
-  },
-  {
-    name: "Explore", links: [
-      {
-        name: 'Shop all shirts',
-        subtext: 'Find something you love',
-        href: '/shop',
-        icon: <PiTShirt />
-      },
-      {
-        name: 'Discover creators',
-        href: '/templates',
-        icon: <GiPencilBrush />
-      }
-    ]
-  },
-];
+export default function Navbar({ resources }) {
+  const [navigation] = useState([
+    {
+      name: resources.navbar.sellonline, links: [
+        {
+          name: resources.navbar.sellcampaign,
+          href: '/sell-online',
+          icon: <LiaMoneyBillWaveSolid />
+        },
+        {
+          name: resources.navbar.createstore,
+          href: '/online-stores',
+          icon: <IoStorefrontOutline />
+        }
+      ]
+    },
+    {
+      name: resources.navbar.customize, links: [
+        {
+          name: resources.navbar.catalog,
+          href: '/catalog',
+          icon: <RiShoppingBag3Line />
+        },
+        {
+          name: resources.navbar.templates,
+          href: '/templates',
+          icon: <BsImageAlt />
+        }
+      ]
+    },
+    {
+      name: resources.navbar.explore, links: [
+        {
+          name: resources.navbar.shop,
+          subtext: resources.navbar.shoplove,
+          href: '/shop',
+          icon: <PiTShirt />
+        },
+        {
+          name: resources.navbar.discover,
+          href: '/templates',
+          icon: <GiPencilBrush />
+        }
+      ]
+    },
+  ])
 
-const dashboardLinks = [
-  {
-    name: 'Overview',
-    href: '/dashboard/overview'
-  },
-  {
-    name: 'Campaigns',
-    href: '/dashboard/campaigns'
-  },
-  {
-    name: 'Store',
-    href: '/dashboard/stores'
-  },
-  {
-    name: 'Payouts',
-    href: '/dashboard/payouts'
-  },
-  {
-    name: 'My orders',
-    href: '/dashboard/orders'
-  },
-  {
-    name: 'Account',
-    href: '/dashboard/account'
-  },
-]
+  const [dashboardLinks] = useState([
+    {
+      name: resources.navbar.overview,
+      href: '/dashboard/overview'
+    },
+    {
+      name: resources.navbar.campaigns,
+      href: '/dashboard/campaigns'
+    },
+    {
+      name: resources.navbar.store,
+      href: '/dashboard/stores'
+    },
+    {
+      name: resources.navbar.payouts,
+      href: '/dashboard/payouts'
+    },
+    {
+      name: resources.navbar.orders,
+      href: '/dashboard/orders'
+    },
+    {
+      name: resources.navbar.account,
+      href: '/dashboard/account'
+    },
+  ])
 
-export default function Navbar() {
   const [isFixed, setIsFixed] = useState(false)
   const [user, setUser] = useAtom(userAtom)
 
@@ -156,8 +157,8 @@ export default function Navbar() {
               </ul>
 
               <div className="ml-auto flex items-center">
-                <UserDropdown />
-                <Cart />
+                <UserDropdown resources={resources} />
+                <Cart resources={resources} />
               </div>
             </div>
           </div>
@@ -173,7 +174,9 @@ export default function Navbar() {
                       <span className="text-lg mr-2">
                         <FaBarsStaggered />
                       </span>
-                      Menu
+                      <span className='md:block hidden'>
+                        Menu
+                      </span>
                     </Menu.Button>
                   </div>
                   <Transition
@@ -185,7 +188,7 @@ export default function Navbar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute md:w-96 w-72 max-h-[70vh] overflow-y-auto -top-2 -left-2 bg-white z-30 px-4 py-3 pt-12 rounded-md shadow-2xl">
+                    <Menu.Items className="absolute md:w-96 w-80 max-h-[70vh] overflow-y-auto -top-2 -left-2 bg-white z-30 px-4 py-3 pt-12 rounded-md shadow-2xl">
                       <Menu.Item>
                         {({ active, close }) => (
                           <button
@@ -195,12 +198,12 @@ export default function Navbar() {
                             <span className="text-2xl mr-2">
                               <IoMdClose />
                             </span>
-                            Close
+                            {resources.navbar.close}
                           </button>
                         )}
                       </Menu.Item>
 
-                      <h4 className="text-dark font-sans mt-6 mb-6">Welcome, <span className="text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text">{user?.name}</span></h4>
+                      <h4 className="text-dark font-sans mt-6 mb-6">{resources.navbar.welcome}, <span className="text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text">{user?.name}</span></h4>
 
                       <ul className="grid grid-cols-2 gap-3 gap-x-10">
                         {dashboardLinks.map((link, idx) => (
@@ -243,13 +246,13 @@ export default function Navbar() {
                 </Menu>
               </div>
 
-              <Link href={'/'} className="absolute left-1/2 -translate-x-1/2 block scale-75 md:scale-100">
+              <Link href={'/'} hrefLang="uz" className="absolute left-1/2 -translate-x-1/2 block scale-75 md:scale-100">
                 <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
               </Link>
 
               <div className="flex-2 flex items-center">
-                <UserDropdown />
-                <Cart />
+                <UserDropdown resources={resources} />
+                <Cart resources={resources} />
               </div>
             </div>
           </div>

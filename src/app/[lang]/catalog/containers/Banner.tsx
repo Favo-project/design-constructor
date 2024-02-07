@@ -2,7 +2,7 @@ import Image from "next/image";
 import { bannerImg } from "../assets";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 
-export default function Banner() {
+export default function Banner({ resources }) {
     return (
         <section className="py-20 bg-[#f5f0ea]">
             <div className="container m-auto max-w-7xl">
@@ -12,10 +12,10 @@ export default function Banner() {
                     </div>
                     <div className="md:col-start-11 md:col-span-7 md:row-start-1 px-7 py-14 bg-white rounded-xl shadow-lg">
                         <h2 className="lg:text-5xl text-3xl text-gray-700 font-bold font-sans tracking-wide leading-tight mb-10">
-                            Create something great today
+                            {resources.catalog.banner.title}
                         </h2>
                         <SolidBtn href={'/dashboard/overview'}>
-                            Start designing
+                            {resources.catalog.banner.startbtn}
                         </SolidBtn>
                     </div>
                 </div>

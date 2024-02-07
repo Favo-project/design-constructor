@@ -6,7 +6,7 @@ import { BsCart4 } from 'react-icons/bs'
 import { IoMdClose } from 'react-icons/io'
 import { LiaShoppingBagSolid } from 'react-icons/lia'
 
-export default function Cart({ theme }: { theme?: 'dark' | 'light' }) {
+export default function Cart({ theme, resources }: { resources, theme?: 'dark' | 'light' }) {
     const [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
@@ -56,7 +56,7 @@ export default function Cart({ theme }: { theme?: 'dark' | 'light' }) {
                                         as="h3"
                                         className="text-2xl font-semibold leading-6 text-gray-800"
                                     >
-                                        Your cart
+                                        {resources.cart.title}
                                     </Dialog.Title>
 
                                     <div className='w-full flex flex-col items-center justify-center pt-8 pb-4'>
@@ -65,11 +65,10 @@ export default function Cart({ theme }: { theme?: 'dark' | 'light' }) {
                                                 <LiaShoppingBagSolid />
                                             </span>
                                         </div>
-                                        <h4 className='text-lg uppercase font-mono font-semibold text-gray-700 my-6'>Your cart is empty</h4>
-
+                                        <h4 className='text-lg uppercase font-mono font-semibold text-gray-700 my-6'>{resources.cart.empty}</h4>
                                         <div>
-                                            <p className='text-gray-700 font-medium font-sans'>Add something to it.</p>
-                                            <Link href={'/shop'} className='text-magenta font-medium font-sans'>Explore popular campaigns</Link>
+                                            <p className='text-gray-700 font-medium font-sans'>{resources.cart.addsomething}.</p>
+                                            <Link href={'/shop'} className='text-magenta font-medium font-sans'>{resources.cart.explore}</Link>
                                         </div>
                                     </div>
 

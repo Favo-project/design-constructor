@@ -14,7 +14,7 @@ import SizeInfo from "../../components/SizeInfo";
 import FeaturedItem from "../../components/FeaturedItem";
 import CampaignImage from "@/components/CampaignImage";
 
-export default function Preview() {
+export default function Preview({ resources }) {
     const [side, setSide] = useState('front')
     const [imgLoading, setImgLoading] = useState(false)
     const [campaign, setCampaign] = useAtom(campaignAtom)
@@ -69,7 +69,7 @@ export default function Preview() {
     return <div className="container relative m-auto">
         <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-10 gap-2 py-10 mt-6">
             <div className="md:sticky flex lg:justify-end justify-center top-28 h-min bg-transparent">
-                <div className="relative w-full max-w-[600px] bg-transparent">
+                <div className="relative w-full max-h-[700px] max-w-[700px] bg-transparent">
                     <div className="border-0">
                         <CampaignImage design={savedDesign[side]} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} main />
                     </div>
@@ -151,7 +151,7 @@ export default function Preview() {
                                             ))
                                         }
                                     </div>
-                                    <SizeInfo />
+                                    <SizeInfo resources={resources} />
                                 </div>
 
                             ) : (

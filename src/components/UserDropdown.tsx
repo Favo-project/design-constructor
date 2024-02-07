@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { AiOutlineHome } from 'react-icons/ai'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { IoSettingsOutline } from 'react-icons/io5'
@@ -13,13 +13,48 @@ import AuthModal from './AuthModal'
 import { GoChevronDown } from 'react-icons/go'
 import { useLayoutEffect, useState } from 'react'
 import axios from 'axios'
+import { EnIco, RuIco, UzIco } from '@/assets'
+import { Locale } from '@/i18n.config'
+import { RadioGroup } from '@headlessui/react'
 
-export default function UserDropdown({ className, theme = 'dark' }: { className?: string, theme?: 'dark' | 'light' }) {
+interface ILanguage {
+    name: string, locale: Locale, icon: React.ReactNode
+}
+
+const langs: ILanguage[] = [
+    {
+        name: 'Eng',
+        locale: 'en',
+        icon: <Image src={EnIco} width={20} height={20} alt='lang-icon' />
+    },
+    {
+        name: 'Uzb',
+        locale: 'uz',
+        icon: <Image src={UzIco} width={20} height={20} alt='lang-icon' />
+    },
+    // {
+    //     name: 'Rus',
+    //     locale: 'ru',
+    //     icon: <Image src={RuIco} width={20} height={20} alt='lang-icon' />
+    // },
+]
+
+export default function UserDropdown({ className, resources, theme = 'dark' }: { className?: string, resources, theme?: 'dark' | 'light' }) {
+    const pathname = usePathname();
+    const { lang } = useParams();
     const router = useRouter()
     const [loading, setLoading] = useState(true)
+    const [selectedLang, setSelectedLang] = useState(() => langs.find(l => l.locale === lang) || langs[0])
 
     const [user, setUser] = useAtom(userAtom)
     const [auth, setAuth] = useAtom(authAtom)
+
+    const redirectedPathName = (locale: Locale) => {
+        if (!pathname) return "/";
+        const segments = pathname.split("/");
+        segments[1] = locale;
+        return segments.join("/");
+    };
 
     useLayoutEffect(() => {
         const fetch = async () => {
@@ -62,6 +97,16 @@ export default function UserDropdown({ className, theme = 'dark' }: { className?
         }
     }
 
+
+    const onChangeLang = (locale) => {
+        try {
+            localStorage.setItem('selectLocale', locale)
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
     if (loading) {
         return null
     }
@@ -73,13 +118,10 @@ export default function UserDropdown({ className, theme = 'dark' }: { className?
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
                             <Menu.Button className={`flex items-center hover:bg-gray-200 px-2 py-1 rounded-md outline-none ${theme === 'light' ? 'text-white hover:bg-opacity-30' : 'text-dark'}`}>
-                                {/* <span className='text-xl mr-1 sm:block hidden'>
+                                <span className='text-xl mr-1'>
                                     <GoChevronDown />
-                                </span> */}
-                                <span className='bg-gradient-to-r from-magenta to-blue bg-clip-text text-lg text-transparent font-medium mr-2'>
-                                    UZ
                                 </span>
-                                <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-magenta">
+                                <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-magenta">
                                     {
                                         user.photo ? (
                                             <Image className='w-full h-full rounded-full object-cover' src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`} alt='account-profile' width={28} height={28} />
@@ -100,39 +142,71 @@ export default function UserDropdown({ className, theme = 'dark' }: { className?
                             leaveTo="transform opacity-0 scale-95"
                         >
                             <Menu.Items className="absolute overflow-hidden right-0 mt-2 w-56 origin-bottom-left divide-y divide-gray-300 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-                                <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">Welcome, <strong className='block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
+                                <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">{resources.userdropdown.welcome}, <strong className='block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
+
+                                <div className='py-1 px-2   '>
+                                    <RadioGroup value={selectedLang} onChange={setSelectedLang}>
+                                        <RadioGroup.Label className="sr-only">Select language</RadioGroup.Label>
+                                        <div className="flex items-center gap-3">
+                                            {langs.map((lang) => (
+                                                <RadioGroup.Option
+                                                    key={lang.name}
+                                                    value={lang}
+                                                    className={({ checked }) =>
+                                                        `${checked ? 'bg-blue' : 'bg-white border border-slate-300'} relative flex cursor-pointer rounded-md outline-none shadow-md`
+                                                    }
+                                                >
+                                                    {({ checked }) => (
+                                                        <Link onClick={() => onChangeLang(lang.locale)} href={redirectedPathName(lang.locale)} className="flex items-center gap-2 px-2.5 py-2 rounded-lg cursor-pointer">
+                                                            <RadioGroup.Label className={'cursor-pointer'}>
+                                                                {lang.icon}
+                                                            </RadioGroup.Label>
+                                                            <RadioGroup.Description
+                                                                as="span"
+                                                                className={`inline font-medium ${checked ? 'text-white' : 'text-gray-700'
+                                                                    } text-sm`}
+                                                            >
+                                                                {lang.name}
+                                                            </RadioGroup.Description>
+                                                        </Link>
+                                                    )}
+                                                </RadioGroup.Option>
+                                            ))}
+                                        </div>
+                                    </RadioGroup>
+                                </div>
                                 <Menu.Item as="div">
                                     <Link className="flex items-center px-3 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
                                         <span className="text-2xl mr-2">
                                             <AiOutlineHome />
-                                        </span> Dashboard
+                                        </span> {resources.userdropdown.dashboard}
                                     </Link>
                                 </Menu.Item>
                                 <Menu.Item as="div">
                                     <Link className="flex items-center px-3 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
                                         <span className="text-2xl mr-2">
                                             <IoSettingsOutline />
-                                        </span> Account Settings
+                                        </span> {resources.userdropdown.account}
                                     </Link>
                                 </Menu.Item>
                                 <Menu.Item as="div">
                                     <button onClick={onLogout} className="w-full flex items-center px-3 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100">
                                         <span className="text-2xl mr-2">
                                             <MdLogout />
-                                        </span> Logout
+                                        </span> {resources.userdropdown.logout}
                                     </button>
                                 </Menu.Item>
                             </Menu.Items>
                         </Transition>
                     </Menu>
                 ) : (
-                    <AuthModal>
-                        <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
-                            Log in
+                    <AuthModal resources={resources}>
+                        <div className={`font-semibold leading-6 ${theme === 'light' ? 'text-white' : 'text-dark'} hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all`}>
+                            {resources.userdropdown.login}
                         </div>
                     </AuthModal>
                 )
             }
-        </div>
+        </div >
     )
 }

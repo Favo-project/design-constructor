@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment, useLayoutEffect } from "react"
+import { useEffect, useState, Fragment } from "react"
 import { Listbox, Transition, Popover } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { BsCheckLg } from "react-icons/bs"
@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { colors, fonts } from "@/constants"
 import { IoMdClose } from "react-icons/io"
 
-export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Editor({ resources, selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
     const [text, setText] = useState(selectedObj.object.text)
     const [selectedFont, setSelectedFont] = useState(fonts[0])
     const [selectedColor, setSelectedColor] = useState(null)

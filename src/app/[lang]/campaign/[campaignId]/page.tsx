@@ -9,18 +9,16 @@ import { GrTag } from "react-icons/gr";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 import CampaignImage from "@/components/CampaignImage";
 
-export default function Campaign({ campaign }) {
+export default function Campaign({ campaign, resources }) {
     const cartBtn = useRef(null)
     const [isCartBtn, setIsCartBtn] = useState(false)
 
     const [side, setSide] = useState('front')
-    const [imgLoading, setImgLoading] = useState(false)
 
     const [currentColor, setCurrentColor] = useState(0)
     const [currentProduct, setCurrentProduct] = useState(campaign.products[0])
 
     const flipSide = (side) => {
-        setImgLoading(true)
         if (side === 'front') {
             setSide('front')
         }
@@ -30,13 +28,11 @@ export default function Campaign({ campaign }) {
     }
 
     const setProduct = (product) => {
-        setImgLoading(true)
         setCurrentProduct(product)
         setCurrentColor(0)
     }
 
     const setColor = (index) => {
-        setImgLoading(true)
         setCurrentColor(index)
     }
 
@@ -51,8 +47,6 @@ export default function Campaign({ campaign }) {
 
         return product?.sizes
     }
-
-    console.log(campaign);
 
     useEffect(() => {
         const isInViewport = (elem) => {
@@ -69,7 +63,7 @@ export default function Campaign({ campaign }) {
             return isinview
         }
 
-        const handler = (e) => {
+        const handler = () => {
             setIsCartBtn(!isInViewport(cartBtn.current))
         }
 
@@ -84,7 +78,7 @@ export default function Campaign({ campaign }) {
             <div className="container relative m-auto md:pt-20 pt-12">
                 <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-10 gap-2 py-10 mt-6">
                     <div className="md:sticky flex lg:justify-end justify-center top-28 h-min bg-transparent">
-                        <div className="relative w-full h-[700px]m max-h-[700px] bg-transparent">
+                        <div className="relative w-full max-h-[700px] max-w-[700px] bg-transparent">
                             <div className="border-0">
                                 <CampaignImage design={campaign.design?.[side]} background={currentProduct?.colors[currentColor]?.image?.[side]} pArea={currentProduct.printableArea?.[side]} main />
                                 <div>
@@ -97,10 +91,10 @@ export default function Campaign({ campaign }) {
 
                             <div>
                                 <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1 z-10">
-                                    <button onClick={() => flipSide('front')} className={`${side === 'front' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2 transition-all`}>
+                                    <button onClick={() => flipSide('front')} className={`${side === 'front' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2 transition-all max-w-[50px] max-h-[50px]`}>
                                         <CampaignImage design={campaign.design?.['front']} pArea={currentProduct.printableArea?.[side]} background={currentProduct?.colors[currentColor].image?.[side]} width={30} />
                                     </button>
-                                    <button onClick={() => flipSide('back')} className={`${side === 'back' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2  hover:border-slate-300 transition-all`}>
+                                    <button onClick={() => flipSide('back')} className={`${side === 'back' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2  hover:border-slate-300 transition-all max-w-[50px] max-h-[50px]`}>
                                         <CampaignImage design={campaign.design?.['back']} pArea={currentProduct.printableArea?.[side]} background={currentProduct?.colors[currentColor].image?.[side]} width={30} />
                                     </button>
                                 </div>
@@ -114,10 +108,10 @@ export default function Campaign({ campaign }) {
                             <h4 className="relative inline-flex px-3 py-3.5 rounded-md bg-slate-200 font-sans font-medium text-slate-600 mb-2 after:block after:absolute after:left-[20px] after:-bottom-[19px] after:border-[10px] after:border-l-transparent after:border-r-transparent after:border-b-transparent after:border-t-slate-200">{campaign.description}</h4>
                         </div>
 
-                        <CampaignCreator creator={campaign.creator} />
+                        <CampaignCreator resources={resources} creator={campaign.creator} />
 
                         <div className="lg:my-10 my-4">
-                            <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">COLOR</h3>
+                            <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.campaignId.color}</h3>
                             <ul className="flex items-center gap-2">
                                 {
                                     currentProduct?.colors.map(({ color }, index) => (
@@ -137,7 +131,7 @@ export default function Campaign({ campaign }) {
                         </div>
 
                         <div className="lg:my-10 my-4">
-                            <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Design<span className="text-lg ml-2">{getCurrentPrice()}</span></h3>
+                            <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.campaignId.design}<span className="text-lg ml-2">{getCurrentPrice()}</span></h3>
                             <div className="flex flex-wrap gap-3">
                                 {
                                     campaign.products.map((product, index) => (
@@ -156,7 +150,7 @@ export default function Campaign({ campaign }) {
                         </div>
 
                         <div className="lg:my-10 my-4">
-                            <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">SIZE</h3>
+                            <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.campaignId.size}</h3>
                             <div className="flex mb-3 gap-2">
                                 {
                                     getCurrentSizes()?.length ? (
@@ -170,11 +164,11 @@ export default function Campaign({ campaign }) {
                                                     ))
                                                 }
                                             </div>
-                                            <SizeInfo />
+                                            <SizeInfo resources={resources} />
                                         </div>
 
                                     ) : (
-                                        <h4 className="text-slate-600 font-sans flex items-center font-semibold">Currently there is no size for this product <span className="text-2xl text-orange-600 ml-2"><PiWarningDiamond /></span></h4>
+                                        <h4 className="text-slate-600 font-sans flex items-center font-semibold">{resources.campaignId.nosize}<span className="text-2xl text-orange-600 ml-2"><PiWarningDiamond /></span></h4>
                                     )
                                 }
                             </div>
@@ -182,7 +176,7 @@ export default function Campaign({ campaign }) {
 
                         <div ref={cartBtn} className="lg:my-10 my-6">
                             <SolidBtn>
-                                Add to cart
+                                {resources.campaignId.addcart}
                                 <span className="text-white ml-2 text-lg"><BsCartPlus /></span>
                             </SolidBtn>
 
@@ -201,7 +195,7 @@ export default function Campaign({ campaign }) {
                                             <GrTag className="text-slate-400" />
                                         </span>
                                         <div className="flex flex-col">
-                                            <h4 className="uppercase font-mono font-semibold text-slate-500 mb-1">SOLD</h4>
+                                            <h4 className="uppercase font-mono font-semibold text-slate-500 mb-1">{resources.campaignId.sold}</h4>
                                             <span className="font-bold text-lg font-sans">{campaign.soldAmount}</span>
                                         </div>
                                     </div>

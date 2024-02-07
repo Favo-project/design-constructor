@@ -1,15 +1,15 @@
 import OutlineBtn from "./form-elements/OutlineBtn";
 
-export default function HelpCard() {
+export default function HelpCard({ resources }) {
     return (
         <div>
             <h5 className="mb-8 text-2xl font-medium tracking-tight text-gray-600 font-sans">
-                Need help?
+                {resources.helpcard.title}?
             </h5>
             <p className="mb-6 font-normal text-gray-700">
-                Have your questions answered without having to wait.
+                {resources.helpcard.paragraph}.
             </p>
-            <OutlineBtn>Get help now</OutlineBtn>
+            <OutlineBtn>{resources.helpcard.gethelp}</OutlineBtn>
         </div>
     )
 }

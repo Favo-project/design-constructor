@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { useLayoutEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 
-export default function Details() {
+export default function Details({ resources }) {
     const { campaignId } = useParams()
     const [campaign, setCampaign] = useAtom(campaignAtom)
     const [isSaved] = useAtom(isSavedAtom)

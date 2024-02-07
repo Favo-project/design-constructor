@@ -23,7 +23,7 @@ import TextEditor from "../components/Text/Editor";
 import ClipartEditor from "../components/Clipart/Editor";
 import ImageEditor from "../components/Ulpoad/Editor";
 import MultipleEditor from "../components/MultipleEditor";
-import { campaignAtom, canvasAtom, authAtom, userAtom, designAtom, campaignPrintCrossed } from "@/constants";
+import { campaignAtom, authAtom, userAtom, designAtom, campaignPrintCrossed } from "@/constants";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { campaignUtils } from "@/actions/campaign";
@@ -32,8 +32,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Start() {
-  const [canvasExp, setCanvas] = useAtom(canvasAtom)
+export default function Start({ resources }) {
   const { campaignId } = useParams()
 
   const router = useRouter()
@@ -106,6 +105,8 @@ export default function Start() {
   // state for identifing the print area cross
   const [printCrossed, setPrintCrossed] = useAtom(campaignPrintCrossed)
 
+  console.log(campaign);
+
   useLayoutEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: canvasValues.current.CANVAS_WIDTH,
@@ -115,8 +116,6 @@ export default function Start() {
       preserveObjectStacking: true,
       allowTouchScrolling: true
     });
-
-    setCanvas(canvas)
 
     const onSelect = (options) => {
       if (options.selected.length > 1) {
@@ -941,7 +940,7 @@ export default function Start() {
                 onClick={onChangeSide}
                 className="flex items-center py-1 px-2 text-xs rounded-md border-opacity-70 border-slate-300 border-2 uppercase"
               >
-                <VscRefresh className="mr-2 text-lg" /> Show {campaign?.selected?.side === 'front' ? 'back' : 'front'}
+                <VscRefresh className="mr-2 text-lg" /> {resources.design.start.show} {campaign?.selected?.side === 'front' ? resources.design.start.back : resources.design.start.front} {resources.design.start.show2}
               </button>
               <div id="zoom" className="flex items-center ml-4 gap-2">
                 <button
@@ -976,7 +975,7 @@ export default function Start() {
         <div></div>
         <div className="px-6 lg:p-8  shadow-xl min-h-[100vh] relative z-40">
           <h2 className="text-gray-700 text-2xl font-semibold mt-6">
-            Create your design
+            {resources.design.start.createdesign}
           </h2>
           <div className="w-full px-2 py-6 sm:px-0">
             <Tab.Group onChange={onChangeTab} selectedIndex={tabIndex}>

@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 
-export default function Content() {
+export default function Content({ resources }) {
     const [categories] = useState([
         {
             name: 'Popular',
@@ -52,7 +52,7 @@ export default function Content() {
         <main className="py-8">
             <div className="container m-auto max-w-7xl px-6">
                 <div className="max-w-3xl">
-                    <h3 className="font-sans uppercase font-semibold text-slate-700 tracking-wider p-2 mb-4">BY CATEGORY</h3>
+                    <h3 className="font-sans font-semibold text-slate-700 tracking-wider p-2 mb-4 uppercase">{resources.templates.content.bycategory}</h3>
                     <ul className="grid grid-cols-3">
                         {
                             categories.map((category, index) => (
@@ -77,7 +77,7 @@ export default function Content() {
                                         </div>
                                         <div className="flex justify-center">
                                             <button className="px-3 py-1.5 rounded-md hover:shadow-md border-2 shadow-lg transition-all border-white hover:border-slate-400">
-                                                Customize
+                                                {resources.templates.content.customize}
                                             </button>
                                         </div>
                                     </Link>

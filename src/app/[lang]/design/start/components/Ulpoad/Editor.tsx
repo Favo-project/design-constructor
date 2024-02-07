@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { HiOutlineDuplicate } from "react-icons/hi";
 import { BiSolidSelectMultiple } from "react-icons/bi";
 
-export default function Editor({ selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Editor({ resources, selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
     const [rotate, setRotate] = useState(0)
 
     useEffect(() => {

@@ -5,6 +5,7 @@ import { Provider } from 'jotai'
 import { Locale, i18n } from "@/i18n.config";
 
 import { Inter } from "next/font/google";
+import LocaleRedirect from "@/components/LocaleRedirect";
 const inter = Inter({ subsets: ["latin"] });
 
 export async function generateStaticParams() {
@@ -23,12 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { lang: Locale }
 }) {
-
   return (
     <html lang={params.lang}>
       <body className={inter.className}>
         <div className="bg-slate-500 text-white text-xs text-center z-[300] fixed bottom-0 right-0 left-0">Web-site test jarayonida. Xatoliklar yuz berishi mumkin!</div>
         <NextTopLoader showSpinner={false} color="#FF00CC" />
+        <LocaleRedirect />
         <Provider>
           {children}
         </Provider>

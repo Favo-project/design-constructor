@@ -1,6 +1,4 @@
-'use client'
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import Header from "./components/Header";
 import Link from "next/link";
 
@@ -19,10 +17,7 @@ const products = [
     },
 ]
 
-export default function Store() {
-    const { storeId } = useParams()
-
-    console.log(storeId);
+export default function Store({ resources }) {
 
     return (
         <div id="store">

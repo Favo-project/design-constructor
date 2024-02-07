@@ -3,9 +3,9 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { GoBell } from 'react-icons/go'
 
-type DeleteProps = { campaignId: string, title: string, isOpen: boolean, closeModal: () => void, onDelete: (campaignId: string) => Promise<void> }
+type DeleteProps = { resources, campaignId: string, title: string, isOpen: boolean, closeModal: () => void, onDelete: (campaignId: string) => Promise<void> }
 
-export default function CampaignDelete({ campaignId, title, isOpen, closeModal, onDelete }: DeleteProps) {
+export default function CampaignDelete({ resources, campaignId, title, isOpen, closeModal, onDelete }: DeleteProps) {
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -43,21 +43,21 @@ export default function CampaignDelete({ campaignId, title, isOpen, closeModal, 
                                         as="h3"
                                         className="px-10 text-xl text-magenta font-medium leading-6 text-center"
                                     >
-                                        Are you sure you want to delete this campaign &quot;{title}&quot;
+                                        {resources.campaigndelete.title} &quot;{title}&quot;
                                     </Dialog.Title>
                                     <div className="mt-6 mb-4">
-                                        <p className="font-sans font-medium text-gray-600">All your progress will be gone.</p>
+                                        <p className="font-sans font-medium text-gray-600">{resources.campaigndelete.text}.</p>
                                     </div>
 
                                     <div className="mt-4 flex items-center justify-end gap-3">
                                         <button onClick={closeModal} className='font-sans text-magenta'>
-                                            Cancel
+                                            {resources.campaigndelete.cancel}
                                         </button>
                                         <SolidBtn
                                             type="button"
                                             onClick={() => onDelete(campaignId)}
                                         >
-                                            Yes, Delete!
+                                            {resources.campaigndelete.delete}!
                                         </SolidBtn>
                                     </div>
                                 </Dialog.Panel>

@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 
-export default function Hero() {
+export default function Hero({ resources }) {
   const [user] = useAtom(userAtom)
 
   return (
@@ -28,8 +28,8 @@ export default function Hero() {
 
         <div className="container m-auto max-w-7xl flex lg:flex-nowrap flex-wrap gap-10">
           <div className="py-8 sm:py-12 lg:py-20">
-            <h1 className="text-[36px] md:text-[48px] max-w-lg font-bold leading-tight font-sans text-gray-800 ">
-              Design your next favorite custom shirt
+            <h1 className="text-[36px] md:text-[48px] max-w-lg font-semibold leading-tight font-sans text-gray-800 ">
+              {resources.home.hero.title}
             </h1>
             <div className="mt-10 flex items-center gap-x-4 mb-12">
               {
@@ -38,26 +38,26 @@ export default function Hero() {
                     <SolidBtn
                       href="/design/start"
                     >
-                      Start designing
+                      {resources.home.hero.startbtn}
                     </SolidBtn>
                     <OutlineBtn
                       href="/dashboard/overview"
                     >
-                      Dashboard
+                      {resources.home.hero.dashboard}
                     </OutlineBtn>
                   </>
                 ) : (
                   <SolidBtn
                     href="/design/start"
                   >
-                    Start designing
+                    {resources.home.hero.startbtn}
                   </SolidBtn>
                 )
               }
 
             </div>
             <form className="relative shadow-[2px_2px_14px_0px_#bdc8d9] border-slate-200 focus-within:hover:shadow-none hover:shadow-none focus-within:shadow-none rounded-xl max-w-md transition-all">
-              <input className="px-4 py-3.5 rounded-xl w-full hover:shadow-[inset_0_0_0_2px_#bdc8d9] outline-none hover:focus-within:shadow-[inset_0_0_0_2px_#474E68] focus-within:shadow-[inset_0_0_0_2px_#474E68] transition-all duration-300 font-semibold text-slate-600" type="text" placeholder="Search" />
+              <input className="px-4 py-3.5 rounded-xl w-full hover:shadow-[inset_0_0_0_2px_#bdc8d9] outline-none hover:focus-within:shadow-[inset_0_0_0_2px_#474E68] focus-within:shadow-[inset_0_0_0_2px_#474E68] transition-all duration-300 font-semibold text-slate-600" type="text" placeholder={resources.search} />
               <button type="submit" className="absolute top-[50%] translate-y-[-50%] right-0 text-2xl py-3.5 px-4">
                 <GoSearch />
               </button>

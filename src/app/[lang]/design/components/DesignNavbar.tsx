@@ -22,7 +22,8 @@ import Toasts from "@/components/Toasts";
 import { LogoMain } from "@/assets";
 import UserDropdown from "@/components/UserDropdown";
 
-export default function DesignNavbar() {
+export default function DesignNavbar({ resources }) {
+  console.log(resources);
   const [toast, setToast] = useAtom(toastAtom)
   const router = useRouter()
   const pathname = usePathname()
@@ -188,7 +189,7 @@ export default function DesignNavbar() {
                   <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
                 </Link>
               ) : (
-                <AuthModal>
+                <AuthModal resources={resources}>
                   <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
                     Log in
                   </div>
@@ -253,10 +254,10 @@ export default function DesignNavbar() {
             {
               user.loaded ? (
                 <div>
-                  <UserDropdown />
+                  <UserDropdown resources={resources} />
                 </div>
               ) : (
-                <AuthModal>
+                <AuthModal resources={resources}>
                   <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
                     Log in
                   </div>
@@ -348,7 +349,7 @@ export default function DesignNavbar() {
                       </button>
                     </div>
                   ) : (
-                    <AuthModal>
+                    <AuthModal resources={resources}>
                       <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
                         Log in
                       </div>

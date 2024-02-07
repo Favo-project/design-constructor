@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { TbArrowsDiagonal, TbVectorTriangle } from "react-icons/tb";
 import { AiOutlineFilePdf } from "react-icons/ai";
 
-export default function UploadGuide() {
+export default function UploadGuide({ resources }) {
   const [isOpen, setIsOpen] = useState(false);
   const [guidelines] = useState([
     {
@@ -111,4 +111,4 @@ export default function UploadGuide() {
   );
 }
 
-function GuideDialog() {}
+function GuideDialog() { }

@@ -21,7 +21,7 @@ import SolidBtn from "@/components/form-elements/SolidBtn";
 import CampaignImage from "@/components/CampaignImage";
 
 
-export default function Campaigns() {
+export default function Campaigns({ resources }) {
     const [loading, setLoading] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [campaignId, setCampaignId] = useState('')
@@ -100,13 +100,11 @@ export default function Campaigns() {
         }
     }
 
-    console.log(campaigns);
-
     return (
         <div id="campaigns">
             <header className="flex items-center justify-between">
-                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">Campaigns</h1>
-                <UserDropdown />
+                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.campaigns.title}</h1>
+                <UserDropdown resources={resources} />
             </header>
 
             <div>
@@ -115,7 +113,7 @@ export default function Campaigns() {
                         <div className="flex flex-col items-center mb-1">
                             <Image src={account} width={124} height={124} alt="account-img" />
                             <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
-                                Create your account
+                                {resources.dashboard.campaigns.createaccount}
                                 <MdCheck className="ml-2 text-green-600 text-xl" />
                             </h5>
                         </div>
@@ -127,7 +125,7 @@ export default function Campaigns() {
                         <div className="flex flex-col items-center mb-1">
                             <Image src={campaign} width={124} height={124} alt="account-img" />
                             <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
-                                Launch your first campaign
+                                {resources.dashboard.campaigns.launchcampaign}
                                 <MdCheck className="ml-2 text-green-600 text-xl hidden" />
                             </h5>
                         </div>
@@ -138,7 +136,7 @@ export default function Campaigns() {
                     <div className="flex flex-col m-auto items-center mb-1">
                         <Image src={sale} width={124} height={124} alt="account-img" />
                         <h5 className="flex mt-3 items-center text-sm tracking-wider font-sans text-slate-600">
-                            Get your first sale
+                            {resources.dashboard.campaigns.getsale}
                             <MdCheck className="ml-2 text-green-600 text-xl hidden" />
                         </h5>
                     </div>
@@ -147,17 +145,17 @@ export default function Campaigns() {
                 <div>
                     <header className="flex items-center justify-between mb-6">
                         <SolidBtn href={'/design/start'}>
-                            Start new
+                            {resources.dashboard.campaigns.start}
                         </SolidBtn>
                     </header>
 
                     <table className="text-left w-full">
                         <thead>
                             <tr>
-                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">NAME</th>
-                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 hidden md:table-cell">SOLD</th>
-                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 hidden md:table-cell">TOTAL EARNED</th>
-                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">STATUS</th>
+                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 uppercase">{resources.dashboard.campaigns.name}</th>
+                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 hidden md:table-cell uppercase">{resources.dashboard.campaigns.sold}</th>
+                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 hidden md:table-cell uppercase">{resources.dashboard.campaigns.totalearned}</th>
+                                <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 uppercase">{resources.dashboard.campaigns.status}</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -176,20 +174,20 @@ export default function Campaigns() {
                                 !campaigns.length ? (
                                     <tr>
                                         <td>
-                                            <h4 className="text-slate-600 text-lg font-sans">You do not have campaigns yet!</h4>
+                                            <h4 className="text-slate-600 text-lg font-sans">{resources.dashboard.campaigns.nocampaigns}</h4>
                                         </td>
                                     </tr>
                                 ) : (
                                     campaigns.map((campaign, index) => (
                                         <tr key={index} className="hover:shadow-lg transition-all mb-2 rounded-lg overflow-hidden cursor-pointer relative">
                                             <td>
-                                                <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
+                                                <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 sm:p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                                                     <div>
                                                         <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-medium">{campaign.title}</p>
-                                                        <span className="text-xs text-slate-500">0 sold</span>
+                                                        <span className="text-xs text-slate-500">0 {resources.dashboard.campaigns.soldamount}</span>
                                                     </div>
                                                 </Link>
                                             </td>
@@ -211,9 +209,9 @@ export default function Campaigns() {
                                                         <>
                                                             <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
                                                                 <span className="text-slate-400 mr-1"><FaRegCircle /></span>
-                                                                Draft
+                                                                {resources.dashboard.campaigns.draft}
                                                             </h4>
-                                                            <p className="text-sm text-slate-500">Not launched</p>
+                                                            <p className="text-sm text-slate-500">{resources.dashboard.campaigns.notlaunched}</p>
                                                         </>
                                                     ) : campaign.status === 'Launched' ? (
                                                         <>
@@ -221,13 +219,13 @@ export default function Campaigns() {
                                                                 <span className="text-green-600 mr-1"><FaCircle /></span>
                                                                 On
                                                             </h4>
-                                                            <p className="text-sm text-slate-500">Launched</p>
+                                                            <p className="text-sm text-slate-500">{resources.dashboard.campaigns.launched}</p>
                                                         </>
                                                     ) : ''
                                                 }
                                             </td>
                                             <td>
-                                                <Menu as="div" className="relative inline-block text-left p-3">
+                                                <Menu as="div" className="relative inline-block text-left sm:p-3">
                                                     <div>
                                                         <Menu.Button className="p-3 relative text-2xl outline-none text-slate-700 hover:text-slate-400 transition-all">
                                                             <IoSettingsOutline />
@@ -261,7 +259,7 @@ export default function Campaigns() {
                                                                                     aria-hidden="true"
                                                                                 />
                                                                             )}
-                                                                            Edit
+                                                                            {resources.dashboard.campaigns.edit}
                                                                         </button>
                                                                     </Link>
                                                                 )}
@@ -283,7 +281,7 @@ export default function Campaigns() {
                                                                                 aria-hidden="true"
                                                                             />
                                                                         )}
-                                                                        Duplicate
+                                                                        {resources.dashboard.campaigns.duplicate}
                                                                     </button>
                                                                 )}
                                                             </Menu.Item>
@@ -305,7 +303,7 @@ export default function Campaigns() {
                                                                                 aria-hidden="true"
                                                                             />
                                                                         )}
-                                                                        Delete
+                                                                        {resources.dashboard.campaigns.delete}
                                                                     </button>
                                                                 )}
                                                             </Menu.Item>
@@ -323,10 +321,10 @@ export default function Campaigns() {
             </div>
 
             <div className="py-4 px-3 lg:py-8 lg:px-7 max-w-xl mt-20 bg-white border border-gray-200 rounded-2xl shadow-lg">
-                <HelpCard />
+                <HelpCard resources={resources} />
             </div>
 
-            <CampaignDelete closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={title} campaignId={campaignId} />
+            <CampaignDelete resources={resources} closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={title} campaignId={campaignId} />
         </div>
     )
 }

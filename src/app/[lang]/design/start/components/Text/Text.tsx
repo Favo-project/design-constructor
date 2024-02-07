@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { fabric } from 'fabric'
 import { v4 as uuidv4 } from 'uuid'
 import SolidBtn from "@/components/form-elements/SolidBtn";
 
-export default function Text({ campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Text({ resources, campaign, setCampaign, canvasRef, canvasValues }) {
   const [text, setText] = useState("");
 
   const addText = () => {

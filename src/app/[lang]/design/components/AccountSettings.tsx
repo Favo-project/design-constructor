@@ -23,7 +23,6 @@ export default function AccountSettings() {
 
     useEffect(() => {
         if (file?.name && file?.size) {
-            console.log(file);
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => {

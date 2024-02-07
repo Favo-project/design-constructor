@@ -7,7 +7,7 @@ import axios from "axios"
 import { useAtom } from "jotai"
 import { useLayoutEffect, useState } from "react"
 
-export default function Products() {
+export default function Products({ resources }) {
     const [auth, setAuth] = useAtom(authAtom)
     const [user, setUser] = useAtom(userAtom)
     const [loading, setLoading] = useState(true)
@@ -52,12 +52,12 @@ export default function Products() {
                 </div>
             ) : (
                 <div className="container m-auto max-w-7xl">
-                    <h2 className="text-center text-slate-700 font-semibold tracking-widest font-sans text-xl mb-10">OUR BEST PRODUCTS</h2>
+                    <h2 className="text-center text-slate-700 font-semibold tracking-widest font-sans text-xl mb-10 uppercase">{resources.home.products.title}</h2>
 
                     <div className="grid md:grid-cols-3 grid-cols-2 mb-6 justify-center">
                         {
                             campaigns.map((campaign, index) => (
-                                <CampaignCard key={index} campaign={campaign} />
+                                <CampaignCard key={index} campaign={campaign} resources={resources} />
                             ))
                         }
                     </div>
@@ -65,7 +65,7 @@ export default function Products() {
                     <div className="flex justify-center">
                         <OutlineBtn href={'/shop'}
                         >
-                            See all
+                            {resources.home.products.marketplace}
                         </OutlineBtn>
                     </div>
                 </div>

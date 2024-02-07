@@ -1,14 +1,13 @@
 'use client'
 import { campaignAtom, designAtom } from "@/constants";
 import { useAtom } from "jotai";
-import Image from "next/image";
 import { BsQuestionCircle } from "react-icons/bs";
 import { formatCurrency } from "@/actions/campaignTools";
 import ProfitInput from "./ProfitInput";
 import { useEffect } from "react";
 import CampaignImage from "@/components/CampaignImage";
 
-export default function Profits() {
+export default function Profits({ resources }) {
     const [campaign] = useAtom(campaignAtom)
     const [savedDesign] = useAtom(designAtom)
 

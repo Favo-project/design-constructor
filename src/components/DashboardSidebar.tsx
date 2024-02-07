@@ -2,48 +2,50 @@
 import { LogoPrimary } from "@/assets";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineDollar, AiOutlineHome } from "react-icons/ai";
 import { BiStore } from "react-icons/bi";
 import { BsBarChart } from "react-icons/bs";
 import { FiChevronLeft, FiSettings } from "react-icons/fi";
 
-const navigation = [
-  {
-    name: 'Overview',
-    icon: <AiOutlineHome />,
-    href: '/dashboard/overview'
-  },
-  {
-    name: 'Campaigns',
-    icon: <BsBarChart />,
-    href: '/dashboard/campaigns',
-    subLinks: ['/dashboard/details']
-  },
-  {
-    name: 'My Store',
-    icon: <BiStore />,
-    href: '/dashboard/stores'
-  },
-  {
-    name: 'Payouts',
-    icon: <AiOutlineDollar />,
-    href: '/dashboard/payouts'
-  },
-  {
-    name: 'Account',
-    icon: <FiSettings />,
-    href: '/dashboard/account'
-  },
-  {
-    name: 'Back to ArtVibe',
-    icon: <FiChevronLeft />,
-    href: '/'
-  },
-]
 
-export default function Sidebar() {
+
+export default function Sidebar({ resources }) {
+  const [navigation] = useState([
+    {
+      name: resources.dashboard.sidebar.overview,
+      icon: <AiOutlineHome />,
+      href: '/dashboard/overview'
+    },
+    {
+      name: resources.dashboard.sidebar.campaigns,
+      icon: <BsBarChart />,
+      href: '/dashboard/campaigns',
+      subLinks: ['/dashboard/details']
+    },
+    {
+      name: resources.dashboard.sidebar.store,
+      icon: <BiStore />,
+      href: '/dashboard/stores'
+    },
+    {
+      name: resources.dashboard.sidebar.payouts,
+      icon: <AiOutlineDollar />,
+      href: '/dashboard/payouts'
+    },
+    {
+      name: resources.dashboard.sidebar.account,
+      icon: <FiSettings />,
+      href: '/dashboard/account'
+    },
+    {
+      name: resources.dashboard.sidebar.back,
+      icon: <FiChevronLeft />,
+      href: '/'
+    },
+  ])
+
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 

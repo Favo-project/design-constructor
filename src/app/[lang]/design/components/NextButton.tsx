@@ -47,17 +47,6 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         setIsLaunch(campaignTools.launchCheck(campaign))
     }, [pathname, campaignId, campaign])
 
-    if (printCrossed === true) {
-        return (
-            <>
-                <button onClick={openCrossModal} className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
-                    Next
-                </button>
-                <CrossedDialog isOpen={isCrossedOpen} closeModal={closeCrossModal} nextUrl={nextUrl} onSave={onSave} />
-            </>
-        )
-    }
-
     if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
         if (campaign.status === 'Launched') {
             return (
@@ -89,6 +78,17 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
             <button disabled className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                 Next
             </button>
+        )
+    }
+
+    if (printCrossed === true) {
+        return (
+            <>
+                <button disabled={!loaded || loading} onClick={openCrossModal} className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
+                    Next
+                </button>
+                <CrossedDialog isOpen={isCrossedOpen} closeModal={closeCrossModal} nextUrl={nextUrl} onSave={onSave} />
+            </>
         )
     }
 

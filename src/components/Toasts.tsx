@@ -7,12 +7,14 @@ export default function Toasts() {
     const [toast, setToast] = useAtom(toastAtom)
 
     useEffect(() => {
-        const timout = setTimeout(() => {
-            setToast({ ...toastAtom.init })
-        }, 3000)
+        if (toast.message) {
+            const timout = setTimeout(() => {
+                setToast({ ...toastAtom.init })
+            }, 3000)
 
-        return () => clearTimeout(timout)
-    }, [toast, setToast])
+            return () => clearTimeout(timout)
+        }
+    }, [toast])
 
     const toastColor = (type) => {
         if (type === 'warning') {

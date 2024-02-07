@@ -1,7 +1,8 @@
+'use client'
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-export default function Badges() {
+export default function Badges({ resources }) {
     const { campaignId } = useParams()
 
     return (
@@ -9,15 +10,15 @@ export default function Badges() {
             <div className="container m-auto max-w-7xl py-10 px-6">
                 <ul className="flex items-center gap-2">
                     <li>
-                        <Link href={'/'} className="text-slate-600 font-sans">Home</Link>
+                        <Link href={'/'} className="text-slate-600 font-sans">{resources.campaignId.home}</Link>
                     </li>
                     <span className="text-slate-600">/</span>
                     <li>
-                        <Link href={'/shop'} className="text-slate-600 font-sans">Shop</Link>
+                        <Link href={'/shop'} className="text-slate-600 font-sans">{resources.campaignId.shop}</Link>
                     </li>
                     <span className="text-slate-600">/</span>
                     <li>
-                        <Link href={`/${campaignId}`} className="text-slate-600 font-sans border-b border-slate-600">Campaign</Link>
+                        <Link href={`/${campaignId}`} className="text-slate-600 font-sans border-b border-slate-600">{resources.campaignId.campaign}</Link>
                     </li>
                 </ul>
             </div>

@@ -10,7 +10,7 @@ import Image from "next/image";
 import { colors } from "@/constants"
 import { IoMdClose } from "react-icons/io"
 
-export default function ClipartEditor({ selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
+export default function ClipartEditor({ resources, selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
     const [selectedColor, setSelectedColor] = useState(null)
     const [rotate, setRotate] = useState(0)
 

@@ -22,7 +22,7 @@ import UserDropdown from "@/components/UserDropdown";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import CampaignImage from "@/components/CampaignImage";
 
-export default function Dashboard() {
+export default function Overview({ resources }) {
   const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [campaignId, setCampaignId] = useState('')
@@ -105,21 +105,21 @@ export default function Dashboard() {
 
   return (
     <div id="overview">
-      <CampaignDelete closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={title} campaignId={campaignId} />
+      <CampaignDelete resources={resources} closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={title} campaignId={campaignId} />
 
       <header className="flex items-center justify-between">
-        <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">Overview</h1>
-        <UserDropdown />
+        <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.overview.title}</h1>
+        <UserDropdown resources={resources} />
       </header>
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
         <div className="flex flex-col gap-8">
-          <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
+          <div className="py-4 px-3 lg:py-6 lg:px-4 xl:py-8 xl:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
             <header className="flex items-center mb-8 justify-between">
               <h3 className="text-2xl font-semibold tracking-tight text-gray-600">
-                Campaigns
+                {resources.dashboard.overview.campaigns}
               </h3>
               <Link href={'/design/start'} className="p-1 text-magenta hover:text-transparent hover:bg-gradient-to-r from-magenta to-blue hover:bg-clip-text transition text-sm">
-                Start new
+                {resources.dashboard.overview.start}
               </Link>
             </header>
             <div className="campaign-list">
@@ -128,27 +128,27 @@ export default function Dashboard() {
                   <span className="h-6 w-6 mr-2">
                     <UserIcon aria-hidden="true" />
                   </span>
-                  Create your account
+                  {resources.dashboard.overview.createaccount}
                 </li>
                 <li className="flex items-center mb-4">
                   <span className="h-6 w-6 mr-2">
                     <RocketLaunchIcon aria-hidden="true" />
                   </span>
-                  Launch your first campaign
+                  {resources.dashboard.overview.launchcampaign}
                 </li>
                 <li className="flex items-center mb-4">
                   <span className="h-6 w-6 mr-2">
                     <CurrencyDollarIcon aria-hidden="true" />
                   </span>
-                  Get your first sale
+                  {resources.dashboard.overview.getsale}
                 </li>
               </ul>
             </div>
             <table className="text-left w-full">
               <thead>
                 <tr>
-                  <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">NAME</th>
-                  <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5">STATUS</th>
+                  <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 uppercase">{resources.dashboard.overview.name}</th>
+                  <th className="text-xs font-sans font-bold tracking-widest text-slate-500 pb-5 uppercase">{resources.dashboard.overview.status}</th>
                   <th></th>
                 </tr>
               </thead>
@@ -168,20 +168,20 @@ export default function Dashboard() {
                     !campaigns.length ? (
                       <tr>
                         <td>
-                          <h4 className="text-slate-600 text-lg font-sans">You do not have campaigns yet!</h4>
+                          <h4 className="text-slate-600 text-lg font-sans">{resources.dashboard.overview.nocampaigns}</h4>
                         </td>
                       </tr>
                     ) : (
                       campaigns.map((campaign, index) => (
                         <tr key={index} className="relative hover:shadow-xl transition-all rounded-md cursor-pointer">
                           <td>
-                            <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
+                            <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 sm:p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                               <div>
                                 <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
                               </div>
                               <div>
                                 <p className="text-sm font-medium">{campaign.title}</p>
-                                <span className="text-xs text-slate-500">0 sold</span>
+                                <span className="text-xs text-slate-500">0 {resources.dashboard.overview.sold}</span>
                               </div>
                             </Link>
                           </td>
@@ -191,9 +191,9 @@ export default function Dashboard() {
                                 <>
                                   <h4 className="flex text-sm font-semibold text-slate-600 items-center mb-1">
                                     <span className="text-slate-400 mr-1"><FaRegCircle /></span>
-                                    Draft
+                                    {resources.dashboard.overview.draft}
                                   </h4>
-                                  <p className="text-sm text-slate-500">Not launched</p>
+                                  <p className="text-sm text-slate-500">{resources.dashboard.overview.notlaunched}</p>
                                 </>
                               ) : campaign.status === 'Launched' ? (
                                 <>
@@ -201,13 +201,13 @@ export default function Dashboard() {
                                     <span className="text-green-600 mr-1"><FaCircle /></span>
                                     On
                                   </h4>
-                                  <p className="text-sm text-slate-500">Launched</p>
+                                  <p className="text-sm text-slate-500">{resources.dashboard.overview.launched}</p>
                                 </>
                               ) : ''
                             }
                           </td>
                           <td>
-                            <Menu as="div" className="relative inline-block text-left p-3">
+                            <Menu as="div" className="relative inline-block text-left sm:p-3">
                               <div>
                                 <Menu.Button className="p-2 relative text-2xl outline-none text-slate-700 hover:text-slate-400 transition-all">
                                   <IoSettingsOutline />
@@ -241,7 +241,7 @@ export default function Dashboard() {
                                               aria-hidden="true"
                                             />
                                           )}
-                                          Edit
+                                          {resources.dashboard.overview.edit}
                                         </button>
                                       </Link>
                                     )}
@@ -263,7 +263,7 @@ export default function Dashboard() {
                                             aria-hidden="true"
                                           />
                                         )}
-                                        Duplicate
+                                        {resources.dashboard.overview.duplicate}
                                       </button>
                                     )}
                                   </Menu.Item>
@@ -285,7 +285,7 @@ export default function Dashboard() {
                                             aria-hidden="true"
                                           />
                                         )}
-                                        Delete
+                                        {resources.dashboard.overview.delete}
                                       </button>
                                     )}
                                   </Menu.Item>
@@ -302,23 +302,23 @@ export default function Dashboard() {
             </table>
             <div className="flex justify-end mt-4">
               <OutlineBtn href={'/dashboard/campaigns'}>
-                See all
+                {resources.dashboard.overview.seeall}
               </OutlineBtn>
             </div>
           </div>
           <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-semibold tracking-tight text-gray-600">
-              Campaigns
+              {resources.dashboard.overview.campaigns}
             </h3>
             <div>
 
               <div className="flex flex-col items-center mt-6">
                 <h4 className="uppercase font-semibold tracking-wider text-slate-600 text-lg mb-3">
-                  NO PAYOUTS YET
+                  {resources.dashboard.overview.nopayouts}
                 </h4>
-                <p className="text-sm text-slate-600 text-center tracking-wide mb-3">No payouts available yet. Don’t worry, we will email you when the first one is ready.</p>
-                <OutlineBtn href={'/dashboard/payouts'}>
-                  LEARN MORE
+                <p className="text-sm text-slate-600 text-center tracking-wide mb-3">{resources.dashboard.overview.payoutemail}.</p>
+                <OutlineBtn className="uppercase" href={'/dashboard/payouts'}>
+                  {resources.dashboard.overview.learnmore}
                 </OutlineBtn>
               </div>
             </div>
@@ -328,15 +328,14 @@ export default function Dashboard() {
           <div className="flex flex-col gap-8">
             <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
               <h5 className="mb-8 text-2xl font-medium tracking-tight text-gray-600 font-sans">
-                Recent sales
+                {resources.dashboard.overview.recentsales}
               </h5>
               <p className="mb-3 font-normal text-gray-700 text-center">
-                You don’t have any sales yet. After you get your first one, they
-                will appear here.
+                {resources.dashboard.overview.nosales}.
               </p>
             </div>
             <div className="py-4 px-3 lg:py-8 lg:px-7 bg-white border border-gray-200 rounded-2xl shadow-lg">
-              <HelpCard />
+              <HelpCard resources={resources} />
             </div>
           </div>
         </div>

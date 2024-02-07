@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 
-export default function Content() {
+export default function Content({ resources }) {
     const [products] = useState([
         {
             name: 'Shirts',
@@ -37,7 +37,7 @@ export default function Content() {
             <div className="container m-auto max-w-7xl">
                 <div className="grid md:grid-cols-[1fr_3.5fr] gap-14 px-6">
                     <div>
-                        <h3 className="text-lg font-bold font-sans text-slate-600 mb-3">Filter by tag</h3>
+                        <h3 className="text-lg font-bold font-sans text-slate-600 mb-3">{resources.catalog.content.filter}</h3>
                         <ul className="flex md:flex-col flex-wrap md:flex-nowrap gap-2 items-start">
                             <li>
                                 <button className="font-sans font-medium text-slate-600 px-3 py-1.5 rounded-full border-2 border-slate-200 hover:border-slate-600 focus:bg-slate-600 focus:text-white focus:border-slate-600 transition-all">News</button>

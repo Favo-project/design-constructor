@@ -9,7 +9,7 @@ import { useLayoutEffect, useState } from "react";
 import axios from "axios";
 import Loader from "@/components/Loader";
 
-export default function Shop() {
+export default function Shop({ resources }) {
     const [auth, setAuth] = useAtom(authAtom)
     const [user, setUser] = useAtom(userAtom)
     const [loading, setLoading] = useState(true)
@@ -54,10 +54,10 @@ export default function Shop() {
                     </div>
                 ) : (
                     <>
-                        <Navbar />
-                        <Hero />
-                        <Content campaigns={campaigns} />
-                        <Footer />
+                        <Navbar resources={resources} />
+                        <Hero resources={resources} />
+                        <Content campaigns={campaigns} resources={resources} />
+                        <Footer resources={resources} />
                     </>
                 )
             }

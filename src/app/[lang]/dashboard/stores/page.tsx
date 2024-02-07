@@ -7,7 +7,7 @@ import UserDropdown from "@/components/UserDropdown";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 
-export default function Stores() {
+export default function Stores({ resources }) {
     const [isOpen, setIsOpen] = useState(false)
     const [name, setName] = useState('')
 
@@ -22,8 +22,8 @@ export default function Stores() {
     return (
         <div id="stores">
             <header className="flex items-center justify-between">
-                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">Store</h1>
-                <UserDropdown />
+                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.store.title}</h1>
+                <UserDropdown resources={resources} />
             </header>
 
             <div className="flex justify-center gap-6">
@@ -36,13 +36,13 @@ export default function Stores() {
             </div>
 
             <div className="flex flex-col items-center mt-10">
-                <p className="max-w-[330px] text-slate-600 font-sans text-center mb-4">Stores make it easy to browse multiple products in one place.</p>
+                <p className="max-w-[330px] text-slate-600 font-sans text-center mb-4">{resources.dashboard.store.paragraph}.</p>
 
                 <SolidBtn
                     type="button"
                     onClick={openModal}
                 >
-                    Create my store
+                    {resources.dashboard.store.createstore}
                 </SolidBtn>
 
                 <Transition appear show={isOpen} as={Fragment}>
@@ -75,12 +75,12 @@ export default function Stores() {
                                             as="h3"
                                             className="text-lg font-medium leading-6 text-gray-900"
                                         >
-                                            Name your store
+                                            {resources.dashboard.store.namestore}
                                         </Dialog.Title>
                                         <div className="mt-4">
-                                            <h5 className="w-full text-sm uppercase font-mono tracking-wider font-semibold mb-3 text-slate-600">TITLE</h5>
-                                            <input onChange={(e) => setName(e.target.value)} type="text" className="w-full px-4 py-2.5 border-2 border-magenta border-opacity-70 outline-none rounded-lg font-semibold mb-3 text-slate-600 placeholder:text-slate-500 placeholder:font-semibold" placeholder="For example: Life with Avery" />
-                                            <p className="text-slate-600 text-sm">Don`t worry, you can always change it later.</p>
+                                            <h5 className="w-full text-sm uppercase font-mono tracking-wider font-semibold mb-3 text-slate-600">{resources.dashboard.store.storetitle}</h5>
+                                            <input onChange={(e) => setName(e.target.value)} type="text" className="w-full px-4 py-2.5 border-2 border-magenta border-opacity-70 outline-none rounded-lg font-semibold mb-3 text-slate-600 placeholder:text-slate-500 placeholder:font-semibold" placeholder={resources.dashboard.store.placeholder} />
+                                            <p className="text-slate-600 text-sm">{resources.dashboard.store.dontworry}.</p>
                                         </div>
 
                                         <div className="mt-6 flex justify-end">
@@ -90,7 +90,7 @@ export default function Stores() {
                                                 type="button"
                                                 onClick={closeModal}
                                             >
-                                                Continue
+                                                {resources.dashboard.store.continue}
                                             </OutlineBtn>
                                         </div>
                                     </Dialog.Panel>

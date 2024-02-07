@@ -8,7 +8,7 @@ import { useAtom } from 'jotai'
 import Toasts from '@/components/Toasts'
 import SolidBtn from '@/components/form-elements/SolidBtn'
 
-export default function DraftDialog({ isOpen, closeModal }) {
+export default function DraftDialog({ resources, isOpen, closeModal }) {
     const [toast, setToast] = useAtom(toastAtom)
     const router = useRouter()
     const { campaignId } = useParams()
@@ -23,7 +23,7 @@ export default function DraftDialog({ isOpen, closeModal }) {
 
             setCampaign({ ...campaign, ...response.data })
             router.push(`/design/start/${campaignId}`)
-            setToast({ type: "info", message: "Iltimos kuting" })
+            setToast({ type: "info", message: resources.campaigndraft.wait })
             closeModal()
         }
         catch (e) {
@@ -77,21 +77,21 @@ export default function DraftDialog({ isOpen, closeModal }) {
                                         as="h3"
                                         className="px-10 text-xl text-magenta font-medium leading-6 text-center"
                                     >
-                                        Are you sure you want to revert your campaign back to draft?
+                                        {resources.campaigndraft.title}?
                                     </Dialog.Title>
                                     <div className="mt-6 mb-4">
-                                        <p className="font-sans font-medium text-gray-600">Revert your campaign to draft to edit your design. Buyers won’t be able to check out until you launch the campaign again.</p>
+                                        <p className="font-sans font-medium text-gray-600">{resources.campaigndraft.paragraph}.</p>
                                     </div>
 
                                     <div className="mt-4 flex items-center justify-end gap-3">
                                         <button onClick={closeModal} className='font-sans text-magenta'>
-                                            Cancel
+                                            {resources.campaigndraft.cancel}
                                         </button>
                                         <SolidBtn
                                             type="button"
                                             onClick={() => onRevert()}
                                         >
-                                            Revert to draft
+                                            {resources.campaigndraft.revert}
                                         </SolidBtn>
                                     </div>
                                 </Dialog.Panel>

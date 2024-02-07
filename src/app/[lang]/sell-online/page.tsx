@@ -11,23 +11,26 @@ import Customize from "./containers/Customize";
 import Promote from "./containers/Promote";
 import PrintShip from "./containers/PrintShip";
 import Start from "./containers/Start";
+import { getDictionary } from "@/lib/dictionary";
 
-export default function SellOnline() {
+export default async function SellOnline({ params: { lang } }) {
+    const dict = await getDictionary(lang)
+
     return (
         <>
-            <Navbar />
-            <Hero />
-            <Examples />
-            <Guide />
-            <CreateStore />
-            <Catalog />
-            <UploadDesign />
-            <Prices />
-            <Customize />
-            <Promote />
-            <PrintShip />
-            <Start />
-            <Footer />
+            <Navbar resources={dict} />
+            <Hero resources={dict} />
+            <Examples resources={dict} />
+            <Guide resources={dict} />
+            <CreateStore resources={dict} />
+            <Catalog resources={dict} />
+            <UploadDesign resources={dict} />
+            <Prices resources={dict} />
+            <Customize resources={dict} />
+            <Promote resources={dict} />
+            <PrintShip resources={dict} />
+            <Start resources={dict} />
+            <Footer resources={dict} />
         </>
     )
 }

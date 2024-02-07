@@ -10,7 +10,7 @@ interface IGraph {
   height: number;
 }
 
-export default function Clipart({ campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Clipart({ resources, campaign, setCampaign, canvasRef, canvasValues }) {
   const [graphics] = useState([
     {
       icon: `${process.env.NEXT_PUBLIC_BASE_URL}/files/cliparts/icon.svg`,

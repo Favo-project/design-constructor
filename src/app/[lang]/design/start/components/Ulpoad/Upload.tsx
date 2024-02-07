@@ -11,7 +11,7 @@ interface CanvasObj extends fabric.Image {
   relativeTop?: number, side?: string, canvasId?: string, objType?: string, imgUrl?: string
 }
 
-export default function Upload({ campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Upload({ resources, campaign, setCampaign, canvasRef, canvasValues }) {
   const [loading, setLoading] = useState(false)
 
   const [file, setFile] = useState<File>();
@@ -83,7 +83,7 @@ export default function Upload({ campaign, setCampaign, canvasRef, canvasValues 
 
   return (
     <div id="w-full py-4 px-4">
-      <UploadGuide />
+      <UploadGuide resources={resources} />
       <div>
         <FileDrop setFile={setFile} file={file} />
         <div className="flex items-center py-4">

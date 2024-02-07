@@ -11,12 +11,12 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Questions() {
+export default function Questions({ resources }) {
 
     return (
         <section>
             <div className="container m-auto max-w-5xl px-6">
-                <h2 className="text-2xl text-slate-700 font-sans font-semibold mb-10">Couldn’t find what you’re looking for?</h2>
+                <h2 className="text-2xl text-slate-700 font-sans font-semibold mb-10">{resources.contact.questions.title}?</h2>
 
 
                 <div>
@@ -36,7 +36,7 @@ export default function Questions() {
                                 <div className={`px-4 py-6 rounded-lg transition-all`}>
                                     <div className='flex items-center gap-4'>
                                         <span className='p-2 text-3xl rounded-full text-slate-600 bg-[#f5f8fc] shadow-sm'><BsTags /></span>
-                                        <p className='text-slate-600 font-sans font-medium tracking-wide'>I have an issue with my order</p>
+                                        <p className='text-slate-600 font-sans font-medium tracking-wide'>{resources.contact.questions.orderissue}</p>
                                     </div>
                                     <span className='absolute z-30 text-white text-sm bottom-[11px] right-[11px]'>
                                         <IoMdCheckmark />
@@ -57,7 +57,7 @@ export default function Questions() {
                                 <div className={`px-4 py-6 rounded-lg transition-all`}>
                                     <div className='flex items-center gap-4'>
                                         <span className='p-2 text-3xl rounded-full text-slate-600 bg-[#f5f8fc] shadow-sm'><IoStorefrontOutline /></span>
-                                        <p className='text-slate-600 font-sans font-medium tracking-wide'>I have a question about selling on Bonfire</p>
+                                        <p className='text-slate-600 font-sans font-medium tracking-wide'>{resources.contact.questions.selling}</p>
                                     </div>
                                     <span className='absolute z-30 text-white text-sm bottom-[11px] right-[11px]'>
                                         <IoMdCheckmark />
@@ -78,7 +78,7 @@ export default function Questions() {
                                 <div className={`px-4 py-6 rounded-lg transition-all`}>
                                     <div className='flex items-center gap-4'>
                                         <span className='p-2 text-3xl rounded-full text-slate-600 bg-[#f5f8fc] shadow-sm'><BsQuestionCircle /></span>
-                                        <p className='text-slate-600 font-sans font-medium tracking-wide'>I have a general question</p>
+                                        <p className='text-slate-600 font-sans font-medium tracking-wide'>{resources.contact.questions.general}</p>
                                     </div>
                                     <span className='absolute z-30 text-white text-sm bottom-[11px] right-[11px]'>
                                         <IoMdCheckmark />
@@ -89,13 +89,13 @@ export default function Questions() {
                         </Tab.List>
                         <Tab.Panels className="mt-2">
                             <Tab.Panel className={classNames('py-12 outline-none')}>
-                                <OrderQuestion />
+                                <OrderQuestion resources={resources} />
                             </Tab.Panel>
                             <Tab.Panel className={classNames('py-12 outline-none')}>
-                                <SpecialQuestion />
+                                <SpecialQuestion resources={resources} />
                             </Tab.Panel>
                             <Tab.Panel className={classNames('py-12 outline-none')}>
-                                <GeneralQuestion />
+                                <GeneralQuestion resources={resources} />
                             </Tab.Panel>
                         </Tab.Panels>
                     </Tab.Group>

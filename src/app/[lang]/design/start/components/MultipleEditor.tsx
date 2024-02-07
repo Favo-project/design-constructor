@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { BiSelectMultiple } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
-export default function MultipleEditor({ multipleObj, campaign, setCampaign, canvasRef, canvasValues }) {
+export default function MultipleEditor({ resources, multipleObj, campaign, setCampaign, canvasRef, canvasValues }) {
     const [rotate, setRotate] = useState(0)
 
     useEffect(() => {

@@ -1,12 +1,8 @@
-'use client'
-import { campaign } from "@/app/dashboard/assets"
 import CampaignCard from "@/components/CampaignCard"
-import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 
-export default function Content({ campaigns }) {
-    const [categories] = useState([
+export default function Content({ campaigns, resources }) {
+    const categories = [
         {
             name: 'Popular',
         },
@@ -43,13 +39,13 @@ export default function Content({ campaigns }) {
         {
             name: 'Inspirational',
         },
-    ])
+    ]
 
     return (
         <main className="py-8">
             <div className="container m-auto max-w-7xl px-4">
                 <div className="max-w-3xl">
-                    <h3 className="font-sans uppercase font-semibold text-slate-700 tracking-wider p-2 mb-4">BY CATEGORY</h3>
+                    <h3 className="font-sans uppercase font-semibold text-slate-700 tracking-wider p-2 mb-4">{resources.shop.content.bycategory}</h3>
                     <ul className="grid grid-cols-3">
                         {
                             categories.map((category, index) => (
@@ -67,7 +63,7 @@ export default function Content({ campaigns }) {
                     <div className="grid md:grid-cols-3 grid-cols-2 gap-10">
                         {
                             campaigns.map((campaign, index) => (
-                                <CampaignCard key={index} campaign={campaign} />
+                                <CampaignCard resources={resources} key={index} campaign={campaign} />
                             ))
                         }
                     </div>

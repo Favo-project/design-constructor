@@ -22,7 +22,7 @@ import SolidBtn from '@/components/form-elements/SolidBtn';
 import UserDropdown from '@/components/UserDropdown';
 import CampaignImage from '@/components/CampaignImage';
 
-export default function Details() {
+export default function Details({ resources }) {
     const router = useRouter()
     const [isOpenDraft, setIsOpenDraft] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
@@ -112,27 +112,26 @@ export default function Details() {
                             <GoChevronLeft />
                         </Link>
                         <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-5 lg:ml-3">{campaign?.title}</h1>
-                        <UserDropdown />
+                        <UserDropdown resources={resources} />
                     </header>
                     <div className="flex items-center mb-14 gap-4 lg:ml-3">
                         <Link href={`/campaign/${campaignId}`} className="font-sans hover:text-magenta text-slate-400 flex items-center transition-all">
                             <span className="md:text-2xl text-xl mr-2">
                                 <MdOpenInNew />
                             </span>
-                            See campaign
+                            {resources.dashboard.details.seecampaign}
                         </Link>
                         <button className="font-sans hover:text-magenta text-slate-400 flex items-center transition-all">
                             <span className="md:text-2xl text-xl mr-2">
                                 <FiLink />
                             </span>
-                            Copy link
+                            {resources.dashboard.details.copylink}
                         </button>
                     </div>
                     <div className='flex items-center md:flex-nowrap flex-wrap gap-5 mb-10 justify-between'>
                         <div className='flex items-center gap-3'>
                             <div>
                                 <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
-                                {/* <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[0].colors[0].designImg.front}`} width={44} height={44} alt="campaign-img" /> */}
                             </div>
                             <div>
                                 <h4 className='flex items-center gap-2 font-bold text-slate-600 mb-1'>
@@ -140,12 +139,12 @@ export default function Details() {
                                         campaign.status === 'Launched' ? (
                                             <>
                                                 <span className='text-green-600'><FaCircle /></span>
-                                                Launched
+                                                {resources.dashboard.details.launched}
                                             </>
                                         ) : (
                                             <>
                                                 <span className='text-slate-400'><FaRegCircle /></span>
-                                                Draft
+                                                {resources.dashboard.details.draft}
                                             </>
                                         )
                                     }
@@ -191,7 +190,7 @@ export default function Details() {
                                                                     aria-hidden="true"
                                                                 />
                                                             )}
-                                                            Edit
+                                                            {resources.dashboard.details.edit}
                                                         </button>
                                                     </Link>
                                                 )}
@@ -213,7 +212,7 @@ export default function Details() {
                                                                 aria-hidden="true"
                                                             />
                                                         )}
-                                                        Duplicate
+                                                        {resources.dashboard.details.duplicate}
                                                     </button>
                                                 )}
                                             </Menu.Item>
@@ -235,7 +234,7 @@ export default function Details() {
                                                                 aria-hidden="true"
                                                             />
                                                         )}
-                                                        Revert to draft
+                                                        {resources.dashboard.details.revert}
                                                     </button>
                                                 )}
                                             </Menu.Item>
@@ -257,7 +256,7 @@ export default function Details() {
                                                                 aria-hidden="true"
                                                             />
                                                         )}
-                                                        Delete
+                                                        {resources.dashboard.details.delete}
                                                     </button>
                                                 )}
                                             </Menu.Item>
@@ -265,14 +264,14 @@ export default function Details() {
                                     </Transition>
                                 </Menu>
                             </div>
-                            <SolidBtn href={`/${campaignId}`}>
-                                See page
+                            <SolidBtn href={`/campaign/${campaignId}`}>
+                                {resources.dashboard.details.seepage}
                             </SolidBtn>
                         </div>
                     </div>
                     <div className='mb-6'>
                         <h2 className='text-2xl font-semibold text-slate-700 font-sans mb-6'>
-                            Recent sales
+                            {resources.dashboard.details.recentsales}
                         </h2>
 
                         <div>
@@ -288,7 +287,7 @@ export default function Details() {
                                             )
                                         }
                                     >
-                                        Your buyers
+                                        {resources.dashboard.details.buyers}
                                     </Tab>
                                     <Tab
                                         className={({ selected }) =>
@@ -300,7 +299,7 @@ export default function Details() {
                                             )
                                         }
                                     >
-                                        Sales by product
+                                        {resources.dashboard.details.byproduct}
                                     </Tab>
                                 </Tab.List>
                                 <Tab.Panels className="mt-4">
@@ -311,7 +310,7 @@ export default function Details() {
                                             <span className='text-6xl p-8 rounded-full bg-slate-200 mb-6 text-slate-400 flex items-center justify-center'>
                                                 <CiShoppingCart />
                                             </span>
-                                            <p className='text-lg text-center text-slate-400'>No sales yet. Share your campaign to spread the word.</p>
+                                            <p className='text-lg text-center text-slate-400'>{resources.dashboard.details.nosales}.</p>
                                         </div>
                                     </Tab.Panel>
                                     <Tab.Panel
@@ -326,10 +325,10 @@ export default function Details() {
                         </div>
                     </div>
                     <div>
-                        <h2 className='text-2xl font-semibold text-slate-700 font-sans mb-6'>Share</h2>
+                        <h2 className='text-2xl font-semibold text-slate-700 font-sans mb-6'>{resources.dashboard.details.share}</h2>
                         <div className='border-2 border-slate-200 rounded-lg lgp-10 p-4 lg:max-w-md'>
                             <div className='flex flex-col mb-8'>
-                                <h3 className='text-xl font-semibold text-slate-600 mb-2'>Share on social</h3>
+                                <h3 className='text-xl font-semibold text-slate-600 mb-2'>{resources.dashboard.details.social}</h3>
                                 <div className='flex items-center flex-wrap gap-6'>
                                     <div className='flex flex-col items-center'>
                                         <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>F</button>
@@ -358,30 +357,30 @@ export default function Details() {
                                 </div>
                             </div>
                             <div className='flex flex-col'>
-                                <h3 className='text-xl font-semibold text-slate-600 mb-2'>Send a link</h3>
+                                <h3 className='text-xl font-semibold text-slate-600 mb-2'>{resources.dashboard.details.sendlink}</h3>
                                 <div className='flex items-center flex-wrap gap-6'>
                                     <div className='flex flex-col items-center'>
                                         <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>C</button>
                                         <span className='text-slate-500 font-sans font-medium'>
-                                            Copy link
+                                            {resources.dashboard.details.copy}
                                         </span>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>Sh</button>
                                         <span className='text-slate-500 font-sans font-medium'>
-                                            Share
+                                            {resources.dashboard.details.share}
                                         </span>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>C</button>
                                         <span className='text-slate-500 font-sans font-medium'>
-                                            Copy link
+                                            {resources.dashboard.details.copy}
                                         </span>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>Sh</button>
                                         <span className='text-slate-500 font-sans font-medium'>
-                                            Share
+                                            {resources.dashboard.details.share}
                                         </span>
                                     </div>
                                 </div>
@@ -389,11 +388,11 @@ export default function Details() {
                         </div>
                     </div>
 
-                    <CampaignDelete closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={campaign.title} campaignId={campaign._id} />
+                    <CampaignDelete resources={resources} closeModal={closeModal} isOpen={isOpen} onDelete={onDelete} title={campaign.title} campaignId={campaign._id} />
                 </>
             )}
 
-            <DraftDialog closeModal={closeModalDraft} isOpen={isOpenDraft} />
+            <DraftDialog resources={resources} closeModal={closeModalDraft} isOpen={isOpenDraft} />
         </div>
     )
 }

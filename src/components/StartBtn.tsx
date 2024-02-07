@@ -4,7 +4,7 @@ import { useAtom } from "jotai"
 import { userAtom } from "@/constants"
 import SolidBtn from "./form-elements/SolidBtn"
 
-export default function StartBtn({ href = '/dashboard/overview', context = 'Get started', contextOut = 'Get started' }) {
+export default function StartBtn({ resources, href = '/dashboard/overview', context = 'Get started', contextOut = 'Get started' }) {
     const [user] = useAtom(userAtom)
 
     return (
@@ -17,7 +17,7 @@ export default function StartBtn({ href = '/dashboard/overview', context = 'Get 
                 </SolidBtn>
             </>
         ) : (
-            <AuthModal>
+            <AuthModal resources={resources}>
                 <SolidBtn div>
                     {contextOut}
                 </SolidBtn>

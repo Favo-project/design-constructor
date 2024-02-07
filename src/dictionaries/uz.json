@@ -1,16 +1,437 @@
 {
-  "navigation": {
-    "home": "Startseite",
-    "about": "Über"
-  },
-  "page": {
-    "home": {
-      "title": "Willkommen bei NextJs i18n",
-      "description": "Internationalisierung im NextJs 13 App-Router"
+  "home": {
+    "hero": {
+      "title": "Sevimli Futbolka yarating va onlayn soting",
+      "startbtn": "Dizayn yaratish",
+      "dashboard": "Boshqaruv panel",
+      "search": "Qidirish"
     },
-    "about": {
-      "title": "Über uns",
-      "description": "Dies ist die About-Seite"
+    "products": {
+      "title": "Bizning eng yaxshi mahsulotlarimiz",
+      "marketplace": "Barchasini ko'rish"
+    },
+    "sellonline": {
+      "title": "Art Vibe bilan o'z brendingizni yarating",
+      "paragraph1": "Platformada o'z sahifangizni ochib Futbolka, hudi va svitshotlar uchun dizayn tayyorlab daromad qilishingiz mumkin",
+      "paragraph2": "Siz tayyorlagan dizayndagi kiyimlarni mijozingizga pulini esa sizga jo'natamiz",
+      "sellbtn": "Futbolkalarni onlayn sotish"
+    },
+    "openstore": {
+      "title": "Bepul onlayn do'kon oching",
+      "paragraph": "Onlayn do'kon yaratib siz o'z mahsulotlaringizni ko'rish uchun mijozlaringizga qulaylik yaratgan bolasiz. Bu butlaqo bepul va o'z brendingizga moslashtirish oson",
+      "openbtn": "Onlayn do'kon ochish"
+    },
+    "support": {
+      "title": "Mijozlarni qo'llab-quvvatlash",
+      "paragraph": "Siz 'Art Vibe'da kiyimlar uchun dizayn yaratishni boshlagan kuningizdan boshlab, mijozlar ehtiyojini qondirish va hisobni boshqarish bo'yicha maxsus guruhlarimiz sizni har qadamda qo'llab-quvvatlab borishadi"
+    },
+    "suggestions": {
+      "title": "ARTVIBE HAQIDA BATAFSIL",
+      "catalog": "Mahsulotlar katalogini ko'rish",
+      "standards": "Sifatli matodan ishlangan kiyimlar",
+      "templates": "Dizayn shablonlardan foydalaning",
+      "ideas": "Bizning eng yaxshi shablonlarimiz"
+    },
+    "start": {
+      "title": "Boshlashga tayyormisiz",
+      "paragraph": "O'z brendingizni yaratishga bir qadam qoldi",
+      "startbtn": "Boshlash"
     }
+  },
+  "sellonline": {
+    "hero": {
+      "title": "Futbolkalarni onlayn tayyorlash va sotish uchun eng qulay joy",
+      "free": "100% bepul",
+      "setup": "Oson sozlash",
+      "payouts": "Tez to'lov",
+      "startbtn": "Boshlash"
+    },
+    "examples": {
+      "title": "ArtVibe bilan siz hudiy, futbolka va svitshortlarni dizaynini tayyorlab pul ishlashingiz mumkin. Bu 100% bepul, siz yaratgan dizayndagi kiyimlarni mijozlaringizga to'g'ridan to'g'ri yetkazib beramiz"
+    },
+    "guide": {
+      "title": "ArtVibe yordamida kiyimlarni qanday onlayn sotish mumkin",
+      "design": "Dizayn tayyorlang yoki yuklang",
+      "upload": "ArtVibe bilan o'z dizayningizni yarating yoki yuklab oling",
+      "promote": "Reklama va sotish",
+      "sell": "ArtVibe da yaratgan ijodingizni ijtimoiy tarmoqlaringizga joylab reklama qiling",
+      "shirts": "Yetkazib berish",
+      "shipped": "Siz tayyorlagan dizayndagi kiyimlar sotilganda, ArtVibe mijozlaringizga to'g'ridan to'g'ri yetkazib beramiz",
+      "getpaid": "Pulingizni oling",
+      "payouts": "Istagan vaqtingizda o'zingizga qulay usulda saytdagi hisobingizda yechib olishingiz mumkin",
+      "startbtn": "Boshlash"
+    },
+    "createstore": {
+      "title": "Onlayn futbolkalar do'konini yarating",
+      "paragraph": "Bepul onlayn-do'kon yaratish orqali sayt foydalanuvchilariga siz yaratgan barcha maxsus kiyimlarni ko'rib chiqishga qulaylik yaratasiz. Yaratish uchun bir necha daqiqa vaqt ketadi va siz ularni brendingizga mos ravishda sozlashingiz mumkin",
+      "openbtn": "Onlayn do'kon yaratish"
+    },
+    "catalog": {
+      "title": "Internetda sotmoqchi bo'lgan maxsus kiyimni tanlang",
+      "paragraph": "Yuqori sifatli futbolkalar, hudilar, svitshortlar va boshqalarning tanlangan tanlovimizni ko'rib chiqing. Turli xil uslublar, o'lchamlar, ranglar va mato variantlarini toping, masalan, halqali paxta, poliblendlar, og'ir vaznlar va boshqalar.",
+      "seecatalog": "To'liq katalogni ko'rish"
+    },
+    "uploaddesign": {
+      "title": "O'zingizning dizayningizni yuklang yoki dizayn vositamizda o'zingizning tanlovingizni yarating",
+      "paragraph": "O'zingizning shaxsiy ijodingizni yuklang yoki minglab bepul shriftlar va grafiklardan iborat kutubxonamizdan foydalaning"
+    },
+    "prices": {
+      "title": "Sotish narxlaringizni belgilang",
+      "paragraph1": "O'zingizning sotish narxlaringizni belgilang va foyda miqdoringizni aniqlang. Ko'proq sotganingiz sayin, daromadingiz ortadi",
+      "paragraph2": "Shuningdek, kampaniyangizning davomiyligini belgilash va mablagʻ yigʻishni yoqish kabi kampaniya sozlamalarini oʻzgartirishingiz mumkin"
+    },
+    "customize": {
+      "title": "Sahifangizni moslashtiring",
+      "paragraph": "Kampaniya sahifangizdan boshqalar bilan ulashing. Jozibali sarlavha va xulosa yarating va hikoyangizni jonlantirish uchun videolarni qo'shing"
+    },
+    "promote": {
+      "title": "Dizaynlaringizni reklama qiling va soting",
+      "paragraph1": "Ijtimoiy tarmoqlar, veb-saytingiz yoki eng yaxshi ishlaydigan boshqa kanallar orqali auditoriyangizga so'zni tarqating",
+      "paragraph2": "Mijozlar mobil qurilmalarga mos kampaniya sahifangizga tashrif buyurgan va xarid qilganda sotuvchining boshqaruv panelidagi savdo statistikasini tomosha qiling."
+    },
+    "print": {
+      "title": "Futbolkalar chop etiladi & yetkaziladi",
+      "paragraph": "Dam oling, biz butun dunyo bo'ylab xaridorlarga buyurtmalarni chop etish va jo'natish bilan shug'ullanamiz"
+    },
+    "start": {
+      "title": "Ko'ylaklarni onlayn sotishni boshlashga tayyormisiz",
+      "text": "O'zingizning sevimli futbolkangizni loyihalashtirishga bir qadam qoldi.",
+      "startbtn": "Boshlash",
+      "helpcenter": "Yordam markazi",
+      "helptext": "Boshlash uchun tez-tez beriladigan savollarga javoblarni o'qing",
+      "readmore": "Barchasini ko'rish",
+      "dropline": "Xabar qoldiring",
+      "droptext": "Biror kishi bilan gaplashishni afzal ko'rasizmi? Bizga xabar yuboring, biz bog'lanamiz",
+      "contact": "Biz bilan bog'laning"
+    }
+  },
+  "onlinestore": {
+    "hero": {
+      "title": "ONLAYN DO'KONINGIZNI OCHING",
+      "paragraph": "Sizning o'ziga hos dizaynga ega kiyimlaringiz bir joyda",
+      "createstore": "Do'koningizni yarating",
+      "startbtn": "Boshlash"
+    },
+    "customization": {
+      "products": "Barcha mahsulotlaringiz bir joyda",
+      "productstext": "Do'kon barcha mahsulotlaringizni bir joyga jamlash orqali mijozlaringizga xarid qilishni osonlashtiradi",
+      "customization": "Moslashtirish osonlashtirildi",
+      "customizationtext": "O'z brendingizni ishonarli va do'koningizni o'ziga xos ko'rinishga keltirish juda oson",
+      "story": "Hikoyangizni aytib bering",
+      "storytext": "O'zingizni dunyoga tanishtiring va kimligingiz yoki kompaniyangiz maqsadi haqida yozing"
+    },
+    "slider": {
+      "title": "Biz sizning hikoyangiz qanday bo'lishidan qat'i nazar, professional ko'rinishdagi do'kon yaratishni osonlashtiramiz",
+      "paragraph": "Onlayn do'koningiz uchun allaqachon ArtVibe do'konlaridan o'zlarining maxsus kiyimlarini sotish uchun foydalanayotgan minglab sotuvchilardan ilhom oling"
+    },
+    "openstore": {
+      "title": "Bugunoq do'koningizni oching",
+      "paragraph": "ArtVibe da ro'yxatdan o'tishingiz bilan onlayn do'koningizni ochishingiz mumkin",
+      "openstore": "Do'kon ochish"
+    }
+  },
+  "catalog": {
+    "hero": {
+      "link1": "Bosh sahifa",
+      "link2": "Mahsulotlar",
+      "title": "Katalog",
+      "paragraph": "Yuqori standardlarga ega maxsus kiyimlar"
+    },
+    "content": {
+      "filter": "Tag bo'yicha filterlash"
+    },
+    "banner": {
+      "title": "Bugun ajoyib dizayn yarating",
+      "startbtn": "Dizayn boshlash"
+    }
+  },
+  "templates": {
+    "hero": {
+      "link1": "Bosh sahifa",
+      "link2": "Dizayn shablonlar",
+      "title": "Fubolkalar dizayni uchun shablonlar",
+      "paragraph": "Bepul futbolka shablonlari va o'zingiz dizayn yaratishingizga g'oyalar to'plami"
+    },
+    "content": {
+      "bycategory": "Kategoriya bo'yicha",
+      "customize": "O'zgartirish"
+    }
+  },
+  "shop": {
+    "hero": {
+      "link1": "Bosh sahifa",
+      "link2": "Marketplace",
+      "title1": "",
+      "title2": " marketplace dagi mahsulotlarni ko'ring"
+    },
+    "content": {
+      "bycategory": "Kategoriya bo'yicha"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Yordam markazimizda tezkor javob & maslahatlar oling",
+      "text": "Kutmasdan savollaringizga javob oling",
+      "helpbtn": "Yordam markazi bilan tanishing"
+    },
+    "questions": {
+      "title": "Qidirayotgan narsangizni topa olmadingizmi?",
+      "orderissue": "Mening buyurtmam bilan bog'liq muammo bor",
+      "selling": "Menda ArtVibe-da sotish haqida savolim bor",
+      "general": "Menda umumiy savol bor"
+    },
+    "orderquestion": {
+      "title": "Bizga faqat sizdan ma'lumot kerak",
+      "ordernumber": "BUYURTMA RAQAMI",
+      "placeholder": "Masalan, 12-3456-789",
+      "text": "Siz uni elektron pochtangizda yoki quyidagi amallarni bajarish orqali topishingiz mumkin",
+      "continue": "Davom etish"
+    },
+    "specialquestion": {
+      "label": "NIMA BO'LDI",
+      "getanswer": "Yordam markazimizda tezkor javoblarni oling",
+      "questionanswer": "Kutmasdan savollaringizga javob oling",
+      "gethelp": "Hoziroq yordam oling",
+      "sendmessage": "Xabar yuboring",
+      "respond": "Bizning jamoamiz odatda 1-2 ish kuni ichida javob beradi",
+      "yourname": "Ismingiz nima",
+      "nameplaceholder": "Sizning ismingiz & familiyangiz",
+      "emailadress": "E-POCHTA MANZILI",
+      "message": "XABARINGIZ",
+      "messageplaceholder": "Qo'shimcha eslatmalar bormi?",
+      "send": "Xabar yuborish",
+      "questions": {
+        "selectlist": "Iltimos, ro'yxatdan tanlang",
+        "pricing": "Narxlar qanday ishlaydi?",
+        "pricingtip": "Esingizda bo'lsin, ArtVibe-da sotish bepul va asosiy xarajat kampaniyangizni o'rnatishda foyda bosqichida ko'rsatiladi.",
+        "design": "Menga dizayn bo'yicha yordam kerak",
+        "designtip": "Iltimos, ismingizni va elektron pochtangizni kiriting va dizayningiz yoki ilhomingizning eng yuqori sifatli tasvirini ilova qiling. Qo'llab-quvvatlanadigan fayl turlari: .AI, .EPS, .PDF, .PNG yoki .JPG (.AI afzalroq). Shuningdek, quyida dizayningizga qanday yordam berishimiz haqida bizga fikr bering.",
+        "campaigns": "Kampaniyalar qanday ishlaydi",
+        "campaignstip": "Esda tutingki, dizayningiz muddatini 21 kundan ortiq uzaytira olmaymiz. Biroq, siz xohlagancha qayta ishga tushirishingiz mumkin.",
+        "other": "Boshqa",
+        "othertip": "Bizga qanday yordam berishimiz mumkinligini ayting. Iltimos, quyida e-pochtangizni va maxsus savolingizga tegishli qo'shimcha ma'lumotlarni taqdim eting."
+      }
+    },
+    "generalquestion": {
+      "getanswer": "Yordam markazimizda tezkor javoblarni oling",
+      "questionanswer": "Kutmasdan savollaringizga javob oling",
+      "gethelp": "Hoziroq yordam oling",
+      "sendmessage": "Xabar yuboring",
+      "respond": "Bizning jamoamiz odatda 1-2 ish kuni ichida javob beradi",
+      "yourname": "Ismingiz nima",
+      "nameplaceholder": "Sizning ismingiz & familiyangiz",
+      "emailadress": "E-POCHTA MANZILI",
+      "message": "XABARINGIZ",
+      "messageplaceholder": "Qo'shimcha eslatmalar bormi?",
+      "send": "Xabar yuborish"
+    }
+  },
+  "store": {
+    "navbar": {
+      "close": "Yopish",
+      "welcome": "Xush kelibsiz"
+    }
+  },
+  "campaignId": {
+    "color": "RANG",
+    "design": "Dizayn",
+    "size": "O'LCHAM",
+    "nosize": "Hozirda ushbu mahsulot uchun o'lcham yo'q",
+    "addcart": "Savatchaga qo'shish",
+    "sold": "SOTILGAN",
+    "home": "Bosh sahifa",
+    "shop": "Mahsulotlar",
+    "campaign": "Dizayn"
+  },
+  "dashboard": {
+    "sidebar": {
+      "overview": "Asosiy",
+      "campaigns": "Dizaylar",
+      "store": "Mening do'konim",
+      "payouts": "To'lovlar",
+      "account": "Kabinet",
+      "back": "ArtVibe ga qaytish"
+    },
+    "overview": {
+      "title": "Asosiy",
+      "campaigns": "Dizaynlar",
+      "start": "Yangi boshlash",
+      "createaccount": "Profilingizni yarating",
+      "launchcampaign": "Birinchi dizayningizni boshlang",
+      "getsale": "Birinchi daromadingizni oling",
+      "name": "nomi",
+      "status": "status",
+      "nocampaigns": "Sizda hali dizaynlar yo'q!",
+      "sold": "sotildi",
+      "draft": "Tayyorlanmoqda",
+      "notlaunched": "Ishga tushmagan",
+      "launched": "Ishga tushgan",
+      "edit": "O'zgartirish",
+      "duplicate": "Nusxalash",
+      "delete": "O'chirish",
+      "seeall": "Hammasini ko'rish",
+      "nopayouts": "Hozircha to'lovlar mavjud emas",
+      "payoutemail": "Hozircha to'lovlar mavjud emas. Xavotir olmang, birinchisi tayyor bo'lgach, sizga xat yuboramiz",
+      "learnmore": "BATAFSIL MA'LUMOT",
+      "recentsales": "So'nggi sotuvlar",
+      "nosales": "Sizda hali sotuv yo'q. Birinchisini olganingizdan so'ng, ular shu yerda paydo bo'ladi"
+    },
+    "campaigns": {
+      "title": "Dizaynlar",
+      "createaccount": "Profilingizni yarating",
+      "launchcampaign": "Birinchi dizayningizni boshlang",
+      "getsale": "Birinchi daromadingizni oling",
+      "start": "Yangi boshlash",
+      "name": "nomi",
+      "sold": "SOTILGAN",
+      "totalearned": "umumiy daromad",
+      "status": "STATUS",
+      "nocampaigns": "Sizda hali dizaynlar yo'q!",
+      "soldamount": "sotildi",
+      "draft": "Tayyorlanmoqda",
+      "notlaunched": "Ishga tushmagan",
+      "launched": "Ishga tushgan",
+      "edit": "O'zgartirish",
+      "duplicate": "Nusxalash",
+      "delete": "O'chirish"
+    },
+    "store": {
+      "title": "Do'kon",
+      "paragraph": "Do'konlar bir joyda bir nechta mahsulotlarni ko'rib chiqishni osonlashtiradi",
+      "createstore": "Do'koningizni yarating",
+      "namestore": "Do'koningizga nom bering",
+      "storetitle": "Sarlavha",
+      "placeholder": "Masalan: Avery bilan hayot",
+      "dontworry": "Xavotir olmang, sarlavhani keyinroq o'zgartirishingiz mumkin",
+      "continue": "Davom eting"
+    },
+    "payouts": {
+      "title": "To'lovlar",
+      "payouttitle": "Hozircha toʻlovlar mavjud emas",
+      "paragraph": "Xavotir olmang, birinchisi tayyor bo'lgach, sizga xabar yuboramiz"
+    },
+    "account": {
+      "title": "Kabinet",
+      "member": "Profil yaratilgan sana",
+      "profilesettings": "Profil sozlamalari",
+      "passwordsettings": "Parol",
+      "emailsettings": "Pochta sozlamalari",
+      "name": "Ism",
+      "phone": "TEL. RAQAM",
+      "emailadress": "EMAIL POCHTA",
+      "photo": "RASM",
+      "imagetypes": "JPG yoki PNG. Maksimal hajmi 5 MB",
+      "savechanges": "O'ZGARLARNI SAQLASH",
+      "newpassword": "YANGI PAROL",
+      "confirmpassword": "YANGI PAROLNI TASDIQLASH",
+      "changepassword": "PAROLNI O'ZGARTIRISH",
+      "maximagesize": "Maksimal rasm hajmi 5 MB",
+      "onlyimages": "Faqat rasmlarga ruxsat beriladi"
+    },
+    "details": {
+      "seecampaign": "Dizaynni ko'rish",
+      "copylink": "Havolani nusxalash",
+      "launched": "Ishga tushgan",
+      "draft": "Tayyorlanmoqda",
+      "edit": "O'zgartirish",
+      "duplicate": "Nusxalash",
+      "revert": "Revert to draft",
+      "delete": "O'chirish",
+      "seepage": "Sahifani ko'rish",
+      "recentsales": "So'nggi sotuvlar",
+      "buyers": "Sizning haridorlaringiz",
+      "byproduct": "Mahsulot bo'yicha sotish",
+      "nosales": "Hali sotuv yo'q. Dizayningizni ijtimoiy tarmoqlarda ulashing",
+      "share": "Ulashish",
+      "social": "Ijtimoiy tarmoqda baham ko'ring",
+      "sendlink": "Havolani yuborish",
+      "copy": "Havolani nusxalash"
+    }
+  },
+  "design": {
+    "start": {
+      "show": "",
+      "show2": "Ko'rsatish",
+      "back": "Orqani",
+      "front": "Oldini",
+      "createdesign": "Create your design"
+    }
+  },
+  "navbar": {
+    "sellonline": "Onlayn sotish",
+    "sellcampaign": "Futbolkalarni dizayn bilan sotish",
+    "createstore": "Do'kon yaratish",
+    "customize": "O'zgartirish",
+    "catalog": "Produkt katalog",
+    "templates": "Dizayn shablonlar",
+    "explore": "Marketplace",
+    "shop": "Futbolkalar sotib olish",
+    "shoplove": "O'zingiz sevgan dizayn toping",
+    "discover": "Ijodkorlarni kuzating",
+    "overview": "Bosh menyu",
+    "campaigns": "Dizaylar",
+    "store": "Do'kon",
+    "payouts": "To'lovlar",
+    "orders": "Buyurtmalarim",
+    "account": "Kabinet",
+    "close": "Yopish",
+    "welcome": "Xush kelibsiz"
+  },
+  "footer": {
+    "subtitle": "Yuqori sifatli va takrorlanmas dizayndagi kiyimlar olami",
+    "company": "Kompaniya",
+    "about": "Biz haqimizda",
+    "help": "Yordam olish",
+    "contact": "Kontakt",
+    "creator": "Ijodkorlar uchun",
+    "store": "Do'kon ochish",
+    "sell": "ArtVibe da sotish",
+    "contacts": "Kontaktlar",
+    "callus": "Biz bilan bog'laning"
+  },
+  "userdropdown": {
+    "welcome": "Xush kelibsiz",
+    "dashboard": "Boshqaruv panel",
+    "account": "Kabinet",
+    "logout": "Chiqish",
+    "login": "Kirish"
+  },
+  "cart": {
+    "title": "Sizning savatingiz",
+    "cartempty": "Savatingiz bo'sh",
+    "addsomething": "Savatga nimadir qo'shing",
+    "explore": "Mashhur dizaynlarni izlang"
+  },
+  "auth": {
+    "signin": "Kirish",
+    "signup": "Ro'yxatdan o'tish",
+    "name": "Ism & Familiya",
+    "phone": "Tel. Raqam",
+    "password": "Parol",
+    "newuser": "Yangi foydalanuvchi",
+    "terms1": "Men",
+    "terms2": " ning Maxfiylik & Foydalanish shartlariga roziman"
+  },
+  "campaignCard": {
+    "available1": "",
+    "available2": "xil stilda mavjud"
+  },
+  "helpcard": {
+    "title": "Yordam kerakmi",
+    "paragraph": "Kutmasdan savollaringizga javob oling",
+    "gethelp": "Hozir yordam olish"
+  },
+  "campaigndelete": {
+    "title": "Haqiqatan ham bu dizaynni o'chirib tashlamoqchimisiz",
+    "text": "Barcha progress yo'qoladi",
+    "cancel": "Bekor qilish",
+    "delete": "Ha, O'chirish"
+  },
+  "campaigndraft": {
+    "wait": "Iltimos kuting",
+    "title": "Haqiqatan ham kampaniyangizni qoralamaga qaytarmoqchimisiz",
+    "paragraph": "Dizayningizni tahrirlash uchun uni qoralamaga qaytaring. Dizaynni yana ishga tushirmaguningizcha, xaridorlar hisob-kitob qila olmaydi",
+    "cancel": "Bekor qilish",
+    "revert": "Qoralamaga qaytarish"
   }
 }

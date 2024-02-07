@@ -4,12 +4,11 @@ import { Navigation } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function Slider() {
-    const [slides] = useState([
+export default function Slider({ resources }) {
+    const slides = [
         {
             name: 'Nonprofits',
             image: 'https://c.bonfireassets.com/images/stores/store-nonprofit.jpg',
@@ -30,13 +29,13 @@ export default function Slider() {
             image: 'https://c.bonfireassets.com/images/stores/store-creator.jpg',
             href: 'ok-boomer'
         },
-    ])
+    ]
 
     return (
         <section className="overflow-hidden py-20 relative before:block before:-z-10 before:absolute before:bg-dark before:bg-opacity-90 before:top-0 before:left-0 before:right-0 before:h-[80%]">
             <div className="flex flex-col items-center">
-                <h2 className='text-center text-slate-100 text-2xl font-sans font-semibold leading-normal tracking-wide max-w-[530px] mb-8'>We make it easy to create a professional looking store — no matter what your story is.</h2>
-                <p className='text-center text-slate-300 font-sans tracking-wide max-w-[530px] mb-14'>Draw inspiration for your online store from the thousands of sellers who are already using stores on Bonfire to sell their custom apparel.</p>
+                <h2 className='text-center text-slate-100 text-2xl font-sans font-semibold leading-normal tracking-wide max-w-[530px] mb-8'>{resources.onlinestore.slider.title}.</h2>
+                <p className='text-center text-slate-300 font-sans tracking-wide max-w-[530px] mb-14'>{resources.onlinestore.slider.paragraph}.</p>
             </div>
             <div className='lg:px-32 px-6'>
                 <Swiper navigation={true} modules={[Navigation]} style={{ overflow: 'unset' }} className="mySwiper">

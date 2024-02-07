@@ -15,7 +15,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Account() {
+export default function Account({ resources }) {
     const router = useRouter()
     const [password, setPassword] = useState('')
     const [confirm, setConfirm] = useState('')
@@ -27,11 +27,11 @@ export default function Account() {
 
     const imageFilter = (imgFile) => {
         if (imgFile?.size > 1024 * 1024 * 5) {
-            setImageError('Maximum image size is 5MB')
+            setImageError(resources.dashboard.account.maximagesize)
             return false
         }
         if (!imageTypes.includes(imgFile?.type)) {
-            setImageError('Only images allowed')
+            setImageError(resources.dashboard.account.onlyimages)
             return false
         }
         return true
@@ -87,8 +87,6 @@ export default function Account() {
         }
     }
 
-    console.log(imageError);
-
     useEffect(() => {
         if (imageError) {
             setTimeout(() => {
@@ -100,8 +98,8 @@ export default function Account() {
     return (
         <div id="account">
             <header className="flex items-center justify-between">
-                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">Account</h1>
-                <UserDropdown />
+                <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.account.title}</h1>
+                <UserDropdown resources={resources} />
             </header>
 
             <div>
@@ -111,8 +109,8 @@ export default function Account() {
                             <Image className="rounded-full w-[160px] h-[160px] object-cover border-2 border-slate-200 object-center" src={user.photo ? (`${process.env.NEXT_PUBLIC_BASE_URL}/files${user?.photo}`) : avatar} alt="account-avatar" width={160} height={160} />
                         </div>
                         <div>
-                            <h3 className="font-medium text-3xl font-sans text-slate-700 mb-3">Dilrozbek Raximov</h3>
-                            <p className="text-slate-700 font-medium font-sans">Member since September 2023</p>
+                            <h3 className="font-medium text-3xl font-sans text-slate-700 mb-3">{user.name}</h3>
+                            <p className="text-slate-700 font-medium font-sans">{resources.dashboard.account.member} September 2023</p>
                         </div>
                     </div>
 
@@ -130,7 +128,7 @@ export default function Account() {
                                         )
                                     }
                                 >
-                                    Profile Settings
+                                    {resources.dashboard.account.profilesettings}
                                 </Tab>
                                 <Tab
                                     className={({ selected }) =>
@@ -143,7 +141,7 @@ export default function Account() {
                                         )
                                     }
                                 >
-                                    Password
+                                    {resources.dashboard.account.passwordsettings}
                                 </Tab>
                                 <Tab
                                     className={({ selected }) =>
@@ -156,18 +154,18 @@ export default function Account() {
                                         )
                                     }
                                 >
-                                    Email Settings
+                                    {resources.dashboard.account.emailsettings}
                                 </Tab>
                             </Tab.List>
                             <Tab.Panels className="mt-2">
                                 <Tab.Panel className={"py-6 px-2"}>
                                     <form onSubmit={changeCredentials}>
                                         <div className="flex flex-col mb-12">
-                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="name">NAME*</label>
+                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="name">{resources.dashboard.account.name}*</label>
                                             <input value={user.name} onChange={(e) => onChange('name', e.target.value)} className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="text" id="name" />
                                         </div>
                                         <div className="flex flex-col mb-12">
-                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="phone">PHONE*</label>
+                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="phone">{resources.dashboard.account.phone}*</label>
                                             <PatternFormat
                                                 value={user.phone}
                                                 type="tel"
@@ -178,22 +176,21 @@ export default function Account() {
                                                 className='px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600'
                                                 name='phone'
                                                 id='phone'
-                                                placeholder='Phone'
                                             />
                                         </div>
                                         <div className="flex flex-col mb-12">
-                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="email">EMAIL ADDRESS</label>
+                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="email">{resources.dashboard.account.emailadress}</label>
                                             <input value={user.email} onChange={(e) => onChange('email', e.target.value)} className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="email" />
                                         </div>
                                         <div className="flex flex-col mb-12">
-                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="photo">PHOTO</label>
+                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="photo">{resources.dashboard.account.photo}</label>
                                             <input onChange={onUpload} className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="file" id="photo" />
-                                            <p className="text-slate-600 text-sm mt-2">JPG or PNG. Maximum size of 5MB.</p>
+                                            <p className="text-slate-600 text-sm mt-2">{resources.dashboard.account.imagetypes}.</p>
                                             <span className="w-full text-red-600 font-medium text-sm">{imageError}</span>
                                         </div>
                                         <div>
                                             <SolidBtn type="submit">
-                                                SAVE CHANGES
+                                                {resources.dashboard.account.savechanges}
                                             </SolidBtn>
                                         </div>
                                     </form>
@@ -201,16 +198,16 @@ export default function Account() {
                                 <Tab.Panel className={"py-6 px-2"}>
                                     <form onSubmit={changePassword}>
                                         <div className="flex flex-col mb-12">
-                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="new-password">NEW PASSWORD*</label>
+                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="new-password">{resources.dashboard.account.newpassword}*</label>
                                             <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="new-password" />
                                         </div>
                                         <div className="flex flex-col mb-12">
-                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="confirm-password">CONFIRM NEW PASSOWRD*</label>
+                                            <label className="uppercase font-sans text-sm font-bold tracking-widest mb-3 text-slate-600" htmlFor="confirm-password">{resources.dashboard.account.confirmpassword}*</label>
                                             <input className="px-4 py-3.5 bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="email" id="confirm-password" />
                                         </div>
                                         <div>
                                             <SolidBtn>
-                                                CHANGE PASSWORD
+                                                {resources.dashboard.account.changepassword}
                                             </SolidBtn>
                                         </div>
                                     </form>

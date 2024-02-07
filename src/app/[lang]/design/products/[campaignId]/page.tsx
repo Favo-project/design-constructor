@@ -11,7 +11,7 @@ import { IoTimeOutline } from "react-icons/io5";
 import DraftDialog from "../../components/DraftDialog";
 import { useParams, useRouter } from "next/navigation";
 
-export default function Products() {
+export default function Products({ resources }) {
     const router = useRouter()
     const { campaignId } = useParams()
     const [isOpen, setIsOpen] = useState(false)
@@ -188,12 +188,12 @@ export default function Products() {
                     <p className="p-3 bg-slate-200 rounded-lg text-slate-600 font-medium text-sm flex items-center mt-8 tracking-normal"><span className="text-xl text-slate-600 mr-1.5"><IoTimeOutline /></span> Any changes will apply to all future orders.</p>
                     <div className="w-full px-2 sm:px-0">
                         <div className="rounded-xl bg-white py-3 ring-white focus:outline-none">
-                            <DesignProducts campaign={campaign} canvasRef={canvasRef} canvasValues={canvasValues} setCampaign={setCampaign} />
+                            <DesignProducts resources={resources} campaign={campaign} canvasRef={canvasRef} canvasValues={canvasValues} setCampaign={setCampaign} />
                         </div>
                     </div>
                 </div>
             </div>
-            <DraftDialog closeModal={closeModal} isOpen={isOpen} />
+            <DraftDialog resources={resources} closeModal={closeModal} isOpen={isOpen} />
         </div>
     )
 }

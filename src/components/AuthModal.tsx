@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import Auth from './Auth'
 
-export default function AuthModal({ children }: { children: React.ReactNode }) {
+export default function AuthModal({ children, resources }: { resources, children: React.ReactNode }) {
     let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
@@ -49,7 +49,7 @@ export default function AuthModal({ children }: { children: React.ReactNode }) {
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 md:px-10 text-left align-middle shadow-xl transition-all">
-                                <Auth closeModal={closeModal} />
+                                <Auth resources={resources} closeModal={closeModal} />
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

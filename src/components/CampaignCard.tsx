@@ -1,12 +1,9 @@
 import { formatCurrency } from "@/actions/campaignTools"
 import Link from "next/link"
 import CampaignImage from "./CampaignImage"
-import { Locale } from "@/i18n.config"
 
-export default function CampaignCard({ campaign, params }: { campaign, params: { lang: Locale } }) {
+export default function CampaignCard({ campaign, resources }: { campaign, resources }) {
     const product = campaign.products[0]
-
-    console.log(params);
 
     return (
         <Link className="block max-w-md w-full m-auto p-2 pb-3 transition-all" href={`/campaign/${campaign._id}`}>
@@ -36,7 +33,7 @@ export default function CampaignCard({ campaign, params }: { campaign, params: {
                         </ul>
                     </div>
                     <div>
-                        <p className="text-center font-sans text-sm text-slate-400">Available in {campaign.products.length} styles</p>
+                        <p className="text-center font-sans text-sm text-slate-400">{resources.campaignCard.available1} {campaign.products.length} {resources.campaignCard.available2}</p>
                     </div>
                 </div>
             </div>

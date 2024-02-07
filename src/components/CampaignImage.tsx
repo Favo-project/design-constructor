@@ -5,7 +5,7 @@ import Loader from "./Loader";
 import { campaignUtils } from "@/actions/campaign";
 
 export default function CampaignImage({ design, pArea, background, width = 600, main = false }) {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const canvasValues = useRef({
         CANVAS_WIDTH: 700,
@@ -17,7 +17,7 @@ export default function CampaignImage({ design, pArea, background, width = 600, 
     const canvas = useRef(null)
 
     useLayoutEffect(() => {
-        const applyDesign = async () => {
+        const applyDesign = () => {
 
             // static canvas for rendering campaign images
             canvas.current = new fabric.StaticCanvas(canvasRef.current, {
@@ -103,7 +103,7 @@ export default function CampaignImage({ design, pArea, background, width = 600, 
             <div>
                 {
                     loading && main ? (
-                        <div className="absolute bg-white z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+                        <div className="absolute bg-white z-20 top-0 left-0 right-0 bottom-0 flex items-center justify-center">
                             <Loader />
                         </div>
                     ) : null

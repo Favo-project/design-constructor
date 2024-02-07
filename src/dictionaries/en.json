@@ -1,16 +1,437 @@
 {
-  "navigation": {
-    "home": "Home",
-    "about": "About"
-  },
-  "page": {
-    "home": {
-      "title": "Welcome to NextJs i18n",
-      "description": "Internationalization in NextJs 13 App router"
+  "home": {
+    "hero": {
+      "title": "Design your next favorite custom shirt",
+      "startbtn": "Start designing",
+      "dashboard": "Dashboard",
+      "search": "Search"
     },
-    "about": {
-      "title": "About Us",
-      "description": "This is the about page"
+    "products": {
+      "title": "Our best products",
+      "marketplace": "See all"
+    },
+    "sellonline": {
+      "title": "Sell shirts online through a campaign",
+      "paragraph1": "Sell custom products online by creating your own campaign page where anyone can check out",
+      "paragraph2": "When your campaign ends, we ship products directly to your buyers and send you the profits",
+      "sellbtn": "Sell shirts online"
+    },
+    "openstore": {
+      "title": "Open a free online store",
+      "paragraph": "Make it easy for users to browse all of the custom shirts and apparel you’ve designed by creating an online store. They’re free to make and simple to tailor to your brand",
+      "openbtn": "Open your store"
+    },
+    "support": {
+      "title": "Responsive, and caring customer support",
+      "paragraph": "From the moment you set out to create a custom shirt, our dedicated customer happiness and account management teams have your back every step of the way"
+    },
+    "suggestions": {
+      "title": "MORE FROM ARTVIBE",
+      "catalog": "See our product catalog",
+      "standards": "Custom apparel with higher standards",
+      "templates": "Start with a design template",
+      "ideas": "Explore our best design ideas"
+    },
+    "start": {
+      "title": "Ready to start",
+      "paragraph": "You’re only one step away from designing your next favorite shirt",
+      "startbtn": "Get started"
     }
+  },
+  "sellonline": {
+    "hero": {
+      "title": "The easy way to design and sell t-shirts online",
+      "free": "100% free",
+      "setup": "Easy setup",
+      "payouts": "Fast payouts",
+      "startbtn": "Get started"
+    },
+    "examples": {
+      "title": "Sell shirts online without inventory through a Bonfire campaign. It`s 100% free, you get a fast payout, and we`ll ship your products directly to your buyers"
+    },
+    "guide": {
+      "title": "How to sell shirts online with ArtVibe",
+      "design": "DESIGN OR UPLOAD ARTWORK",
+      "upload": "Upload custom artwork or create your design right on Bonfire",
+      "promote": "PROMOTE AND SELL",
+      "sell": "Spread the word on social media while we handle everything else",
+      "shirts": "SHIRTS ARE SHIPPED",
+      "shipped": "Sit back as orders are printed and sent directly to your buyers",
+      "getpaid": "GET PAID",
+      "payouts": "Get a fast payout of 100% of the campaign profits",
+      "startbtn": "Get started"
+    },
+    "createstore": {
+      "title": "Create an online t-shirt store",
+      "paragraph": "Make it easy for users to browse all of the custom shirts and apparel you`ve designed by creating a free online store. It only takes a few minutes to create and you can customize them to match your brand",
+      "openbtn": "Open your store"
+    },
+    "catalog": {
+      "title": "Choose the custom apparel you want to sell online",
+      "paragraph": "Browse our curated selection of premium t-shirts, hoodies, tank tops and more. Find a variety of styles, sizes, colors and fabric options like ringspun cotton, polyblends, heavyweights and more",
+      "seecatalog": "See full catalog"
+    },
+    "uploaddesign": {
+      "title": "Upload your own design or create your own right in our design tool",
+      "paragraph": "Upload your own custom artwork or use our library of thousands of free fonts and graphics"
+    },
+    "prices": {
+      "title": "Set your selling prices",
+      "paragraph1": "Set your own selling prices and determine your profit margins. As you sell more, your profit margins per shirt will increase",
+      "paragraph2": "You can also change your campaign settings, such as setting your campaign duration and enabling fundraising"
+    },
+    "customize": {
+      "title": "Customize your page",
+      "paragraph": "Connect with your community right from your campaign page. Craft a compelling title and summary and add in videos to bring your story to life"
+    },
+    "promote": {
+      "title": "Promote and sell your shirts",
+      "paragraph1": "Spread the word to your audience via social media, your website or whatever other channels work best",
+      "paragraph2": "Watch sales stats in your seller dashboard while your community visits and buys from your mobile-friendly campaign page"
+    },
+    "print": {
+      "title": "SHIRTS ARE PRINTED & SHIPPED",
+      "paragraph": "Sit back and relax. We take care of printing and shipping orders to buyers anywhere across the world"
+    },
+    "start": {
+      "title": "Ready to start selling shirts online",
+      "text": "You're only one step away from designing your next favorite shirt",
+      "startbtn": "Get started",
+      "helpcenter": "HELP CENTER",
+      "helptext": "Read through answers to frequently asked question to help you get started",
+      "readmore": "Read more",
+      "dropline": "DROP US A LINE",
+      "droptext": "Prefer to talk to someone? Send us a message, and we`ll be in touch",
+      "contact": "Contact Us"
+    }
+  },
+  "onlinestore": {
+    "hero": {
+      "title": "OPEN YOUR ONLINE STORE",
+      "paragraph": "Your custom designed shirts all in one place",
+      "createstore": "Create your store",
+      "startbtn": "Get started"
+    },
+    "customization": {
+      "products": "All of your products in one place",
+      "productstext": "Stores make it easy for your customers to shop by bringing all your products together",
+      "customization": "Customization made easy",
+      "customizationtext": "Customize your store to give it a unique look and feel that compliments your brand",
+      "story": "Tell your story",
+      "storytext": "Introduce yourself to the world and write about who you are or the mission of your organization."
+    },
+    "slider": {
+      "title": "We make it easy to create a professional looking store — no matter what your story is",
+      "paragraph": "Draw inspiration for your online store from the thousands of sellers who are already using stores on ArtVibe to sell their custom apparel"
+    },
+    "openstore": {
+      "title": "Open your store today",
+      "paragraph": "Create an account on ArtVibe and you’ll automatically be able to open your online store",
+      "openstore": "Open your store"
+    }
+  },
+  "catalog": {
+    "hero": {
+      "link1": "Home",
+      "link2": "Products",
+      "title": "Catalog",
+      "paragraph": "Custom apparel with higher standards"
+    },
+    "content": {
+      "filter": "Filter by tag"
+    },
+    "banner": {
+      "title": "Create something great today",
+      "startbtn": "Start designing"
+    }
+  },
+  "templates": {
+    "hero": {
+      "link1": "Home",
+      "link2": "Design templates",
+      "title": "T-shirt design templates",
+      "paragraph": "A collection of free t-shirt templates & design ideas for your custom t-shirt"
+    },
+    "content": {
+      "bycategory": "By category",
+      "customize": "Customize"
+    }
+  },
+  "shop": {
+    "hero": {
+      "link1": "Home",
+      "link2": "Shop",
+      "title1": "Explore the",
+      "title2": "marketplace"
+    },
+    "content": {
+      "bycategory": "By category"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Get instant answers & advice in our Help Center",
+      "text": "Have your questions answered without having to wait",
+      "helpbtn": "Explore help center"
+    },
+    "questions": {
+      "title": "Couldn't find what you're looking for",
+      "orderissue": "I have an issue with my order",
+      "selling": "I have a question about selling on ArtVibe",
+      "general": "I have a general question"
+    },
+    "orderquestion": {
+      "title": "We just need some information from you",
+      "ordernumber": "ORDER NUMBER",
+      "placeholder": "For example, 12-3456-789",
+      "text": "You can find it in the confirmation email or by following these steps",
+      "continue": "Continue"
+    },
+    "specialquestion": {
+      "label": "WHAT`S GOING ON",
+      "getanswer": "Get instant answers in our Help Center",
+      "questionanswer": "Have your questions answered without having to wait",
+      "gethelp": "Get help now",
+      "sendmessage": "Send a message",
+      "respond": "Our team typically responds within 1-2 business days",
+      "yourname": "WHAT`S YOUR NAME",
+      "nameplaceholder": "Your first & last name",
+      "emailadress": "EMAIL ADDRESS",
+      "message": "YOUR MESSAGE",
+      "messageplaceholder": "Any additional notes?",
+      "send": "Send message",
+      "questions": {
+        "selectlist": "Please select from the list",
+        "pricing": "How does pricing work?",
+        "pricingtip": "Remember, selling on ArtVibe is free and base cost is shown in the profits step when setting up your campaign.",
+        "design": "I need help with my design",
+        "designtip": "Please provide your name and email and attach the highest quality image possible of your design or inspiration. Supported file types: .AI, .EPS, .PDF, .PNG or .JPG (.AI is preferred). Also, give us an idea of how we can help with your design below.",
+        "campaings": "How do campaigns work",
+        "campaignstip": "Remember, we`re unable to extend your campaign`s duration beyond 21 days. However, you can relaunch as many times as you`d like.",
+        "other": "Other",
+        "othertip": "Let us know how we can help. Please provide your email and any additional information related to your specific question below."
+      }
+    },
+    "generalquestion": {
+      "getanswer": "Get instant answers in our Help Center",
+      "questionanswer": "Have your questions answered without having to wait",
+      "gethelp": "Get help now",
+      "sendmessage": "Send a message",
+      "respond": "Our team typically responds within 1-2 business days",
+      "yourname": "WHAT`S YOUR NAME",
+      "nameplaceholder": "Your first & last name",
+      "emailadress": "EMAIL ADDRESS",
+      "message": "YOUR MESSAGE",
+      "messageplaceholder": "Any additional notes?",
+      "send": "Send message"
+    }
+  },
+  "store": {
+    "navbar": {
+      "close": "Close",
+      "welcome": "Welcome"
+    }
+  },
+  "campaignId": {
+    "color": "COLOR",
+    "design": "Design",
+    "size": "SIZE",
+    "nosize": "Currently there is no size for this product",
+    "addcart": "Add to cart",
+    "sold": "SOLD",
+    "home": "Home",
+    "shop": "Shop",
+    "campaign": "Campaign"
+  },
+  "dashboard": {
+    "sidebar": {
+      "overview": "Overview",
+      "campaigns": "Campaigns",
+      "store": "My store",
+      "payouts": "Payouts",
+      "account": "Account",
+      "back": "Back to ArtVibe"
+    },
+    "overview": {
+      "title": "Overview",
+      "campaigns": "Campaigns",
+      "start": "Start new",
+      "createaccount": "Create your account",
+      "launchcampaign": "Launch your first campaign",
+      "getsale": "Get your first sale",
+      "name": "Name",
+      "status": "Status",
+      "nocampaigns": "You do not have campaigns yet!",
+      "sold": "sold",
+      "draft": "Draft",
+      "notlaunched": "Not launched",
+      "launched": "Launched",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "seeall": "See all",
+      "nopayouts": "No payouts yet",
+      "payoutemail": "No payouts available yet. Don't worry, we will email you when the first one is ready",
+      "learnmore": "LEARN MORE",
+      "recentsales": "Recent sales",
+      "nosales": "You don't have any sales yet. After you get your first one, they will appear here"
+    },
+    "campaigns": {
+      "title": "Campaings",
+      "createaccount": "Create your account",
+      "launchcampaign": "Launch your first campaign",
+      "getsale": "Get your first sale",
+      "start": "Start new",
+      "name": "NAME",
+      "sold": "SOLD",
+      "totalearned": "TOTAL EARNED",
+      "status": "STATUS",
+      "nocampaigns": "You do not have campaigns yet!",
+      "soldamount": "sold",
+      "draft": "Draft",
+      "notlaunched": "Not launched",
+      "launched": "Launched",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete"
+    },
+    "store": {
+      "title": "Store",
+      "paragraph": "Stores make it easy to browse multiple products in one place",
+      "createstore": "Create my store",
+      "namestore": "Name your store",
+      "storetitle": "Title",
+      "placeholder": "For example: Life with Avery",
+      "dontworry": "Don`t worry, you can always change it later",
+      "continue": "Continue"
+    },
+    "payouts": {
+      "title": "Payouts",
+      "payouttitle": "No payouts available yet",
+      "paragraph": "Don’t worry, we will email you when the first one is ready"
+    },
+    "account": {
+      "title": "Account",
+      "member": "Member since",
+      "profilesettings": "Profile Settings",
+      "passwordsettings": "Password",
+      "emailsettings": "Email settings",
+      "name": "NAME",
+      "phone": "PHONE",
+      "emailadress": "EMAIL ADDRESS",
+      "photo": "PHOTO",
+      "imagetypes": "JPG or PNG. Maximum size of 5MB",
+      "savechanges": "SAVE CHANGES",
+      "newpassword": "NEW PASSWORD",
+      "confirmpassword": "CONFIRM NEW PASSOWRD",
+      "changepassword": "CHANGE PASSWORD",
+      "maximagesize": "Maximum image size is 5MB",
+      "onlyimages": "Only images allowed"
+    },
+    "details": {
+      "seecampaign": "See campaign",
+      "copylink": "Copy link",
+      "launched": "Launched",
+      "draft": "Draft",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "revert": "Revert to draft",
+      "delete": "Delete",
+      "seepage": "See page",
+      "recentsales": "Recent sales",
+      "buyers": "Your buyers",
+      "buproduct": "Sales by product",
+      "nosales": "No sales yet. Share your campaign to spread the word",
+      "share": "Share",
+      "social": "Share on social",
+      "sendlink": "Send a link",
+      "copy": "Copy a link"
+    }
+  },
+  "design": {
+    "start": {
+      "show": "Show",
+      "show2": "",
+      "back": "Back",
+      "front": "Front",
+      "createdesign": "Create your design"
+    }
+  },
+  "navbar": {
+    "sellonline": "Sell online",
+    "sellcampaign": "Sell online in a campaign",
+    "createstore": "Create a merch store",
+    "customize": "Customize",
+    "catalog": "Product catalog",
+    "templates": "Design templates",
+    "explore": "Explore",
+    "shop": "Shop all shirts",
+    "shoplove": "Find something you love",
+    "discover": "Discover creators",
+    "overview": "Overview",
+    "campaigns": "Campaigns",
+    "store": "Store",
+    "payouts": "Payouts",
+    "orders": "My orders",
+    "account": "Account",
+    "close": "Close",
+    "welcome": "Welcome"
+  },
+  "footer": {
+    "subtitle": "Where the world goes for premium custom shirts",
+    "company": "Company",
+    "about": "About us",
+    "help": "Get help",
+    "contact": "Contact",
+    "creator": "For creators",
+    "store": "Create store",
+    "sell": "Sell on ArtVibe",
+    "contacts": "Contacts",
+    "callus": "Call us"
+  },
+  "userdropdown": {
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "account": "Account Settings",
+    "logout": "Logout",
+    "login": "Log in"
+  },
+  "cart": {
+    "title": "Your cart",
+    "cartempty": "Your cart is empty",
+    "addsomething": "Add something to it",
+    "explore": "Explore popular campaigns"
+  },
+  "auth": {
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "name": "Name",
+    "phone": "Phone",
+    "password": "Password",
+    "newuser": "New user",
+    "terms1": "I agree to",
+    "terms2": "`s Privacy Policy & Terms and Conditions"
+  },
+  "campaignCard": {
+    "available1": "Available in",
+    "available2": "styles"
+  },
+  "helpcard": {
+    "title": "Need help",
+    "paragraph": "Have your questions answered without having to wait",
+    "gethelp": "Get help now"
+  },
+  "campaigndelete": {
+    "title": "Are you sure you want to delete this campaign",
+    "text": "All your progress will be gone",
+    "cancel": "Cancel",
+    "delete": "Yes, Delete"
+  },
+  "campaigndraft": {
+    "wait": "Please wait",
+    "title": "Are you sure you want to revert your campaign back to draft",
+    "paragraph": "Revert your campaign to draft to edit your design. Buyers won’t be able to check out until you launch the campaign again",
+    "cancel": "Cancel",
+    "revert": "Revert to draft"
   }
 }

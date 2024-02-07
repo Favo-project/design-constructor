@@ -141,7 +141,7 @@ const shirts = [
   },
 ];
 
-export default function Products({ campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Products({ resources, campaign, setCampaign, canvasRef, canvasValues }) {
   const { campaignId } = useParams()
 
   useEffect(() => {
@@ -170,7 +170,7 @@ export default function Products({ campaign, setCampaign, canvasRef, canvasValue
     <div className="w-full py-4">
       <div className="mx-auto w-full">
         <RadioGroup value={campaign.selected.product} onChange={onChangeHandler}>
-          <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+          <RadioGroup.Label className="sr-only">Products</RadioGroup.Label>
           <div className="space-y-6">
             {campaign.products.map((product: any, index: any) => (
               <RadioGroup.Option
