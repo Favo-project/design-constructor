@@ -21,8 +21,35 @@ import NavbarArrow from "./NavbarArrow";
 import Toasts from "@/components/Toasts";
 import { LogoMain } from "@/assets";
 import UserDropdown from "@/components/UserDropdown";
+import { EnIco, RuIco, UzIco } from '@/assets'
+import { Locale } from '@/i18n.config'
+import { RadioGroup } from '@headlessui/react'
+
+interface ILanguage {
+  name: string, locale: Locale, icon: React.ReactNode
+}
+
+const langs: ILanguage[] = [
+  {
+    name: 'Eng',
+    locale: 'en',
+    icon: <Image src={EnIco} width={20} height={20} alt='lang-icon' />
+  },
+  {
+    name: 'Uzb',
+    locale: 'uz',
+    icon: <Image src={UzIco} width={20} height={20} alt='lang-icon' />
+  },
+  {
+    name: 'Rus',
+    locale: 'ru',
+    icon: <Image src={RuIco} width={20} height={20} alt='lang-icon' />
+  },
+]
 
 export default function DesignNavbar({ resources }) {
+  const { lang } = useParams();
+  const [selectedLang, setSelectedLang] = useState(() => langs.find(l => l.locale === lang) || langs[0])
   const [toast, setToast] = useAtom(toastAtom)
   const router = useRouter()
   const pathname = usePathname()
@@ -170,6 +197,23 @@ export default function DesignNavbar({ resources }) {
     return pathname.indexOf(href) !== -1
   }
 
+  const redirectedPathName = (locale: Locale) => {
+    if (!pathname) return "/";
+    const segments = pathname.split("/");
+    segments[1] = locale;
+    return segments.join("/");
+  };
+
+  const onChangeLang = (locale) => {
+    try {
+      localStorage.setItem('selectLocale', locale)
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+
   return (
     <>
       <Toasts />
@@ -238,7 +282,7 @@ export default function DesignNavbar({ resources }) {
                     </span>
                   </div>
                 ) : (
-                  <button className="text-sm py-6 font-semibold leading-6 text-slate-700 cursor-default">{link.name}</button>
+                  <button className="text-sm py-6 font-semibold leading-6 text-slate-700 cursor-default">{resources.designnavbar[link.name]}</button>
                 )
               }
               {campaignTools.navigation(campaign, campaignId).length !== index + 1 && <NavbarArrow />}
@@ -320,7 +364,7 @@ export default function DesignNavbar({ resources }) {
                           </span>
                         </div>
                       ) : (
-                        <button className="text-sm py-4 font-semibold leading-6 text-slate-700 cursor-default">{link.name}</button>
+                        <button className="text-sm py-4 font-semibold leading-6 text-slate-700 cursor-default">{resources.designnavbar[link.name]}</button>
                       )
                     }
                   </div>
@@ -331,6 +375,38 @@ export default function DesignNavbar({ resources }) {
                   user.loaded ? (
                     <div>
                       <h3 className="flex flex-wrap py-3 tracking-tight text-slate-700">{resources.designnavbar.welcome}, <strong className='ml-1 block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
+
+                      <div className='py-1 px-2'>
+                        <RadioGroup value={selectedLang} onChange={setSelectedLang}>
+                          <RadioGroup.Label className="sr-only">Select language</RadioGroup.Label>
+                          <div className="flex items-center gap-2">
+                            {langs.map((lang) => (
+                              <RadioGroup.Option
+                                key={lang.name}
+                                value={lang}
+                                className={({ checked }) =>
+                                  `${checked ? 'bg-blue' : 'bg-white border border-slate-300'} relative flex cursor-pointer rounded-md outline-none shadow-md`
+                                }
+                              >
+                                {({ checked }) => (
+                                  <Link onClick={() => onChangeLang(lang.locale)} href={redirectedPathName(lang.locale)} className="flex items-center gap-1 px-1.5 py-1.5 rounded-lg cursor-pointer">
+                                    <RadioGroup.Label className={'cursor-pointer'}>
+                                      {lang.icon}
+                                    </RadioGroup.Label>
+                                    <RadioGroup.Description
+                                      as="span"
+                                      className={`inline font-medium ${checked ? 'text-white' : 'text-gray-700'
+                                        } text-sm`}
+                                    >
+                                      {lang.name}
+                                    </RadioGroup.Description>
+                                  </Link>
+                                )}
+                              </RadioGroup.Option>
+                            ))}
+                          </div>
+                        </RadioGroup>
+                      </div>
                       <Link onClick={() => setMobileMenuOpen(false)} className="flex items-center mb-2 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
                         <span className="text-2xl mr-2">
                           <AiOutlineHome />

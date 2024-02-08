@@ -246,7 +246,7 @@ export default function Navbar({ resources }) {
                 </Menu>
               </div>
 
-              <Link href={'/'} hrefLang="uz" className="absolute left-1/2 -translate-x-1/2 block scale-75 md:scale-100">
+              <Link href={'/'} className="absolute left-1/2 -translate-x-1/2 block scale-75 md:scale-100">
                 <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
               </Link>
 

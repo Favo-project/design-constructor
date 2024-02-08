@@ -12,7 +12,7 @@ export default function Hero({ resources }) {
 
   return (
     <div className="bg-white pt-[70px]">
-      <div className="relative isolate px-6 lg:pt-14 pt-8 lg:px-5">
+      <div className="relative isolate px-4 sm:px-6 lg:pt-14 pt-8 lg:px-5">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -28,7 +28,7 @@ export default function Hero({ resources }) {
 
         <div className="container m-auto max-w-7xl flex lg:flex-nowrap flex-wrap gap-10">
           <div className="py-8 sm:py-12 lg:py-20">
-            <h1 className="text-[36px] md:text-[48px] max-w-lg font-semibold leading-tight font-sans text-gray-800 ">
+            <h1 className="text-[32px] sm:text-[36px] md:text-[48px] max-w-lg font-semibold leading-tight font-sans text-gray-800 ">
               {resources.home.hero.title}
             </h1>
             <div className="mt-10 flex items-center gap-x-4 mb-12">

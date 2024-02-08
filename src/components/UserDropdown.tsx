@@ -32,11 +32,11 @@ const langs: ILanguage[] = [
         locale: 'uz',
         icon: <Image src={UzIco} width={20} height={20} alt='lang-icon' />
     },
-    // {
-    //     name: 'Rus',
-    //     locale: 'ru',
-    //     icon: <Image src={RuIco} width={20} height={20} alt='lang-icon' />
-    // },
+    {
+        name: 'Rus',
+        locale: 'ru',
+        icon: <Image src={RuIco} width={20} height={20} alt='lang-icon' />
+    },
 ]
 
 export default function UserDropdown({ className, resources, theme = 'dark' }: { className?: string, resources, theme?: 'dark' | 'light' }) {
@@ -49,12 +49,6 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
     const [user, setUser] = useAtom(userAtom)
     const [auth, setAuth] = useAtom(authAtom)
 
-    const redirectedPathName = (locale: Locale) => {
-        if (!pathname) return "/";
-        const segments = pathname.split("/");
-        segments[1] = locale;
-        return segments.join("/");
-    };
 
     useLayoutEffect(() => {
         const fetch = async () => {
@@ -97,6 +91,12 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
         }
     }
 
+    const redirectedPathName = (locale: Locale) => {
+        if (!pathname) return "/";
+        const segments = pathname.split("/");
+        segments[1] = locale;
+        return segments.join("/");
+    };
 
     const onChangeLang = (locale) => {
         try {
@@ -117,10 +117,13 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
                 user.loaded ? (
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
-                            <Menu.Button className={`flex items-center hover:bg-gray-200 px-2 py-1 rounded-md outline-none ${theme === 'light' ? 'text-white hover:bg-opacity-30' : 'text-dark'}`}>
-                                <span className='text-xl mr-1'>
+                            <Menu.Button className={`flex items-center hover:bg-gray-200 sm:px-2 px-1 py-1 rounded-md outline-none ${theme === 'light' ? 'text-white hover:bg-opacity-30' : 'text-dark'}`}>
+                                <span className='text-xl mr-1 hidden sm:block'>
                                     <GoChevronDown />
                                 </span>
+
+                                <span className='uppercase font-mono mr-2 font-light bg-clip-text bg-gradient-to-r from-magenta to-blue text-transparent'>{lang}</span>
+
                                 <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-magenta">
                                     {
                                         user.photo ? (
@@ -144,10 +147,10 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
                             <Menu.Items className="absolute overflow-hidden right-0 mt-2 w-56 origin-bottom-left divide-y divide-gray-300 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                 <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">{resources.userdropdown.welcome}, <strong className='block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
 
-                                <div className='py-1 px-2   '>
+                                <div className='py-1 px-2'>
                                     <RadioGroup value={selectedLang} onChange={setSelectedLang}>
                                         <RadioGroup.Label className="sr-only">Select language</RadioGroup.Label>
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-2">
                                             {langs.map((lang) => (
                                                 <RadioGroup.Option
                                                     key={lang.name}
@@ -157,7 +160,7 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
                                                     }
                                                 >
                                                     {({ checked }) => (
-                                                        <Link onClick={() => onChangeLang(lang.locale)} href={redirectedPathName(lang.locale)} className="flex items-center gap-2 px-2.5 py-2 rounded-lg cursor-pointer">
+                                                        <Link onClick={() => onChangeLang(lang.locale)} href={redirectedPathName(lang.locale)} className="flex items-center gap-1 px-1.5 py-1.5 rounded-lg cursor-pointer">
                                                             <RadioGroup.Label className={'cursor-pointer'}>
                                                                 {lang.icon}
                                                             </RadioGroup.Label>

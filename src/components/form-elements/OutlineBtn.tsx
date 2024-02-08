@@ -18,21 +18,21 @@ export default function OutlineBtn({
     if (div) {
         return (
             <button
-                className={`inline-flex text-sm items-center px-4 py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white ${className}`}>
+                className={`inline-flex text-sm items-center px-3 py-2.5 sm:px-4 sm:py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white ${className}`}>
                 {children}
             </button>
         )
     }
 
     if (href && !disabled) {
-        return <Link href={href} className={`inline-flex text-sm items-center px-4 py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white ${className}`}>
+        return <Link href={href} className={`inline-flex text-sm items-centerpx-2 px-3 py-2.5 sm:px-4 sm:py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white ${className}`}>
             {children}
         </Link>
     }
 
     if (disabled) {
         return (
-            <button disabled className={`inline-flex text-sm items-center px-4 py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white disabled:opacity-60 disabled:cursor-not-allowed ${className}`}>
+            <button disabled className={`inline-flex text-sm items-center px-3 py-2.5 sm:px-4 sm:py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white disabled:opacity-60 disabled:cursor-not-allowed ${className}`}>
                 {children}
             </button>
         )
@@ -40,7 +40,7 @@ export default function OutlineBtn({
 
     return (
         <button disabled={disabled} type={type} onClick={onClick}
-            className={`inline-flex text-sm items-center px-4 py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white disabled:opacity-60 disabled:cursor-not-allowed ${className}`}>
+            className={`inline-flex text-sm items-center px-3 py-2.5 sm:px-4 sm:py-[12.5px] font-semibold text-center border-2 rounded-sm border-dark text-dark outline-none transition-all duration-300 hover:bg-dark hover:text-white disabled:opacity-60 disabled:cursor-not-allowed ${className}`}>
             {children}
         </button>
     );
