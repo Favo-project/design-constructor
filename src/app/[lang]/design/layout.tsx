@@ -5,8 +5,6 @@ import DesignLayout from "./RootLayout"
 export default async function Layout({ children, params: { lang } }: { params: { lang: Locale }, children: React.ReactNode }) {
     const dict = await getDictionary(lang)
 
-    console.log(dict);
-
     return (
         <div>
             <DesignLayout resources={dict}>

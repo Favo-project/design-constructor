@@ -1,6 +1,6 @@
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
-import Start from "./Main";
+import Start from "./page";
 
 export default async function Layout({ params, children }: { params: { lang: Locale }, children: React.ReactNode }) {
     const dict = await getDictionary(params.lang)

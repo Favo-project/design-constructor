@@ -69,27 +69,27 @@ export default function Start({ resources }) {
   const designContainer = useRef(null);
   const containerRef = useRef(null);
   const [categories]: any = useState({
-    Products: {
+    [resources.design.start.products]: {
       icon: <PiTShirt />,
       component: Products,
       editor: MultipleEditor,
       multiple: true
     },
-    Text: {
+    [resources.design.start.text]: {
       icon: <PiTextTBold />,
       component: Text,
       editor: TextEditor
     },
-    Clipart: {
+    [resources.design.start.clipart]: {
       icon: <PiShapes />,
       component: Clipart,
       editor: ClipartEditor
     },
-    // Templates: {
+    // [resources.design.start.templates]: {
     //   icon: <HiOutlineTemplate />,
     //   component: Templates,
     // },
-    Upload: {
+    [resources.design.start.upload]: {
       icon: <PiUploadSimple />,
       component: Upload,
       editor: ImageEditor
@@ -917,6 +917,8 @@ export default function Start({ resources }) {
     return () => window.removeEventListener('resize', resizeHandler)
   }, [])
 
+  console.log('render');
+
   return (
     <div id="designer">
       <div className="grid sm:grid-cols-1 lg:grid-cols-3">
@@ -1014,12 +1016,12 @@ export default function Start({ resources }) {
                   >
                     {
                       multipleObj?.length && category.multiple ? (
-                        <category.editor selectedObj={selectedObj} multipleObj={multipleObj} campaign={campaign} setCampaign={setCampaign} canvasRef={canvasRef} canvasValues={canvasValues} />
+                        <category.editor resources={resources} selectedObj={selectedObj} multipleObj={multipleObj} campaign={campaign} setCampaign={setCampaign} canvasRef={canvasRef} canvasValues={canvasValues} />
                       ) : (
                         selectedObj && category.editor ? (
-                          <category.editor selectedObj={selectedObj} multipleObj={multipleObj} campaign={campaign} setCampaign={setCampaign} canvasRef={canvasRef} canvasValues={canvasValues} />
+                          <category.editor resources={resources} selectedObj={selectedObj} multipleObj={multipleObj} campaign={campaign} setCampaign={setCampaign} canvasRef={canvasRef} canvasValues={canvasValues} />
                         ) : (
-                          <category.component canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} canvasValues={canvasValues} />
+                          <category.component resources={resources} canvasRef={canvasRef} campaign={campaign} setCampaign={setCampaign} canvasValues={canvasValues} />
                         )
                       )
                     }

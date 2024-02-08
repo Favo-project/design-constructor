@@ -97,8 +97,6 @@ export default function DesignLayout({
     }
   }, [auth])
 
-  console.log(resources);
-
   return (
     <div className="lg:pt-[72px] pt-[80px]">
       {

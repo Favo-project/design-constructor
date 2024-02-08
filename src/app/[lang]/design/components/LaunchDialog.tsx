@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import { Fragment } from 'react'
 import { GoChevronLeft } from 'react-icons/go'
 
-export default function LaunchDialog({ isOpen, closeModal }) {
+export default function LaunchDialog({ resources, isOpen, closeModal }) {
     const { campaignId } = useParams()
 
     return (
@@ -36,10 +36,10 @@ export default function LaunchDialog({ isOpen, closeModal }) {
                         >
                             <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-10 text-left align-middle shadow-xl transition-all">
                                 <div>
-                                    <h2 className='text-2xl font-semibold text-slate-700 font-sans mb-6'>Share</h2>
+                                    <h2 className='text-2xl font-semibold text-slate-700 font-sans mb-6'>{resources.designnavbar.share}</h2>
                                     <div>
                                         <div className='flex flex-col mb-8'>
-                                            <h3 className='text-xl font-semibold text-slate-600 mb-2'>Share on social</h3>
+                                            <h3 className='text-xl font-semibold text-slate-600 mb-2'>{resources.designnavbar.sharesocial}</h3>
                                             <div className='flex items-center gap-6'>
                                                 <div className='flex flex-col items-center'>
                                                     <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>F</button>
@@ -68,38 +68,38 @@ export default function LaunchDialog({ isOpen, closeModal }) {
                                             </div>
                                         </div>
                                         <div className='flex flex-col'>
-                                            <h3 className='text-xl font-semibold text-slate-600 mb-2'>Send a link</h3>
+                                            <h3 className='text-xl font-semibold text-slate-600 mb-2'>{resources.designnavbar.sendlink}</h3>
                                             <div className='flex items-center gap-6'>
                                                 <div className='flex flex-col items-center'>
                                                     <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>C</button>
                                                     <span className='text-slate-500 font-sans font-medium'>
-                                                        Copy link
+                                                        {resources.designnavbar.copylink}
                                                     </span>
                                                 </div>
                                                 <div className='flex flex-col items-center'>
                                                     <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>Sh</button>
                                                     <span className='text-slate-500 font-sans font-medium'>
-                                                        Share
+                                                        {resources.designnavbar.share}
                                                     </span>
                                                 </div>
                                                 <div className='flex flex-col items-center'>
                                                     <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>C</button>
                                                     <span className='text-slate-500 font-sans font-medium'>
-                                                        Copy link
+                                                        {resources.designnavbar.copylink}
                                                     </span>
                                                 </div>
                                                 <div className='flex flex-col items-center'>
                                                     <button className='w-14 h-14 p-3 text-slate-500 rounded-full bg-slate-100 mb-1'>Sh</button>
                                                     <span className='text-slate-500 font-sans font-medium'>
-                                                        Share
+                                                        {resources.designnavbar.share}
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className='flex items-center justify-between mt-6'>
-                                        <Link href="/dashboard/overview" className='font-medium text-magenta font-sans flex items-center'><span className='text-lg mr-1 flex items-center justify-center'><GoChevronLeft /></span> Dashboard</Link>
-                                        <SolidBtn href={`/${campaignId}`}>See campaign</SolidBtn>
+                                        <Link href="/dashboard/overview" className='font-medium text-magenta font-sans flex items-center'><span className='text-lg mr-1 flex items-center justify-center'><GoChevronLeft /></span> {resources.designnavbar.dashboard}</Link>
+                                        <SolidBtn href={`/campaign/${campaignId}`}>{resources.designnavbar.seecampaign}</SolidBtn>
                                     </div>
                                 </div>
                             </Dialog.Panel>

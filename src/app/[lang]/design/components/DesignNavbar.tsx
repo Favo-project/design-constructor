@@ -23,7 +23,6 @@ import { LogoMain } from "@/assets";
 import UserDropdown from "@/components/UserDropdown";
 
 export default function DesignNavbar({ resources }) {
-  console.log(resources);
   const [toast, setToast] = useAtom(toastAtom)
   const router = useRouter()
   const pathname = usePathname()
@@ -174,8 +173,8 @@ export default function DesignNavbar({ resources }) {
   return (
     <>
       <Toasts />
-      <SaveDialog isOpen={saveDialog} closeModal={() => { }} />
-      <LaunchDialog isOpen={launchDialog} closeModal={closeLaunchModal} />
+      <SaveDialog resources={resources} isOpen={saveDialog} />
+      <LaunchDialog resources={resources} isOpen={launchDialog} closeModal={closeLaunchModal} />
 
       <nav
         className="flex z-50 fixed top-0 left-0 right-0 bg-white items-center justify-between p-4 lg:px-8 lg:py-0 shadow-sm"
@@ -191,7 +190,7 @@ export default function DesignNavbar({ resources }) {
               ) : (
                 <AuthModal resources={resources}>
                   <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
-                    Log in
+                    {resources.designnavbar.login}
                   </div>
                 </AuthModal>
               )
@@ -232,7 +231,7 @@ export default function DesignNavbar({ resources }) {
                       href={link.href}
                       className="text-sm py-6 font-semibold leading-6 text-slate-700 hover:text-magenta transition-all"
                     >
-                      {link.name}
+                      {resources.designnavbar[link.name]}
                     </Link>
                     <span className="ml-1 text-green-600 text-lg">
                       <MdCheck />
@@ -246,9 +245,9 @@ export default function DesignNavbar({ resources }) {
             </div>
           ))}
         </div>
-        <div className="flex lg:flex-1 lg:justify-end gap-3 items-center">
-          <SaveButton loaded={user.loaded} onSave={onSave} loading={loading} isSaved={isSaved} />
-          <NextButton loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} onSave={onSave} isSaved={isSaved} />
+        <div className="flex lg:flex-1 lg:justify-end gap-1 xl:gap-3 items-center">
+          <SaveButton resources={resources} loaded={user.loaded} onSave={onSave} loading={loading} isSaved={isSaved} />
+          <NextButton resources={resources} loaded={user.loaded} onNext={onNext} onLaunch={onLaunch} loading={loading} campaign={campaignId ? campaign : campaignBlank} onSave={onSave} isSaved={isSaved} />
 
           <div className="hidden lg:block">
             {
@@ -259,7 +258,7 @@ export default function DesignNavbar({ resources }) {
               ) : (
                 <AuthModal resources={resources}>
                   <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
-                    Log in
+                    {resources.designnavbar.login}
                   </div>
                 </AuthModal>
               )
@@ -278,7 +277,7 @@ export default function DesignNavbar({ resources }) {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-4 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
+              <span className="sr-only">{resources.designnavbar.yourcampaign}</span>
               <Link href={'/'} className="block scale-75 md:scale-100">
                 <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
               </Link>
@@ -314,7 +313,7 @@ export default function DesignNavbar({ resources }) {
                             onClick={() => setMobileMenuOpen(false)}
                             className="text-sm py-4 font-semibold leading-6 text-slate-700 hover:text-transparent hover:bg-gradient-to-r from-magenta to-blue hover:bg-clip-text transition-all"
                           >
-                            {link.name}
+                            {resources.designnavbar[link.name]}
                           </Link>
                           <span className="ml-1 text-green-600 text-lg">
                             <MdCheck />
@@ -331,27 +330,27 @@ export default function DesignNavbar({ resources }) {
                 {
                   user.loaded ? (
                     <div>
-                      <h3 className="flex flex-wrap py-3 tracking-tight text-slate-700">Welcome, <strong className='ml-1 block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
+                      <h3 className="flex flex-wrap py-3 tracking-tight text-slate-700">{resources.designnavbar.welcome}, <strong className='ml-1 block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
                       <Link onClick={() => setMobileMenuOpen(false)} className="flex items-center mb-2 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100" href={'/dashboard/overview'}>
                         <span className="text-2xl mr-2">
                           <AiOutlineHome />
-                        </span> Dashboard
+                        </span> {resources.designnavbar.dashboard}
                       </Link>
                       <Link onClick={() => setMobileMenuOpen(false)} className="flex items-center mb-2 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100" href={'/dashboard/account'}>
                         <span className="text-2xl mr-2">
                           <IoSettingsOutline />
-                        </span> Account Settings
+                        </span> {resources.designnavbar.account}
                       </Link>
                       <button onClick={onLogout} className="w-full flex items-center mb-2 py-2.5 text-dark hover:text-magenta transition-all font-sans font-semibold hover:bg-slate-100">
                         <span className="text-2xl mr-2">
                           <MdLogout />
-                        </span> Logout
+                        </span> {resources.designnavbar.logout}
                       </button>
                     </div>
                   ) : (
                     <AuthModal resources={resources}>
                       <div className="font-semibold leading-6 text-dark hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all">
-                        Log in
+                        {resources.designnavbar.login}
                       </div>
                     </AuthModal>
                   )

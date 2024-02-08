@@ -4,31 +4,36 @@ import { useAtom } from "jotai";
 import { BsQuestionCircle } from "react-icons/bs";
 import { formatCurrency } from "@/actions/campaignTools";
 import ProfitInput from "./ProfitInput";
-import { useEffect } from "react";
 import CampaignImage from "@/components/CampaignImage";
 
 export default function Profits({ resources }) {
     const [campaign] = useAtom(campaignAtom)
     const [savedDesign] = useAtom(designAtom)
 
-    useEffect(() => {
+    const getProfit = (product) => {
+        const higherThanBase = product.sellingPrice > product.baseCost
+        const lowerThanMax = product.sellingPrice < product.maxCost
 
-    }, [campaign])
+        if (higherThanBase && lowerThanMax) {
+            return formatCurrency(product.sellingPrice - product.baseCost)
+        }
+
+        return 0
+    }
 
     return <div>
         <div className="container m-auto w-full max-w-7xl pt-12 px-6">
-
             <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
-                Set your selling prices
+                {resources.design.profits.title}
             </h2>
             <div className="w-full overflow-x-auto">
                 <table className="text-left w-[100%] min-w-[820px]">
                     <thead>
                         <tr className="font-thin font-mono text-base uppercase text-slate-600">
-                            <th>PRODUCT</th>
-                            <th className="flex items-center">BASE COST <button className="p-1 ml-2 mb-[1px] text-gray-400 hover:text-gray-700"><BsQuestionCircle /></button></th>
-                            <th>SELLING PRICE</th>
-                            <th>YOUR PROFIT</th>
+                            <th>{resources.design.profits.product}</th>
+                            <th className="flex items-center">{resources.design.profits.basecost}<button className="p-1 ml-2 mb-[1px] text-gray-400 hover:text-gray-700"><BsQuestionCircle /></button></th>
+                            <th>{resources.design.profits.sellingprice}</th>
+                            <th>{resources.design.profits.yourprofit}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,8 +68,8 @@ export default function Profits({ resources }) {
                                     </td>
                                     <td className="py-5">
                                         <div>
-                                            <h5 className="flex items-center font-semibold text-green-600">{formatCurrency(product.sellingPrice - product.baseCost)} each <button className="p-1 ml-2 text-gray-400 hover:text-gray-700"><BsQuestionCircle /></button></h5>
-                                            <span className="text-sm">at 1 sold</span>
+                                            <h5 className="flex items-center font-semibold text-green-600">{getProfit(product)} each <button className="p-1 ml-2 text-gray-400 hover:text-gray-700"><BsQuestionCircle /></button></h5>
+                                            <span className="text-sm">{resources.design.profits.sold}</span>
                                         </div>
                                     </td>
                                 </tr>

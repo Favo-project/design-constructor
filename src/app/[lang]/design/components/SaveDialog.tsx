@@ -2,7 +2,7 @@ import Loader from '@/components/Loader'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-export default function SaveDialog({ isOpen, closeModal }) {
+export default function SaveDialog({ resources, isOpen }) {
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={() => { }}>
@@ -37,11 +37,11 @@ export default function SaveDialog({ isOpen, closeModal }) {
                                     as="h3"
                                     className="text-2xl mb-4 text-center font-mono font-bold leading-6 text-slate-700"
                                 >
-                                    Saving your design
+                                    {resources.designnavbar.savedesign}
                                 </Dialog.Title>
                                 <div className="mt-2">
                                     <p className="text-center font-sans font-medium text-slate-600">
-                                        We&apos;ll make sure the artwork looks perfect before painting.
+                                        {resources.designnavbar.text}.
                                     </p>
                                 </div>
                             </Dialog.Panel>

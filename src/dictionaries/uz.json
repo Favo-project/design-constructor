@@ -241,7 +241,14 @@
     "sold": "SOTILGAN",
     "home": "Bosh sahifa",
     "shop": "Mahsulotlar",
-    "campaign": "Dizayn"
+    "campaign": "Dizayn",
+    "by": "",
+    "by2": "tomonidan",
+    "featured": "Asosiy element",
+    "setitem": "Elementni asosiy qiling",
+    "featuredfor": "Asosiy element sifatida belgilash",
+    "entirecampaign": "Butun dizaynga",
+    "productstyle": "Shu produktga"
   },
   "dashboard": {
     "sidebar": {
@@ -354,7 +361,63 @@
       "show2": "Ko'rsatish",
       "back": "Orqani",
       "front": "Oldini",
-      "createdesign": "Create your design"
+      "createdesign": "Dizayningizni yarating",
+      "products": "Mahsulotlar",
+      "text": "Text",
+      "clipart": "Clipart",
+      "templates": "Shablonlar",
+      "upload": "Yuklash"
+    },
+    "profits": {
+      "title": "Sotish narxlaringizni belgilang",
+      "product": "MAHSULOT",
+      "basecost": "BOSHLANG'ICH NARX",
+      "sellingprice": "SOTISH NARXI",
+      "yourprofit": "SIZNING FOYDANGIZ",
+      "sold": "1 dona sotilganda"
+    },
+    "details": {
+      "title": "Dizayningizni tasvirlashning eng yaxshi usuli qanday",
+      "subtitle": "QO'SHIMCHA TEGI TANLANG (IXTIYORIY)",
+      "addcustom": "O'zingiz qo'shing"
+    },
+    "products": {
+      "title": "Mahsulotlar"
+    },
+    "multipleeditor": {
+      "title": "Siz bir nechta ob'ektni tanladingiz"
+    },
+    "upload": {
+      "terms1": "Tasvirni yuklash orqali men dizaynni ko‘paytirish va sotishga qonuniy huquqim borligiga hamda",
+      "terms2": "Foydalanish shartlariga to‘liq rioya qilishimga roziman"
+    },
+    "uploadguide": {
+      "tip1": "1500x1500px shaffof rasmlar(png) afzalroq",
+      "tip2": "Asl vektor rasmlari(svg), agar sizda bo'lsa, eng yaxshi ishlaydi",
+      "tip3": "Biz SVG, WEBP, GIF, PNG va JPG fayllarini qo'llab-quvvatlaymiz",
+      "title": "Fayl bo'yicha ko'rsatmalar",
+      "learnmore": "Batafsil ma'lumot"
+    },
+
+    "editor": {
+      "rotate": "Aylantirish",
+      "actions": "Harakatlar",
+      "deselect": "Tanlovni bekor qiling",
+      "deleteall": "Hammasini oʻchirish",
+      "preview": "Ko‘rib chiqish",
+      "color": "Rang",
+      "duplicate": "Nusxa yaratish",
+      "selectall": "Hammasini belgilash",
+      "textplaceholder": "Sizning tekstingiz",
+      "addtext": "Matn qo'shish",
+      "edittext": "Matnni tahrirlash",
+      "font": "Font",
+      "choosecolor": "Rang tanlang",
+      "usedcolor": "DIZAYNINGIZDA ISHLATILMOQDA",
+      "allcolors": "Barcha ranglar",
+      "size": "Hajmi",
+      "spacing": "Masofa",
+      "searchitem": "Clipart qidirish"
     }
   },
   "navbar": {
@@ -433,5 +496,37 @@
     "paragraph": "Dizayningizni tahrirlash uchun uni qoralamaga qaytaring. Dizaynni yana ishga tushirmaguningizcha, xaridorlar hisob-kitob qila olmaydi",
     "cancel": "Bekor qilish",
     "revert": "Qoralamaga qaytarish"
+  },
+  "designnavbar": {
+    "design": "Dizayn",
+    "profits": "Foyda",
+    "details": "Tafsilotlar",
+    "preview": "Tahrirlash & Ko'rish",
+    "products": "Mahsulotlar",
+    "login": "Kirish",
+    "yourcampaign": "Sizning dizayningiz",
+    "welcome": "Xush kelibsiz",
+    "dashboard": "Boshqaruv panel",
+    "account": "Kabinet",
+    "logout": "Chiqish",
+    "savedesign": "Dizayningizni saqlamoqdamiz",
+    "text": "Printdan oldin dizayningiz mukammal ko'rinishiga ishonch hosil qilamiz",
+    "share": "Ulashish",
+    "sharesocial": "Ijtimoiy tarmoqda ulashing",
+    "sendlink": "Havolani yuborish",
+    "copylink": "Havolani nusxalash",
+    "seecampaign": "Dizaynni ko'rish",
+    "saved": "Saqlandi",
+    "save": "Saqlash",
+    "saveclose": "Saqlash & Chiqish",
+    "launch": "Yakunlash",
+    "next": "Keyingisi"
+  },
+  "crossdialog": {
+    "title": "Dizayningiz chop etish maydonidan tashqarida bo'lishi mumkin",
+    "paragraph1": "Sizning narsalaringiz faqat chop etiladigan maydon ichida joylashgan dizayn bilan chop etiladi",
+    "paragraph2": "Agar siz butun dizayningizni yakuniy nashrga qo'shmoqchi bo'lsangiz, dizaynning barcha elementlari chop etiladigan maydon ichida joylashganligiga ishonch hosil qiling",
+    "cancel": "Bekor qilish va o'zgartirish",
+    "continue": "Davom etish"
   }
 }

@@ -88,10 +88,10 @@ export default function Upload({ resources, campaign, setCampaign, canvasRef, ca
         <FileDrop setFile={setFile} file={file} />
         <div className="flex items-center py-4">
           <Checkbox required checked={userRights}
-            onChange={() => setUserRights(!userRights)} className="text-sm" >
-            By uploading the image, I agree that I have the legal right to
-            reproduce and sell the design, and that I am in full compliance with
-            <span className="font-medium bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text ml-1">ArtVibe</span>’s Terms of Use.
+            onChange={() => setUserRights(!userRights)} className="text-sm">
+            {resources.design.upload.terms1}
+            <span className="font-medium bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text ml-1">ArtVibe</span>
+            {resources.design.upload.terms2}.
           </Checkbox>
         </div>
         <SolidBtn

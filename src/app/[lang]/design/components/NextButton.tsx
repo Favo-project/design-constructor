@@ -6,7 +6,7 @@ import CrossedDialog from "./CrossedDialog"
 import { useAtom } from "jotai"
 import { campaignPrintCrossed } from "@/constants"
 
-export default function NextButton({ loaded, onNext, onLaunch, loading, campaign, onSave, isSaved }) {
+export default function NextButton({ resources, loaded, onNext, onLaunch, loading, campaign, onSave, isSaved }) {
     const pathname = usePathname()
     const { campaignId } = useParams()
     const [isNext, setIsNext] = useState(false)
@@ -16,7 +16,7 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
     const [isCrossedOpen, setIsCrossedOpen] = useState(false)
 
     // state for identifing the print area cross
-    const [printCrossed, setPrintCrossed] = useAtom(campaignPrintCrossed)
+    const [printCrossed] = useAtom(campaignPrintCrossed)
 
     function closeCrossModal() {
         setIsCrossedOpen(false)
@@ -50,9 +50,9 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
     if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
         if (campaign.status === 'Launched') {
             return (
-                <button onClick={onSave} disabled={!loaded || loading} className="text-sm flex uppercase tracking-tight bg-gradient-to-r from-magenta to-blue text-white rounded-md">
-                    <Link href={nextUrl} className="block text-white rounded-md shadow-md px-2 p-2">
-                        Save & Close
+                <button onClick={onSave} disabled={!loaded || loading} className="text-xs flex uppercase tracking-tighter bg-gradient-to-r from-magenta to-blue text-white rounded-md">
+                    <Link href={nextUrl} className="block text-white rounded-md shadow-md px-1 p-2">
+                        {resources.designnavbar.saveclose}
                     </Link>
                 </button>
             )
@@ -61,14 +61,14 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         if (!isLaunch) {
             return (
                 <button disabled className="block bg-gradient-to-r from-magenta to-blue text-white rounded-md shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
-                    Launch
+                    {resources.designnavbar.launch}
                 </button>
             )
         }
 
         return (
             <button onClick={onLaunch} disabled={!loaded || loading} className="block bg-gradient-to-r from-magenta to-blue text-white rounded-md shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
-                Launch
+                {resources.designnavbar.launch}
             </button>
         )
     }
@@ -76,7 +76,7 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
     if (!isNext || isSaved || !loaded || loading) {
         return (
             <button disabled className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
-                Next
+                {resources.designnavbar.next}
             </button>
         )
     }
@@ -85,9 +85,9 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
         return (
             <>
                 <button disabled={!loaded || loading} onClick={openCrossModal} className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
-                    Next
+                    {resources.designnavbar.next}
                 </button>
-                <CrossedDialog isOpen={isCrossedOpen} closeModal={closeCrossModal} nextUrl={nextUrl} onSave={onSave} />
+                <CrossedDialog resources={resources} isOpen={isCrossedOpen} closeModal={closeCrossModal} nextUrl={nextUrl} onSave={onSave} />
             </>
         )
     }
@@ -95,7 +95,7 @@ export default function NextButton({ loaded, onNext, onLaunch, loading, campaign
     return (
         <button onClick={onNext} disabled={!loaded || loading} className="bg-gradient-to-r from-magenta to-blue rounded-md disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
             <Link href={nextUrl} className="block text-white rounded-md shadow-md px-3 p-1">
-                Next
+                {resources.designnavbar.next}
             </Link>
         </button>
     )

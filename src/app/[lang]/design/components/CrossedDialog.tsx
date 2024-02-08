@@ -6,7 +6,7 @@ import SolidBtn from '@/components/form-elements/SolidBtn'
 import Link from 'next/link'
 import { PiTShirtDuotone } from 'react-icons/pi'
 
-export default function CrossedDialog({ onSave, isOpen, closeModal, nextUrl }: { onSave: () => void, isOpen: boolean, closeModal: () => void, nextUrl: string }) {
+export default function CrossedDialog({ resources, onSave, isOpen, closeModal, nextUrl }: { onSave: () => void, isOpen: boolean, closeModal: () => void, nextUrl: string, resources }) {
     const [printCrossed, setPrintCrossed] = useAtom(campaignPrintCrossed)
 
     const onProceed = () => {
@@ -53,23 +53,23 @@ export default function CrossedDialog({ onSave, isOpen, closeModal, nextUrl }: {
                                     as="h3"
                                     className="px-10 md:text-2xl text-lg text-magenta leading-normal font-semibold text-center"
                                 >
-                                    Your design might be outside of the printable area.
+                                    {resources.crossdialog.title}.
                                 </Dialog.Title>
                                 <div className="mt-6 mb-4">
-                                    <p className="font-sans text-gray-600 mb-3 sm:text-base text-sm">Your items will only be printed with the design that is contained inside of the printable area.</p>
-                                    <p className="font-sans text-gray-600 sm:text-base text-sm">If you wish to include your entire design in the final print, please ensure all elements of the design are positioned inside of the printable area.</p>
+                                    <p className="font-sans text-gray-600 mb-3 sm:text-base text-sm">{resources.crossdialog.paragraph1}.</p>
+                                    <p className="font-sans text-gray-600 sm:text-base text-sm">{resources.crossdialog.paragraph2}.</p>
                                 </div>
 
                                 <div className="mt-4 flex items-center justify-end gap-3">
                                     <button onClick={closeModal} className='font-sans text-blue'>
-                                        Cancel and edit design
+                                        {resources.crossdialog.cancel}
                                     </button>
                                     <SolidBtn
                                         type="button"
                                         onClick={() => onProceed()}
                                     >
                                         <Link href={nextUrl}>
-                                            Continue
+                                            {resources.crossdialog.continue}
                                         </Link>
                                     </SolidBtn>
                                 </div>

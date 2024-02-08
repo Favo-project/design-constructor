@@ -9,16 +9,16 @@ export const navigation = {
 }
 
 export const designNavigation = [
-    { name: "Design", href: "/design/start", level: 1, passed: false },
-    { name: "Profits", href: "/design/profits", level: 2, passed: false },
-    { name: "Details", href: "/design/details", level: 3, passed: false },
-    { name: "Edit & Preview", href: "/design/preview", level: 4, passed: false },
+    { name: "design", href: "/design/start", level: 1, passed: false },
+    { name: "profits", href: "/design/profits", level: 2, passed: false },
+    { name: "details", href: "/design/details", level: 3, passed: false },
+    { name: "preview", href: "/design/preview", level: 4, passed: false },
 ];
 export const launchedNavigation = [
-    { name: "Products", href: "/design/products", level: 1, passed: false },
-    { name: "Profits", href: "/design/profits", level: 2, passed: false },
-    { name: "Details", href: "/design/details", level: 3, passed: false },
-    { name: "Edit & Preview", href: "/design/preview", level: 4, passed: false },
+    { name: "products", href: "/design/products", level: 1, passed: false },
+    { name: "profits", href: "/design/profits", level: 2, passed: false },
+    { name: "details", href: "/design/details", level: 3, passed: false },
+    { name: "preview", href: "/design/preview", level: 4, passed: false },
 ];
 
 class CampaignTools {

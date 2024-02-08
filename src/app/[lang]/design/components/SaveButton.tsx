@@ -1,7 +1,7 @@
 import { MdCheck } from "react-icons/md";
 import SaveLoader from "./SaveLoader";
 
-export default function SaveButton({ loaded, onSave, loading, isSaved }) {
+export default function SaveButton({ resources, loaded, onSave, loading, isSaved }) {
     if (!loaded) {
         return null
     }
@@ -15,14 +15,14 @@ export default function SaveButton({ loaded, onSave, loading, isSaved }) {
     if (isSaved) {
         return (
             <button disabled className="text-sm text-slate-700 font-sans font-semibold mr-1 flex items-center disabled:cursor-not-allowed">
-                <span className="text text-green-600 mr-1 text-lg"><MdCheck /></span> Saved
+                <span className="text text-green-600 mr-1 text-lg"><MdCheck /></span> {resources.designnavbar.saved}
             </button>
         )
     }
 
     return (
         <button onClick={onSave} className="text-magenta font-sans font-semibold mr-1">
-            Save
+            {resources.designnavbar.save}
         </button>
     )
 }

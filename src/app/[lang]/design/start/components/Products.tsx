@@ -170,7 +170,7 @@ export default function Products({ resources, campaign, setCampaign, canvasRef, 
     <div className="w-full py-4">
       <div className="mx-auto w-full">
         <RadioGroup value={campaign.selected.product} onChange={onChangeHandler}>
-          <RadioGroup.Label className="sr-only">Products</RadioGroup.Label>
+          <RadioGroup.Label className="sr-only">{resources.design.products.title}</RadioGroup.Label>
           <div className="space-y-6">
             {campaign.products.map((product: any, index: any) => (
               <RadioGroup.Option

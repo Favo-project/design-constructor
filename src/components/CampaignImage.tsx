@@ -17,54 +17,59 @@ export default function CampaignImage({ design, pArea, background, width = 600, 
     const canvas = useRef(null)
 
     useLayoutEffect(() => {
-        const applyDesign = () => {
+        const applyDesign = async () => {
+            try {
+                setLoading(true)
 
-            // static canvas for rendering campaign images
-            canvas.current = new fabric.StaticCanvas(canvasRef.current, {
-                width: canvasValues.current.CANVAS_WIDTH,
-                height: canvasValues.current.CANVAS_HEIGHT,
-                selection: false,
-            });
-
-            // adding all design objects to campaign canvas
-            design.map((obj) => {
-                if (obj.objType === "text") {
-                    campaignUtils.addText(canvas.current, obj, pArea);
-                }
-                if (obj.objType === "icon") {
-                    campaignUtils.addClipart(canvas.current, obj, pArea);
-                }
-                if (obj.objType === "image") {
-                    campaignUtils.addImage(canvas.current, obj, pArea);
-                }
-            })
-
-            setLoading(true)
-
-            // loading campaign design background
-            let imgElement = new Image();
-            imgElement.crossOrigin = "anonymous";
-            imgElement.src = background
-            imgElement.onload = function () {
-                const fabricImage = new fabric.Image(imgElement);
-                fabricImage.set({
-                    scaleX: (canvasValues.current.CANVAS_WIDTH || 1) / (fabricImage.width || 1),
-                    scaleY: (canvasValues.current.CANVAS_HEIGHT || 1) / (fabricImage.width || 1),
-                    selectable: false,
-                    top: canvasValues.current.CANVAS_WIDTH / 2,
-                    left: canvasValues.current.CANVAS_HEIGHT / 2,
-                    originX: "center",
-                    originY: "center",
+                // static canvas for rendering campaign images
+                canvas.current = new fabric.StaticCanvas(canvasRef.current, {
+                    width: canvasValues.current.CANVAS_WIDTH,
+                    height: canvasValues.current.CANVAS_HEIGHT,
+                    selection: false,
                 });
-                setLoading(false)
-                canvas.current.setBackgroundImage(fabricImage, canvas.current.renderAll.bind(canvas.current));
-            };
 
-            canvas.current.renderAll()
+                // adding all design objects to campaign canvas
+                await Promise.all(
+                    design.map(async (obj) => {
+                        if (obj.objType === "text") {
+                            await campaignUtils.addText(canvas.current, obj, pArea);
+                        }
+                        if (obj.objType === "icon") {
+                            await campaignUtils.addClipart(canvas.current, obj, pArea);
+                        }
+                        if (obj.objType === "image") {
+                            await campaignUtils.addImage(canvas.current, obj, pArea);
+                        }
+                    })
+                )
+
+                // loading campaign design background
+                let imgElement = new Image();
+                imgElement.crossOrigin = "anonymous";
+                imgElement.src = background
+                imgElement.onload = function () {
+                    const fabricImage = new fabric.Image(imgElement);
+                    fabricImage.set({
+                        scaleX: (canvasValues.current.CANVAS_WIDTH || 1) / (fabricImage.width || 1),
+                        scaleY: (canvasValues.current.CANVAS_HEIGHT || 1) / (fabricImage.width || 1),
+                        selectable: false,
+                        top: canvasValues.current.CANVAS_WIDTH / 2,
+                        left: canvasValues.current.CANVAS_HEIGHT / 2,
+                        originX: "center",
+                        originY: "center",
+                    });
+                    setLoading(false)
+                    canvas.current.setBackgroundImage(fabricImage, canvas.current.renderAll.bind(canvas.current));
+                };
+
+                canvas.current.renderAll()
+            }
+            catch (err) {
+                console.log(err?.message);
+            }
         }
 
         applyDesign()
-
 
         // resizes handler that resizes the campaign image according to its design container
         const resizeHandler = () => {

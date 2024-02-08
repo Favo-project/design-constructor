@@ -8,15 +8,15 @@ export default function UploadGuide({ resources }) {
   const [guidelines] = useState([
     {
       icon: <TbArrowsDiagonal />,
-      description: "1500px by 1500px transparent artwork is preferred",
+      description: resources.design.uploadguide.tip1,
     },
     {
       icon: <TbVectorTriangle />,
-      description: "Original vector artwork work best, if you have it",
+      description: resources.design.uploadguide.tip2,
     },
     {
       icon: <AiOutlineFilePdf />,
-      description: "We support AI, EPS, PDF, PNG and JPG files",
+      description: resources.design.uploadguide.tip3,
     },
   ]);
 
@@ -31,7 +31,7 @@ export default function UploadGuide({ resources }) {
   return (
     <div className="w-full my-4">
       <h3 className="text-lg font-semibold text-slate-600 mb-4">
-        File guidlines
+        {resources.design.upload.title}
       </h3>
       <ul className="flex flex-col mb-4">
         {guidelines.map((guideline, index) => (
@@ -50,7 +50,7 @@ export default function UploadGuide({ resources }) {
         onClick={openModal}
         className="text-base font-medium text-blue-700"
       >
-        Learn more
+        {resources.design.upload.learnmore}
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>

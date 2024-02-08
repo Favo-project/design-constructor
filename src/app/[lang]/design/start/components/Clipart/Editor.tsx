@@ -124,7 +124,7 @@ export default function ClipartEditor({ resources, selectedObj, campaign, setCam
     return (
         <div>
             <div className="my-8">
-                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Preview</h3>
+                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.preview}</h3>
                 <div className="flex">
                     <div className="p-1 rounded-md bg-blue/20">
                         <Image src={selectedObj?.object?.url || ''} style={{ fill: 'red' }} alt="preview-img" width={65} height={65} />
@@ -133,7 +133,7 @@ export default function ClipartEditor({ resources, selectedObj, campaign, setCam
             </div>
             <div className="flex my-8 flex-wrap gap-4">
                 <div id="color">
-                    <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Color</h3>
+                    <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.color}</h3>
                     <div className="w-full max-w-sm px-2">
                         <Popover className="relative">
                             {({ open }) => (
@@ -160,14 +160,14 @@ export default function ClipartEditor({ resources, selectedObj, campaign, setCam
                                                     <IoMdClose />
                                                 </button>
                                                 <div className="p-7">
-                                                    <h3 className="text-2xl text-slate-800 font-mono mb-4">Choose color</h3>
-                                                    <p className="text-slate-700 text-sm font-mono mb-4">USED IN YOUR DESIGN</p>
+                                                    <h3 className="text-2xl text-slate-800 font-mono mb-4">{resources.design.editor.choosecolor}</h3>
+                                                    <p className="text-slate-700 text-sm font-mono mb-4">{resources.design.editor.usedcolor}</p>
                                                     <div> <button className="rounded-full border border-gray-400 p-1 mx-1"><span className="flex items-center justify-center h-6 w-6 border border-gray-400 rounded-full" style={{ backgroundColor: selectedColor || 'white' }}>
                                                         <BsCheckLg />
                                                     </span></button></div>
                                                 </div>
                                                 <div className="relative bg-white px-7 pt-2 pb-7">
-                                                    <p className="text-slate-700 text-sm font-mono mb-4">ALL COLORS</p>
+                                                    <p className="text-slate-700 text-sm font-mono mb-4">{resources.design.editor.allcolors}</p>
                                                     <div className="grid grid-cols-6">
                                                         {colors.map((item, index) => (
                                                             <div key={index}>
@@ -187,7 +187,7 @@ export default function ClipartEditor({ resources, selectedObj, campaign, setCam
                     </div>
                 </div>
                 <div id="flip">
-                    <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Color</h3>
+                    <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.color}</h3>
                     <div className="flex items-center px-2">
                         <button onClick={flipX} className="text-2xl p-2 border-2 border-white rounded-md text-slate-700 hover:border-gray-200 transition-all">
                             <LuFlipHorizontal2 />
@@ -200,7 +200,7 @@ export default function ClipartEditor({ resources, selectedObj, campaign, setCam
             </div>
             <div className="my-8">
                 <div className="flex flex-col items-start">
-                    <label htmlFor="rotate" className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">ROTATE</label>
+                    <label htmlFor="rotate" className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.rotate}</label>
                     <div className="w-full flex justify-between items-center">
                         <input type="range" className="transparent h-2 w-full rounded-md cursor-pointer appearance-none border-transparent bg-neutral-300" id="rotate" value={rotate} onChange={onChangeRotate} min={0} max={360} />
                         <input type="number" className="w-16 border rounded-md border-magenta/40 outline-none p-2 font-semibold text-slate-600 text-sm ml-3" value={rotate} min={0} max={360} onChange={onChangeRotate} />
@@ -208,19 +208,19 @@ export default function ClipartEditor({ resources, selectedObj, campaign, setCam
                 </div>
             </div>
             <div className="my-8">
-                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">ACTIONS</h3>
+                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.actions}</h3>
                 <div className="flex items-start gap-4">
                     <button onClick={duplicateObj} className="flex flex-col items-center p-2 border-2 border-white rounded-md text-sm text-slate-700 hover:border-gray-200 transition-all">
                         <span className="text-lg mb-1">
                             <HiOutlineDuplicate />
                         </span>
-                        Duplicate
+                        {resources.design.editor.duplicate}
                     </button>
                     <button onClick={selectAll} className="flex flex-col items-center p-2 border-2 border-white rounded-md text-sm text-slate-700 hover:border-gray-200 transition-all">
                         <span className="text-lg mb-1">
                             <BiSolidSelectMultiple />
                         </span>
-                        Select All
+                        {resources.design.editor.selectall}
                     </button>
                 </div>
             </div>

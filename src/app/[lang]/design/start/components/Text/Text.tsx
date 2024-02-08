@@ -55,13 +55,13 @@ export default function Text({ resources, campaign, setCampaign, canvasRef, canv
             value={text}
             id="design-text"
             name="text"
-            placeholder="Your text"
+            placeholder={resources.design.editor.textplaceholder}
             rows={4}
             className="block w-full font-semibold text-gray-600 outline-none rounded-md border-0 py-4 px-3 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue sm:text-md sm:leading-6"
           ></textarea>
         </div>
         <div className="flex flex-1 items-center justify-end mt-4">
-          <SolidBtn onClick={addText} disabled={!text} >Add text</SolidBtn>
+          <SolidBtn onClick={addText} disabled={!text}>{resources.design.editor.addtext}</SolidBtn>
         </div>
       </div>
     </div>

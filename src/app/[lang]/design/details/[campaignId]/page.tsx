@@ -1,7 +1,7 @@
 'use client'
 import { campaignAtom, isSavedAtom } from '@/constants'
 import { useAtom } from 'jotai'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useLayoutEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 
@@ -165,7 +165,7 @@ export default function Details({ resources }) {
     return (
         <div className="container m-auto w-full max-w-7xl py-12 lg:px-6 px-4" >
             <h2 className="text-4xl font-sans font-semibold text-slate-700 mt-8 mb-6">
-                What’s the best way to describe your campaign?
+                {resources.design.details.title}?
             </h2>
 
             <div>
@@ -179,7 +179,7 @@ export default function Details({ resources }) {
             </div>
 
             <div className='mt-10'>
-                <h3 className='font-medium text-base text-gray-600 mb-6'>SELECT ADDITIONAL TAGS (OPTIONAL)</h3>
+                <h3 className='font-medium text-base text-gray-600 mb-6'>{resources.design.details.subtitle}</h3>
                 <div className='flex flex-wrap gap-3'>
                     {
                         additionalTags.map((tag, index) => (
@@ -197,7 +197,7 @@ export default function Details({ resources }) {
                                         <AiOutlinePlus />
                                     </button>
                                 </form>
-                            ) : <span className='flex border-2 rounded-full px-4 py-2 text-gray-600 border-slate-200 bg-slate-200 hover:bg-slate-100 hover:border-slate-400'>Add your own</span>
+                            ) : <span className='flex border-2 rounded-full px-4 py-2 text-gray-600 border-slate-200 bg-slate-200 hover:bg-slate-100 hover:border-slate-400'>{resources.design.details.addcustom}</span>
                         }
                     </button>
                 </div>

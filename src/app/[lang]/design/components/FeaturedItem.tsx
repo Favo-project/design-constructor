@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import { Fragment } from 'react'
 import { MdCheck } from 'react-icons/md'
 
-export default function FeaturedItem({ currentProduct, currentColor, setCurrentColor }) {
+export default function FeaturedItem({ resources, currentProduct, currentColor, setCurrentColor }) {
     const [campaign, setCampaign] = useAtom(campaignAtom)
 
     const isProductFeatured = () => {
@@ -59,7 +59,7 @@ export default function FeaturedItem({ currentProduct, currentColor, setCurrentC
             {
                 isProductFeatured() && isColorFeatured() ? (
                     <button className='absolute bottom-5 left-1/2 -translate-x-1/2 px-3 py-2 text-sm font-semibold rounded-lg border-2 shadow-lg bg-white border-slate-100 text-magenta hover:border-slate-300 transition-all flex items-center '>
-                        Featured Item <span className='text-green-600 text-lg ml-1'><MdCheck /></span>
+                        {resources.campaignId.featured} <span className='text-green-600 text-lg ml-1'><MdCheck /></span>
                     </button>
                 ) : (
                     <div className="absolute bottom-5 left-[35%]">
@@ -69,7 +69,7 @@ export default function FeaturedItem({ currentProduct, currentColor, setCurrentC
                                     <Popover.Button
                                         className={'px-3 py-2 text-sm font-semibold rounded-md border-2 shadow-lg bg-white border-slate-100 text-magenta hover:border-slate-300 transition-all'}
                                     >
-                                        Set item as featured
+                                        {resources.campaignId.setitem}
                                     </Popover.Button>
                                     <Transition
                                         as={Fragment}
@@ -83,18 +83,18 @@ export default function FeaturedItem({ currentProduct, currentColor, setCurrentC
                                         <Popover.Panel className="absolute left-1/2 bottom-1/2 z-10 mt-3 w-screen max-w-[340px] -translate-x-1/2 transform px-4">
                                             <div className='bg-white rounded-lg shadow-lg p-4'>
                                                 <div className='flex flex-col'>
-                                                    <h4 className='text-slate-700 font-sans mb-2'>Set as featured item for:</h4>
+                                                    <h4 className='text-slate-700 font-sans mb-2'>{resources.campaignId.featuredfor}:</h4>
                                                     {
                                                         !isProductFeatured() && (
                                                             <button onClick={() => { featureProduct(); close() }} className='w-full px-6 py-2.5 bg-blue text-sm text-white shadow mb-4 font-semibold rounded-sm hover:shadow-md transition-all'>
-                                                                Entire campaign
+                                                                {resources.campaignId.entirecampaign}
                                                             </button>
                                                         )
                                                     }
                                                     {
                                                         !isColorFeatured() && (
                                                             <button onClick={() => { featureColor(); close() }} className='w-full px-6 py-2.5 border border-dark text-sm text-slate-600 shadow font-semibold rounded-sm hover:shadow-md hover:bg-dark hover:text-white transition-all'>
-                                                                This product style
+                                                                {resources.campaignId.productstyle}
                                                             </button>
                                                         )
                                                     }

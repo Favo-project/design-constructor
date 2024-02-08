@@ -65,10 +65,10 @@ export default function MultipleEditor({ resources, multipleObj, campaign, setCa
 
     return (
         <div>
-            <p className="p-3 bg-slate-200 rounded-xl shadow-lg">You have selected multiple objects</p>
+            <h3 className="p-3 bg-slate-200 rounded-xl shadow-lg">{resources.design.multipleeditor.title}</h3>
             <div className="my-8">
                 <div className="flex flex-col items-start">
-                    <label htmlFor="rotate" className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">ROTATE</label>
+                    <label htmlFor="rotate" className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.rotate}</label>
                     <div className="w-full flex justify-between items-center">
                         <input type="range" className="transparent h-2 w-full rounded-md cursor-pointer appearance-none border-transparent bg-neutral-300" id="rotate" value={rotate} onChange={onChangeRotate} min={0} max={360} />
                         <input type="number" className="w-16 border rounded-md border-magenta/40 outline-none p-2 font-semibold text-slate-600 text-sm ml-3" value={rotate} min={0} max={360} onChange={onChangeRotate} />
@@ -76,19 +76,19 @@ export default function MultipleEditor({ resources, multipleObj, campaign, setCa
                 </div>
             </div>
             <div className="my-8">
-                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">ACTIONS</h3>
+                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.actions}</h3>
                 <div className="flex items-start gap-4">
                     <button onClick={deselect} className="flex flex-col items-center p-2 border-2 border-white rounded-md text-sm text-slate-700 hover:border-gray-200 transition-all">
                         <span className="text-lg mb-1">
                             <BiSelectMultiple />
                         </span>
-                        Deselect
+                        {resources.design.editor.deselect}
                     </button>
                     <button onClick={deleteAll} className="flex flex-col items-center p-2 border-2 border-white rounded-md text-sm text-slate-700 hover:border-gray-200 transition-all">
                         <span className="text-lg mb-1">
                             <RiDeleteBin5Line />
                         </span>
-                        Delete All
+                        {resources.design.editor.deleteall}
                     </button>
                 </div>
             </div>

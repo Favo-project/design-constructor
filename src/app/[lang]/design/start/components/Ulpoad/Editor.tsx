@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { HiOutlineDuplicate } from "react-icons/hi";
 import { BiSolidSelectMultiple } from "react-icons/bi";
 
-export default function Editor({ resources, selectedObj, campaign, setCampaign, canvasRef, canvasValues }) {
+export default function Editor({ resources, selectedObj, campaign, setCampaign, canvasRef }) {
     const [rotate, setRotate] = useState(0)
 
     useEffect(() => {
@@ -108,7 +108,7 @@ export default function Editor({ resources, selectedObj, campaign, setCampaign, 
     return (
         <div>
             <div className="my-8">
-                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Preview</h3>
+                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.preview}</h3>
                 <div className="flex">
                     <div className="p-1 rounded-md bg-blue/20">
                         <Image src={selectedObj?.object?.imgUrl} alt="preview-img" width={65} height={65} />
@@ -116,7 +116,7 @@ export default function Editor({ resources, selectedObj, campaign, setCampaign, 
                 </div>
             </div>
             <div id="flip" className="my-8">
-                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">Color</h3>
+                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.color}</h3>
                 <div className="flex items-center px-2">
                     <button onClick={flipX} className="text-2xl p-2 border-2 border-white rounded-md text-slate-700 hover:border-gray-200 transition-all">
                         <LuFlipHorizontal2 />
@@ -128,7 +128,7 @@ export default function Editor({ resources, selectedObj, campaign, setCampaign, 
             </div>
             <div className="my-8">
                 <div className="flex flex-col items-start">
-                    <label htmlFor="rotate" className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">ROTATE</label>
+                    <label htmlFor="rotate" className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.rotate}</label>
                     <div className="w-full flex justify-between items-center">
                         <input type="range" className="transparent h-2 w-full rounded-md cursor-pointer appearance-none border-transparent bg-neutral-300" id="rotate" value={rotate} onChange={onChangeRotate} min={0} max={360} />
                         <input type="number" className="w-16 border rounded-md border-indigo-400 outline-none p-2 font-semibold text-slate-600 text-sm ml-3" value={rotate} min={0} max={360} onChange={onChangeRotate} />
@@ -136,19 +136,19 @@ export default function Editor({ resources, selectedObj, campaign, setCampaign, 
                 </div>
             </div>
             <div className="my-8">
-                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">ACTIONS</h3>
+                <h3 className="font-semibold text-slate-600 mb-3 text-base uppercase font-mono">{resources.design.editor.actions}</h3>
                 <div className="flex items-start gap-4">
                     <button onClick={duplicateObj} className="flex flex-col items-center p-2 border-2 border-white rounded-md text-sm text-slate-700 hover:border-gray-200 transition-all">
                         <span className="text-lg mb-1">
                             <HiOutlineDuplicate />
                         </span>
-                        Duplicate
+                        {resources.design.editor.duplicate}
                     </button>
                     <button onClick={selectAll} className="flex flex-col items-center p-2 border-2 border-white rounded-md text-sm text-slate-700 hover:border-gray-200 transition-all">
                         <span className="text-lg mb-1">
                             <BiSolidSelectMultiple />
                         </span>
-                        Select All
+                        {resources.design.editor.selectall}
                     </button>
                 </div>
             </div>

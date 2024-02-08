@@ -83,7 +83,7 @@ export default function Preview({ resources }) {
                                 <CampaignImage design={campaign.design['back']} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} width={30} />
                             </button>
                         </div>
-                        <FeaturedItem currentProduct={currentProduct} currentColor={currentColor} setCurrentColor={setCurrentColor} />
+                        <FeaturedItem resources={resources} currentProduct={currentProduct} currentColor={currentColor} setCurrentColor={setCurrentColor} />
                     </div>
 
                 </div>

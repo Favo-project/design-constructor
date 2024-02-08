@@ -241,7 +241,14 @@
     "sold": "SOLD",
     "home": "Home",
     "shop": "Shop",
-    "campaign": "Campaign"
+    "campaign": "Campaign",
+    "by": "by",
+    "by2": "",
+    "featured": "Featured Item",
+    "setitem": "Set item as featured",
+    "featuredfor": "Set as featured item for",
+    "entirecampaign": "Entire campaign",
+    "productstyle": "This product style"
   },
   "dashboard": {
     "sidebar": {
@@ -354,7 +361,63 @@
       "show2": "",
       "back": "Back",
       "front": "Front",
-      "createdesign": "Create your design"
+      "createdesign": "Create your design",
+      "products": "Products",
+      "text": "Text",
+      "clipart": "Clipart",
+      "templates": "Templates",
+      "upload": "Upload"
+    },
+    "profits": {
+      "title": "Set your selling prices",
+      "product": "PRODUCT",
+      "basecost": "BASE COST",
+      "sellingprice": "SELLING PRICE",
+      "yourprofit": "YOUR PROFIT",
+      "sold": "at 1 sold"
+    },
+    "details": {
+      "title": "What’s the best way to describe your campaign",
+      "subtitle": "SELECT ADDITIONAL TAGS (OPTIONAL)",
+      "addcustom": "Add your own"
+    },
+    "products": {
+      "title": "Products"
+    },
+    "multipleeditor": {
+      "title": "You have selected multiple objects"
+    },
+    "upload": {
+      "terms1": "By uploading the image, I agree that I have the legal right to reproduce and sell the design, and that I am in full compliance with",
+      "terms2": "Terms of Use"
+    },
+    "uploadguide": {
+      "tip1": "1500px by 1500px transparent artwork is preferred",
+      "tip2": "Original vector artwork work best, if you have it",
+      "tip3": "We support SVG, WEBP, GIF, PNG and JPG files",
+      "title": "File guidelines",
+      "learnmore": "Learn more"
+    },
+
+    "editor": {
+      "rotate": "Rotate",
+      "actions": "Actions",
+      "deselect": "Deselect",
+      "deleteall": "Delete all",
+      "preview": "Preview",
+      "color": "Color",
+      "duplicate": "Duplicate",
+      "selectall": "Select All",
+      "textplaceholder": "Your text",
+      "addtext": "Add text",
+      "edittext": "Edit Text",
+      "font": "Font",
+      "choosecolor": "Choose color",
+      "usedcolor": "USED IN YOUR DESIGN",
+      "allcolors": "All colors",
+      "size": "Size",
+      "spacing": "SPACING",
+      "searchitem": "Search for something"
     }
   },
   "navbar": {
@@ -433,5 +496,37 @@
     "paragraph": "Revert your campaign to draft to edit your design. Buyers won’t be able to check out until you launch the campaign again",
     "cancel": "Cancel",
     "revert": "Revert to draft"
+  },
+  "designnavbar": {
+    "design": "Design",
+    "profits": "Profits",
+    "details": "Details",
+    "preview": "Edit & Preview",
+    "products": "Products",
+    "login": "Log in",
+    "yourcampaign": "Your campaign",
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "account": "Account Settings",
+    "logout": "Logout",
+    "savedesign": "Saving your design",
+    "text": "We'll make sure the artwork looks perfect before painting",
+    "share": "Share",
+    "sharesocial": "Share on social",
+    "sendlink": "Send a link",
+    "copylink": "Copy link",
+    "seecampaign": "See campaign",
+    "saved": "Saved",
+    "save": "Save",
+    "saveclose": "Save & Close",
+    "launch": "Launch",
+    "next": "Next"
+  },
+  "crossdialog": {
+    "title": "Your design might be outside of the printable area",
+    "paragraph1": "Your items will only be printed with the design that is contained inside of the printable area",
+    "paragraph2": "If you wish to include your entire design in the final print, please ensure all elements of the design are positioned inside of the printable area",
+    "cancel": "Cancel and edit design",
+    "continue": "Continue"
   }
 }
