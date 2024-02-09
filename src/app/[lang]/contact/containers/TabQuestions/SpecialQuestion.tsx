@@ -3,7 +3,6 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import { helpImg } from '../../assets'
-import Link from 'next/link'
 import SolidBtn from '@/components/form-elements/SolidBtn'
 import OutlineBtn from '@/components/form-elements/OutlineBtn'
 

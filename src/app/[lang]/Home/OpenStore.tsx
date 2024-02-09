@@ -13,7 +13,7 @@ export default function OpenStore({ resources }) {
                             {resources.home.openstore.openbtn}
                         </OutlineBtn>
                     </div>
-                    <div className="w-[1100px]">
+                    <div className="w-[600px] max-h-[300px] sm:w-[800px] sm:max-h-[450px] md:w-[1100px] md:max-h-max">
                         <Image src={'https://www.bonfire.com/images/stores/store-footer.png'} className="w-full" width={1000} height={600} alt="sell-online" />
                     </div>
                 </div>

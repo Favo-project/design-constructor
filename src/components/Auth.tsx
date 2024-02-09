@@ -211,7 +211,7 @@ export default function Auth({ closeModal, resources }) {
                                     <input value={registerPassword} onChange={e => setRegisterPassword(e.target.value)} className='text-slate-600 font-semibold px-3 py-2.5 outline-none border-2 border-slate-300 rounded-md placeholder:font-medium hover:border-slate-500 focus:border-magenta transition' type="password" name='password-register' id='password-register' placeholder={resources.auth.password} required />
                                 </div>
                                 <div className='flex mt-6'>
-                                    <Checkbox onChange={() => setTermsPolicy(!termsPolicy)} checked={termsPolicy} required={true}>{resources.auth.terms1} <span className='bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text font-medium'>ArtVibe</span>{resources.auth.terms2}</Checkbox>
+                                    <Checkbox onChange={() => setTermsPolicy(!termsPolicy)} checked={termsPolicy} required={true}>{resources.auth.terms1} <span className='bg-gradient-to-r from-magenta to-blue text-transparent bg-clip-text font-medium'>ArtVibe</span> {resources.auth.terms2}</Checkbox>
                                 </div>
                                 <div className='w-full mb-6 mt-6'>
                                     <SolidBtn type='submit' className='w-full text-center justify-center'>{resources.auth.signup}</SolidBtn>

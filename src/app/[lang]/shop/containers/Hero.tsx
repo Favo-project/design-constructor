@@ -41,7 +41,7 @@ export default function Hero({ resources }) {
                     <h1 className="md:text-4xl text-3xl font-sans font-bold tracking-wide text-dark">{resources.shop.hero.title1} <span className="bg-gradient-to-r from-magenta to-blue bg-clip-text text-transparent">ArtVibe</span> {resources.shop.hero.title2}</h1>
                     <div className='relative flex items-center'>
                         <span className='absolute text-lg text-gray-700 left-2'><GoSearch /></span>
-                        <input className='p-2 pl-8 text-sm outline-none rounded-lg border-2 border-slate-300 font-sans font-semibold placeholder:text-slate-400 text-slate-600' placeholder='Search' type="text" />
+                        <input className='p-2 pl-8 text-sm outline-none rounded-lg border-2 border-slate-300 font-sans font-semibold placeholder:text-slate-400 text-slate-600' placeholder={resources.shop.hero.search} type="text" />
                     </div>
                 </div>
             </div>

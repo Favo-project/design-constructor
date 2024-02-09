@@ -3,7 +3,7 @@ import NativeLink from "next/link";
 import { useParams } from "next/navigation";
 
 // this link is internationalized link, it has href with correct locale
-export default function Link({ children, href, className = '', hrefLang = 'uz', style = {} }) {
+export default function Link({ children, ...props }) {
     const { lang } = useParams()
     const linkHref = (href) => {
         if (lang) {
@@ -15,6 +15,6 @@ export default function Link({ children, href, className = '', hrefLang = 'uz', 
     };
 
     return (
-        <NativeLink href={linkHref(href)} style={style} hrefLang={hrefLang} className={className}>{children}</ NativeLink >
+        <NativeLink {...props} href={linkHref(props.href)}>{children}</NativeLink >
     )
 }

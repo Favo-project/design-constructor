@@ -40,7 +40,7 @@ export default function Start({ resources }) {
   const [user, setUser] = useAtom(userAtom)
   const [loading, setLoading] = useState(true)
   const [tabIndex, setTabIndex] = useState(0)
-  const [selectedObj, setSelectedObj] = useState<{ objType: any, object: fabric.Object }>(null)
+  const [selectedObj, setSelectedObj] = useState<{ objType: string, object: fabric.Object }>(null)
   const [multipleObj, setMultipleObj] = useState([])
   const zoomInBtn = useRef(null)
   const zoomOutBtn = useRef(null)
@@ -104,8 +104,6 @@ export default function Start({ resources }) {
 
   // state for identifing the print area cross
   const [printCrossed, setPrintCrossed] = useAtom(campaignPrintCrossed)
-
-  console.log(campaign);
 
   useLayoutEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
@@ -916,8 +914,6 @@ export default function Start({ resources }) {
 
     return () => window.removeEventListener('resize', resizeHandler)
   }, [])
-
-  console.log('render');
 
   return (
     <div id="designer">

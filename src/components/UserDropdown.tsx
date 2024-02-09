@@ -16,6 +16,7 @@ import axios from 'axios'
 import { EnIco, RuIco, UzIco } from '@/assets'
 import { Locale } from '@/i18n.config'
 import { RadioGroup } from '@headlessui/react'
+import { CiLogin } from 'react-icons/ci'
 
 interface ILanguage {
     name: string, locale: Locale, icon: React.ReactNode
@@ -112,7 +113,7 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
     }
 
     return (
-        <div className={`flex items-center sm:mr-3 ${className}`}>
+        <div className={`flex items-center sm:mr-3 mr-1 ${className}`}>
             {
                 user.loaded ? (
                     <Menu as="div" className="relative inline-block text-left">
@@ -122,7 +123,7 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
                                     <GoChevronDown />
                                 </span>
 
-                                <span className='uppercase font-mono mr-2 font-light bg-clip-text bg-gradient-to-r from-magenta to-blue text-transparent'>{lang}</span>
+                                <span className='text-lg uppercase font-mono mr-2 font-light bg-clip-text bg-gradient-to-r from-magenta to-blue text-transparent'>{lang}</span>
 
                                 <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-magenta">
                                     {
@@ -147,7 +148,7 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
                             <Menu.Items className="absolute overflow-hidden right-0 mt-2 w-56 origin-bottom-left divide-y divide-gray-300 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                 <h3 className="px-3 py-3 pt-5 tracking-tight text-slate-700">{resources.userdropdown.welcome}, <strong className='block text-transparent font-medium bg-gradient-to-r from-magenta to-blue bg-clip-text'>{user.name}!</strong></h3>
 
-                                <div className='py-1 px-2'>
+                                <div className='py-2 px-2'>
                                     <RadioGroup value={selectedLang} onChange={setSelectedLang}>
                                         <RadioGroup.Label className="sr-only">Select language</RadioGroup.Label>
                                         <div className="flex items-center gap-2">
@@ -205,7 +206,12 @@ export default function UserDropdown({ className, resources, theme = 'dark' }: {
                 ) : (
                     <AuthModal resources={resources}>
                         <div className={`font-semibold leading-6 ${theme === 'light' ? 'text-white' : 'text-dark'} hover:text-transparent bg-gradient-to-r from-magenta to-blue bg-clip-text transition-all`}>
-                            {resources.userdropdown.login}
+                            <span className='hidden sm:block'>
+                                {resources.userdropdown.login}
+                            </span>
+                            <span className={`block sm:hidden text-2xl mt-1 ${theme === 'light' ? 'text-white' : 'text-dark'} hover:text-magenta transition-all mr-2`}>
+                                <CiLogin />
+                            </span>
                         </div>
                     </AuthModal>
                 )

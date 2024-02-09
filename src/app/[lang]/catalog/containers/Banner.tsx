@@ -12,10 +12,10 @@ export default function Banner({ resources }) {
                     </div>
                     <div className="md:col-start-11 md:col-span-7 md:row-start-1 px-7 py-14 bg-white rounded-xl shadow-lg">
                         <h2 className="lg:text-5xl text-3xl text-gray-700 font-bold font-sans tracking-wide leading-tight mb-10">
-                            {resources.catalog.banner.title}
+                            {resources?.catalog.banner.title}
                         </h2>
                         <SolidBtn href={'/dashboard/overview'}>
-                            {resources.catalog.banner.startbtn}
+                            {resources?.catalog.banner.startbtn}
                         </SolidBtn>
                     </div>
                 </div>

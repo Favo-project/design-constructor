@@ -20,8 +20,8 @@ export default function CampaignCard({ campaign, resources }: { campaign, resour
                         <div className="w-[1px] h-full absolute right-0 top-0 block z-10 bg-white" />
                     </div>
                 </header>
-                <div className="flex flex-col items-center -mt-5 relative z-20">
-                    <h3 className="text-slate-700 font-sans font-medium mb-1">{campaign.title}</h3>
+                <div className="flex flex-col items-center -mt-3 md:-mt-4 relative z-20">
+                    <h3 className="text-slate-700 font-sans font-medium mb-1 text-center">{campaign.title}</h3>
                     <strong className="block font-semibold mb-2 text-slate-600">{formatCurrency(product.sellingPrice)}</strong>
                     <div className="mb-2">
                         <ul className="flex items-center justify-center gap-2">

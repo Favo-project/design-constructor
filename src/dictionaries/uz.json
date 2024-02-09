@@ -162,7 +162,8 @@
       "link1": "Bosh sahifa",
       "link2": "Marketplace",
       "title1": "",
-      "title2": " marketplace dagi mahsulotlarni ko'ring"
+      "title2": " marketplace dagi mahsulotlarni ko'ring",
+      "search": "Qidirish"
     },
     "content": {
       "bycategory": "Kategoriya bo'yicha"
@@ -237,7 +238,8 @@
     "design": "Dizayn",
     "size": "O'LCHAM",
     "nosize": "Hozirda ushbu mahsulot uchun o'lcham yo'q",
-    "addcart": "Savatchaga qo'shish",
+    "addcart": "Savatga qo'shish",
+    "removecart": "Savatdan o'chirish",
     "sold": "SOTILGAN",
     "home": "Bosh sahifa",
     "shop": "Mahsulotlar",
@@ -442,6 +444,8 @@
   },
   "footer": {
     "subtitle": "Yuqori sifatli va takrorlanmas dizayndagi kiyimlar olami",
+    "mydashboard": "Boshqaruv panel",
+    "start": "Boshlash",
     "company": "Kompaniya",
     "about": "Biz haqimizda",
     "help": "Yordam olish",

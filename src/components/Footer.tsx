@@ -15,7 +15,7 @@ export default function Footer({ resources }) {
               <Image src={LogoMain} alt="artvibe-logo" width={60} height={38} />
             </Link>
             <p className="text-sm max-w-[190px] text-slate-300 mb-10 font-sans">{resources.footer.subtitle}.</p>
-            <StartBtn resources={resources} href="/dashboard/overview" context="My dashboard" contextOut="Get started" />
+            <StartBtn resources={resources} href="/dashboard/overview" context={resources.footer.mydashboard} contextOut={resources.footer.start} />
           </div>
           <ul className="flex flex-col gap-2">
             <li>

@@ -57,7 +57,7 @@ export default function Hero({ resources }) {
 
             </div>
             <form className="relative shadow-[2px_2px_14px_0px_#bdc8d9] border-slate-200 focus-within:hover:shadow-none hover:shadow-none focus-within:shadow-none rounded-xl max-w-md transition-all">
-              <input className="px-4 py-3.5 rounded-xl w-full hover:shadow-[inset_0_0_0_2px_#bdc8d9] outline-none hover:focus-within:shadow-[inset_0_0_0_2px_#474E68] focus-within:shadow-[inset_0_0_0_2px_#474E68] transition-all duration-300 font-semibold text-slate-600" type="text" placeholder={resources.search} />
+              <input className="px-4 py-3.5 rounded-xl w-full hover:shadow-[inset_0_0_0_2px_#bdc8d9] outline-none hover:focus-within:shadow-[inset_0_0_0_2px_#474E68] focus-within:shadow-[inset_0_0_0_2px_#474E68] transition-all duration-300 font-semibold text-slate-600" type="text" placeholder={resources.home.hero.search} />
               <button type="submit" className="absolute top-[50%] translate-y-[-50%] right-0 text-2xl py-3.5 px-4">
                 <GoSearch />
               </button>

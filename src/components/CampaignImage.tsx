@@ -1,8 +1,9 @@
 'use client'
 import { useLayoutEffect, useRef, useState } from "react";
 import { fabric } from 'fabric'
-import Loader from "./Loader";
 import { campaignUtils } from "@/actions/campaign";
+import Image from "next/image";
+import { CampaignLayout } from "@/assets";
 
 export default function CampaignImage({ design, pArea, background, width = 600, main = false }) {
     const [loading, setLoading] = useState(true)
@@ -44,7 +45,7 @@ export default function CampaignImage({ design, pArea, background, width = 600, 
                 )
 
                 // loading campaign design background
-                let imgElement = new Image();
+                let imgElement = new window.Image();
                 imgElement.crossOrigin = "anonymous";
                 imgElement.src = background
                 imgElement.onload = function () {
@@ -106,15 +107,15 @@ export default function CampaignImage({ design, pArea, background, width = 600, 
     return (
         <div id="campaign-image" className="w-full relative">
             <div>
-                {
-                    loading && main ? (
-                        <div className="absolute bg-white z-20 top-0 left-0 right-0 bottom-0 flex items-center justify-center">
-                            <Loader />
-                        </div>
-                    ) : null
-                }
-                <div className="w-full min-w-full" ref={designContainer}>
+                <div className={`w-full min-w-full min-h-full relative`} ref={designContainer}>
                     <canvas id="design" className="w-full" ref={canvasRef} />
+                    {
+                        loading && main ? (
+                            <div className={`w-full h-[100%] absolute top-0 left-0 bottom-0 right-0 z-20 bg-white`}>
+                                <Image src={CampaignLayout} className="w-full h-full object-contain opacity-50" alt="campaign-picture" width={600} height={600} />
+                            </div>
+                        ) : null
+                    }
                 </div>
             </div>
         </div>

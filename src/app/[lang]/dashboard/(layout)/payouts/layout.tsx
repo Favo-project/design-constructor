@@ -10,6 +10,8 @@ export default async function Layout({
     const dict = await getDictionary(lang)
 
     return <>
-        <Payouts resources={dict} />
+        {dict ? (
+            <Payouts resources={dict} />
+        ) : null}
     </>
 } 

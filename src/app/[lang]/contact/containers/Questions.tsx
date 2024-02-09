@@ -25,7 +25,7 @@ export default function Questions({ resources }) {
                             <Tab
                                 className={({ selected }) =>
                                     classNames(
-                                        'relative z-50 w-full rounded-lg transition-all',
+                                        'relative z-30 w-full rounded-lg transition-all',
                                         'outline-none',
                                         selected
                                             ? 'shadow-[inset_0_0_0_2px_#bdc8d9] hover:shadow-[inset_0_0_0_2px_#bdc8d9] after:block after:w-5 after:h-5 after:absolute after:right-2 after:bottom-2 after:rounded-full after:bg-[#2b8265]'

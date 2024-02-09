@@ -47,12 +47,12 @@
       "startbtn": "Get started"
     },
     "examples": {
-      "title": "Sell shirts online without inventory through a Bonfire campaign. It`s 100% free, you get a fast payout, and we`ll ship your products directly to your buyers"
+      "title": "Sell shirts online without inventory through a ArtVibe campaign. It`s 100% free, you get a fast payout, and we`ll ship your products directly to your buyers"
     },
     "guide": {
       "title": "How to sell shirts online with ArtVibe",
       "design": "DESIGN OR UPLOAD ARTWORK",
-      "upload": "Upload custom artwork or create your design right on Bonfire",
+      "upload": "Upload custom artwork or create your design right on ArtVibe",
       "promote": "PROMOTE AND SELL",
       "sell": "Spread the word on social media while we handle everything else",
       "shirts": "SHIRTS ARE SHIPPED",
@@ -162,7 +162,8 @@
       "link1": "Home",
       "link2": "Shop",
       "title1": "Explore the",
-      "title2": "marketplace"
+      "title2": "marketplace",
+      "search": "Search"
     },
     "content": {
       "bycategory": "By category"
@@ -206,7 +207,7 @@
         "pricingtip": "Remember, selling on ArtVibe is free and base cost is shown in the profits step when setting up your campaign.",
         "design": "I need help with my design",
         "designtip": "Please provide your name and email and attach the highest quality image possible of your design or inspiration. Supported file types: .AI, .EPS, .PDF, .PNG or .JPG (.AI is preferred). Also, give us an idea of how we can help with your design below.",
-        "campaings": "How do campaigns work",
+        "campaigns": "How do campaigns work",
         "campaignstip": "Remember, we`re unable to extend your campaign`s duration beyond 21 days. However, you can relaunch as many times as you`d like.",
         "other": "Other",
         "othertip": "Let us know how we can help. Please provide your email and any additional information related to your specific question below."
@@ -238,6 +239,7 @@
     "size": "SIZE",
     "nosize": "Currently there is no size for this product",
     "addcart": "Add to cart",
+    "removecart": "Remove from cart",
     "sold": "SOLD",
     "home": "Home",
     "shop": "Shop",
@@ -442,6 +444,8 @@
   },
   "footer": {
     "subtitle": "Where the world goes for premium custom shirts",
+    "mydashboard": "My dashboard",
+    "start": "Get started",
     "company": "Company",
     "about": "About us",
     "help": "Get help",

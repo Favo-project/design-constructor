@@ -264,3 +264,5 @@ export const imageTypes = [
   'image/webp',
   'image/gif',
 ]
+
+export const CART_STORAGE_KEY = "cartList"
