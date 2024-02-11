@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { campaignPrintCrossed } from '@/constants'
 import { useAtom } from 'jotai'
 import SolidBtn from '@/components/form-elements/SolidBtn'
-import Link from 'next/link'
+import Link from '@/components/Link'
 import { PiTShirtDuotone } from 'react-icons/pi'
 
 export default function CrossedDialog({ resources, onSave, isOpen, closeModal, nextUrl }: { onSave: () => void, isOpen: boolean, closeModal: () => void, nextUrl: string, resources }) {

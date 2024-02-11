@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { PatternFormat } from "react-number-format";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 import UserDropdown from "@/components/UserDropdown";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -99,7 +100,10 @@ export default function Account({ resources }) {
         <div id="account">
             <header className="flex items-center justify-between">
                 <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.account.title}</h1>
-                <UserDropdown resources={resources} />
+                <div className="flex items-center gap-3">
+                    <LocaleSwitcher />
+                    <UserDropdown resources={resources} />
+                </div>
             </header>
 
             <div>

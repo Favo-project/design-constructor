@@ -1,5 +1,5 @@
 import CampaignCard from "@/components/CampaignCard"
-import Link from "next/link"
+import Link from "@/components/Link"
 
 export default function Content({ campaigns, resources }) {
     const categories = [

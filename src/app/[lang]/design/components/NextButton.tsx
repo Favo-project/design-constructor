@@ -1,6 +1,6 @@
 import { useParams, usePathname } from "next/navigation"
 import { useLayoutEffect, useState } from "react"
-import Link from "next/link"
+import Link from "@/components/Link"
 import { campaignTools, navigation } from "@/actions/campaignTools"
 import CrossedDialog from "./CrossedDialog"
 import { useAtom } from "jotai"

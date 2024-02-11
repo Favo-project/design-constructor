@@ -1,7 +1,7 @@
 'use client'
 import { LogoPrimary } from "@/assets";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { useParams, usePathname } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineDollar, AiOutlineHome } from "react-icons/ai";

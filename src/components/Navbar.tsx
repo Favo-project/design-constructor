@@ -19,6 +19,7 @@ import Cart from "./Cart";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 import Link from "./Link";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 export default function Navbar({ resources }) {
   const [navigation] = useState([
@@ -116,7 +117,7 @@ export default function Navbar({ resources }) {
 
   return (
     <div className={`relative z-50`}>
-      <nav className={`fixed left-0 right-0 transition-all ${isFixed ? 'top-0 border-b border-slate-300 bg-[#fafafa]' : 'top-6'}`}>
+      <nav className={`fixed left-0 right-0 transition-all ${isFixed ? 'top-0 border-b border-slate-300 bg-white' : 'top-6'}`}>
         <div className="lg:block hidden">
           <div className="container m-auto max-w-7xl">
             <div className="px-4 py-3 flex items-center">
@@ -158,6 +159,7 @@ export default function Navbar({ resources }) {
 
               <div className="ml-auto flex items-center">
                 <UserDropdown resources={resources} />
+                <LocaleSwitcher />
                 <Cart resources={resources} />
               </div>
             </div>
@@ -166,7 +168,7 @@ export default function Navbar({ resources }) {
 
         <div className="lg:hidden">
           <div className="container m-auto max-w-7xl">
-            <div className="px-4 py-3 relative flex items-center justify-between">
+            <div className="sm:px-4 px-2 py-3 relative flex items-center justify-between">
               <div className="flex-2">
                 <Menu as="div" className="relative ml-4">
                   <div>
@@ -252,6 +254,7 @@ export default function Navbar({ resources }) {
 
               <div className="flex-2 flex items-center">
                 <UserDropdown resources={resources} />
+                <LocaleSwitcher />
                 <Cart resources={resources} />
               </div>
             </div>

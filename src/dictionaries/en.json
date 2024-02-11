@@ -370,6 +370,18 @@
       "templates": "Templates",
       "upload": "Upload"
     },
+    "productpage": {
+      "show": "Show",
+      "show2": "",
+      "back": "Back",
+      "front": "Front",
+      "editdesign": "Want to edit your design?",
+      "can": "You can",
+      "draft": "revert your campaign to draft",
+      "makechange": "to make any changes to your design",
+      "editproducts": "Edit your products",
+      "anychanges": "Any changes will apply to all future orders"
+    },
     "profits": {
       "title": "Set your selling prices",
       "product": "PRODUCT",
@@ -467,7 +479,9 @@
     "title": "Your cart",
     "cartempty": "Your cart is empty",
     "addsomething": "Add something to it",
-    "explore": "Explore popular campaigns"
+    "explore": "Explore popular campaigns",
+    "continue": "Continue shopping",
+    "checkout": "Check out"
   },
   "auth": {
     "signin": "Sign in",

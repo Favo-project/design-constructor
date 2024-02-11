@@ -1,17 +1,18 @@
 'use client'
-
 import Toasts from "@/components/Toasts"
 import SolidBtn from "@/components/form-elements/SolidBtn"
-import { CART_STORAGE_KEY, toastAtom } from "@/constants"
+import { CART_STORAGE_KEY, cartAtom, toastAtom } from "@/constants"
 import { useAtom } from "jotai"
 import { Suspense, useEffect, useRef, useState } from "react"
 import { BsCartDash, BsCartPlus } from "react-icons/bs"
+import OutlineBtn from "./form-elements/OutlineBtn"
 
 export default function AddCart({ resources, campaignId, product, color }) {
     const cartBtn = useRef(null)
     const [toast, setToast] = useAtom(toastAtom)
     const [isCartBtn, setIsCartBtn] = useState(false)
     const [isInCart, setIsInCart] = useState(false)
+    const [cartLength, setCartLength] = useAtom(cartAtom)
 
     useEffect(() => {
         const isInViewport = (elem) => {
@@ -73,7 +74,8 @@ export default function AddCart({ resources, campaignId, product, color }) {
         const campaign = {
             campaignId,
             colorName: color.color.name,
-            productName: product.name
+            productName: product.name,
+            id: Math.floor(100000 + Math.random() * 900000)
         }
 
         const newCartList = [...cartList, campaign]
@@ -90,7 +92,7 @@ export default function AddCart({ resources, campaignId, product, color }) {
             productName: product.name
         }
 
-        console.log(cartList, campaign);
+        console.log(campaign);
 
         const newCartList = cartList.filter(c => {
             const cartCampaign = JSON.parse(JSON.stringify(c))
@@ -118,34 +120,38 @@ export default function AddCart({ resources, campaignId, product, color }) {
             setToast({ type: 'success', message: "Dizayn korzinaga qo'shildi" })
             setIsInCart(true)
         }
+
+        setCartLength(getCartList()?.length)
     }
 
     useEffect(() => {
         setIsInCart(isAdded())
-    }, [campaignId, product, color])
+    }, [campaignId, product, color, cartLength])
 
     return (
         <Suspense fallback={'Loading'}>
             <div ref={cartBtn} className="lg:my-10 my-6">
                 <Toasts />
 
-                <SolidBtn onClick={toggleCart}>
-                    {
-                        isInCart ? (
+                {
+                    isInCart ? (
+                        <OutlineBtn onClick={toggleCart}>
                             <div className="flex items-center">
                                 {resources.campaignId.removecart}
-                                <span className="text-white ml-2 text-lg">
+                                <span className="ml-2 text-lg">
                                     <BsCartDash />
                                 </span>
                             </div>
-                        ) : (
+                        </OutlineBtn>
+                    ) : (
+                        <SolidBtn onClick={toggleCart}>
                             <div className="flex items-center">
                                 {resources.campaignId.addcart}
                                 <span className="text-white ml-2 text-lg"><BsCartPlus /></span>
                             </div>
-                        )
-                    }
-                </SolidBtn>
+                        </SolidBtn>
+                    )
+                }
 
                 <div className={`fixed md:hidden block right-4 z-40 ${isCartBtn ? 'bottom-12' : '-bottom-12'} transition-all duration-300`}>
                     <button onClick={toggleCart} className="p-4 text-2xl border-2 border-magenta rounded-full bg-white shadow-2xl hover:text-magenta transition-all">

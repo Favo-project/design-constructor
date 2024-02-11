@@ -9,7 +9,7 @@ import { Fragment, useLayoutEffect, useState } from 'react'
 import { MdDelete, MdDeleteOutline, MdModeEdit, MdOutlineEdit } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import HelpCard from "@/components/HelpCard";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { authAtom, campaignAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -21,6 +21,7 @@ import { FaCircle, FaRegCircle } from "react-icons/fa6";
 import UserDropdown from "@/components/UserDropdown";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import CampaignImage from "@/components/CampaignImage";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 export default function Overview({ resources }) {
   const [loading, setLoading] = useState(false)
@@ -109,7 +110,10 @@ export default function Overview({ resources }) {
 
       <header className="flex items-center justify-between">
         <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.overview.title}</h1>
-        <UserDropdown resources={resources} />
+        <div className="flex items-center gap-3">
+          <LocaleSwitcher />
+          <UserDropdown resources={resources} />
+        </div>
       </header>
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
         <div className="flex flex-col gap-8">

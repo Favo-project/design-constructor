@@ -6,7 +6,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout, MdCheck } from "react-icons/md";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/Link";
 import AuthModal from "@/components/AuthModal";
 import { useAtom } from "jotai";
 import { authAtom, campaignAtom, campaignStart, designAtom, isSavedAtom, toastAtom, userAtom } from "@/constants";
@@ -159,11 +159,11 @@ export default function DesignNavbar({ resources }) {
   const onLaunch = async () => {
     try {
       await onSave()
+      setLaunchDialog(true)
+      setToast({ type: "success", message: `Dizayn  - "${campaign.title}" yakullandi` })
       const response = await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
       const launchData = await campaignTools.launchCampaign(auth, campaignId)
       setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel, status: launchData?.data?.status })
-      setToast({ type: "success", message: `Dizayn  - "${campaign.title}" yakullandi` })
-      setLaunchDialog(true)
     }
     catch (err) {
       if (err?.response?.status === 403) {

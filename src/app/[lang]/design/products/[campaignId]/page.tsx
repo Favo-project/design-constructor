@@ -163,17 +163,17 @@ export default function Products({ resources }) {
                                 onClick={onChangeSide}
                                 className="flex items-center py-1 px-2 text-xs rounded-md border-opacity-70 border-slate-300 border-2 uppercase"
                             >
-                                <VscRefresh className="mr-2 text-lg" /> Show {campaign.selected.side === 'front' ? 'back' : 'front'}
+                                <VscRefresh className="mr-2 text-lg" /> {resources.design.productpage.show} {campaign.selected.side === 'front' ? resources.design.productpage.back : resources.design.productpage.front} {resources.design.productpage.show2}
                             </button>
                         </div>
                         {
                             toEdit ? (
                                 <div className="flex flex-col p-4 w-[80%] sm:w-auto bg-white rounded-lg shadow-2xl shadow-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                                     <h2 className="text-xl font-semibold font-sans text-slate-700 mb-2">
-                                        Want to edit your design?
+                                        {resources.design.productpage.editdesign}
                                     </h2>
                                     <p className="font-sans text-slate-700">
-                                        You can <button className="font-medium text-magenta" onClick={openModal}>revert your campaign to draft</button> to make any changes to your design.
+                                        {resources.design.productpage.can} <button className="font-medium text-magenta" onClick={openModal}>{resources.design.productpage.draft}</button> {resources.design.productpage.makechange}.
                                     </p>
                                 </div>
                             ) : null
@@ -183,9 +183,9 @@ export default function Products({ resources }) {
                 <div></div>
                 <div className="px-4 lg:p-8 shadow-xl min-h-[100vh]">
                     <h3 className="text-gray-700 text-2xl font-semibold mt-6">
-                        Edit your products
+                        {resources.design.productpage.editproducts}
                     </h3>
-                    <p className="p-3 bg-slate-200 rounded-lg text-slate-600 font-medium text-sm flex items-center mt-8 tracking-normal"><span className="text-xl text-slate-600 mr-1.5"><IoTimeOutline /></span> Any changes will apply to all future orders.</p>
+                    <p className="p-3 bg-slate-200 rounded-lg text-slate-600 font-medium text-sm flex items-center mt-8 tracking-normal"><span className="text-xl text-slate-600 mr-1.5"><IoTimeOutline /></span>{resources.design.productpage.anychanges}.</p>
                     <div className="w-full px-2 sm:px-0">
                         <div className="rounded-xl bg-white py-3 ring-white focus:outline-none">
                             <DesignProducts resources={resources} campaign={campaign} canvasRef={canvasRef} canvasValues={canvasValues} setCampaign={setCampaign} />

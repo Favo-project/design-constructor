@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { GoChevronLeft } from "react-icons/go";
-import Link from "next/link";
+import Link from "@/components/Link";
 import Loading from "../../components/loading";
 import { FiLink } from "react-icons/fi";
 import { MdDelete, MdDeleteOutline, MdModeEdit, MdOpenInNew, MdOutlineEdit } from "react-icons/md";
@@ -21,6 +21,7 @@ import DraftDialog from '@/app/[lang]/design/components/DraftDialog';
 import SolidBtn from '@/components/form-elements/SolidBtn';
 import UserDropdown from '@/components/UserDropdown';
 import CampaignImage from '@/components/CampaignImage';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
 
 export default function Details({ resources }) {
     const router = useRouter()
@@ -112,7 +113,10 @@ export default function Details({ resources }) {
                             <GoChevronLeft />
                         </Link>
                         <h1 className="md:text-3xl text-2xl font-bold text-slate-600 my-5 lg:ml-3">{campaign?.title}</h1>
-                        <UserDropdown resources={resources} />
+                        <div className="flex items-center gap-3">
+                            <LocaleSwitcher />
+                            <UserDropdown resources={resources} />
+                        </div>
                     </header>
                     <div className="flex items-center mb-14 gap-4 lg:ml-3">
                         <Link href={`/campaign/${campaignId}`} className="font-sans hover:text-magenta text-slate-400 flex items-center transition-all">

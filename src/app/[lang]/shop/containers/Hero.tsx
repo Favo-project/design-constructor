@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/Link";
 import { GoSearch } from "react-icons/go";
 
 export default function Hero({ resources }) {

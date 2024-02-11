@@ -1,5 +1,5 @@
 import { formatCurrency } from "@/actions/campaignTools"
-import Link from "next/link"
+import Link from "@/components/Link"
 import CampaignImage from "./CampaignImage"
 
 export default function CampaignCard({ campaign, resources }: { campaign, resources }) {
@@ -13,12 +13,6 @@ export default function CampaignCard({ campaign, resources }: { campaign, resour
                         <CampaignImage design={campaign.design.back} background={product?.colors[0]?.image?.back} pArea={product.printableArea?.back} main />
                     </div>
                     <CampaignImage design={campaign.design.front} background={product?.colors[0]?.image?.front} pArea={product.printableArea?.front} main />
-                    <div>
-                        <div className="w-full h-[1px] absolute top-0 block z-10 bg-white" />
-                        <div className="w-[1px] h-full absolute left-0 top-0 block z-10 bg-white" />
-                        <div className="w-full h-[1px] absolute bottom-0 block z-10 bg-white" />
-                        <div className="w-[1px] h-full absolute right-0 top-0 block z-10 bg-white" />
-                    </div>
                 </header>
                 <div className="flex flex-col items-center -mt-3 md:-mt-4 relative z-20">
                     <h3 className="text-slate-700 font-sans font-medium mb-1 text-center">{campaign.title}</h3>

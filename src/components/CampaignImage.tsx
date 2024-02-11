@@ -111,7 +111,7 @@ export default function CampaignImage({ design, pArea, background, width = 600, 
                     <canvas id="design" className="w-full" ref={canvasRef} />
                     {
                         loading && main ? (
-                            <div className={`w-full h-[100%] absolute top-0 left-0 bottom-0 right-0 z-20 bg-white`}>
+                            <div className={`w-full absolute top-0 left-0 bottom-0 right-0 z-20 bg-white`}>
                                 <Image src={CampaignLayout} className="w-full h-full object-contain opacity-50" alt="campaign-picture" width={600} height={600} />
                             </div>
                         ) : null

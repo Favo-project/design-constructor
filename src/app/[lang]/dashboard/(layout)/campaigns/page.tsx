@@ -9,7 +9,7 @@ import { FaCircle, FaMinus, FaRegCircle } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from 'next/navigation'
 import HelpCard from "@/components/HelpCard";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { BiCopy, BiSolidCopy } from "react-icons/bi";
 import axios from "axios";
 import { useAtom } from "jotai";
@@ -19,6 +19,7 @@ import CampaignDelete from "../components/CampaignDelete";
 import UserDropdown from "@/components/UserDropdown";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 import CampaignImage from "@/components/CampaignImage";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 
 export default function Campaigns({ resources }) {
@@ -104,7 +105,10 @@ export default function Campaigns({ resources }) {
         <div id="campaigns">
             <header className="flex items-center justify-between">
                 <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.campaigns.title}</h1>
-                <UserDropdown resources={resources} />
+                <div className="flex items-center gap-3">
+                    <LocaleSwitcher />
+                    <UserDropdown resources={resources} />
+                </div>
             </header>
 
             <div>

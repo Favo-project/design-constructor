@@ -1,5 +1,5 @@
 'use client'
-import Link from "next/link";
+import Link from "@/components/Link";
 import { useParams } from "next/navigation";
 
 export default function Badges({ resources }) {

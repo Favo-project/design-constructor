@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/Link";
 import { FaInstagram, FaTiktok } from "react-icons/fa6";
 import { FaTelegramPlane, FaFacebook } from "react-icons/fa";
 import StartBtn from "./StartBtn";

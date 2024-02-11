@@ -370,6 +370,18 @@
       "templates": "Shablonlar",
       "upload": "Yuklash"
     },
+    "productpage": {
+      "show": "",
+      "show2": "Ko'rsatish",
+      "back": "Orqani",
+      "front": "Oldini",
+      "editdesign": "Dizayningizni tahrirlashni xohlaysizmi?",
+      "can": "Siz",
+      "draft": "dizayningizni qoralamaga aylantirish",
+      "makechange": "orqali unga xohlagan o'zgartirish kiritishingiz mumkin",
+      "editproducts": "Produktlarni o'zgartirish",
+      "anychanges": "Har qanday o'zgarishlar barcha kelgusi buyurtmalarga amal qiladi"
+    },
     "profits": {
       "title": "Sotish narxlaringizni belgilang",
       "product": "MAHSULOT",
@@ -467,7 +479,9 @@
     "title": "Sizning savatingiz",
     "cartempty": "Savatingiz bo'sh",
     "addsomething": "Savatga nimadir qo'shing",
-    "explore": "Mashhur dizaynlarni izlang"
+    "explore": "Mashhur dizaynlarni izlang",
+    "continue": "Xarid qilishda davom eting",
+    "checkout": "To'lov qilish"
   },
   "auth": {
     "signin": "Kirish",

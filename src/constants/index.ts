@@ -266,3 +266,7 @@ export const imageTypes = [
 ]
 
 export const CART_STORAGE_KEY = "cartList"
+
+export const cartAtom = atom(0)
+
+export const revalidationTime = 600 // revalidation time for requests to call backend

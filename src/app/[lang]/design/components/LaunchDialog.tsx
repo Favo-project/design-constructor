@@ -1,6 +1,6 @@
 import SolidBtn from '@/components/form-elements/SolidBtn'
 import { Dialog, Transition } from '@headlessui/react'
-import Link from 'next/link'
+import Link from '@/components/Link'
 import { useParams } from 'next/navigation'
 import { Fragment } from 'react'
 import { GoChevronLeft } from 'react-icons/go'

@@ -7,7 +7,7 @@ import { PatternFormat } from 'react-number-format';
 import axios from 'axios'
 import SolidBtn from './form-elements/SolidBtn'
 import { LogoMain } from '@/assets'
-import Link from 'next/link'
+import Link from '@/components/Link'
 import Image from 'next/image'
 import Checkbox from './form-elements/Checkbox'
 

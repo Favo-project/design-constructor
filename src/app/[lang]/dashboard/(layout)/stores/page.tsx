@@ -6,6 +6,7 @@ import { Fragment, useState } from 'react'
 import UserDropdown from "@/components/UserDropdown";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import SolidBtn from "@/components/form-elements/SolidBtn";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 export default function Stores({ resources }) {
     const [isOpen, setIsOpen] = useState(false)
@@ -23,7 +24,10 @@ export default function Stores({ resources }) {
         <div id="stores">
             <header className="flex items-center justify-between">
                 <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.store.title}</h1>
-                <UserDropdown resources={resources} />
+                <div className="flex items-center gap-3">
+                    <LocaleSwitcher />
+                    <UserDropdown resources={resources} />
+                </div>
             </header>
 
             <div className="flex justify-center gap-6">

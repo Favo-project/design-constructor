@@ -4,7 +4,7 @@ import { Navigation } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Image from 'next/image';
 
 export default function Slider({ resources }) {

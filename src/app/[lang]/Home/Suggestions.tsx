@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { catalogImg, templateImg } from "./assets";
 import { GoChevronRight } from "react-icons/go";
-import Link from "next/link";
+import Link from "@/components/Link";
 
 export default function Suggestions({ resources }) {
     return (

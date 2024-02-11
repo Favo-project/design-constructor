@@ -7,7 +7,7 @@ import { Menu, Transition } from '@headlessui/react'
 import axios from 'axios'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/Link'
 import { Fragment, useLayoutEffect, useState } from 'react'
 import { BsImageAlt } from 'react-icons/bs'
 import { FaBarsStaggered } from 'react-icons/fa6'
@@ -18,6 +18,7 @@ import { IoStorefrontOutline } from 'react-icons/io5'
 import { LiaMoneyBillWaveSolid } from 'react-icons/lia'
 import { PiTShirt } from 'react-icons/pi'
 import { RiShoppingBag3Line } from 'react-icons/ri'
+import LocaleSwitcher from '@/components/LocaleSwitcher'
 
 export default function CampaignNavbar({ resources }) {
     const [navigation] = useState([
@@ -145,7 +146,7 @@ export default function CampaignNavbar({ resources }) {
     return (
         <div className='relative z-50'>
             <nav className={`z-30 fixed left-0 right-0 transition-all ${isFixed ? 'top-0 border-b border-slate-300 bg-white' : 'top-6'}`}>
-                <nav className="container m-auto max-w-7xl px-4 py-3 flex items-center justify-between relative">
+                <nav className="container m-auto max-w-7xl sm:px-4 px-2 py-3 flex items-center justify-between relative">
                     <div className='flex-[2] flex items-center gap-5'>
                         <Menu as="div" className="relative ml-4">
                             <div>
@@ -235,6 +236,7 @@ export default function CampaignNavbar({ resources }) {
 
                     <div className='flex-[2] flex items-center justify-end'>
                         <UserDropdown resources={resources} className="hidden md:block" />
+                        <LocaleSwitcher />
                         <Cart resources={resources} />
                     </div>
                 </nav>
