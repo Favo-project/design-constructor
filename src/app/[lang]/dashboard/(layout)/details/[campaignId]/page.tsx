@@ -20,8 +20,8 @@ import { VscDebugRestart } from 'react-icons/vsc';
 import DraftDialog from '@/app/[lang]/design/components/DraftDialog';
 import SolidBtn from '@/components/form-elements/SolidBtn';
 import UserDropdown from '@/components/UserDropdown';
-import CampaignImage from '@/components/CampaignImage';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
+import Image from 'next/image';
 
 export default function Details({ resources }) {
     const router = useRouter()
@@ -135,7 +135,7 @@ export default function Details({ resources }) {
                     <div className='flex items-center md:flex-nowrap flex-wrap gap-5 mb-10 justify-between'>
                         <div className='flex items-center gap-3'>
                             <div>
-                                <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
+                                <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products?.[0].colors?.[0].designImg?.front}`} alt="campaign-image" width={48} height={48} />
                             </div>
                             <div>
                                 <h4 className='flex items-center gap-2 font-bold text-slate-600 mb-1'>

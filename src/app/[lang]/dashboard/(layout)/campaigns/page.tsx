@@ -18,7 +18,6 @@ import Loader from "@/components/Loader";
 import CampaignDelete from "../components/CampaignDelete";
 import UserDropdown from "@/components/UserDropdown";
 import SolidBtn from "@/components/form-elements/SolidBtn";
-import CampaignImage from "@/components/CampaignImage";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 
@@ -187,7 +186,7 @@ export default function Campaigns({ resources }) {
                                             <td>
                                                 <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 sm:p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                                                     <div>
-                                                        <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
+                                                        <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products?.[0].colors?.[0].designImg?.front}`} alt="campaign-image" width={48} height={48} />
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-medium">{campaign.title}</p>

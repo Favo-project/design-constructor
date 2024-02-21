@@ -1,6 +1,6 @@
 import { formatCurrency } from "@/actions/campaignTools"
 import Link from "@/components/Link"
-import CampaignImage from "./CampaignImage"
+import Image from "next/image"
 
 export default function CampaignCard({ campaign, resources }: { campaign, resources }) {
     const product = campaign.products[0]
@@ -10,9 +10,9 @@ export default function CampaignCard({ campaign, resources }: { campaign, resour
             <div className="flex flex-col">
                 <header className="relative">
                     <div className="z-10 w-full h-full top-0 bottom-0 left-0 right-0 opacity-0 absolute hover:opacity-100 transition-all duration-300">
-                        <CampaignImage design={campaign.design.back} background={product?.colors[0]?.image?.back} pArea={product.printableArea?.back} main />
+                        <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${product.colors[0].designImg['back']}`} alt="campaign-image" width={700} height={700} />
                     </div>
-                    <CampaignImage design={campaign.design.front} background={product?.colors[0]?.image?.front} pArea={product.printableArea?.front} main />
+                    <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${product.colors[0].designImg['front']}`} alt="campaign-image" width={700} height={700} />
                 </header>
                 <div className="flex flex-col items-center -mt-3 md:-mt-4 relative z-20">
                     <h3 className="text-slate-700 font-sans font-medium mb-1 text-center">{campaign.title}</h3>

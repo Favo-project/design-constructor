@@ -20,8 +20,8 @@ import { BiCopy, BiSolidCopy } from "react-icons/bi";
 import { FaCircle, FaRegCircle } from "react-icons/fa6";
 import UserDropdown from "@/components/UserDropdown";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
-import CampaignImage from "@/components/CampaignImage";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import Image from "next/image";
 
 export default function Overview({ resources }) {
   const [loading, setLoading] = useState(false)
@@ -181,7 +181,7 @@ export default function Overview({ resources }) {
                           <td>
                             <Link href={campaign.status === "Launched" ? `/dashboard/details/${campaign._id}` : `/design/start/${campaign._id}`} className="flex items-center gap-3 sm:p-3 after:block after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 z-10">
                               <div>
-                                <CampaignImage design={campaign.design?.front} background={campaign?.products[0]?.colors[0]?.image?.front} pArea={campaign?.products[0]?.printableArea?.front} width={48} />
+                                <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products?.[0].colors?.[0].designImg?.front}`} alt="campaign-image" width={48} height={48} />
                               </div>
                               <div>
                                 <p className="text-sm font-medium">{campaign.title}</p>

@@ -5,15 +5,20 @@ import CampaignCreator from "./components/CampaignCreator";
 import SizeInfo from "../../design/components/SizeInfo";
 import { PiWarningDiamond } from "react-icons/pi";
 import { GrTag } from "react-icons/gr";
-import CampaignImage from "@/components/CampaignImage";
 import Link from "next/link";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import AddCart from "../../../../components/AddCart";
 import Loader from "@/components/Loader";
+import Image from "next/image";
+import { revalidationTime } from "@/constants";
 
 const getCampaign = async (campaignId) => {
-    return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/public/${campaignId}`).then((res) => res.json()).then(
+    return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/public/${campaignId}`, {
+        next: {
+            revalidate: revalidationTime // revalidation time to refetch the data from the backend
+        }
+    }).then((res) => res.json()).then(
         result => result.data || undefined
     )
 }
@@ -47,7 +52,7 @@ export default async function Campaign({ params: { lang, campaignId }, searchPar
                             <div className="relative w-full max-h-[700px] max-w-[700px] bg-transparent">
                                 <div className="border-0">
                                     <Suspense fallback={'Loading'}>
-                                        <CampaignImage design={campaign.design?.[side]} background={campaign.products[product]?.colors[color]?.image?.[side]} pArea={campaign.products[product].printableArea?.[side]} main />
+                                        <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[product].colors[color].designImg[side]}`} alt="campaign-image" width={700} height={700} />
                                     </Suspense>
                                     <div>
                                         <div className="w-full h-[1px] absolute top-0 block z-10 bg-white" />
@@ -60,10 +65,10 @@ export default async function Campaign({ params: { lang, campaignId }, searchPar
                                 <div>
                                     <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1 z-10">
                                         <Link href={{ query: { product, side: "front", color } }} scroll={false} className={`${side === 'front' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2 transition-all max-w-[50px] max-h-[50px]`}>
-                                            <CampaignImage design={campaign?.design?.['front']} pArea={campaign.products[product].printableArea?.[side]} background={campaign.products[product]?.colors[color].image?.[side]} width={30} />
+                                            <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[product].colors[color].designImg['front']}`} alt="campaign-image" width={30} height={30} />
                                         </Link>
                                         <Link href={{ query: { product, side: "back", color } }} scroll={false} className={`${side === 'back' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2  hover:border-slate-300 transition-all max-w-[50px] max-h-[50px]`}>
-                                            <CampaignImage design={campaign.design?.['back']} pArea={campaign.products[product].printableArea?.[side]} background={campaign.products[product]?.colors[color].image?.[side]} width={30} />
+                                            <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${campaign.products[product].colors[color].designImg['back']}`} alt="campaign-image" width={30} height={30} />
                                         </Link>
                                     </div>
                                 </div>

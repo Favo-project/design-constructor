@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "Favo design",
+  title: "Artvibe",
   description: "Here you can create your own art within our products",
 };
 

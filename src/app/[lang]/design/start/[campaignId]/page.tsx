@@ -880,12 +880,35 @@ export default function Start({ resources }) {
       canvasValues.current.side = 'back'
       canvas.remove(...campaign.design.front)
       canvas.add(...campaign.design.back)
+
+      const printableArea = campaign.products[campaign.selected.product].printableArea['back']
+
+      for (const side in campaign.design) {
+        if (campaign.design[side].length) {
+          campaign.design[side].forEach((elem) => {
+            elem.top = (printableArea.top - printableArea.height / 2) + elem.height / 2 + elem.relativeTop
+            canvasRef.canvas.requestRenderAll()
+          })
+        }
+      }
     }
+
     else {
       setCampaign({ ...campaign, selected: { ...campaign.selected, side: 'front' } })
       canvasValues.current.side = 'front'
       canvas.remove(...campaign.design.back)
       canvas.add(...campaign.design.front)
+
+      const printableArea = campaign.products[campaign.selected.product].printableArea['front']
+
+      for (const side in campaign.design) {
+        if (campaign.design[side].length) {
+          campaign.design[side].forEach((elem) => {
+            elem.top = (printableArea.top - printableArea.height / 2) + elem.height / 2 + elem.relativeTop
+            canvasRef.canvas.requestRenderAll()
+          })
+        }
+      }
     }
 
     canvas.discardActiveObject()

@@ -12,16 +12,14 @@ import { PiWarningDiamond } from "react-icons/pi";
 import AccountSettings from "../../components/AccountSettings";
 import SizeInfo from "../../components/SizeInfo";
 import FeaturedItem from "../../components/FeaturedItem";
-import CampaignImage from "@/components/CampaignImage";
+import Image from 'next/image';
 
 export default function Preview({ resources }) {
     const [side, setSide] = useState('front')
-    const [imgLoading, setImgLoading] = useState(false)
     const [campaign, setCampaign] = useAtom(campaignAtom)
 
     const [currentColor, setCurrentColor] = useState(0)
     const [currentProduct, setCurrentProduct] = useState(campaign.products[0])
-    const [savedDesign] = useAtom(designAtom)
 
     useEffect(() => {
         let campaignTitle = campaign.title
@@ -34,7 +32,6 @@ export default function Preview({ resources }) {
     }, [])
 
     const flipSide = (side) => {
-        setImgLoading(true)
         if (side === 'front') {
             setSide('front')
         }
@@ -44,13 +41,11 @@ export default function Preview({ resources }) {
     }
 
     const setProduct = (product) => {
-        setImgLoading(true)
         setCurrentProduct(product)
         setCurrentColor(0)
     }
 
     const setColor = (index) => {
-        setImgLoading(true)
         setCurrentColor(index)
     }
 
@@ -71,16 +66,16 @@ export default function Preview({ resources }) {
             <div className="md:sticky flex lg:justify-end justify-center top-28 h-min bg-transparent">
                 <div className="relative w-full max-h-[700px] max-w-[700px] bg-transparent">
                     <div className="border-0">
-                        <CampaignImage design={savedDesign[side]} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} main />
+                        <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors?.[currentColor].designImg[side]}`} alt="campaign-image" width={700} height={700} />
                     </div>
 
                     <div>
                         <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1 z-10">
                             <button onClick={() => flipSide('front')} className={`${side === 'front' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2 transition-all`}>
-                                <CampaignImage design={campaign.design['front']} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} width={30} />
+                                <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors?.[currentColor].designImg.front}`} alt="campaign-image" width={30} height={30} />
                             </button>
                             <button onClick={() => flipSide('back')} className={`${side === 'back' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2  hover:border-slate-300 transition-all`}>
-                                <CampaignImage design={campaign.design['back']} pArea={currentProduct.printableArea[side]} background={currentProduct?.colors[currentColor].image[side]} width={30} />
+                                <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors?.[currentColor].designImg.back}`} alt="campaign-image" width={30} height={30} />
                             </button>
                         </div>
                         <FeaturedItem resources={resources} currentProduct={currentProduct} currentColor={currentColor} setCurrentColor={setCurrentColor} />

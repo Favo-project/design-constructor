@@ -90,14 +90,17 @@ export default function DesignNavbar({ resources }) {
         const response = await campaignTools.saveCampaign(pathname, auth, campaignId, campaign)
 
         setIsSaved(true)
-        setCampaign({ ...campaign, ...response.data })
-        setSavedDesign({ ...response.data.design })
+        if (response.updated) {
+          setSavedDesign({ ...response.data.design })
+          setCampaign({ ...campaign, products: [...response?.data?.products] })
+        }
 
         setTimeout(() => {
           setIsSaved(false)
         }, 3000)
 
         setLoading(false)
+        return response.data
       }
       else {
         setSaveDialog(true)
@@ -123,6 +126,7 @@ export default function DesignNavbar({ resources }) {
         localStorage.removeItem('user_at')
       }
       else {
+        console.log(err);
         setToast({ type: "warning", message: err?.message || 'Xatolik yuz berdi, qayta uruning' })
       }
     }
@@ -133,7 +137,7 @@ export default function DesignNavbar({ resources }) {
       const data = await onSave()
       if (campaignId) {
         const response = await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
-        setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel })
+        setCampaign({ ...campaign, products: [...data?.products], campaignLevel: response?.data?.campaignLevel })
       }
       else {
         const response = await campaignTools.changeLevel(auth, pathname, data._id, data)
@@ -151,6 +155,7 @@ export default function DesignNavbar({ resources }) {
         setSaveDialog(false)
       }
       else {
+        console.log(err);
         setToast({ type: "warning", message: err?.message || 'Xatolik yuz berdi, qayta uruning' })
       }
     }

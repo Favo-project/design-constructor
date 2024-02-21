@@ -9,12 +9,12 @@ import { IoMdClose } from 'react-icons/io'
 import { LiaShoppingBagSolid } from 'react-icons/lia'
 import Loader from './Loader'
 import { fetchCart } from '@/api/cart'
-import CampaignImage from './CampaignImage'
 
 import { Listbox } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import { formatCurrency } from '@/actions/campaignTools'
 import SolidBtn from './form-elements/SolidBtn'
+import Image from 'next/image'
 
 const CART_ITEM_CLASSNAME = 'w-full grid md:grid-cols-[10%_10%_36%_16%_18%] grid-cols-[15%_15%_32%_16%_18%] md:gap-[2.4%] gap-[1%] items-center'
 
@@ -265,7 +265,7 @@ function CartItem({ item, campaign, removeFromCart }) {
             <div className='flex items-center'>
                 <div className={CART_ITEM_CLASSNAME}>
                     <div>
-                        <CampaignImage design={campaign.design['front']} background={color.image['front']} pArea={product.printableArea['front']} width={50} />
+                        <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${color.designImg?.front}`} alt="campaign-image" width={50} height={50} />
                     </div>
                     <div>
                         <input value={qty} onChange={(e) => changeQty(Number(e.target.value))} className="text-sm md:text-base px-2 py-2 md:px-3 md:py-2.5 w-full bg-transparent outline-none font-semibold rounded-lg border-2 border-slate-200 focus-within:border-slate-600 text-slate-600" type="text" id="name" />
