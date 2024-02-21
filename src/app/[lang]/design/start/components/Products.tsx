@@ -28,8 +28,8 @@ const shirts = [
         },
         image: {
           front:
-            `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/premium-unisex-tee-dark-heather-gray.jpg`,
-          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/premium-unisex-tee-dark-heather-gray-back.jpg`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/premium-unisex-tee-dark-heather-gray.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/premium-unisex-tee-dark-heather-gray-back.jpg`,
         },
       },
       {
@@ -39,8 +39,8 @@ const shirts = [
         },
         image: {
           front:
-            `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/premium-unisex-tee-red.jpg`,
-          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/premium-unisex-tee-red-back.jpg`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/premium-unisex-tee-red.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/premium-unisex-tee-red-back.jpg`,
         },
       },
     ],
@@ -73,8 +73,8 @@ const shirts = [
         },
         image: {
           front:
-            `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/classic-tee-black.jpg`,
-          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/classic-tee-black-back.jpg`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/classic-tee-black.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/classic-tee-black-back.jpg`,
         },
       },
       {
@@ -84,8 +84,8 @@ const shirts = [
         },
         image: {
           front:
-            `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/classic-tee-royal.jpg`,
-          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/classic-tee-royal-back.jpg`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/classic-tee-royal.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/classic-tee-royal-back.jpg`,
         },
       },
     ],
@@ -118,8 +118,8 @@ const shirts = [
         },
         image: {
           front:
-            `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/pullover-hoodie-sport-grey.jpg`,
-          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/pullover-hoodie-sport-grey-back.jpg`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/pullover-hoodie-sport-grey.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/pullover-hoodie-sport-grey-back.jpg`,
         },
       },
       {
@@ -129,8 +129,8 @@ const shirts = [
         },
         image: {
           front:
-            `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/pullover-hoodie-indigo.jpg`,
-          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/images/pullover-hoodie-indigo-back.jpg`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/pullover-hoodie-indigo.jpg`,
+          back: `${process.env.NEXT_PUBLIC_BASE_URL}/files/products/pullover-hoodie-indigo-back.jpg`,
         },
       },
     ],
