@@ -4,8 +4,7 @@ import LogoSecondary from './logo.svg'
 import UzIco from './uzbekistan.png'
 import RuIco from './russia.png'
 import EnIco from './united-kingdom.png'
-import CampaignLayout from './campaign-layout.webp'
 
 export {
-    LogoMain, LogoPrimary, LogoSecondary, UzIco, RuIco, EnIco, CampaignLayout
+    LogoMain, LogoPrimary, LogoSecondary, UzIco, RuIco, EnIco
 }
