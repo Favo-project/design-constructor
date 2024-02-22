@@ -6,7 +6,7 @@ import { Locale, i18n } from "@/i18n.config";
 
 import { Inter } from "next/font/google";
 import LocaleRedirect from "@/components/LocaleRedirect";
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"] });
 
 export async function generateStaticParams() {
   return i18n.locales.map(locale => ({ lang: locale }))

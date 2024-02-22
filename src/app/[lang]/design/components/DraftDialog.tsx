@@ -7,6 +7,7 @@ import { authAtom, campaignAtom, toastAtom, userAtom } from '@/constants'
 import { useAtom } from 'jotai'
 import Toasts from '@/components/Toasts'
 import SolidBtn from '@/components/form-elements/SolidBtn'
+import { revalidateTag } from 'next/cache'
 
 export default function DraftDialog({ resources, isOpen, closeModal }) {
     const [toast, setToast] = useAtom(toastAtom)
@@ -24,6 +25,7 @@ export default function DraftDialog({ resources, isOpen, closeModal }) {
             setCampaign({ ...campaign, ...response.data })
             router.push(`/design/start/${campaignId}`)
             setToast({ type: "info", message: resources.campaigndraft.wait })
+            // revalidateTag('campaign-public')
             closeModal()
         }
         catch (e) {

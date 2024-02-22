@@ -21,16 +21,6 @@ export default function Preview({ resources }) {
     const [currentColor, setCurrentColor] = useState(0)
     const [currentProduct, setCurrentProduct] = useState(campaign.products[0])
 
-    useEffect(() => {
-        let campaignTitle = campaign.title
-
-        setCurrentProduct({ ...campaign.products[0] })
-        if (campaignTitle === 'Draft campaign') {
-            campaignTitle = ''
-            setCampaign({ ...campaign, title: campaignTitle })
-        }
-    }, [])
-
     const flipSide = (side) => {
         if (side === 'front') {
             setSide('front')
@@ -70,7 +60,7 @@ export default function Preview({ resources }) {
                     </div>
 
                     <div>
-                        <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1 z-10">
+                        <div className="bg-transparent flex flex-col items-center gap-3 absolute bottom-5 left-1">
                             <button onClick={() => flipSide('front')} className={`${side === 'front' ? 'border-slate-400' : 'border-slate-100 hover:border-slate-200'} p-2 bg-white rounded-lg border-2 transition-all`}>
                                 <Image className="w-full h-full object-contain" src={`${process.env.NEXT_PUBLIC_BASE_URL}/files${currentProduct?.colors?.[currentColor].designImg.front}`} alt="campaign-image" width={30} height={30} />
                             </button>

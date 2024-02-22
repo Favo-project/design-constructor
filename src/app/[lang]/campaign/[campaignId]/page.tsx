@@ -16,7 +16,8 @@ import { revalidationTime } from "@/constants";
 const getCampaign = async (campaignId) => {
     return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/campaigns/public/${campaignId}`, {
         next: {
-            revalidate: revalidationTime // revalidation time to refetch the data from the backend
+            revalidate: revalidationTime,
+            // tags: ['campaign-public']
         }
     }).then((res) => res.json()).then(
         result => result.data || undefined

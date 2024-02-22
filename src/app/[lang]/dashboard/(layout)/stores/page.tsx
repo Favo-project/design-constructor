@@ -7,10 +7,14 @@ import UserDropdown from "@/components/UserDropdown";
 import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import { useAtom } from "jotai";
+import { userAtom } from "@/constants";
 
 export default function Stores({ resources }) {
     const [isOpen, setIsOpen] = useState(false)
     const [name, setName] = useState('')
+
+    const [user, setUser] = useAtom(userAtom)
 
     function closeModal() {
         setIsOpen(false)
@@ -18,6 +22,33 @@ export default function Stores({ resources }) {
 
     function openModal() {
         setIsOpen(true)
+    }
+
+    async function onCreateStore(e) {
+        e.preventDefault()
+
+        if (name) {
+
+            try {
+                const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store`, {
+                    method: "POST", headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        title: name,
+                        subtitle: "Official merchandise",
+                        phone: user.phone
+                    })
+                })
+
+                console.log(data);
+                setName('')
+            }
+            catch (err) {
+                console.log(err?.message);
+            }
+
+        }
     }
 
     return (
@@ -81,22 +112,24 @@ export default function Stores({ resources }) {
                                         >
                                             {resources.dashboard.store.namestore}
                                         </Dialog.Title>
-                                        <div className="mt-4">
-                                            <h5 className="w-full text-sm uppercase font-mono tracking-wider font-semibold mb-3 text-slate-600">{resources.dashboard.store.storetitle}</h5>
-                                            <input onChange={(e) => setName(e.target.value)} type="text" className="w-full px-4 py-2.5 border-2 border-magenta border-opacity-70 outline-none rounded-lg font-semibold mb-3 text-slate-600 placeholder:text-slate-500 placeholder:font-semibold" placeholder={resources.dashboard.store.placeholder} />
-                                            <p className="text-slate-600 text-sm">{resources.dashboard.store.dontworry}.</p>
-                                        </div>
+                                        <form onSubmit={onCreateStore}>
+                                            <div className="mt-4">
+                                                <h5 className="w-full text-sm uppercase font-mono tracking-wider font-semibold mb-3 text-slate-600">{resources.dashboard.store.storetitle}</h5>
+                                                <input required onChange={(e) => setName(e.target.value)} value={name} type="text" className="w-full px-4 py-2.5 border-2 border-magenta border-opacity-70 outline-none rounded-lg font-semibold mb-3 text-slate-600 placeholder:text-slate-500 placeholder:font-semibold" placeholder={resources.dashboard.store.placeholder} />
+                                                <p className="text-slate-600 text-sm">{resources.dashboard.store.dontworry}.</p>
+                                            </div>
 
-                                        <div className="mt-6 flex justify-end">
+                                            <div className="mt-6 flex justify-end">
 
-                                            <OutlineBtn
-                                                disabled={name === ''}
-                                                type="button"
-                                                onClick={closeModal}
-                                            >
-                                                {resources.dashboard.store.continue}
-                                            </OutlineBtn>
-                                        </div>
+                                                <OutlineBtn
+                                                    disabled={name === ''}
+                                                    type="submit"
+                                                    onClick={closeModal}
+                                                >
+                                                    {resources.dashboard.store.continue}
+                                                </OutlineBtn>
+                                            </div>
+                                        </form>
                                     </Dialog.Panel>
                                 </Transition.Child>
                             </div>

@@ -47,6 +47,10 @@ export default function NextButton({ resources, loaded, onNext, onLaunch, loadin
         setIsLaunch(campaignTools.launchCheck(campaign))
     }, [pathname, campaignId, campaign])
 
+    if (pathname.indexOf(navigation.start) !== -1 && !campaignId) {
+        return null
+    }
+
     if (pathname.indexOf(navigation.preview) !== -1 && campaignId) {
         if (campaign.status === 'Launched') {
             return (
@@ -81,7 +85,7 @@ export default function NextButton({ resources, loaded, onNext, onLaunch, loadin
         )
     }
 
-    if (printCrossed === true) {
+    if (printCrossed === true && pathname.indexOf(navigation.start)) {
         return (
             <>
                 <button disabled={!loaded || loading} onClick={openCrossModal} className="bg-gradient-to-r from-magenta to-blue rounded-md text-white shadow-md px-3 p-1 disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">

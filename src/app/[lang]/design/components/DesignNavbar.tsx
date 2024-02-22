@@ -24,6 +24,7 @@ import UserDropdown from "@/components/UserDropdown";
 import { EnIco, RuIco, UzIco } from '@/assets'
 import { Locale } from '@/i18n.config'
 import { RadioGroup } from '@headlessui/react'
+import { revalidateTag } from "next/cache";
 
 interface ILanguage {
   name: string, locale: Locale, icon: React.ReactNode
@@ -109,9 +110,9 @@ export default function DesignNavbar({ resources }) {
           ...campaignStart.init,
           products: [...campaignBlank.products]
         })
-        router.push(`/design/start/${response.data._id}`)
         setCampaign({ ...campaign, ...response.data })
         setSavedDesign({ ...response.data.design })
+        router.push(`/design/start/${response?.data?._id}`)
         return response.data
       }
     }
@@ -126,7 +127,7 @@ export default function DesignNavbar({ resources }) {
         localStorage.removeItem('user_at')
       }
       else {
-        console.log(err);
+        console.log(err?.message);
         setToast({ type: "warning", message: err?.message || 'Xatolik yuz berdi, qayta uruning' })
       }
     }
@@ -140,7 +141,7 @@ export default function DesignNavbar({ resources }) {
         setCampaign({ ...campaign, products: [...data?.products], campaignLevel: response?.data?.campaignLevel })
       }
       else {
-        const response = await campaignTools.changeLevel(auth, pathname, data._id, data)
+        const response = await campaignTools.changeLevel(auth, pathname, data?._id, data)
         setCampaign({ ...campaign, ...data, campaignLevel: response?.data?.campaignLevel })
       }
     }
@@ -169,6 +170,7 @@ export default function DesignNavbar({ resources }) {
       const response = await campaignTools.changeLevel(auth, pathname, campaignId, campaign)
       const launchData = await campaignTools.launchCampaign(auth, campaignId)
       setCampaign({ ...campaign, campaignLevel: response?.data?.campaignLevel, status: launchData?.data?.status })
+      // revalidateTag('campaign-public')
     }
     catch (err) {
       if (err?.response?.status === 403) {
@@ -217,7 +219,6 @@ export default function DesignNavbar({ resources }) {
       console.log(err);
     }
   }
-
 
   return (
     <>

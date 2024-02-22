@@ -70,9 +70,11 @@ export default function Cart({ theme, resources }: { resources, theme?: 'dark' |
 
             const data = await fetchCart(cartList)
 
-            const itemsLength = data.reduce((acc, camp) => acc + camp.items.length, 0)
+            const dataItems = []
+            data.map(c => dataItems.push(...c.items))
 
-            setCartLength(itemsLength || 0)
+            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(dataItems))
+            setCartLength(dataItems?.length || 0)
             setCart([...data])
             setLoading(false)
         }

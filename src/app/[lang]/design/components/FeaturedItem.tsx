@@ -62,7 +62,7 @@ export default function FeaturedItem({ resources, currentProduct, currentColor, 
                         {resources.campaignId.featured} <span className='text-green-600 text-lg ml-1'><MdCheck /></span>
                     </button>
                 ) : (
-                    <div className="absolute bottom-5 left-[35%]">
+                    <div className="absolute bottom-5 left-1/2 -translate-x-1/2">
                         <Popover className="relative">
                             {({ open, close }) => (
                                 <>
@@ -80,7 +80,7 @@ export default function FeaturedItem({ resources, currentProduct, currentColor, 
                                         leaveFrom="opacity-100 translate-y-0"
                                         leaveTo="opacity-0 translate-y-1"
                                     >
-                                        <Popover.Panel className="absolute left-1/2 bottom-1/2 z-10 mt-3 w-screen max-w-[340px] -translate-x-1/2 transform px-4">
+                                        <Popover.Panel className="absolute left-1/2 bottom-1/2 z-30 mt-3 w-screen max-w-[340px] -translate-x-1/2 transform px-4">
                                             <div className='bg-white rounded-lg shadow-lg p-4'>
                                                 <div className='flex flex-col'>
                                                     <h4 className='text-slate-700 font-sans mb-2'>{resources.campaignId.featuredfor}:</h4>

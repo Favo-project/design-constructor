@@ -4,13 +4,14 @@ import { avatar } from "../assets";
 import { useEffect, useState } from 'react'
 import { Tab } from '@headlessui/react'
 import axios from "axios";
-import { authAtom, imageTypes, userAtom } from "@/constants";
+import { authAtom, imageTypes, toastAtom, userAtom } from "@/constants";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { PatternFormat } from "react-number-format";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 import UserDropdown from "@/components/UserDropdown";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import Toasts from "@/components/Toasts";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -23,6 +24,7 @@ export default function Account({ resources }) {
     const [photo, setPhoto] = useState<File>()
     const [imageError, setImageError] = useState('')
 
+    const [toast, setToast] = useAtom(toastAtom)
     const [user, setUser] = useAtom(userAtom)
     const [auth, setAuth] = useAtom(authAtom)
 
@@ -58,6 +60,7 @@ export default function Account({ resources }) {
 
             setUser({ ...response.data })
             setAuth(response.newToken)
+            setToast({ type: "success", message: 'Ma`lumotlar o`zgartirildi' })
             localStorage.setItem('user_at', response.newToken)
         }
         catch (err) {
@@ -98,6 +101,7 @@ export default function Account({ resources }) {
 
     return (
         <div id="account">
+            <Toasts />
             <header className="flex items-center justify-between">
                 <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.account.title}</h1>
                 <div className="flex items-center gap-3">

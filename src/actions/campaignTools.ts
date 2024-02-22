@@ -275,22 +275,22 @@ class CampaignTools {
 
     async changeLevel(authToken: string, pathname: string, campaignId: string | string[], campaign) {
         let campaignLevel = 0
-        if (pathname.indexOf(navigation.start) !== -1 && campaign.campaignLevel < 1) {
+        if (pathname.indexOf(navigation.start) !== -1 && campaign?.campaignLevel < 1) {
             campaignLevel = 1
 
             return await this.modify(authToken, campaignId, { campaignLevel })
         }
-        else if (pathname.indexOf(navigation.profits) !== -1 && campaign.campaignLevel < 2) {
+        else if (pathname.indexOf(navigation.profits) !== -1 && campaign?.campaignLevel < 2) {
             campaignLevel = 2
 
             return await this.modify(authToken, campaignId, { campaignLevel })
         }
-        else if (pathname.indexOf(navigation.details) !== -1 && campaign.campaignLevel < 3) {
+        else if (pathname.indexOf(navigation.details) !== -1 && campaign?.campaignLevel < 3) {
             campaignLevel = 3
 
             return await this.modify(authToken, campaignId, { campaignLevel })
         }
-        else if (pathname.indexOf(navigation.preview) !== -1 && campaign.campaignLevel < 4) {
+        else if (pathname.indexOf(navigation.preview) !== -1 && campaign?.campaignLevel < 4) {
             campaignLevel = 4
 
             return await this.modify(authToken, campaignId, { campaignLevel })
