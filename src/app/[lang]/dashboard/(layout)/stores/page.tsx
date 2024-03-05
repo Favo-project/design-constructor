@@ -8,12 +8,19 @@ import OutlineBtn from "@/components/form-elements/OutlineBtn";
 import SolidBtn from "@/components/form-elements/SolidBtn";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { useAtom } from "jotai";
-import { userAtom } from "@/constants";
+import { authAtom, toastAtom, userAtom } from "@/constants";
+import Toasts from "@/components/Toasts";
+import { useRouter } from "next/navigation";
+import { createStore } from "@/api/store";
 
 export default function Stores({ resources }) {
+    const router = useRouter()
+
     const [isOpen, setIsOpen] = useState(false)
     const [name, setName] = useState('')
 
+    const [toast, setToast] = useAtom(toastAtom)
+    const [auth, setAuth] = useAtom(authAtom)
     const [user, setUser] = useAtom(userAtom)
 
     function closeModal() {
@@ -30,22 +37,25 @@ export default function Stores({ resources }) {
         if (name) {
 
             try {
-                const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store`, {
-                    method: "POST", headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        title: name,
-                        subtitle: "Official merchandise",
-                        phone: user.phone
-                    })
-                })
+                const response = await createStore(auth || localStorage.getItem('user_at'), name, 'Official merchandise')
 
-                console.log(data);
+                if (response?.success) {
+                    console.log(response?.data);
+                }
+                else {
+                    setToast({ type: "error", message: response?.error })
+                }
                 setName('')
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err?.message);
+                if (err?.response?.status === 403) {
+                    router.push('/')
+                    setAuth('')
+                    setUser({
+                        ...userAtom.init
+                    })
+                    localStorage.removeItem('user_at')
+                }
             }
 
         }
@@ -53,6 +63,7 @@ export default function Stores({ resources }) {
 
     return (
         <div id="stores">
+            <Toasts />
             <header className="flex items-center justify-between">
                 <h1 className="md:text-3xl text-2xl font-bold text-dark my-8">{resources.dashboard.store.title}</h1>
                 <div className="flex items-center gap-3">

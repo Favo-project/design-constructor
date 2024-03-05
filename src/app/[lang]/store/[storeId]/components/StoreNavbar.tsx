@@ -147,7 +147,7 @@ export default function StoreNavbar({ resources }) {
     return (
         <div className='relative z-50'>
             <nav className={`z-30 fixed left-0 right-0 transition-all ${isFixed ? 'top-0 border-b border-slate-300 bg-white' : 'top-6'}`}>
-                <nav className="container m-auto max-w-7xl sm:px-4 px-2 py-3 flex items-center justify-between relative">
+                <div className="container m-auto max-w-7xl sm:px-4 px-2 py-3 flex items-center justify-between relative">
                     <div className='flex-[2] flex items-center gap-5'>
                         <Menu as="div" className="relative ml-4">
                             <div>
@@ -236,7 +236,7 @@ export default function StoreNavbar({ resources }) {
                         <LocaleSwitcher theme={isFixed ? 'dark' : 'light'} />
                         <Cart resources={resources} theme={isFixed ? 'dark' : 'light'} />
                     </div>
-                </nav>
+                </div>
             </nav>
         </div>
     )

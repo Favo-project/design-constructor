@@ -25,8 +25,10 @@ export default function Store({ resources }) {
 
             <div className="container m-auto max-w-7xl p-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr]">
-                    <div>
-                        1
+                    <div className="w-full h-full relative">
+                        <div className="sticky top-24">
+                            1
+                        </div>
                     </div>
                     <div>
                         <div className="grid md:grid-cols-3 grid-cols-2">
